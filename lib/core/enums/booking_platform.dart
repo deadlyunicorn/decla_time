@@ -1,0 +1,4 @@
+enum BookingPlatform {
+  airbnb,
+  booking
+}
