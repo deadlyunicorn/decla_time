@@ -3,7 +3,7 @@ import 'package:decla_time/core/enums/declaration_status.dart';
 
 class NoParams {}
 
-class BookingDetailsParams{
+class ReservationParams{
 
   final DateTime arrivalDate;
   final DateTime departureDate;
@@ -11,7 +11,7 @@ class BookingDetailsParams{
   final double hostPayout;
   final BookingPlatform bookingPlatform;
 
-  BookingDetailsParams({
+  ReservationParams({
     required this.arrivalDate,
     required this.departureDate,
     required this.totalValue,
@@ -21,11 +21,11 @@ class BookingDetailsParams{
 
 }
 
-class DeclarationDetailsParams extends BookingDetailsParams{
+class DeclarationParams extends ReservationParams{
 
   final DeclarationStatus declarationStatus;
 
-  DeclarationDetailsParams({
+  DeclarationParams({
     required super.arrivalDate,
     required super.departureDate,
     required super.totalValue,
