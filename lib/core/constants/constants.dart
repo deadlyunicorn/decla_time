@@ -1,8 +1,10 @@
 String kTemplate = 'template';
 
+String kApplicationName = 'decla_time';
+
+
 String kName = 'name';
 String kId = 'id';
-
 //For api interactions
 const kArrivalDate = 'arrival_date';
 const kDepartureDate = 'departure_date';
