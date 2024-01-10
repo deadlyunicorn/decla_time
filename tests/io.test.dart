@@ -1,0 +1,58 @@
+// ignore_for_file: avoid_print
+import 'package:decla_time/core/documents_io/documents_io.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_test/flutter_test.dart';
+
+const testMockDirectory = "./tests/mockFs"  ;
+
+void main() {
+
+  group( "Reservations Folder Manipulation", () {
+
+    test('Creating test file in the reservations directory', () async {
+
+      setUpDocumentsDirectory();
+      
+      await DocumentsIO.createReservationFile("test");
+      int fileCount = (await DocumentsIO.reservationsDirectoryFuture ).listSync().length;
+      expect(
+        fileCount, equals(1) 
+      );
+
+    });
+
+    test("Read test file", () async{
+      setUpDocumentsDirectory();
+
+      String randomText = "hello does this work?";
+      await DocumentsIO.editReservationFile( "test", content: randomText);
+      String fileContent = await DocumentsIO.readReservationFile("test");
+      expect( fileContent, equals( randomText ) );
+    });
+
+    test("Delete test file", () async{
+      setUpDocumentsDirectory();
+
+      await DocumentsIO.deleteReservationFile("test");
+      int fileCount = (await DocumentsIO.reservationsDirectoryFuture ).listSync().length;
+      expect(
+        fileCount, equals(0) 
+      );
+    });
+
+  });
+  
+
+}
+
+void setUpDocumentsDirectory() {
+
+  TestWidgetsFlutterBinding.ensureInitialized();
+  
+  TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMethodCallHandler(
+    const MethodChannel(
+    'plugins.flutter.io/path_provider',
+    ), (message) async => testMockDirectory,
+  );
+  
+}
