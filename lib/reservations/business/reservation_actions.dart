@@ -17,20 +17,39 @@ class ReservationFolderActions {
     }).toList();
   }
 
-  void getReservationTableFromMultipleCsvFiles(List<File> files) {
-    //get files with listReservationFiles()
+  Future<List<Reservation>> generateReservationTableFromAllCsvFilesInReservationsDirectory( ) async {
 
-    //make sure all files exist.
+    final reservationCsvFileNames =
+        (await ReservationFolderActions._listReservationFiles())
+            .where((file) => file.path.contains(".csv"))
+            .map((file) => file.path.substring(file.path.lastIndexOf("/")));
+
+    final reservationsTable = (await Future.wait(reservationCsvFileNames
+            .map((filename) => (generateReservationTableFromFile(filename)))))
+            .fold<List<Reservation>>( [], (previousValue, element) => [...previousValue, ...element]);
+
+    // .fold( [] as List<Reservation>, (previousValue, element) async => [ ...previousValue, ...(await element) ]);
+
+    return reservationsTable;
   }
 
-  void listReservationFiles() async{
+  Future<List<Reservation>> generateReservationTableFromMultipleFiles( List<File> files) async{
+    
+    final reservationsTable = (await Future.wait( files
+            .map((filename) => (generateReservationTableFromFile( filename.path )))))
+            .fold<List<Reservation>>( [], (previousValue, element) => [...previousValue, ...element]);
 
-    print( (await DocumentsIO.reservationsDirectoryFuture).listSync() );
-    //list all the local reservation files
-    // files stored inside "documents/reservations"
-    //
+    // .fold( [] as List<Reservation>, (previousValue, element) async => [ ...previousValue, ...(await element) ]);
+
+    return reservationsTable;
   }
 
+  static Future<List<File>> _listReservationFiles() async {
+    return (await DocumentsIO.reservationsDirectoryFuture)
+        .listSync()
+        .whereType<File>()
+        .toList();
+  }
 
   void deleteReservationFile() {
     //User can delete a file
@@ -40,20 +59,24 @@ class ReservationFolderActions {
     //User can select files to delete.
   }
 
-  static Future<List<Reservation>> generateReservationTableFromFile( String filename )async{
-
+  static Future<List<Reservation>> generateReservationTableFromFile(
+      String filename) async {
     final tableFromCsvFile =
         await ReservationFolderActions().getRowEntriesFromCsvFile(
       filename,
     ); //[0][1] => first row, second element of the row;
 
+    if (tableFromCsvFile[0].length == 13) {
+      //File is Airbnb File
+      return ReservationFolderActions._generateReservationTableFromAirbnbFile(
+          tableFromCsvFile);
+    } else if (tableFromCsvFile[0].length == 19 ||
+        tableFromCsvFile[0].length == 20) {
+      //File is Booking File
+      //the columns aren't correctly built ( "Reservation by" names get split into 2 columns, thus getting 20 if it's not the first row).
 
-    if (tableFromCsvFile[0].length == 13) { //File is Airbnb File
-      return ReservationFolderActions._generateReservationTableFromAirbnbFile(tableFromCsvFile);
-    } else if ( tableFromCsvFile[0].length == 19 || tableFromCsvFile[0].length == 20 ) { //File is Booking File
-    //the columns aren't correctly built ( "Reservation by" names get split into 2 columns, thus getting 20 if it's not the first row).
-
-      return  ReservationFolderActions._generateReservationTableFromBookingDotComFile( tableFromCsvFile);
+      return ReservationFolderActions
+          ._generateReservationTableFromBookingDotComFile(tableFromCsvFile);
     } else {
       throw UnsupportedFileException();
     }
