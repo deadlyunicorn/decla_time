@@ -14,7 +14,7 @@ void main() {
 
     test('Creating test file in the reservations directory', () async {
 
-      setUpDocumentsDirectory();
+      setUpDocumentsDirectoryForTesting();
       
       await DocumentsIO.createReservationFile("test");
       int fileCount = (await DocumentsIO.reservationsDirectoryFuture ).listSync().length;
@@ -25,7 +25,7 @@ void main() {
     });
 
     test("Read test file", () async{
-      setUpDocumentsDirectory();
+      setUpDocumentsDirectoryForTesting();
 
       String randomText = "hello does this work?";
       await DocumentsIO.editReservationFile( "test", content: randomText);
@@ -34,7 +34,7 @@ void main() {
     });
 
     test("Delete test file", () async{
-      setUpDocumentsDirectory();
+      setUpDocumentsDirectoryForTesting();
 
       await DocumentsIO.deleteReservationFile("test");
       int fileCount = (await DocumentsIO.reservationsDirectoryFuture ).listSync().length;

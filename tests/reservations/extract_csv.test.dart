@@ -7,7 +7,7 @@ import 'package:decla_time/reservations/business/reservation_actions.dart';
 import '../setup_documents_directory.dart';
 
 void main() {
-  setUpDocumentsDirectory();
+  setUpDocumentsDirectoryForTesting();
 
   test("Detecting Airbnb file", () async {
     final csvFileTable = await ReservationFolderActions()

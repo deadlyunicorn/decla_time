@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 const testMockDirectory = "./tests/mockFs"  ;
 
 
-void setUpDocumentsDirectory() {
+void setUpDocumentsDirectoryForTesting() {
 
   TestWidgetsFlutterBinding.ensureInitialized();
   
