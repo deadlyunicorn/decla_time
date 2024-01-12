@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
         onPrimary:  Color( 0xFFEAE9FC ), 
         secondary:  Color(0xFF3B197B), 
         onSecondary:  Color(0xFFEAE9FC), 
-        error:  Color( 0xFF9E0030 ), 
+        error:  Color.fromARGB(255, 199, 11, 68), 
         onError:  Color( 0xFFEAE9FC ), 
         background:  Color( 0xFF040412), 
         onBackground:  Color( 0xFFEAE9FC ), 
@@ -41,6 +41,14 @@ class MyApp extends StatelessWidget {
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
         backgroundColor: Color(0xFF04041A),
         selectedItemColor: Color( 0xFFB59C0D ),
+      ),
+      textTheme: const TextTheme(
+        headlineLarge: TextStyle(
+          fontFamily: "Do Hyeon",
+        ),
+        headlineMedium: TextStyle(
+          fontFamily: "Do Hyeon",
+        )
       ),
       useMaterial3: true,
     );
