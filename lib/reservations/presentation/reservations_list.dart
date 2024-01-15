@@ -146,6 +146,7 @@ class ReservationsOfYear extends StatelessWidget {
 
     return ListView.builder(
         shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
         itemCount: reservationsMapYear.values.length,
         itemBuilder: (context, index) {
           int month = reservationsMapYear.keys.toList()[index];
