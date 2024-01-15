@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:decla_time/reservations/business/reservation.dart';
 import 'package:decla_time/reservations/presentation/reservation_status_dot.dart';
+import 'package:decla_time/reservations/presentation/reservations_list/reservations_of_year_list.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -106,7 +107,7 @@ class ReservationsList extends StatelessWidget {
     return Center(
       child: SizedBox(
         width: min(MediaQuery.sizeOf(context).width, 900),
-        child: ListView.builder(
+        child: ListView.builder( // A list where entries are separated by year.
           itemCount: yearMonthMap.entries.length,
           itemBuilder: (context, index) {
             final int year = yearMonthMap.keys.toList()[index];
@@ -129,98 +130,5 @@ class ReservationsList extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-class ReservationsOfYear extends StatelessWidget {
-  const ReservationsOfYear(
-      {super.key, required this.reservationsMapYear, required this.year});
-
-  final Map<int, List<Reservation>> reservationsMapYear;
-  final int year;
-
-  @override
-  Widget build(BuildContext context) {
-    final horizontalPadding =
-        min((MediaQuery.sizeOf(context).width ~/ 64), 36).toDouble();
-
-    return ListView.builder(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        itemCount: reservationsMapYear.values.length,
-        itemBuilder: (context, index) {
-          int month = reservationsMapYear.keys.toList()[index];
-          final reservationsOfMonth = reservationsMapYear[month]!;
-
-          return Padding(
-            padding: const EdgeInsets.symmetric(
-              vertical: 16,
-            ),
-            child: Container(
-              decoration: BoxDecoration(
-                  color:
-                      Theme.of(context).colorScheme.secondary.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(8)),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Text(
-                        DateFormat.MMMM("en-US").format(
-                          DateTime(0, month),
-                        ),
-                        style: Theme.of(context).textTheme.headlineMedium,
-                      ),
-                    ),
-                    GridView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      padding:
-                          EdgeInsets.symmetric(horizontal: horizontalPadding),
-                      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                        maxCrossAxisExtent: 150.0,
-                        crossAxisSpacing: horizontalPadding,
-                      ),
-                      itemCount:
-                          reservationsMapYear.length * 2, //!TO BE CHANGED!!
-                      itemBuilder: (context, index) {
-                        final currentIndex =
-                            index % 3; //!TO BE CHANGED TO INDEX
-
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                color: Theme.of(context).colorScheme.secondary),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                children: [
-                                  Text(reservationsOfMonth[currentIndex]
-                                      .guestName),
-                                  Text(
-                                      "${reservationsOfMonth[currentIndex].payout} €"),
-                                  Text(
-                                      "${reservationsOfMonth[currentIndex].departureDate.difference(reservationsOfMonth[currentIndex].arrivalDate).inDays + 1} nights"),
-                                  ReservationStatusDot(
-                                      reservationStatusString:
-                                          reservationsOfMonth[currentIndex]
-                                              .reservationStatus)
-                                ],
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          );
-        });
   }
 }
