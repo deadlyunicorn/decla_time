@@ -14,27 +14,55 @@ class ReservationGridItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          color: Theme.of(context).colorScheme.secondary),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            Text(reservationsOfMonth[currentIndex]
-                .guestName),
-            Text(
-                "${reservationsOfMonth[currentIndex].payout} €"),
-            Text(
-                "${reservationsOfMonth[currentIndex].departureDate.difference(reservationsOfMonth[currentIndex].arrivalDate).inDays + 1} nights"),
-            ReservationStatusDot(
-                reservationStatusString:
-                    reservationsOfMonth[currentIndex]
-                        .reservationStatus)
-          ],
+    return Stack(
+      clipBehavior: Clip.none,
+      alignment: Alignment.center,
+      fit: StackFit.expand,
+      children: [
+        Container(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              color: Theme.of(context).colorScheme.secondary),
+          child: Padding(
+            padding: const EdgeInsets.all( 4.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Text(
+                  reservationsOfMonth[currentIndex].guestName,
+                  style: Theme.of(context).textTheme.bodyLarge,
+                  maxLines: 1,
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
+                  
+                ),
+                Text(
+                  "${reservationsOfMonth[currentIndex].payout}€",
+                  style: Theme.of(context).textTheme
+                    .headlineSmall!,
+                  maxLines: 1,
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
+                  softWrap: true,
+
+                ),
+                Text(
+                  "${reservationsOfMonth[currentIndex].departureDate.difference(reservationsOfMonth[currentIndex].arrivalDate).inDays + 1} nights",
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+              ],
+            ),
+          ),
         ),
-      ),
+        Positioned(
+          top: -4,
+          right: -4,
+          child: ReservationStatusDot(
+            reservationStatusString:
+                reservationsOfMonth[currentIndex].reservationStatus,
+          ),
+        ),
+      ],
     );
   }
 }

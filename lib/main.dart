@@ -45,8 +45,13 @@ class MyApp extends StatelessWidget {
       textTheme: const TextTheme(
         headlineLarge: TextStyle(
           fontFamily: "Do Hyeon",
+          fontSize: 40
         ),
         headlineMedium: TextStyle(
+          fontFamily: "Do Hyeon",
+          fontSize: 32
+        ),
+        headlineSmall: TextStyle(
           fontFamily: "Do Hyeon",
         )
       ),
