@@ -1,10 +1,8 @@
 import 'dart:math';
 
 import 'package:decla_time/reservations/business/reservation.dart';
-import 'package:decla_time/reservations/presentation/reservation_status_dot.dart';
 import 'package:decla_time/reservations/presentation/reservations_list/reservations_of_year_list.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class ReservationsList extends StatelessWidget {
   const ReservationsList({super.key});

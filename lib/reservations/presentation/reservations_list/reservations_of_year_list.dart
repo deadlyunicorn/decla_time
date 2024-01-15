@@ -1,6 +1,4 @@
-import 'dart:math';
 import 'package:decla_time/reservations/business/reservation.dart';
-import 'package:decla_time/reservations/presentation/reservation_status_dot.dart';
 import 'package:decla_time/reservations/presentation/reservations_list/reservation_of_month_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
