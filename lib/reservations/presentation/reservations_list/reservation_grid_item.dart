@@ -4,6 +4,7 @@ import 'package:decla_time/reservations/business/reservation.dart';
 import 'package:decla_time/reservations/presentation/reservation_status_dot.dart';
 import 'package:decla_time/reservations/presentation/reservations_list/reservation_details/reservation_details_route.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class ReservationGridItem extends StatelessWidget {
   const ReservationGridItem({
@@ -14,6 +15,13 @@ class ReservationGridItem extends StatelessWidget {
 
   final List<Reservation> reservationsOfMonth;
   final int currentIndex;
+
+  int get nights =>
+      reservationsOfMonth[currentIndex]
+          .departureDate
+          .difference(reservationsOfMonth[currentIndex].arrivalDate)
+          .inDays +
+      1;
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +68,7 @@ class ReservationGridItem extends StatelessWidget {
                     softWrap: true,
                   ),
                   Text(
-                    "${reservationsOfMonth[currentIndex].departureDate.difference(reservationsOfMonth[currentIndex].arrivalDate).inDays + 1} nights",
+                    "$nights nights",
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ],
@@ -75,6 +83,11 @@ class ReservationGridItem extends StatelessWidget {
             reservationStatusString:
                 reservationsOfMonth[currentIndex].reservationStatus,
           ),
+        ),
+        Positioned(
+          bottom: 4,
+          right: 4,
+          child: Text( DateFormat( "dd" ).format( reservationsOfMonth[currentIndex].departureDate )  )
         ),
       ],
     );
