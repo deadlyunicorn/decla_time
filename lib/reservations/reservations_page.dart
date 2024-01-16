@@ -7,9 +7,6 @@ class ReservationsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.symmetric( horizontal: 16, vertical: 32),
-      child: ReservationsList(),
-    );
+    return const ReservationsList();
   }
 }
