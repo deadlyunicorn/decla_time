@@ -4,10 +4,13 @@ import 'package:flutter/material.dart';
 class ReservationStatusDot extends StatelessWidget {
 
   final String reservationStatusString;
-  
+  final double size;
+
   const ReservationStatusDot({
     super.key,
-    required this.reservationStatusString
+    required this.reservationStatusString,
+    this.size = 16
+
   });
 
   @override
@@ -17,22 +20,32 @@ class ReservationStatusDot extends StatelessWidget {
 
     switch( reservationStatus ){
       case ReservationStatus.completed:
-        return const Icon( 
-          size: 16,
-          Icons.circle,
-          color: Colors.green,
+        return Tooltip(
+          richMessage: const TextSpan(text:"Completed"),
+          child: Icon( 
+            Icons.circle,
+            size: size,
+            color: Colors.green,
+          ),
         );
       case ReservationStatus.upcoming:
-        return Icon( 
-          size: 16,
-          Icons.circle,
-          color: Theme.of(context).colorScheme.surface,
+        return Tooltip(
+          richMessage: const TextSpan(text:"Upcoming"),
+          child: Icon( 
+            Icons.circle,
+            semanticLabel: "Upcoming",
+            size: size,
+            color: Theme.of(context).colorScheme.surface,
+          ),
         );
       case ReservationStatus.cancelled:
-        return Icon( 
-          size: 16,
-          Icons.circle,
-          color: Theme.of( context ).colorScheme.error,
+        return Tooltip(
+          richMessage: const TextSpan(text:"Cancelled"),
+          child: Icon( 
+            Icons.circle,
+            size: size,
+            color: Theme.of( context ).colorScheme.error,
+          ),
         );
     }
   }
