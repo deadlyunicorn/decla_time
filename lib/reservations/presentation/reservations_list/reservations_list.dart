@@ -51,12 +51,14 @@ class ReservationsList extends StatelessWidget {
         guestName: "John Hoe",
         arrivalDate: DateTime(2022, 09, 12),
         departureDate: DateTime(2022, 09, 19),
+        lastEdit: DateTime(2023, 12, 1),
         payout: 320,
         reservationStatus: "ok"),
     Reservation(
         bookingPlatform: "Airbnb",
         listingName: "Good Listing",
         id: "123 404",
+        lastEdit: DateTime(2023, 12, 1),
         guestName: "John Hoe",
         arrivalDate: DateTime(2022, 09, 12),
         departureDate: DateTime(2022, 09, 19),
@@ -66,10 +68,11 @@ class ReservationsList extends StatelessWidget {
         bookingPlatform: "Booking.com",
         listingName: "Okay Listing",
         id: "101 404",
-        guestName: "John Shoe",
-        arrivalDate: DateTime(2023, 11, 24),
-        departureDate: DateTime(2023, 11, 30),
-        payout: 170,
+        guestName: "John Shoe of 2 and three and foour and fuiice",
+        lastEdit: DateTime(2023, 2, 1),
+        arrivalDate: DateTime(2023, 11, 24, 13),
+        departureDate: DateTime(2023, 11, 30, 11),
+        payout: 2723.48,
         reservationStatus: "cancelled"),
     Reservation(
         bookingPlatform: "Airrrr",
@@ -105,7 +108,8 @@ class ReservationsList extends StatelessWidget {
     return Center(
       child: SizedBox(
         width: min(MediaQuery.sizeOf(context).width, 900),
-        child: ListView.builder( // A list where entries are separated by year.
+        child: ListView.builder(
+          // A list where entries are separated by year.
           itemCount: yearMonthMap.entries.length,
           itemBuilder: (context, index) {
             final int year = yearMonthMap.keys.toList()[index];
