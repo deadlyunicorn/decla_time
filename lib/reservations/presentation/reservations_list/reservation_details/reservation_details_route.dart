@@ -1,6 +1,8 @@
+import 'package:decla_time/core/extensions/capitalize.dart';
 import 'package:decla_time/reservations/business/reservation.dart';
 import 'package:decla_time/reservations/presentation/reservations_list/reservation_details/reservation_details_container.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 
 class ReservationDetailsRoute extends StatelessWidget {
@@ -13,6 +15,9 @@ class ReservationDetailsRoute extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final localized = AppLocalizations.of(context)!;
+
     return SafeArea(
       child: Scaffold(
           appBar: AppBar(),
@@ -28,14 +33,14 @@ class ReservationDetailsRoute extends StatelessWidget {
                   Center(
                     child: 
                     Text(
-                      "Details",
+                      localized.details.capitalized,
                       style: Theme.of(context).textTheme.headlineLarge,
                     ),
                   ),
                   const SizedBox.square(dimension: 16),
                   ReservationDetailsContainer(reservation: reservation),
                   const SizedBox.square(dimension: 16),
-                  Text( formatLastEdit( reservation.lastEdit) ),
+                  Text( formatLastEdit( reservation.lastEdit, localized: localized ) ),
                 ],
               ),
             ),
@@ -43,10 +48,11 @@ class ReservationDetailsRoute extends StatelessWidget {
     );
   }
 
-  String formatLastEdit( DateTime? lastEdit ){
+  String formatLastEdit( DateTime? lastEdit, {
+    required AppLocalizations localized }){
     
     return lastEdit != null
-      ?"Last Edit: ${ DateFormat( "dd/MM/y HH:mm").format(lastEdit)}" 
+      ?"${localized.lastEdit.capitalized}: ${ DateFormat( "dd/MM/y HH:mm").format(lastEdit)}" 
       :"";
   } 
 }

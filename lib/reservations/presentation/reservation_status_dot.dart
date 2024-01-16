@@ -1,4 +1,6 @@
 import 'package:decla_time/core/enums/reservation_status.dart';
+import 'package:decla_time/core/extensions/capitalize.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class ReservationStatusDot extends StatelessWidget {
@@ -16,12 +18,13 @@ class ReservationStatusDot extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+    final localized = AppLocalizations.of(context)!;
     ReservationStatus reservationStatus = translateReservationStatus(reservationStatusString);
 
     switch( reservationStatus ){
       case ReservationStatus.completed:
         return Tooltip(
-          richMessage: const TextSpan(text:"Completed"),
+          richMessage: TextSpan(text: localized.completed.capitalized),
           child: Icon( 
             Icons.circle,
             size: size,
@@ -30,17 +33,16 @@ class ReservationStatusDot extends StatelessWidget {
         );
       case ReservationStatus.upcoming:
         return Tooltip(
-          richMessage: const TextSpan(text:"Upcoming"),
+          richMessage: TextSpan(text: localized.upcoming.capitalized),
           child: Icon( 
             Icons.circle,
-            semanticLabel: "Upcoming",
             size: size,
             color: Theme.of(context).colorScheme.surface,
           ),
         );
       case ReservationStatus.cancelled:
         return Tooltip(
-          richMessage: const TextSpan(text:"Cancelled"),
+          richMessage: TextSpan(text: localized.cancelled.capitalized ),
           child: Icon( 
             Icons.circle,
             size: size,

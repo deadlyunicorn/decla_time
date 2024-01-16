@@ -1,6 +1,8 @@
+import 'package:decla_time/core/extensions/capitalize.dart';
 import 'package:decla_time/reservations/business/reservation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DateInformationWidget extends StatelessWidget {
   const DateInformationWidget({
@@ -14,6 +16,9 @@ class DateInformationWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final localized = AppLocalizations.of(context)!;
+
     return Column(
       //Dates and Nights
       children: [
@@ -24,14 +29,14 @@ class DateInformationWidget extends StatelessWidget {
           children: [
             Expanded(
               child: Text(
-                "Arrival",
+                localized.arrival.capitalized,
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
             ),
             Expanded(
               child: Text(
-                "Departure",
+                localized.departure.capitalized,
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
@@ -55,7 +60,7 @@ class DateInformationWidget extends StatelessWidget {
             ),
           ],
         ),
-        Text("Nights: $nights"),
+        Text("${localized.nights.capitalized}: $nights"),
       ],
     );
   }

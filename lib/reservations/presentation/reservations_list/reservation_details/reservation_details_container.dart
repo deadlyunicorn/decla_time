@@ -1,9 +1,12 @@
 import 'dart:math';
+import 'package:decla_time/core/extensions/capitalize.dart';
 import 'package:decla_time/reservations/business/reservation.dart';
 import 'package:decla_time/reservations/presentation/decleration_status_dot.dart';
 import 'package:decla_time/reservations/presentation/reservation_status_dot.dart';
 import 'package:decla_time/reservations/presentation/reservations_list/reservation_details/date_information_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class ReservationDetailsContainer extends StatelessWidget {
   const ReservationDetailsContainer({
@@ -18,6 +21,9 @@ class ReservationDetailsContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final localized = AppLocalizations.of(context)!;
+
     return DefaultTextStyle.merge(
       style: Theme.of(context).textTheme.bodyLarge,
       child: Container(
@@ -50,7 +56,7 @@ class ReservationDetailsContainer extends StatelessWidget {
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             text: TextSpan(
-                              text: "Platform: ",
+                              text: "${localized.platform.capitalized}: ",
                               style: Theme.of(context).textTheme.bodyLarge,
                               children: [
                                 TextSpan(
@@ -65,20 +71,20 @@ class ReservationDetailsContainer extends StatelessWidget {
                         ],
                       ),
                       const SizedBox.square( dimension: 8 ),
-                      Text(reservation.listingName != null
-                          ? "At ${reservation.listingName}"
-                          : ''),
-                      const SizedBox.square( dimension: 8 ),
                       SizedBox(
                         width: 300,
                         child: Text(
-                          "Guest Name: ${reservation.guestName}",
+                          "${localized.guestName.capitalized}: ${reservation.guestName}",
                           style: Theme.of(context).textTheme.bodyLarge,
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                           textAlign: TextAlign.center,
                         ),
                       ),
+                      const SizedBox.square( dimension: 8 ),
+                      Text(reservation.listingName != null
+                          ? "${localized.at.capitalized} ${reservation.listingName}"
+                          : ''),
                     ],
                   ),
                   Column(
@@ -92,7 +98,7 @@ class ReservationDetailsContainer extends StatelessWidget {
                         softWrap: true,
                       ),
                       Text(
-                        "${ ( reservation.payout/nights ).toStringAsFixed( 2 ) } € / night",
+                        "${ ( reservation.payout/nights ).toStringAsFixed( 2 ) } € / ${localized.night}",
                         style: Theme.of(context).textTheme.bodyMedium,
                         maxLines: 1,
                         textAlign: TextAlign.center,

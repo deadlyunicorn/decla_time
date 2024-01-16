@@ -1,5 +1,8 @@
 import 'package:decla_time/core/enums/selected_page.dart';
+import 'package:decla_time/core/extensions/capitalize.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+
 
 class CustomFloatingActionButton extends StatelessWidget {
 
@@ -12,6 +15,9 @@ class CustomFloatingActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final localized = AppLocalizations.of(context)!;
+
 
     switch( selectedPage ){
       case SelectedPage.reservations:
@@ -36,8 +42,8 @@ class CustomFloatingActionButton extends StatelessWidget {
               }
             },
             tooltip: selectedPage == SelectedPage.reservations 
-              ? "Add entries from file"
-              : "New declaration",
+              ? localized.addEntries.capitalized
+              : localized.newDeclaration.capitalized,
             child: const Icon(Icons.add),
           ),
         );

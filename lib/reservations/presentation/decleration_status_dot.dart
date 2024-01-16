@@ -1,3 +1,5 @@
+import 'package:decla_time/core/extensions/capitalize.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class DeclarationStatusDot extends StatelessWidget {
@@ -12,9 +14,12 @@ class DeclarationStatusDot extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final localized = AppLocalizations.of(context)!;
+
     if ( isDeclared ) {
       return Tooltip(
-        richMessage: const TextSpan(text: "Declared"),
+        richMessage: TextSpan(text: localized.declared.capitalized ),
         child: Icon(
           Icons.done,
           size: size,
@@ -23,7 +28,7 @@ class DeclarationStatusDot extends StatelessWidget {
       );
     } else {
       return Tooltip(
-        richMessage: const TextSpan(text: "Undeclared"),
+        richMessage: TextSpan(text: localized.undeclared.capitalized ),
         child: Icon(
           Icons.cancel,
           size: size,

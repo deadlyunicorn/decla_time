@@ -1,8 +1,7 @@
-import 'dart:math';
-
 import 'package:decla_time/reservations/business/reservation.dart';
 import 'package:decla_time/reservations/presentation/reservation_status_dot.dart';
 import 'package:decla_time/reservations/presentation/reservations_list/reservation_details/reservation_details_route.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -25,6 +24,9 @@ class ReservationGridItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final localized = AppLocalizations.of(context)!;
+
     return Stack(
       clipBehavior: Clip.none,
       alignment: Alignment.center,
@@ -68,7 +70,7 @@ class ReservationGridItem extends StatelessWidget {
                     softWrap: true,
                   ),
                   Text(
-                    "$nights nights",
+                    "$nights ${localized.nights}",
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ],
