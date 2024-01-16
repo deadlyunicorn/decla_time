@@ -23,9 +23,9 @@ class MyApp extends StatelessWidget {
       fontFamily: 'Ysabeau',
       colorScheme: const ColorScheme(
         brightness: Brightness.dark, 
-        primary:  Color( 0xFF2619B4 ), 
+        primary:  Color(0xFF3B197B), 
         onPrimary:  Color( 0xFFEAE9FC ), 
-        secondary:  Color(0xFF3B197B), 
+        secondary:  Color( 0xFF2619B4 ), 
         onSecondary:  Color(0xFFEAE9FC), 
         error:  Color.fromARGB(255, 199, 11, 68), 
         onError:  Color( 0xFFEAE9FC ), 
@@ -53,7 +53,19 @@ class MyApp extends StatelessWidget {
         ),
         headlineSmall: TextStyle(
           fontFamily: "Do Hyeon",
+        ),
+        bodyLarge: TextStyle(
+          fontSize: 24
+        ),
+        bodyMedium: TextStyle(
+          fontSize: 16
+        ),
+        bodySmall: TextStyle(
+          fontSize: 8
         )
+      ),
+      appBarTheme: const AppBarTheme(
+        backgroundColor: Color(0xFF3B197B)
       ),
       useMaterial3: true,
     );
