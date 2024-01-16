@@ -4,6 +4,9 @@ class Reservation{
   final String bookingPlatform;
   final String? listingName;
 
+  DateTime? lastEdit;
+  bool isDeclared;
+
   final String id;
   final String guestName;
   final DateTime arrivalDate;
@@ -20,7 +23,9 @@ class Reservation{
     required this.arrivalDate,
     required this.departureDate,
     required this.payout,
-    required this.reservationStatus
+    required this.reservationStatus,
+    this.lastEdit,
+    this.isDeclared = false
     
   }); 
   
