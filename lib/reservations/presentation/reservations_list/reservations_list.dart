@@ -117,10 +117,10 @@ class ReservationsList extends StatelessWidget {
             return Column(
               mainAxisSize: MainAxisSize.min,
               children: [
+                const SizedBox.square( dimension: 32),
                 Text(
                   "$year",
                   style: Theme.of(context).textTheme.headlineLarge,
-
                 ),
                 ReservationsOfYear(
                   reservationsMapYear: yearMonthMap[year]!,
