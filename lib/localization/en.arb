@@ -1,0 +1,23 @@
+{
+    "@@locale": "en",
+    "localeFlag": "🇺🇸",
+    "reservations": "reservations",
+    "declarations": "declarations",
+    "analytics": "analytics",
+    "nights": "nights",
+    "night": "night",
+    "platform": "platform",
+    "at": "at",
+    "guestName": "name",
+    "arrival": "arrival",
+    "departure": "departure",
+    "details": "details",
+    "cancelled": "cancelled",
+    "upcoming": "upcoming",
+    "completed": "completed",
+    "declared": "declared",
+    "undeclared": "undeclared",
+    "lastEdit": "last edit",
+    "addEntries": "add entries", 
+    "newDeclaration": "new declaration"
+}
