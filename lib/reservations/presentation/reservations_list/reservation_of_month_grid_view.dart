@@ -23,7 +23,7 @@ class ReservationOfMonthGridView extends StatelessWidget {
       padding:
           EdgeInsets.symmetric(horizontal: horizontalPadding),
       gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-        maxCrossAxisExtent: 150.0,
+        maxCrossAxisExtent: 160.0,
         crossAxisSpacing: horizontalPadding,
       ),
       itemCount:
