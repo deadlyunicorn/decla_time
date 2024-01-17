@@ -15,7 +15,6 @@ class ReservationDetailsRoute extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final localized = AppLocalizations.of(context)!;
 
     return SafeArea(
@@ -31,8 +30,7 @@ class ReservationDetailsRoute extends StatelessWidget {
               child: Column(
                 children: [
                   Center(
-                    child: 
-                    Text(
+                    child: Text(
                       localized.details.capitalized,
                       style: Theme.of(context).textTheme.headlineLarge,
                     ),
@@ -40,7 +38,10 @@ class ReservationDetailsRoute extends StatelessWidget {
                   const SizedBox.square(dimension: 16),
                   ReservationDetailsContainer(reservation: reservation),
                   const SizedBox.square(dimension: 16),
-                  Text( formatLastEdit( reservation.lastEdit, localized: localized ) ),
+                  Text(
+                    formatLastEdit(reservation.lastEdit, localized: localized),
+                    textAlign: TextAlign.center,
+                  ),
                 ],
               ),
             ),
@@ -48,11 +49,10 @@ class ReservationDetailsRoute extends StatelessWidget {
     );
   }
 
-  String formatLastEdit( DateTime? lastEdit, {
-    required AppLocalizations localized }){
-    
+  String formatLastEdit(DateTime? lastEdit,
+      {required AppLocalizations localized}) {
     return lastEdit != null
-      ?"${localized.lastEdit.capitalized}: ${ DateFormat( "dd/MM/y HH:mm").format(lastEdit)}" 
-      :"";
-  } 
+        ? "${localized.lastEdit.capitalized}: ${DateFormat("dd/MM/y HH:mm").format(lastEdit)}"
+        : "";
+  }
 }

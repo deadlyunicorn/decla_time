@@ -38,9 +38,11 @@ class ReservationDetailsContainer extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Stack(
             clipBehavior: Clip.none,
+            alignment: Alignment.center,
             children: [
               Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   OutlineContainer(
                     child: Column(
