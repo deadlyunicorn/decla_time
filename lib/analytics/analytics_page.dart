@@ -14,19 +14,21 @@ class AnalyticsPage extends StatelessWidget {
     return Column(
       children: [
         const Expanded(child: Text("Analytics here")),
-        TextButton(
-          
-          style: TextButton.styleFrom(
-            foregroundColor: Theme.of(context).colorScheme.surface,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular( 4 )
-            )
-          ),
-          onPressed: () {
-            context.read<SettingsController>().toggleLocale();
-          },
-          child: Text(
-            localized.localeFlag,
+        Center(
+          child: TextButton(
+            
+            style: TextButton.styleFrom(
+              foregroundColor: Theme.of(context).colorScheme.surface,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular( 4 )
+              )
+            ),
+            onPressed: () {
+              context.read<SettingsController>().toggleLocale();
+            },
+            child: Text(
+              localized.localeFlag,
+            ),
           ),
         ),
       ],
