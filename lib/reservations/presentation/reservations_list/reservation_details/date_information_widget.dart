@@ -19,49 +19,60 @@ class DateInformationWidget extends StatelessWidget {
 
     final localized = AppLocalizations.of(context)!;
 
-    return Column(
-      //Dates and Nights
-      children: [
-        Flex(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.center,
-          direction: Axis.horizontal,
-          children: [
-            Expanded(
-              child: Text(
-                localized.arrival.capitalized,
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.headlineSmall,
+    return SizedBox(
+      width: 400,
+      child: Column(
+        //Dates and Nights
+        children: [
+          Flex(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            direction: Axis.horizontal,
+            children: [
+              Expanded(
+                child: Text(
+                  localized.arrival.capitalized,
+                  textAlign: TextAlign.center,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.headlineSmall,
+                ),
               ),
-            ),
-            Expanded(
-              child: Text(
-                localized.departure.capitalized,
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.headlineSmall,
+              Expanded(
+                child: Text(
+                  localized.departure.capitalized,
+                  textAlign: TextAlign.center,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.headlineSmall,
+                ),
               ),
-            ),
-          ],
-        ),
-        Flex(
-          direction: Axis.horizontal,
-          children: [
-            Expanded(
-              child: Text(
-                dateFormat(reservation.arrivalDate),
-                textAlign: TextAlign.center,
+            ],
+          ),
+          Flex(
+            direction: Axis.horizontal,
+            children: [
+              Expanded(
+                child: Text(
+                  dateFormat(reservation.arrivalDate),
+                  textAlign: TextAlign.center,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
-            ),
-            Expanded(
-              child: Text(
-                dateFormat(reservation.departureDate),
-                textAlign: TextAlign.center,
+              Expanded(
+                child: Text(
+                  dateFormat(reservation.departureDate),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
+                ),
               ),
-            ),
-          ],
-        ),
-        Text("${localized.nights.capitalized}: $nights"),
-      ],
+            ],
+          ),
+          Text("${localized.nights.capitalized}: $nights"),
+        ],
+      ),
     );
   }
 
