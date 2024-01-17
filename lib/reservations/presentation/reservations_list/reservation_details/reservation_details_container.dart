@@ -7,7 +7,6 @@ import 'package:decla_time/reservations/presentation/reservations_list/reservati
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 class ReservationDetailsContainer extends StatelessWidget {
   const ReservationDetailsContainer({
     super.key,
@@ -16,12 +15,10 @@ class ReservationDetailsContainer extends StatelessWidget {
 
   final Reservation reservation;
   int get nights =>
-    reservation.departureDate.difference(reservation.arrivalDate).inDays + 1;
-
+      reservation.departureDate.difference(reservation.arrivalDate).inDays + 1;
 
   @override
   Widget build(BuildContext context) {
-
     final localized = AppLocalizations.of(context)!;
 
     return DefaultTextStyle.merge(
@@ -45,71 +42,80 @@ class ReservationDetailsContainer extends StatelessWidget {
               Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Column(
-                    children: [
-                      Wrap(
-                        //Platform and ID
-                        spacing: 24,
-                        alignment: WrapAlignment.spaceAround,
-                        children: [
-                          RichText(
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            text: TextSpan(
-                              text: "${localized.platform.capitalized}: ",
-                              style: Theme.of(context).textTheme.bodyLarge,
-                              children: [
-                                TextSpan(
-                                  text: reservation.bookingPlatform,
-                                  style:
-                                      Theme.of(context).textTheme.headlineSmall,
-                                ),
-                              ],
+                  OutlineContainer(
+                    child: Column(
+                      children: [
+                        Wrap(
+                          //Platform and ID
+                          spacing: 24,
+                          alignment: WrapAlignment.spaceAround,
+                          children: [
+                            RichText(
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              text: TextSpan(
+                                text: "${localized.platform.capitalized}: ",
+                                style: Theme.of(context).textTheme.bodyLarge,
+                                children: [
+                                  TextSpan(
+                                    text: reservation.bookingPlatform,
+                                    style:
+                                        Theme.of(context).textTheme.headlineSmall,
+                                  ),
+                                ],
+                              ),
                             ),
+                            Text("ID: ${reservation.id}"),
+                          ],
+                        ),
+                        const SizedBox.square(dimension: 8),
+                        SizedBox(
+                          width: 300,
+                          child: Text(
+                            "${localized.guestName.capitalized}: ${reservation.guestName}",
+                            style: Theme.of(context).textTheme.bodyLarge,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                            textAlign: TextAlign.center,
                           ),
-                          Text("ID: ${reservation.id}"),
-                        ],
-                      ),
-                      const SizedBox.square( dimension: 8 ),
-                      SizedBox(
-                        width: 300,
-                        child: Text(
-                          "${localized.guestName.capitalized}: ${reservation.guestName}",
-                          style: Theme.of(context).textTheme.bodyLarge,
-                          overflow: TextOverflow.ellipsis,
+                        ),
+                        const SizedBox.square(dimension: 8),
+                        Text(reservation.listingName != null
+                            ? "${localized.at.capitalized} ${reservation.listingName}"
+                            : ''),
+                      ],
+                    ),
+                  ),
+                  OutlineContainer(
+                    child: Column(
+                      children: [
+                        Text(
+                          "${reservation.payout} €",
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineMedium
+                              ?.copyWith(color: Colors.green.shade300),
                           maxLines: 1,
                           textAlign: TextAlign.center,
+                          overflow: TextOverflow.ellipsis,
+                          softWrap: true,
                         ),
-                      ),
-                      const SizedBox.square( dimension: 8 ),
-                      Text(reservation.listingName != null
-                          ? "${localized.at.capitalized} ${reservation.listingName}"
-                          : ''),
-                    ],
+                        Text(
+                          "${(reservation.payout / nights).toStringAsFixed(2)} € / ${localized.night}",
+                          style: Theme.of(context).textTheme.bodyMedium,
+                          maxLines: 1,
+                          textAlign: TextAlign.center,
+                          overflow: TextOverflow.ellipsis,
+                          softWrap: true,
+                        ),
+                      ],
+                    ),
                   ),
-                  Column(
-                    children: [
-                      Text(
-                        "${reservation.payout} €",
-                        style: Theme.of(context).textTheme.headlineMedium?.copyWith( color: Colors.green.shade300 ),
-                        maxLines: 1,
-                        textAlign: TextAlign.center,
-                        overflow: TextOverflow.ellipsis,
-                        softWrap: true,
-                      ),
-                      Text(
-                        "${ ( reservation.payout/nights ).toStringAsFixed( 2 ) } € / ${localized.night}",
-                        style: Theme.of(context).textTheme.bodyMedium,
-                        maxLines: 1,
-                        textAlign: TextAlign.center,
-                        overflow: TextOverflow.ellipsis,
-                        softWrap: true,
-                      ),
-                    ],
-                  ),
-                  DateInformationWidget(
-                    reservation: reservation,
-                    nights: nights,
+                  OutlineContainer(
+                    child: DateInformationWidget(
+                      reservation: reservation,
+                      nights: nights,
+                    ),
                   ),
                 ],
               ),
@@ -132,6 +138,24 @@ class ReservationDetailsContainer extends StatelessWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class OutlineContainer extends StatelessWidget {
+  const OutlineContainer({super.key, required this.child});
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+          color: Colors.white.withAlpha(20),
+          borderRadius: BorderRadius.circular(8)),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: child,
       ),
     );
   }
