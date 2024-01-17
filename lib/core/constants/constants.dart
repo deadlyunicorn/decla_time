@@ -27,7 +27,7 @@ const kAirbnbReservationStatusColumn = 1;
 
 const kBookingDotComArrivalDateColumn = 3;
 const kBookingDotComDepartureDateColumn = 4;
-const kBookingDotComGuestNameColumn = 2;
+const kBookingDotComGuestNameColumn = 1;
 const kBookingDotComIdColumn = 0;
 const kBookingDotComTotalPriceColumn = 12;
 const kBookingDotComFeeColumn = 14;
