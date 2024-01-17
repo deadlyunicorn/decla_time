@@ -7,14 +7,12 @@ import 'package:provider/provider.dart';
 
 class ReservationsOfYear extends StatelessWidget {
   const ReservationsOfYear(
-      {super.key, required this.reservationsMapYear, required this.year});
+      {super.key, required this.reservationsMapYear});
 
   final Map<int, List<Reservation>> reservationsMapYear;
-  final int year;
 
   @override
   Widget build(BuildContext context) {
-    
 
     return ListView.builder( // A list where entries are separated by month.
         shrinkWrap: true,
