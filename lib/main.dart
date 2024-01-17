@@ -1,3 +1,4 @@
+import 'package:decla_time/core/connection/isar_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
@@ -22,8 +23,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => settingsController,
+
+    final isarHelper = IsarHelper();
+
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => settingsController),
+        ChangeNotifierProvider(create: (context)=> isarHelper  )
+      ],
       builder: (context, child) => Consumer<SettingsController>(
         builder: (context, value, child) => MaterialApp(
           title: 'DeclaTime',
