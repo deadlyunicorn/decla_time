@@ -1,4 +1,5 @@
 import 'package:decla_time/core/extensions/capitalize.dart';
+import 'package:decla_time/core/widgets/route_outline.dart';
 import 'package:decla_time/reservations/business/reservation.dart';
 import 'package:decla_time/reservations/presentation/reservations_list/reservation_details/reservation_details_container.dart';
 import 'package:flutter/material.dart';
@@ -17,37 +18,18 @@ class ReservationDetailsRoute extends StatelessWidget {
   Widget build(BuildContext context) {
     final localized = AppLocalizations.of(context)!;
 
-    return SafeArea(
-      child: Scaffold(
-          appBar: AppBar(),
-          body: Align(
-            alignment: Alignment.topCenter,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 32,
-                vertical: 32,
-              ),
-              child: Column(
-                children: [
-                  Center(
-                    child: Text(
-                      localized.details.capitalized,
-                      style: Theme.of(context).textTheme.headlineLarge,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                  const SizedBox.square(dimension: 16),
-                  ReservationDetailsContainer(reservation: reservation),
-                  const SizedBox.square(dimension: 16),
-                  Text(
-                    formatLastEdit(reservation.lastEdit, localized: localized),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-              ),
-            ),
-          )),
+    return RouteOutline(
+      title: localized.details.capitalized,
+      child: Column(
+        children: [
+          ReservationDetailsContainer(reservation: reservation),
+          const SizedBox.square(dimension: 16),
+          Text(
+            formatLastEdit(reservation.lastEdit, localized: localized),
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
     );
   }
 
