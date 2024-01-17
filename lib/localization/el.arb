@@ -19,5 +19,7 @@
     "undeclared": "αδήλωτο",
     "lastEdit": "τελευταία αλλαγή",
     "addEntries": "προσθήκη εγγραφών", 
-    "newDeclaration": "νέα δήλωση"
+    "newDeclaration": "νέα δήλωση",
+    "reservationsNotFound": "δεν βρέθηκαν τοπικές εγγραφές κρατήσεων."
+
 }

@@ -19,5 +19,6 @@
     "undeclared": "undeclared",
     "lastEdit": "last edit",
     "addEntries": "add entries", 
-    "newDeclaration": "new declaration"
+    "newDeclaration": "new declaration",
+    "reservationsNotFound": "no reservations found stored locally."
 }
