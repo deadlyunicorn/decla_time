@@ -8,7 +8,7 @@ class DocumentsIO {
 
   static final _documentsDirectoryFuture = getApplicationDocumentsDirectory();
 
-  static final Future<Directory> _appDirFuture = _documentsDirectoryFuture
+  static final Future<Directory> appDirFuture = _documentsDirectoryFuture
     .then(( documentsDirectory ){
 
       final appDir = "${documentsDirectory.path}/$kApplicationName";
@@ -23,7 +23,7 @@ class DocumentsIO {
       
     });
 
-  static final Future<Directory> reservationsDirectoryFuture = _appDirFuture.then(
+  static final Future<Directory> reservationsDirectoryFuture = appDirFuture.then(
     ( appDirectory ) {
       final reservationsDirectory = "${appDirectory.path}/reservations";
       return Directory( reservationsDirectory )
