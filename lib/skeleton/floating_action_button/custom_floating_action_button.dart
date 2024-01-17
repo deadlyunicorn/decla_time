@@ -1,10 +1,8 @@
-import 'package:decla_time/core/connection/isar_helper.dart';
 import 'package:decla_time/core/enums/selected_page.dart';
 import 'package:decla_time/core/extensions/capitalize.dart';
-import 'package:decla_time/reservations/business/reservation_actions.dart';
+import 'package:decla_time/skeleton/floating_action_button/reservation_addition_route.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class CustomFloatingActionButton extends StatelessWidget {
   const CustomFloatingActionButton({
@@ -30,15 +28,19 @@ class CustomFloatingActionButton extends StatelessWidget {
           width: 48,
           duration: const Duration(milliseconds: 50),
           child: FloatingActionButton(
-            onPressed: () async {
+            onPressed: () {
               if (selectedPage == SelectedPage.reservations) {
-                final reservations = await ReservationFolderActions
-                    .generateReservationTableFromFile("booking_gr_3.csv");
-                if ( context.mounted ){
-                  context
-                    .read<IsarHelper>()
-                    .insertMultipleEntriesToDb(reservations);
-                }
+
+                Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return const ReservationAdditionRoute();
+                },
+              ),
+            );
+
+
                 
                 throw UnimplementedError();
                 //Add a new reservation entry to the local database
