@@ -52,3 +52,6 @@ macos
 web
 windows
 pubspec.lock
+lib/reservations/business/reservation.g.dart
+libisar.so
+tests/mockFs

@@ -45,7 +45,7 @@ void main() {
     
     expect( bookingDotComTable[0][kBookingDotComArrivalDateColumn], "Check-in");
     expect( bookingDotComTable[0][kBookingDotComDepartureDateColumn], "Check-out");
-    expect( bookingDotComTable[0][kBookingDotComGuestNameColumn], "Όνομα/ονόματα πελάτη/-ών");
+    expect( bookingDotComTable[0][kBookingDotComGuestNameColumn], "Κράτηση από");
     expect( bookingDotComTable[0][kBookingDotComIdColumn], "Αριθμός κράτησης");
     expect( bookingDotComTable[0][kBookingDotComTotalPriceColumn], "Τιμή");
     expect( bookingDotComTable[0][kBookingDotComFeeColumn], "Ποσό προμήθειας");
