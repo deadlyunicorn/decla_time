@@ -1,4 +1,9 @@
+import 'package:decla_time/core/functions/fasthash.dart';
+import 'package:isar/isar.dart';
 
+part 'reservation.g.dart';
+
+@collection
 class Reservation{
   
   final String bookingPlatform;
@@ -7,6 +12,7 @@ class Reservation{
   DateTime? lastEdit;
   bool isDeclared;
 
+  @Index(unique: true)
   final String id;
   final String guestName;
   final DateTime arrivalDate;
@@ -28,6 +34,8 @@ class Reservation{
     this.isDeclared = false
     
   }); 
+
+  Id get isarId => fastHash( id );
   
 
 }
