@@ -25,16 +25,15 @@ class ReservationOfMonthGridView extends StatelessWidget {
       gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
         maxCrossAxisExtent: 160.0,
         crossAxisSpacing: horizontalPadding,
+        mainAxisSpacing: 16
       ),
       itemCount:
-          reservationsOfMonth.length * 2, //!TO BE CHANGED!!
+          reservationsOfMonth.length,
       itemBuilder: (context, index) {
-        final currentIndex =
-            index % 3; //!TO BE CHANGED TO INDEX
     
         return Padding(
           padding: const EdgeInsets.all(8.0),
-          child: ReservationGridItem(reservationsOfMonth: reservationsOfMonth, currentIndex: currentIndex),
+          child: ReservationGridItem( reservation: reservationsOfMonth[index] ),
         );
       },
     );

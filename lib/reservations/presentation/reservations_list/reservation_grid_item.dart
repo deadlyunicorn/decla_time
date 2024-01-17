@@ -8,23 +8,16 @@ import 'package:intl/intl.dart';
 class ReservationGridItem extends StatelessWidget {
   const ReservationGridItem({
     super.key,
-    required this.reservationsOfMonth,
-    required this.currentIndex,
+    required this.reservation,
   });
 
-  final List<Reservation> reservationsOfMonth;
-  final int currentIndex;
+  final Reservation reservation;
 
   int get nights =>
-      reservationsOfMonth[currentIndex]
-          .departureDate
-          .difference(reservationsOfMonth[currentIndex].arrivalDate)
-          .inDays +
-      1;
+      reservation.departureDate.difference(reservation.arrivalDate).inDays + 1;
 
   @override
   Widget build(BuildContext context) {
-
     final localized = AppLocalizations.of(context)!;
 
     return Stack(
@@ -39,7 +32,7 @@ class ReservationGridItem extends StatelessWidget {
               MaterialPageRoute(
                 builder: (context) {
                   return ReservationDetailsRoute(
-                    reservation: reservationsOfMonth[currentIndex],
+                    reservation: reservation,
                   );
                 },
               ),
@@ -55,14 +48,14 @@ class ReservationGridItem extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Text(
-                    reservationsOfMonth[currentIndex].guestName,
+                    reservation.guestName,
                     style: Theme.of(context).textTheme.bodyMedium,
                     maxLines: 1,
                     textAlign: TextAlign.center,
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
-                    "${reservationsOfMonth[currentIndex].payout}€",
+                    "${reservation.payout}€",
                     style: Theme.of(context).textTheme.headlineSmall!,
                     maxLines: 1,
                     textAlign: TextAlign.center,
@@ -82,14 +75,18 @@ class ReservationGridItem extends StatelessWidget {
           top: -4,
           right: -4,
           child: ReservationStatusDot(
-            reservationStatusString:
-                reservationsOfMonth[currentIndex].reservationStatus,
+            reservationStatusString: reservation.reservationStatus,
           ),
         ),
         Positioned(
-          bottom: 4,
-          right: 4,
-          child: Text( DateFormat( "dd" ).format( reservationsOfMonth[currentIndex].departureDate )  )
+          top: -16,
+          left: 0,
+          child: Text(
+            DateFormat("dd").format(reservation.departureDate),
+            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.7),
+                fontSize: 16),
+          ),
         ),
       ],
     );
