@@ -33,6 +33,8 @@ class ReservationDetailsRoute extends StatelessWidget {
                     child: Text(
                       localized.details.capitalized,
                       style: Theme.of(context).textTheme.headlineLarge,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                   const SizedBox.square(dimension: 16),

@@ -16,7 +16,6 @@ class DateInformationWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final localized = AppLocalizations.of(context)!;
 
     return SizedBox(
@@ -70,7 +69,11 @@ class DateInformationWidget extends StatelessWidget {
               ),
             ],
           ),
-          Text("${localized.nights.capitalized}: $nights"),
+          Text(
+            "${localized.nights.capitalized}: $nights",
+            textAlign: TextAlign.center,
+            maxLines: 1,
+          ),
         ],
       ),
     );

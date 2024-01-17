@@ -73,12 +73,15 @@ class ReservationDetailsContainer extends StatelessWidget {
                         const SizedBox.square(dimension: 8),
                         SizedBox(
                           width: 300,
-                          child: Text(
-                            "${localized.guestName.capitalized}: ${reservation.guestName}",
-                            style: Theme.of(context).textTheme.bodyLarge,
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1,
-                            textAlign: TextAlign.center,
+                          child: Tooltip(
+                            richMessage: TextSpan( text: reservation.guestName ) ,
+                            child: Text(
+                              "${localized.guestName.capitalized}: ${reservation.guestName}",
+                              style: Theme.of(context).textTheme.bodyLarge,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                              textAlign: TextAlign.center,
+                            ),
                           ),
                         ),
                         const SizedBox.square(dimension: 8),
