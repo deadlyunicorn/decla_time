@@ -125,7 +125,7 @@ class ReservationDetailsContainer extends StatelessWidget {
                 right: -4,
                 top: -4,
                 child: ReservationStatusDot(
-                  size: 24,
+                  size: 16,
                   reservationStatusString: reservation.reservationStatus,
                 ),
               ),
@@ -133,7 +133,7 @@ class ReservationDetailsContainer extends StatelessWidget {
                 right: -4,
                 bottom: -4,
                 child: DeclarationStatusDot(
-                  size: 32,
+                  size: 16,
                   isDeclared: reservation.isDeclared,
                 ),
               )
