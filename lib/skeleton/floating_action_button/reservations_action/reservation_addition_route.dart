@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:decla_time/core/widgets/route_outline.dart';
 import 'package:decla_time/reservations/business/reservation.dart';
-import 'package:decla_time/skeleton/floating_action_button/import_from_files_button.dart';
+import 'package:decla_time/skeleton/floating_action_button/reservations_action/import_from_files_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 

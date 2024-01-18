@@ -1,6 +1,6 @@
 import 'package:decla_time/core/enums/selected_page.dart';
 import 'package:decla_time/core/extensions/capitalize.dart';
-import 'package:decla_time/skeleton/floating_action_button/reservation_addition_route.dart';
+import 'package:decla_time/skeleton/floating_action_button/reservations_action/reservation_addition_route.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
