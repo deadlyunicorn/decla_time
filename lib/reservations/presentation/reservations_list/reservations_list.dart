@@ -50,7 +50,7 @@ class ReservationsList extends StatelessWidget {
     } else {
       return Center(
         child: Text(
-          localized.reservationsNotFound.capitalized,
+          localized.reservationsNotFoundLocally.capitalized,
           textAlign: TextAlign.center,
         ),
       );

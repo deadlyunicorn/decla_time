@@ -8,35 +8,29 @@ import 'package:decla_time/core/errors/exceptions.dart';
 import 'package:decla_time/reservations/business/reservation.dart';
 
 class ReservationFolderActions {
-
-
-  Future<List<List<String>>> getRowEntriesFromCsvFile(String fileName) async {
-    final reservationFileContent =
-        (await DocumentsIO.readReservationFile(fileName)).toString();
+  Future<List<List<String>>> getRowEntriesFromCsvFile(String path) async {
+    final reservationFileContent = await File(path).readAsString();
     final csvFileRows = reservationFileContent.split('\n');
     return csvFileRows.map((rowString) => rowString.split(',')).map((rowList) {
       return rowList.map((rowEntry) => rowEntry.replaceAll("\"", "")).toList();
     }).toList();
   }
 
-  static Map<int, Map<int, List<Reservation>>> genereateYearMonthMap( List<Reservation> reservations){
-
+  static Map<int, Map<int, List<Reservation>>> genereateYearMonthMap(
+      List<Reservation> reservations) {
     Map<int, Map<int, List<Reservation>>> tempMap = {};
-    
 
-    for ( final  reservation in reservations) {
-
+    for (final reservation in reservations) {
       final yearOfReservation = reservation.departureDate.year;
       final monthOfReservation = reservation.departureDate.month;
-      final existingReservationsOfTheMonth = tempMap[yearOfReservation]?[monthOfReservation] ?? [];
+      final existingReservationsOfTheMonth =
+          tempMap[yearOfReservation]?[monthOfReservation] ?? [];
 
       tempMap.addAll({
         yearOfReservation: {
-          ...( tempMap[yearOfReservation] ?? {} ), //The already existing or a new year map
-          monthOfReservation: [
-            ...existingReservationsOfTheMonth,
-            reservation
-          ]
+          ...(tempMap[yearOfReservation] ??
+              {}), //The already existing or a new year map
+          monthOfReservation: [...existingReservationsOfTheMonth, reservation]
         }
       });
     }
@@ -46,8 +40,8 @@ class ReservationFolderActions {
     return tempMap;
   }
 
-  Future<List<Reservation>> generateReservationTableFromAllCsvFilesInReservationsDirectory( ) async {
-
+  Future<List<Reservation>>
+      generateReservationTableFromAllCsvFilesInReservationsDirectory() async {
     final reservationCsvFileNames =
         (await ReservationFolderActions._listReservationFiles())
             .where((file) => file.path.contains(".csv"))
@@ -55,18 +49,27 @@ class ReservationFolderActions {
 
     final reservationsTable = (await Future.wait(reservationCsvFileNames
             .map((filename) => (generateReservationTableFromFile(filename)))))
-            .fold<List<Reservation>>( [], (previousValue, element) => [...previousValue, ...element]);
+        .fold<List<Reservation>>(
+            [], (previousValue, element) => [...previousValue, ...element]);
 
     // .fold( [] as List<Reservation>, (previousValue, element) async => [ ...previousValue, ...(await element) ]);
 
     return reservationsTable;
   }
 
-  Future<List<Reservation>> generateReservationTableFromMultipleFiles( List<File> files) async{
-    
-    final reservationsTable = (await Future.wait( files
-            .map((filename) => (generateReservationTableFromFile( filename.path )))))
-            .fold<List<Reservation>>( [], (previousValue, element) => [...previousValue, ...element]);
+  static Future<List<Reservation>> generateReservationTableFromMultipleFiles(
+    List<File> files,
+  ) async {
+
+    final reservationsTable = ( await Future.wait(
+      files.map(
+        (filename) => (generateReservationTableFromFile(filename.path)),
+      ),
+    ))
+      .fold<List<Reservation>>(
+        [],
+        (previousValue, element) => [...previousValue, ...element],
+      );
 
     // .fold( [] as List<Reservation>, (previousValue, element) async => [ ...previousValue, ...(await element) ]);
 
