@@ -20,5 +20,13 @@
     "lastEdit": "last edit",
     "addEntries": "add entries", 
     "newDeclaration": "new declaration",
-    "reservationsNotFound": "no reservations found stored locally."
+    "reservationsNotFoundLocally": "no reservations found stored locally.",
+    "reservationsNotAdded": "no reservations added.",
+    "newReservationsNotFound": "no new reservations found.",
+    "howToGetTheFiles": "how to get the files.",
+    "addFromFile": "import file",
+    "reservation": "reservation",
+    "found": "found"
+
+    
 }

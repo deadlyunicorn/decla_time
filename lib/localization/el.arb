@@ -20,6 +20,17 @@
     "lastEdit": "τελευταία αλλαγή",
     "addEntries": "προσθήκη εγγραφών", 
     "newDeclaration": "νέα δήλωση",
-    "reservationsNotFound": "δεν βρέθηκαν τοπικές εγγραφές κρατήσεων."
+    "reservationsNotFoundLocally": "δεν βρέθηκαν τοπικές εγγραφές κρατήσεων.",
+    "reservationsNotAdded": "δεν προστέθηκαν εγγραφές.",
+    "newReservationsNotFound": "δεν βρέθηκαν νέες εγγραφές.",
+    "howToGetTheFiles": "πώς να αποκτήσετε τα αρχεία.",
+    "addFromFile": "εισαγωγή αρχείου",
+    "reservation": "κράτηση",
+    "found": "βρέθηκαν"
+
+
+
+
+
 
 }
