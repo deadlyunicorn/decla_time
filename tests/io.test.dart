@@ -23,14 +23,14 @@ void main() {
 
     });
 
-    test("Read test file", () async{
-      setUpDocumentsDirectoryForTesting();
+    // test("Read test file", () async{
+    //   setUpDocumentsDirectoryForTesting();
 
-      String randomText = "hello does this work?";
-      await DocumentsIO.editReservationFile( "test", content: randomText);
-      String fileContent = await DocumentsIO.readReservationFile("test");
-      expect( fileContent, equals( randomText ) );
-    });
+    //   String randomText = "hello does this work?";
+    //   await DocumentsIO.editReservationFile( "test", content: randomText);
+    //   String fileContent = await DocumentsIO.readReservationFile("test");
+    //   expect( fileContent, equals( randomText ) );
+    // });
 
     test("Delete test file", () async{
       setUpDocumentsDirectoryForTesting();

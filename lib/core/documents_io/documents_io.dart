@@ -55,11 +55,11 @@ class DocumentsIO {
     File( "${reservationsDirectory.path}/$filename" ).writeAsString( content );
   }
 
-
-  static Future<String> readReservationFile( String filename ) async {
-    final reservationsDirectory = await reservationsDirectoryFuture;
-    return File( "${reservationsDirectory.path}/$filename" ).readAsString();
-  }
+  /// Reads the file and exports the text as STRING.
+  // static Future<String> readReservationFile( String filename ) async {
+  //   final reservationsDirectory = await reservationsDirectoryFuture;
+  //   return File( "${reservationsDirectory.path}/$filename" ).readAsString();
+  // }
 
 
 }
