@@ -34,7 +34,7 @@ class _ReservationAdditionRouteState extends State<ReservationAdditionRoute> {
               spacing: 32,
               runSpacing: 32,
               children: [
-                ImportFromFiles(
+                ImportFromFilesButton(
                   reservationsFoundSoFar: reservations,
                   addToReservationsFoundSoFar: ( newReservationEntries ){
                     setState(() {
