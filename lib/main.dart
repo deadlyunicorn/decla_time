@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:decla_time/core/connection/isar_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -16,25 +18,23 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-
   final SettingsController settingsController;
 
   const MyApp({super.key, required this.settingsController});
 
   @override
   Widget build(BuildContext context) {
-
     final isarHelper = IsarHelper();
 
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => settingsController),
-        ChangeNotifierProvider(create: (context)=> isarHelper  )
+        ChangeNotifierProvider(create: (context) => isarHelper)
       ],
       builder: (context, child) => Consumer<SettingsController>(
         builder: (context, value, child) => MaterialApp(
           title: 'DeclaTime',
-          darkTheme: darkTheme(),
+          darkTheme: darkTheme(context),
           themeMode: ThemeMode.dark,
           home: const Skeleton(),
           locale: Locale(settingsController.locale),
@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
     );
   }
 
-  ThemeData darkTheme() {
+  ThemeData darkTheme(BuildContext context) {
     return ThemeData(
       fontFamily: 'Ysabeau',
       colorScheme: const ColorScheme(
@@ -77,6 +77,18 @@ class MyApp extends StatelessWidget {
           bodyMedium: TextStyle(fontSize: 16),
           bodySmall: TextStyle(fontSize: 8)),
       appBarTheme: const AppBarTheme(backgroundColor: Color(0xFF3B197B)),
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+            foregroundColor: const Color(0xFFB59C0D)),
+      ),
+      snackBarTheme: SnackBarThemeData(
+        behavior: SnackBarBehavior.floating,
+        width: min(600, MediaQuery.sizeOf(context).width - 64),
+        backgroundColor: const Color(0xFF2619B4),
+        contentTextStyle: const TextStyle(color: Color(0xFFEAE9FC)),
+      ),
       useMaterial3: true,
     );
   }
