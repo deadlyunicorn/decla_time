@@ -1,10 +1,14 @@
 import 'dart:math';
 
+import 'package:decla_time/core/connection/isar_helper.dart';
 import 'package:decla_time/core/widgets/route_outline.dart';
 import 'package:decla_time/reservations/business/reservation.dart';
 import 'package:decla_time/skeleton/floating_action_button/reservations_action/import_from_files_button.dart';
+import 'package:decla_time/skeleton/floating_action_button/reservations_action/reservation_addition_button.dart';
+import 'package:decla_time/skeleton/floating_action_button/reservations_action/reservations_found_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
 
 class ReservationAdditionRoute extends StatefulWidget {
   const ReservationAdditionRoute({
@@ -36,11 +40,7 @@ class _ReservationAdditionRouteState extends State<ReservationAdditionRoute> {
               children: [
                 ImportFromFilesButton(
                   reservationsFoundSoFar: reservations,
-                  addToReservationsFoundSoFar: ( newReservationEntries ){
-                    setState(() {
-                      reservations.addAll( newReservationEntries );
-                    });
-                  }
+                  addToReservationsFoundSoFar: addToReservationsFoundSoFar,
                 ),
                 ReservationAdditionButton(
                   description: "Manual Entry",
@@ -60,79 +60,10 @@ class _ReservationAdditionRouteState extends State<ReservationAdditionRoute> {
       ),
     );
   }
-}
 
-class ReservationsFoundList extends StatelessWidget {
-  const ReservationsFoundList({super.key, required this.reservations});
-
-  final List<Reservation> reservations;
-
-  @override
-  Widget build(BuildContext context) {
-    if (reservations.isEmpty) {
-      return const Text("No reservations.");
-    } else {
-      return SizedBox(
-        width: min(MediaQuery.sizeOf(context).width, 900),
-        height: 200,
-        child: ListView.builder(
-          itemCount: reservations.length,
-          itemBuilder: (context, index) {
-            final reservation = reservations[index];
-            return Center(child: Text(reservation.id));
-          },
-        ),
-      );
-    }
-  }
-}
-
-class ReservationAdditionButton extends StatelessWidget {
-  const ReservationAdditionButton(
-      {super.key,
-      required this.description,
-      required this.icon,
-      required this.onTap,
-      this.children});
-
-  final String description;
-  final IconData icon;
-  final void Function() onTap;
-  final List<Widget>? children;
-
-  @override
-  Widget build(BuildContext context) {
-    final dimension = min(
-            160,
-            min(MediaQuery.sizeOf(context).width / 3,
-                MediaQuery.sizeOf(context).height / 3))
-        .toDouble();
-
-    return SizedBox(
-      height: dimension,
-      width: dimension,
-      child: Material(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-        clipBehavior: Clip.antiAlias,
-        color: Theme.of(context).colorScheme.secondary,
-        child: InkWell(
-          onTap: onTap,
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              Icon(
-                icon,
-                size: 32,
-              ),
-              Positioned(
-                bottom: 8,
-                child: Text(description),
-              ),
-              ...?children
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+  void addToReservationsFoundSoFar(newReservationEntries) {
+                  setState(() {
+                    reservations.addAll(newReservationEntries);
+                  });
+                }
 }

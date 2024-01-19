@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:decla_time/core/extensions/capitalize.dart';
 import 'package:decla_time/reservations/business/reservation.dart';
 import 'package:decla_time/reservations/business/reservation_actions.dart';
-import 'package:decla_time/skeleton/floating_action_button/reservations_action/reservation_addition_route.dart';
+import 'package:decla_time/skeleton/floating_action_button/reservations_action/reservation_addition_button.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -62,7 +62,8 @@ class ImportFromFilesButton extends StatelessWidget {
     if (filePickerResults != null) {
       //User did select files
 
-      final List<File> files = filePickerResults.paths
+      final List<File> files = filePickerResults
+          .paths //this is for type safety ( due to API mishaps.. )
           .where(
             (path) => path != null,
           )
@@ -72,6 +73,7 @@ class ImportFromFilesButton extends StatelessWidget {
           .toList();
 
       if (files.isNotEmpty) {
+        //If files are not selected you cannot submit anyways.
         ReservationFolderActions.generateReservationTableFromMultipleFiles(
           files,
         ).then(
@@ -86,6 +88,7 @@ class ImportFromFilesButton extends StatelessWidget {
             );
 
             if (newReservationEntries.isEmpty) {
+              //No new reservations found -
               ScaffoldMessenger.of(context).removeCurrentSnackBar();
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
@@ -95,7 +98,8 @@ class ImportFromFilesButton extends StatelessWidget {
                 ),
               );
             } else {
-              
+              //Found new reservations
+
               final newReservationCount = newReservationEntries.length;
 
               ScaffoldMessenger.of(context).removeCurrentSnackBar();
@@ -103,7 +107,7 @@ class ImportFromFilesButton extends StatelessWidget {
                 SnackBar(
                   content: Center(
                     child: Text(
-                      "${localized.found.capitalized} $newReservationCount ${newReservationCount > 1? localized.reservations : localized.reservation}.",
+                      "${localized.found.capitalized} $newReservationCount ${newReservationCount > 1 ? localized.reservations : localized.reservation}.",
                     ),
                   ),
                 ),
@@ -119,11 +123,10 @@ class ImportFromFilesButton extends StatelessWidget {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Center(
-            child: Text( localized.reservationsNotAdded.capitalized ),
+            child: Text(localized.reservationsNotAdded.capitalized),
           ),
         ),
       );
     }
-
   }
 }
