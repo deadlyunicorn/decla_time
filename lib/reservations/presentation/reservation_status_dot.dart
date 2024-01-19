@@ -33,7 +33,7 @@ class ReservationStatusDot extends StatelessWidget {
         );
       case ReservationStatus.upcoming:
         return Tooltip(
-          richMessage: TextSpan(text: localized.upcoming.capitalized),
+          richMessage: TextSpan(text: "${localized.upcoming.capitalized} ( $reservationStatusString )" ),
           child: Icon( 
             Icons.circle,
             size: size,
@@ -53,12 +53,15 @@ class ReservationStatusDot extends StatelessWidget {
   }
 
   ReservationStatus translateReservationStatus( String reservationStatusString ){
-    switch( reservationStatusString ){
+    switch( reservationStatusString.toLowerCase() ){
 
       case "ok":
       case "completed":
+      case "past guest":
+      case "awaiting guest review":
         return ReservationStatus.completed;
       case "cancelled":
+      case "cancelled_by_guest":
         return ReservationStatus.cancelled;
       default:
         return ReservationStatus.upcoming;
