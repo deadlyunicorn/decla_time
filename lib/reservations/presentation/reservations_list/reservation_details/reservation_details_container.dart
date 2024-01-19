@@ -51,6 +51,7 @@ class ReservationDetailsContainer extends StatelessWidget {
                           //Platform and ID
                           spacing: 24,
                           alignment: WrapAlignment.spaceAround,
+                          crossAxisAlignment: WrapCrossAlignment.center,
                           children: [
                             RichText(
                               maxLines: 1,
@@ -61,20 +62,32 @@ class ReservationDetailsContainer extends StatelessWidget {
                                 children: [
                                   TextSpan(
                                     text: reservation.bookingPlatform,
-                                    style:
-                                        Theme.of(context).textTheme.headlineSmall,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineSmall,
                                   ),
                                 ],
                               ),
                             ),
-                            Text("ID: ${reservation.id}"),
+                            RichText(
+                              text: TextSpan(
+                                text: "ID: ",
+                                children: [
+                                  TextSpan(
+                                      text: reservation.id,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headlineSmall),
+                                ],
+                              ),
+                            ),
                           ],
                         ),
                         const SizedBox.square(dimension: 8),
                         SizedBox(
                           width: 300,
                           child: Tooltip(
-                            richMessage: TextSpan( text: reservation.guestName ) ,
+                            richMessage: TextSpan(text: reservation.guestName),
                             child: Text(
                               "${localized.guestName.capitalized}: ${reservation.guestName}",
                               style: Theme.of(context).textTheme.bodyLarge,
@@ -85,9 +98,12 @@ class ReservationDetailsContainer extends StatelessWidget {
                           ),
                         ),
                         const SizedBox.square(dimension: 8),
-                        Text(reservation.listingName != null
-                            ? "${localized.at.capitalized} ${reservation.listingName}"
-                            : ''),
+                        Text(
+                          reservation.listingName != null
+                              ? "${localized.at.capitalized} '${reservation.listingName}'"
+                              : '',
+                          textAlign: TextAlign.center,
+                        ),
                       ],
                     ),
                   ),
