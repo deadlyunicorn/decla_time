@@ -26,7 +26,17 @@
     "howToGetTheFiles": "how to get the files.",
     "addFromFile": "import file",
     "reservation": "reservation",
-    "found": "found"
+    "found": "found",
+    "addNewPlatform": "add new",
+    "cancel": "cancel",
+    "confirm": "confirm",
+    "enterMin6Chars": "Please enter atleast 6 characters.",
+    "platformAddition" : "platform addition",
+    "platformAdditionHint" : "enter platform name",
+    "bookingPlatformAlreadyExists": "platform already exists."
+
+
+
 
     
 }

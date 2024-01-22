@@ -26,7 +26,15 @@
     "howToGetTheFiles": "πώς να αποκτήσετε τα αρχεία.",
     "addFromFile": "εισαγωγή αρχείου",
     "reservation": "κράτηση",
-    "found": "βρέθηκαν"
+    "found": "βρέθηκαν",
+    "addNewPlatform": "προσθήκη νέας",
+    "cancel": "ακύρωση",
+    "confirm": "επιβεβαίωση",
+    "enterMin6Chars": "εισάγετε τουλάχιστον 6 χαρακτήρες.",
+    "platformAddition" : "προσθήκη πλατφόρμας",
+    "platformAdditionHint" : "εισάγετε όνομα πλατφόρμας.",
+    "bookingPlatformAlreadyExists": "η πλατφόρμα ήδη υπάρχει."
+
 
 
 
