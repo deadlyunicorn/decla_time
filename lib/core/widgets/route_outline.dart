@@ -31,7 +31,8 @@ class RouteOutline extends StatelessWidget {
                     child: Text(
                       title.capitalized,
                       style: Theme.of(context).textTheme.headlineLarge,
-                      maxLines: 1,
+                      maxLines: 2,
+                      textAlign: TextAlign.center,
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
