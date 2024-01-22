@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:decla_time/core/constants/constants.dart';
 import 'package:decla_time/core/extensions/capitalize.dart';
 import 'package:decla_time/core/widgets/custom_alert_dialog.dart';
 import 'package:flutter/material.dart';

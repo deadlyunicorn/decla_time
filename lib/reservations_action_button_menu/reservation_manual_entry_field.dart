@@ -1,5 +1,5 @@
 import 'package:decla_time/core/extensions/capitalize.dart';
-import 'package:decla_time/reservations_action_button_menu/platform_addition_alert_dialog.dart';
+import 'package:decla_time/reservations_action_button_menu/shared_prefs_list_string_addition_alert_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
