@@ -45,7 +45,7 @@ class _ManualReservationEntryRouteState
         key: _formKey,
         child: Column(
           children: [
-            ReservationManualEntryField(
+            ReservationManualDropdownField(
               localized: localized,
               textEditingController: platformNameController,
               sharedPrefsListKey: kBookingPlatforms,
@@ -59,7 +59,7 @@ class _ManualReservationEntryRouteState
             SizedBox.square(
               dimension: 16,
             ),
-            ReservationManualEntryField(
+            ReservationManualDropdownField(
               localized: localized,
               textEditingController: listingNameController,
               sharedPrefsListKey: kReservationListing,
@@ -138,7 +138,7 @@ class _ManualReservationEntryRouteState
                   ? "The reservation took ${departureDate?.difference(arrivalDate!).inDays} nights"
                   : "No info",
             ),
-            ReservationManualEntryField(
+            ReservationManualDropdownField(
               localized: localized,
               textEditingController: reservationStatusController,
               sharedPrefsListKey: kReservationStatus,
