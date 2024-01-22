@@ -76,7 +76,7 @@ class MyApp extends StatelessWidget {
           ),
           bodyLarge: TextStyle(fontSize: 24),
           bodyMedium: TextStyle(fontSize: 16),
-          bodySmall: TextStyle(fontSize: 8)),
+          bodySmall: TextStyle(fontSize: 16)),
       appBarTheme: const AppBarTheme(backgroundColor: Color(0xFF3B197B)),
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
