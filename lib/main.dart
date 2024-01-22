@@ -90,6 +90,13 @@ class MyApp extends StatelessWidget {
         backgroundColor: const Color(0xFF2619B4),
         contentTextStyle: const TextStyle(color: Color(0xFFEAE9FC)),
       ),
+      datePickerTheme: const DatePickerThemeData(
+        backgroundColor: Color(0xFF2619B4),
+        todayBorder: BorderSide( 
+          style: BorderStyle.none
+        ),
+        todayForegroundColor: MaterialStatePropertyAll( Color(0xFFEAE9FC) ),
+      ),
       useMaterial3: true,
     );
   }
