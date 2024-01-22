@@ -33,7 +33,7 @@
     "enterMin6Chars": "Please enter atleast 6 characters.",
     "platformAddition" : "platform addition",
     "platformAdditionHint" : "enter platform name",
-    "bookingPlatformAlreadyExists": "platform already exists."
+    "entryAlreadyExists": "entry already exists."
 
 
 

@@ -23,6 +23,7 @@ class ReservationsFoundList extends StatefulWidget {
 }
 
 class _ReservationsFoundListState extends State<ReservationsFoundList> {
+
   Set<int> selectedReservations = {};
 
   bool isHolding = false;
@@ -31,10 +32,11 @@ class _ReservationsFoundListState extends State<ReservationsFoundList> {
 
   @override
   Widget build(BuildContext context) {
+    
     final localized = AppLocalizations.of(context)!;
 
     if (widget.reservations.isEmpty) {
-      return const Text("No reservations.");
+      return const SizedBox.shrink();
     } else {
       return SizedBox(
         width: min(MediaQuery.sizeOf(context).width, kMaxWidthLargest),
