@@ -11,7 +11,6 @@ const kArrivalDate = 'arrival_date';
 const kDepartureDate = 'departure_date';
 const kPayout = 'payout';
 const kBookingPlatform = 'booking_platform';
-const kBookingPlatforms = 'booking_platforms';
 
 const kSynced     = 'synced';
 const kStatus     = 'status'; 
@@ -48,3 +47,11 @@ const double kMaxWidthMedium = 640;
 const double kMaxWidthLargest = 960;
 
 const double kMaxContainerWidthSmall = 120; 
+
+const kBookingPlatforms = 'booking_platforms';
+const kListings = 'booking_listings';
+
+
+const kCompleted = "completed";
+const kCancelled = "cancelled";
+const kUpcoming = "upcoming";

@@ -1,3 +1,4 @@
+import 'package:decla_time/core/constants/constants.dart';
 import 'package:decla_time/core/enums/reservation_status.dart';
 import 'package:decla_time/core/extensions/capitalize.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -56,11 +57,11 @@ class ReservationStatusDot extends StatelessWidget {
     switch( reservationStatusString.toLowerCase() ){
 
       case "ok":
-      case "completed":
+      case kCompleted:
       case "past guest":
       case "awaiting guest review":
         return ReservationStatus.completed;
-      case "cancelled":
+      case kCancelled:
       case "cancelled_by_guest":
         return ReservationStatus.cancelled;
       default:
