@@ -49,10 +49,6 @@ class _ReservationAdditionRouteState extends State<ReservationAdditionRoute> {
                 ),
               ],
             ),
-            Text(
-              "Basically below the inserted entries will appear and the user will be able to select them.",
-              textAlign: TextAlign.center,
-            ),
             Expanded(
               child: ReservationsFoundList(reservations: reservations),
             ),

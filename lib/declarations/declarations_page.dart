@@ -7,6 +7,5 @@ class DeclarationsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     throw UnimplementedError();
-    return const SizedBox.shrink();
   }
 }
