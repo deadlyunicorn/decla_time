@@ -30,20 +30,14 @@ class CustomFloatingActionButton extends StatelessWidget {
           child: FloatingActionButton(
             onPressed: () {
               if (selectedPage == SelectedPage.reservations) {
-
                 Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) {
-                  return const ReservationAdditionRoute();
-                },
-              ),
-            );
-
-
-                
-                throw UnimplementedError();
-                //Add a new reservation entry to the local database
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return const ReservationAdditionRoute();
+                    },
+                  ),
+                );
               } else {
                 throw UnimplementedError();
                 //Create a new declaration to the external .gov
