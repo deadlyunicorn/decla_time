@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:decla_time/core/connection/isar_helper.dart';
+import 'package:decla_time/core/constants/constants.dart';
 import 'package:decla_time/reservations/business/reservation.dart';
 import 'package:decla_time/reservations/presentation/widgets/reservation_grid_item_container.dart';
 import 'package:decla_time/reservations_action_button_menu/is_selected_underline.dart';
@@ -36,7 +37,7 @@ class _ReservationsFoundListState extends State<ReservationsFoundList> {
       return const Text("No reservations.");
     } else {
       return SizedBox(
-        width: min(MediaQuery.sizeOf(context).width, 900),
+        width: min(MediaQuery.sizeOf(context).width, kMaxWidthLargest),
         child: Column(
           children: [
             Padding(
@@ -67,7 +68,7 @@ class _ReservationsFoundListState extends State<ReservationsFoundList> {
                   shrinkWrap: true,
                   padding: const EdgeInsets.all(16),
                   gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                    maxCrossAxisExtent: 120,
+                    maxCrossAxisExtent: kMaxContainerWidthSmall,
                     crossAxisSpacing: 8,
                     mainAxisSpacing: 8,
                   ),

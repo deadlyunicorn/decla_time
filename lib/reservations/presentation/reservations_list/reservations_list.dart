@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:decla_time/core/constants/constants.dart';
 import 'package:decla_time/core/extensions/capitalize.dart';
 import 'package:decla_time/reservations/business/reservation.dart';
 import 'package:decla_time/reservations/business/reservation_actions.dart';
@@ -22,7 +23,7 @@ class ReservationsList extends StatelessWidget {
     if (reservations.isNotEmpty) {
       return Center(
         child: SizedBox(
-          width: min(MediaQuery.sizeOf(context).width, 900),
+          width: min(MediaQuery.sizeOf(context).width, kMaxWidthLargest),
           child: ListView.builder(
             // A list where entries are separated by year.
             itemCount: yearMonthMap.entries.length,

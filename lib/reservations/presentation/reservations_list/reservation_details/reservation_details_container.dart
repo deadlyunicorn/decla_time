@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:decla_time/core/constants/constants.dart';
 import 'package:decla_time/core/extensions/capitalize.dart';
 import 'package:decla_time/reservations/business/reservation.dart';
 import 'package:decla_time/reservations/presentation/decleration_status_dot.dart';
@@ -25,7 +26,7 @@ class ReservationDetailsContainer extends StatelessWidget {
       style: Theme.of(context).textTheme.bodyLarge,
       child: Container(
         clipBehavior: Clip.antiAlias,
-        width: 600,
+        width: kMaxWidthMedium,
         height: min(
           500,
           MediaQuery.sizeOf(context).height - 250,
@@ -85,7 +86,7 @@ class ReservationDetailsContainer extends StatelessWidget {
                         ),
                         const SizedBox.square(dimension: 8),
                         SizedBox(
-                          width: 300,
+                          width: kMaxWidthSmall - 80,
                           child: Tooltip(
                             richMessage: TextSpan(text: reservation.guestName),
                             child: Text(

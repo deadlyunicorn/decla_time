@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:decla_time/core/connection/isar_helper.dart';
+import 'package:decla_time/core/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
@@ -85,7 +86,7 @@ class MyApp extends StatelessWidget {
       ),
       snackBarTheme: SnackBarThemeData(
         behavior: SnackBarBehavior.floating,
-        width: min(600, MediaQuery.sizeOf(context).width - 64),
+        width: min(kMaxWidthMedium, MediaQuery.sizeOf(context).width - 64),
         backgroundColor: const Color(0xFF2619B4),
         contentTextStyle: const TextStyle(color: Color(0xFFEAE9FC)),
       ),

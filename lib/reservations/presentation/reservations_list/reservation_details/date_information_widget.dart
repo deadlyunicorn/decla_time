@@ -1,3 +1,4 @@
+import 'package:decla_time/core/constants/constants.dart';
 import 'package:decla_time/core/extensions/capitalize.dart';
 import 'package:decla_time/reservations/business/reservation.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,7 @@ class DateInformationWidget extends StatelessWidget {
     final localized = AppLocalizations.of(context)!;
 
     return SizedBox(
-      width: 400,
+      width: kMaxWidthSmall,
       child: Column(
         //Dates and Nights
         children: [

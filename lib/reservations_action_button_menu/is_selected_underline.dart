@@ -1,3 +1,4 @@
+import 'package:decla_time/core/constants/constants.dart';
 import 'package:flutter/material.dart';
 
 class IsSelectedUnderline extends StatelessWidget {
@@ -13,7 +14,7 @@ class IsSelectedUnderline extends StatelessWidget {
     return isSelected
         ? AnimatedContainer(
             height: 3,
-            width: 120,
+            width: kMaxContainerWidthSmall,
             duration: const Duration(
               milliseconds: 150,
             ),

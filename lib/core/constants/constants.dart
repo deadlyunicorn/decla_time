@@ -11,6 +11,8 @@ const kArrivalDate = 'arrival_date';
 const kDepartureDate = 'departure_date';
 const kPayout = 'payout';
 const kBookingPlatform = 'booking_platform';
+const kBookingPlatforms = 'booking_platforms';
+
 const kSynced     = 'synced';
 const kStatus     = 'status'; 
 const kReservationStatus = "reservation_status"; //used to indicate if it was cancelled or not.
@@ -35,3 +37,14 @@ const kBookingDotComReservationStatusColumn = 6;
 
 
 String kPath = 'path';
+
+///480
+const double kMaxWidthSmall = 480;
+
+///640
+const double kMaxWidthMedium = 640;
+
+///960
+const double kMaxWidthLargest = 960;
+
+const double kMaxContainerWidthSmall = 120; 
