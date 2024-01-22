@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:decla_time/core/connection/isar_helper.dart';
 import 'package:decla_time/core/widgets/route_outline.dart';
 import 'package:decla_time/reservations/business/reservation.dart';
 import 'package:decla_time/skeleton/floating_action_button/reservations_action/import_from_files_button.dart';
@@ -8,7 +7,6 @@ import 'package:decla_time/skeleton/floating_action_button/reservations_action/r
 import 'package:decla_time/skeleton/floating_action_button/reservations_action/reservations_found_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:provider/provider.dart';
 
 class ReservationAdditionRoute extends StatefulWidget {
   const ReservationAdditionRoute({
@@ -53,8 +51,11 @@ class _ReservationAdditionRouteState extends State<ReservationAdditionRoute> {
             ),
             Text(
               "Basically below the inserted entries will appear and the user will be able to select them.",
+              textAlign: TextAlign.center,
             ),
-            ReservationsFoundList(reservations: reservations),
+            Expanded(
+              child: ReservationsFoundList(reservations: reservations),
+            ),
           ],
         ),
       ),
@@ -62,8 +63,8 @@ class _ReservationAdditionRouteState extends State<ReservationAdditionRoute> {
   }
 
   void addToReservationsFoundSoFar(newReservationEntries) {
-                  setState(() {
-                    reservations.addAll(newReservationEntries);
-                  });
-                }
+    setState(() {
+      reservations.addAll(newReservationEntries);
+    });
+  }
 }
