@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:decla_time/core/extensions/capitalize.dart';
 import 'package:decla_time/reservations/business/reservation.dart';
 import 'package:decla_time/reservations/business/reservation_actions.dart';
-import 'package:decla_time/skeleton/floating_action_button/reservations_action/reservation_addition_button.dart';
+import 'package:decla_time/reservations_action_button_menu/reservation_addition_button.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
