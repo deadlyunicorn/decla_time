@@ -39,13 +39,26 @@ class ReservationAdditionButton extends StatelessWidget {
           child: Stack(
             alignment: Alignment.center,
             children: [
-              Icon(
-                icon,
-                size: 32,
+              Positioned(
+                left: dimension < 140 ? 8 : null, 
+                top: dimension < 140 ? 8 : null,
+                child: Icon(
+                  icon,
+                  size: dimension < 140 ? 32 : 48,
+                ),
               ),
               Positioned(
                 bottom: 8,
-                child: Text(description),
+                child: SizedBox(
+                  width: dimension,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      description,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
               ),
               ...?children
             ],
