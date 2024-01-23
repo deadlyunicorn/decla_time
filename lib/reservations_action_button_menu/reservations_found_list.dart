@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:decla_time/core/connection/isar_helper.dart';
 import 'package:decla_time/core/constants/constants.dart';
+import 'package:decla_time/core/extensions/capitalize.dart';
 import 'package:decla_time/reservations/business/reservation.dart';
 import 'package:decla_time/reservations/presentation/widgets/reservation_grid_item_container.dart';
 import 'package:decla_time/reservations_action_button_menu/is_selected_underline.dart';
@@ -41,23 +42,31 @@ class _ReservationsFoundListState extends State<ReservationsFoundList> {
       return SizedBox(
         width: min(MediaQuery.sizeOf(context).width, kMaxWidthLargest),
         child: Column(
+          mainAxisSize: MainAxisSize.max,
           children: [
-            Padding(
-              //DE/SELECT ALL Buttons
-              padding: const EdgeInsets.symmetric(vertical: 16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  TextButton(
-                    onPressed: unselectAll,
-                    child: const Text("Unselect all"),
-                  ),
-                  const SizedBox.square(dimension: 16),
-                  TextButton(
-                    onPressed: selectAll,
-                    child: const Text("Select all"),
-                  ),
-                ],
+            Align(
+              alignment: Alignment.topRight,
+              child: Padding(
+                //DE/SELECT ALL Buttons
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                child: Wrap(
+                  alignment: WrapAlignment.end,
+                  crossAxisAlignment: WrapCrossAlignment.end,
+                  runAlignment: WrapAlignment.end,
+                  verticalDirection: VerticalDirection.up,
+                  runSpacing: 8,
+                  spacing: 16,
+                  children: [
+                    TextButton(
+                      onPressed: unselectAll,
+                      child: Text( localized.clearSelection.capitalized ),
+                    ),
+                    TextButton(
+                      onPressed: selectAll,
+                      child: Text( localized.selectAll.capitalized ),
+                    ),
+                  ],
+                ),
               ),
             ),
             Expanded(
@@ -150,7 +159,7 @@ class _ReservationsFoundListState extends State<ReservationsFoundList> {
                               .toList());
                     },
                     child:
-                        Text("Add selected. (${selectedReservations.length})"),
+                        Text("${localized.addSelected.capitalized}. (${selectedReservations.length})"),
                   )
                 : const SizedBox.shrink()
           ],

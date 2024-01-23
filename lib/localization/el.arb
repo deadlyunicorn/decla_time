@@ -33,7 +33,13 @@
     "enterMin6Chars": "εισάγετε τουλάχιστον 6 χαρακτήρες.",
     "platformAddition" : "προσθήκη πλατφόρμας",
     "platformAdditionHint" : "εισάγετε όνομα πλατφόρμας.",
-    "entryAlreadyExists": "η εγγραφή ήδη υπάρχει."
+    "entryAlreadyExists": "η εγγραφή ήδη υπάρχει.",
+    "addSelected" : "προσθήκη επιλεγμένων",
+    "selectAll": "επιλογή όλων",
+    "clearSelection" : "καθαρισμός επιλογής"
+
+
+
 
 
 

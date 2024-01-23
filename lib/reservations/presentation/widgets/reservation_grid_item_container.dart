@@ -20,6 +20,8 @@ class ReservationGridItemContainerItems extends StatelessWidget {
       padding: const EdgeInsets.all(4.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
             reservation.guestName,
@@ -28,18 +30,28 @@ class ReservationGridItemContainerItems extends StatelessWidget {
             textAlign: TextAlign.center,
             overflow: TextOverflow.ellipsis,
           ),
-          Text(
-            "${reservation.payout.toStringAsFixed(2)} €",
-            style: Theme.of(context).textTheme.headlineSmall!,
-            maxLines: 1,
-            textAlign: TextAlign.center,
-            overflow: TextOverflow.ellipsis,
-            softWrap: true,
-          ),
-          Text(
-            "$nights ${localized.nights}",
-            style: Theme.of(context).textTheme.bodyMedium,
-          ),
+          Flexible(
+            child: FittedBox(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    "${reservation.payout.toStringAsFixed(2)} €",
+                    style: Theme.of(context).textTheme.headlineSmall!,
+                    maxLines: 1,
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.ellipsis,
+                    softWrap: true,
+                  ),
+                  Text(
+                    "$nights ${localized.nights}",
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                ],
+              ),
+            ),
+          )
         ],
       ),
     );

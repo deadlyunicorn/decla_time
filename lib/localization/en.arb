@@ -33,7 +33,10 @@
     "enterMin6Chars": "Please enter atleast 6 characters.",
     "platformAddition" : "platform addition",
     "platformAdditionHint" : "enter platform name",
-    "entryAlreadyExists": "entry already exists."
+    "entryAlreadyExists": "entry already exists.",
+    "addSelected" : "add selected",
+    "selectAll": "select all",
+    "clearSelection" : "clear selection"
 
 
 
