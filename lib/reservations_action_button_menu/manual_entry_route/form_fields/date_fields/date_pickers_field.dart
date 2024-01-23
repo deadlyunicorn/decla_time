@@ -28,19 +28,18 @@ class DatePickersField extends StatelessWidget {
         child: Column(
           children: [
             DateFieldWrap(
-              title: localized.arrival.capitalized,
+              label: localized.arrival.capitalized,
               handleDateSetButton: handleArrivalDateButton,
               localized: localized,
               date: arrivalDate,
             ),
-            const SizedBox.square( dimension: 16,),
             DateFieldWrap(
-              title: localized.departure.capitalized,
+              label: localized.departure.capitalized,
               handleDateSetButton: handleDepartureDateButton,
               localized: localized,
               date: departureDate,
             ),
-            const SizedBox.square( dimension: 16,),
+         
             Text(
               (departureDate != null && arrivalDate != null)
                   ? "The reservation took ${departureDate!.difference(arrivalDate!).inDays + 1} nights"
