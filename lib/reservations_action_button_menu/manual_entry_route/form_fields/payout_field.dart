@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:decla_time/core/constants/constants.dart';
 import 'package:decla_time/core/extensions/capitalize.dart';
 import 'package:flutter/material.dart';
@@ -24,9 +22,10 @@ class PayoutField extends StatelessWidget {
         inputFormatters: [FilteringTextInputFormatter.allow(RegExp("[0-9.]"))],
         controller: payoutController,
         decoration: InputDecoration(
-            errorMaxLines: 2,
-            errorStyle: TextStyle(overflow: TextOverflow.fade),
-            helperText: "${localized.format.capitalized}: 120.34"),
+          errorMaxLines: 2,
+          errorStyle: const TextStyle(overflow: TextOverflow.fade),
+          helperText: "${localized.format.capitalized}: 120.34",
+        ),
         textAlign: TextAlign.center,
         keyboardType: TextInputType.number,
         validator: (value) {
