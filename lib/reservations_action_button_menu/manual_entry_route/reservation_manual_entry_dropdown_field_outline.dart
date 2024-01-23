@@ -1,11 +1,11 @@
 import 'package:decla_time/core/extensions/capitalize.dart';
-import 'package:decla_time/reservations_action_button_menu/shared_prefs_list_string_addition_alert_dialog.dart';
+import 'package:decla_time/reservations_action_button_menu/manual_entry_route/shared_prefs_list_string_addition_alert_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class ReservationManualDropdownField extends StatefulWidget {
-  const ReservationManualDropdownField({
+class ReservationManualEntryDropdownFieldOutline extends StatefulWidget {
+  const ReservationManualEntryDropdownFieldOutline({
     super.key,
     required this.localized,
     required this.textEditingController,
@@ -23,12 +23,12 @@ class ReservationManualDropdownField extends StatefulWidget {
   final List<DropdownMenuEntry<String>>? defaultDropdownEntries;
 
   @override
-  State<ReservationManualDropdownField> createState() =>
-      _ReservationManualDropdownFieldState();
+  State<ReservationManualEntryDropdownFieldOutline> createState() =>
+      _ReservationManualEntryDropdownFieldOutlineState();
 }
 
-class _ReservationManualDropdownFieldState
-    extends State<ReservationManualDropdownField> {
+class _ReservationManualEntryDropdownFieldOutlineState
+    extends State<ReservationManualEntryDropdownFieldOutline> {
   @override
   Widget build(BuildContext context) {
     return Wrap(

@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:decla_time/core/extensions/capitalize.dart';
 import 'package:decla_time/reservations/business/reservation.dart';
 import 'package:decla_time/reservations/business/reservation_actions.dart';
-import 'package:decla_time/reservations_action_button_menu/reservation_addition_button.dart';
+import 'package:decla_time/reservations_action_button_menu/import_manually_button.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -24,7 +24,7 @@ class ImportFromFilesButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final localized = AppLocalizations.of(context)!;
 
-    return ReservationAdditionButton(
+    return ImportManuallyButton(
       description: localized.addFromFile.capitalized,
       icon: Icons.file_copy,
       children: [

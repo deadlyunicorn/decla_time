@@ -5,8 +5,8 @@ import 'package:decla_time/core/widgets/route_outline.dart';
 import 'package:decla_time/reservations/business/reservation.dart';
 import 'package:decla_time/reservations_action_button_menu/import_from_files_button.dart';
 import 'package:decla_time/reservations_action_button_menu/manual_entry_route/manual_reservation_entry_route.dart';
-import 'package:decla_time/reservations_action_button_menu/reservation_addition_button.dart';
-import 'package:decla_time/reservations_action_button_menu/reservations_found_list.dart';
+import 'package:decla_time/reservations_action_button_menu/import_manually_button.dart';
+import 'package:decla_time/reservations_action_button_menu/entries_found/reservations_found_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -42,7 +42,7 @@ class _ReservationAdditionRouteState extends State<ReservationAdditionRoute> {
                   reservationsFoundSoFar: reservations,
                   addToReservationsFoundSoFar: addToReservationsFoundSoFar,
                 ),
-                ReservationAdditionButton(
+                ImportManuallyButton(
                   description: "Manual Entry",
                   icon: Icons.edit,
                   onTap: () {

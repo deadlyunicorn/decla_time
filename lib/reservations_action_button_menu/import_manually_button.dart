@@ -1,8 +1,8 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 
-class ReservationAdditionButton extends StatelessWidget {
-  const ReservationAdditionButton({
+class ImportManuallyButton extends StatelessWidget {
+  const ImportManuallyButton({
     super.key,
     required this.description,
     required this.icon,

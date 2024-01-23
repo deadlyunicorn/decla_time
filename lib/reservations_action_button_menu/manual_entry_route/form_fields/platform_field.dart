@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:decla_time/core/constants/constants.dart';
-import 'package:decla_time/reservations_action_button_menu/reservation_manual_entry_field.dart';
+import 'package:decla_time/reservations_action_button_menu/manual_entry_route/reservation_manual_entry_dropdown_field_outline.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -17,7 +17,7 @@ class PlatformField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ReservationManualDropdownField(
+    return ReservationManualEntryDropdownFieldOutline(
       localized: localized,
       textEditingController: platformNameController,
       sharedPrefsListKey: kBookingPlatforms,

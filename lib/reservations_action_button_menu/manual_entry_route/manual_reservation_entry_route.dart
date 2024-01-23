@@ -1,7 +1,5 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:decla_time/core/constants/constants.dart';
-import 'package:decla_time/core/extensions/capitalize.dart';
 import 'package:decla_time/core/widgets/route_outline.dart';
 import 'package:decla_time/reservations/business/reservation.dart';
 import 'package:decla_time/reservations_action_button_menu/manual_entry_route/form_fields/date_pickers_field.dart';
@@ -10,11 +8,8 @@ import 'package:decla_time/reservations_action_button_menu/manual_entry_route/fo
 import 'package:decla_time/reservations_action_button_menu/manual_entry_route/form_fields/payout_field.dart';
 import 'package:decla_time/reservations_action_button_menu/manual_entry_route/form_fields/platform_field.dart';
 import 'package:decla_time/reservations_action_button_menu/manual_entry_route/form_fields/status_field.dart';
-import 'package:decla_time/reservations_action_button_menu/reservation_manual_entry_field.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:intl/intl.dart';
 
 class ManualReservationEntryRoute extends StatefulWidget {
   const ManualReservationEntryRoute({
@@ -98,4 +93,5 @@ class _ManualReservationEntryRouteState
       ),
     );
   }
+  
 }
