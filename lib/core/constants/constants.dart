@@ -46,7 +46,16 @@ const double kMaxWidthMedium = 640;
 ///960
 const double kMaxWidthLargest = 960;
 
+///120
 const double kMaxContainerWidthSmall = 120; 
+
+///160 
+const double kContainerWidthMedium = 160;
+
+///48
+const double kMenuHeight = 64; 
+
+
 
 const kBookingPlatforms = 'booking_platforms';
 const kListings = 'booking_listings';
