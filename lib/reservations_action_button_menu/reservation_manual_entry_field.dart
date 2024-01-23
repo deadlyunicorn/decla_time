@@ -96,7 +96,7 @@ class _ReservationManualDropdownFieldState
     final prefs = await SharedPreferences.getInstance();
 
     final dropdownMenuListStringEntries = prefs.getStringList(widget.sharedPrefsListKey);
-    if (dropdownMenuListStringEntries != null) {
+    if (dropdownMenuListStringEntries != null && dropdownMenuListStringEntries.isNotEmpty ) {
       return dropdownMenuListStringEntries
           .map((entry) => DropdownMenuEntry(value: entry, label: entry))
           .toList();
