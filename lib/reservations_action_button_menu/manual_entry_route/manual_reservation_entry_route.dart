@@ -1,8 +1,6 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:decla_time/core/widgets/route_outline.dart';
 import 'package:decla_time/reservations/business/reservation.dart';
-import 'package:decla_time/reservations_action_button_menu/manual_entry_route/form_fields/date_pickers_field.dart';
+import 'package:decla_time/reservations_action_button_menu/manual_entry_route/form_fields/date_fields/date_pickers_field.dart';
 import 'package:decla_time/reservations_action_button_menu/manual_entry_route/form_fields/id_field.dart';
 import 'package:decla_time/reservations_action_button_menu/manual_entry_route/form_fields/listing_name_field.dart';
 import 'package:decla_time/reservations_action_button_menu/manual_entry_route/form_fields/payout_field.dart';
@@ -49,23 +47,28 @@ class _ManualReservationEntryRouteState
             PlatformField(
                 localized: localized,
                 platformNameController: platformNameController),
-            SizedBox.square(
+            const SizedBox.square(
               dimension: 16,
             ),
             ListingNameField(
                 localized: localized,
                 listingNameController: listingNameController),
             IdField(idController: idController),
-            Text(
+            const Text(
               "Guest Name",
             ),
             PayoutField(
                 payoutController: payoutController, localized: localized),
             DatePickersField(
-                departureDate: departureDate,
-                arrivalDate: arrivalDate,
-                localized: localized),
-            StatusField(localized: localized, reservationStatusController: reservationStatusController),
+              departureDate: departureDate,
+              arrivalDate: arrivalDate,
+              localized: localized,
+              setArrivalDate: setArrivalDate,
+              setDepartureDate: setDapartureDate,
+            ),
+            StatusField(
+                localized: localized,
+                reservationStatusController: reservationStatusController),
             TextButton(
               onPressed: () {
                 _formKey.currentState!.validate();
@@ -85,13 +88,26 @@ class _ManualReservationEntryRouteState
                 //   ],
                 // );
               },
-              child: Text("press mee"),
+              child:const  Text("press mee"),
             ),
-            Text("heehe"),
+            const Expanded(child: Text("heehe")),
+        const CircularProgressIndicator()
+
           ],
         ),
       ),
     );
   }
-  
+
+  void setArrivalDate(DateTime? newDate) {
+    setState(() {
+      arrivalDate = newDate?.add( const Duration(hours: 13));
+    });
+  }
+
+  void setDapartureDate(DateTime? newDate) {
+    setState(() {
+      departureDate = newDate?.add( const Duration(hours: 11));
+    });
+  }
 }
