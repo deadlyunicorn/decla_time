@@ -46,27 +46,34 @@ class MyApp extends StatelessWidget {
     );
   }
 
+  static const _white = Color.fromARGB(255, 218, 216, 248);
+  static const _primary = Color(0xFF3B197B);
+  static const _secondary = Color(0xFF2619B4);
+  static const _tetriary = Color(0xFFB59C0D);
+  static const _background = Color(0xFF040412);
+  static const _error = Color.fromARGB(255, 199, 11, 68);
+
   ThemeData darkTheme(BuildContext context) {
     return ThemeData(
       fontFamily: 'Ysabeau',
       colorScheme: const ColorScheme(
           brightness: Brightness.dark,
-          primary: Color(0xFF3B197B),
-          onPrimary: Color(0xFFEAE9FC),
-          secondary: Color(0xFF2619B4),
-          onSecondary: Color(0xFFEAE9FC),
-          error: Color.fromARGB(255, 199, 11, 68),
-          onError: Color(0xFFEAE9FC),
-          background: Color(0xFF040412),
-          onBackground: Color(0xFFEAE9FC),
-          surface: Color(0xFFB59C0D),
-          onSurface: Color(0xFFEAE9FC)),
+          primary: _primary,
+          onPrimary: _white,
+          secondary: _secondary,
+          onSecondary: _white,
+          error: _error,
+          onError: _white,
+          background: _background,
+          onBackground: _white,
+          surface: _tetriary,
+          onSurface: _white),
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
-          backgroundColor: Color(0xFFB59C0D),
-          foregroundColor: Color(0xFFEAE9FC)),
+          backgroundColor: _tetriary,
+          foregroundColor: _white),
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-        backgroundColor: Color(0xFF04041A),
-        selectedItemColor: Color(0xFFB59C0D),
+        backgroundColor: _background,
+        selectedItemColor: _tetriary,
       ),
       textTheme: const TextTheme(
           headlineLarge: TextStyle(fontFamily: "Do Hyeon", fontSize: 40),
@@ -77,25 +84,33 @@ class MyApp extends StatelessWidget {
           bodyLarge: TextStyle(fontSize: 24),
           bodyMedium: TextStyle(fontSize: 16),
           bodySmall: TextStyle(fontSize: 16)),
-      appBarTheme: const AppBarTheme(backgroundColor: Color(0xFF3B197B)),
+      appBarTheme: const AppBarTheme(backgroundColor: _primary),
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-            foregroundColor: const Color(0xFFB59C0D)),
+            foregroundColor: _tetriary),
       ),
       snackBarTheme: SnackBarThemeData(
         behavior: SnackBarBehavior.floating,
         width: min(kMaxWidthMedium, MediaQuery.sizeOf(context).width - 64),
-        backgroundColor: const Color(0xFF2619B4),
-        contentTextStyle: const TextStyle(color: Color(0xFFEAE9FC)),
+        backgroundColor: _secondary,
+        contentTextStyle: const TextStyle(color: _white),
       ),
       datePickerTheme: const DatePickerThemeData(
-        backgroundColor: Color(0xFF2619B4),
+        backgroundColor: _background,
+        dividerColor: Colors.transparent,
         todayBorder: BorderSide( 
           style: BorderStyle.none
         ),
-        todayForegroundColor: MaterialStatePropertyAll( Color(0xFFEAE9FC) ),
+        todayForegroundColor: MaterialStatePropertyAll( _tetriary ),
+      ),
+      dropdownMenuTheme: DropdownMenuThemeData(
+        menuStyle: MenuStyle(
+          backgroundColor: MaterialStatePropertyAll(
+            _background.withOpacity( 0.94 )
+          ),
+        ),
       ),
       useMaterial3: true,
     );
