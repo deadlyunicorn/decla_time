@@ -21,7 +21,7 @@ class PlatformField extends StatelessWidget {
       textEditingController: platformNameController,
       sharedPrefsListKey: kBookingPlatforms,
       headlineText: "Platform",
-      hintText: "Platform",
+      label: "Platform",
       defaultDropdownEntries: ["Airbnb", "Booking.com"]
           .map((platformEntry) =>
               DropdownMenuEntry(value: platformEntry, label: platformEntry))

@@ -21,7 +21,7 @@ class ListingNameField extends StatelessWidget {
       textEditingController: listingNameController,
       sharedPrefsListKey: kReservationListing,
       headlineText: "Listing name",
-      hintText: "Listing",
+      label: "Listing",
     );
   }
 }

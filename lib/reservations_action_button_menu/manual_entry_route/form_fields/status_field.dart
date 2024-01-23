@@ -22,7 +22,7 @@ class StatusField extends StatelessWidget {
       textEditingController: reservationStatusController,
       sharedPrefsListKey: kReservationStatus,
       headlineText: "Status",
-      hintText: "Status",
+      label: "Status",
       defaultDropdownEntries: [
         DropdownMenuEntry(
           value: kCompleted,
