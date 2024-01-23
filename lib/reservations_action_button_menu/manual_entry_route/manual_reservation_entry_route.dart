@@ -1,3 +1,4 @@
+import 'package:decla_time/core/extensions/capitalize.dart';
 import 'package:decla_time/core/widgets/route_outline.dart';
 import 'package:decla_time/reservations/business/reservation.dart';
 import 'package:decla_time/reservations_action_button_menu/manual_entry_route/form_fields/date_fields/date_pickers_field.dart';
@@ -39,7 +40,7 @@ class _ManualReservationEntryRouteState
     final localized = AppLocalizations.of(context)!;
 
     return RouteOutline(
-      title: "Προσθήκη Κράτησης",
+      title: localized.manualAddition.capitalized,
       child: Form(
         key: _formKey,
         child: Column(
@@ -88,11 +89,16 @@ class _ManualReservationEntryRouteState
                 //   ],
                 // );
               },
-              child:const  Text("press mee"),
+              child: Text(
+                localized.submit.capitalized,
+                style: Theme.of(context)
+                    .textTheme
+                    .headlineLarge
+                    ?.copyWith(color: Theme.of(context).colorScheme.surface),
+              ),
             ),
             const Expanded(child: Text("heehe")),
-        const CircularProgressIndicator()
-
+            const CircularProgressIndicator()
           ],
         ),
       ),
@@ -101,13 +107,13 @@ class _ManualReservationEntryRouteState
 
   void setArrivalDate(DateTime? newDate) {
     setState(() {
-      arrivalDate = newDate?.add( const Duration(hours: 13));
+      arrivalDate = newDate?.add(const Duration(hours: 13));
     });
   }
 
   void setDapartureDate(DateTime? newDate) {
     setState(() {
-      departureDate = newDate?.add( const Duration(hours: 11));
+      departureDate = newDate?.add(const Duration(hours: 11));
     });
   }
 }
