@@ -36,7 +36,12 @@
     "entryAlreadyExists": "η εγγραφή ήδη υπάρχει.",
     "addSelected" : "προσθήκη επιλεγμένων",
     "selectAll": "επιλογή όλων",
-    "clearSelection" : "καθαρισμός επιλογής"
+    "clearSelection" : "καθαρισμός επιλογής",
+    "format": "μορφή",
+    "invalidFormat" : "μη έγκυρη μορφή",
+    "invalidNumber": "μη έγκυρος αριθμός",
+    "set":"ορισμός"
+
 
 
 

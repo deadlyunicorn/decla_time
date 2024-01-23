@@ -5,11 +5,10 @@ import 'package:decla_time/core/extensions/capitalize.dart';
 import 'package:decla_time/core/widgets/route_outline.dart';
 import 'package:decla_time/reservations/business/reservation.dart';
 import 'package:decla_time/reservations_action_button_menu/reservation_manual_entry_field.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:intl/intl.dart';
 
 class ManualReservationEntryRoute extends StatefulWidget {
   const ManualReservationEntryRoute({
@@ -29,6 +28,7 @@ class _ManualReservationEntryRouteState
   final _formKey = GlobalKey<FormState>();
   var platformNameController = TextEditingController();
   var listingNameController = TextEditingController();
+  var idController = TextEditingController();
   var guestNameController = TextEditingController();
   DateTime? arrivalDate;
   DateTime? departureDate;
@@ -66,6 +66,22 @@ class _ManualReservationEntryRouteState
               headlineText: "Listing name",
               hintText: "Listing",
             ),
+            TextFormField(
+              controller: idController,
+              validator: (value) {
+                if ( value != null && value.isNotEmpty  ){
+                  if (  value.length < 6 ){
+                    return "Insert atleast 6 characters";
+                  }
+                  else {
+                    return null;
+                  }
+                }
+                else {
+                  return "Must not be empty";
+                }
+              },
+            ),
             Text(
               "ID",
             ),
@@ -77,19 +93,24 @@ class _ManualReservationEntryRouteState
               width: kMaxContainerWidthSmall,
               child: TextFormField(
                 inputFormatters: [
-                  FilteringTextInputFormatter.allow(RegExp("[0-9.,]"))
+                  FilteringTextInputFormatter.allow(RegExp("[0-9.]"))
                 ],
                 controller: payoutController,
                 decoration: InputDecoration(
-                  errorMaxLines: 2,
-                ),
+                    errorMaxLines: 2,
+                    errorStyle: TextStyle(overflow: TextOverflow.fade),
+                    helperText: "${localized.format.capitalized}: 120.34"),
                 textAlign: TextAlign.center,
                 keyboardType: TextInputType.number,
                 validator: (value) {
-                  if (RegExp("[0-9]+[.,][0-9][0-9]\$").hasMatch(value ?? "")) {
+                  if (RegExp("^[0-9]+[.][0-9][0-9]\$").hasMatch(value ?? "")) {
+                    if (double.tryParse(value ?? "") != null) {
+                    } else {
+                      return localized.invalidNumber.capitalized;
+                    }
                     return null;
                   } else {
-                    return "Invalid Format. Please make sure your Format is like so: 457.00";
+                    return localized.invalidFormat.capitalized;
                   }
                 },
               ),
@@ -112,7 +133,11 @@ class _ManualReservationEntryRouteState
                       arrivalDate = arrivalDateTemp?.add(Duration(hours: 13));
                     });
                   },
-                  child: Text("Arrival Date"),
+                  child: Text(
+                    arrivalDate != null
+                        ? DateFormat('dd/MM/y').format(arrivalDate!)
+                        : localized.set.capitalized,
+                  ),
                 ),
                 TextButton(
                   onPressed: () async {

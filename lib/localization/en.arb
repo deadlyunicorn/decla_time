@@ -36,7 +36,12 @@
     "entryAlreadyExists": "entry already exists.",
     "addSelected" : "add selected",
     "selectAll": "select all",
-    "clearSelection" : "clear selection"
+    "clearSelection" : "clear selection",
+    "format": "format",
+    "invalidFormat" : "invalid format",
+    "invalidNumber" : "invalid number",
+    "set":"set"
+
 
 
 
