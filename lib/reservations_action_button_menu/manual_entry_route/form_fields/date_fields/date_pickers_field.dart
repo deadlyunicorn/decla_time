@@ -1,3 +1,4 @@
+import 'package:decla_time/core/extensions/capitalize.dart';
 import 'package:decla_time/reservations_action_button_menu/manual_entry_route/form_fields/date_fields/date_field_wrap.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -22,51 +23,32 @@ class DatePickersField extends StatelessWidget {
   Widget build(BuildContext context) {
     return DefaultTextStyle.merge(
       style: Theme.of(context).textTheme.headlineSmall,
-      child: Container(
-        decoration: BoxDecoration(
-            border: Border.all(
-              width: 1,
-              color: Theme.of(context).colorScheme.onBackground,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            DateFieldWrap(
+              title: localized.arrival.capitalized,
+              handleDateSetButton: handleArrivalDateButton,
+              localized: localized,
+              date: arrivalDate,
             ),
-            borderRadius: BorderRadius.circular(8)),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Wrap(
-                alignment: WrapAlignment.center,
-                crossAxisAlignment: WrapCrossAlignment.center,
-                spacing: 8,
-                children: [
-                  const Text(
-                    "Arrival Date:",
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      handleArrivalDateButton(context);
-                    },
-                    child: const Text("aa"
-                        // showDateOrSet(widget.arrivalDate),
-                        ),
-                    onHover: (isNotHovering) {
-                    },
-                  ),
-                ],
-              ),
-              DateFieldWrap(
-                title: "Departure Date",
-                handleDateSetButton: handleDepartureDateButton,
-                localized: localized,
-                date: departureDate,
-              ),
-              Text(
-                (departureDate != null && arrivalDate != null)
-                    ? "The reservation took ${departureDate!.difference(arrivalDate!).inDays + 1} nights"
-                    : "No info",
-              ),
-            ],
-          ),
+            const SizedBox.square( dimension: 16,),
+            DateFieldWrap(
+              title: localized.departure.capitalized,
+              handleDateSetButton: handleDepartureDateButton,
+              localized: localized,
+              date: departureDate,
+            ),
+            const SizedBox.square( dimension: 16,),
+            Text(
+              (departureDate != null && arrivalDate != null)
+                  ? "The reservation took ${departureDate!.difference(arrivalDate!).inDays + 1} nights"
+                  : "",
+              style: Theme.of(context).textTheme.bodySmall,
+              textAlign: TextAlign.center,
+            ),
+          ],
         ),
       ),
     );
@@ -79,15 +61,17 @@ class DatePickersField extends StatelessWidget {
       context: context,
       firstDate: DateTime(1999),
       lastDate: departureDate != null
-          ? lastDate.subtract( const Duration(days: 1))
+          ? lastDate.subtract(const Duration(days: 1))
           : DateTime(DateTime.now().year + 100),
       initialDate: arrivalDate ??
           (departureDate != null
-              ? lastDate.subtract( const Duration(days: 1))
+              ? lastDate.subtract(const Duration(days: 1))
               : DateTime.now()),
       currentDate: DateTime.now(),
     );
-    setArrivalDate(arrivalDateTemp);
+    if (arrivalDateTemp != null) {
+      setArrivalDate(arrivalDateTemp);
+    }
   }
 
   Future<void> handleDepartureDateButton(BuildContext context) async {
@@ -96,14 +80,16 @@ class DatePickersField extends StatelessWidget {
 
     final departureDateTemp = await showDatePicker(
       context: context,
-      firstDate: firstDate.add( const Duration(days: 1)),
+      firstDate: firstDate.add(const Duration(days: 1)),
       lastDate: DateTime(DateTime.now().year + 100),
       initialDate: departureDate ??
           (arrivalDate != null
-              ? firstDate.add( const Duration(days: 1))
+              ? firstDate.add(const Duration(days: 1))
               : DateTime.now()),
       currentDate: DateTime.now(),
     );
-    setDepartureDate(departureDateTemp);
+    if (departureDateTemp != null) {
+      setDepartureDate(departureDateTemp);
+    }
   }
 }
