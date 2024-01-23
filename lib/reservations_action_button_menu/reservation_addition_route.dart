@@ -4,7 +4,7 @@ import 'package:decla_time/core/extensions/capitalize.dart';
 import 'package:decla_time/core/widgets/route_outline.dart';
 import 'package:decla_time/reservations/business/reservation.dart';
 import 'package:decla_time/reservations_action_button_menu/import_from_files_button.dart';
-import 'package:decla_time/reservations_action_button_menu/manual_reservation_entry_route.dart';
+import 'package:decla_time/reservations_action_button_menu/manual_entry_route/manual_reservation_entry_route.dart';
 import 'package:decla_time/reservations_action_button_menu/reservation_addition_button.dart';
 import 'package:decla_time/reservations_action_button_menu/reservations_found_list.dart';
 import 'package:flutter/material.dart';
