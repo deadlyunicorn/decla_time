@@ -40,7 +40,10 @@
     "format": "format",
     "invalidFormat" : "invalid format",
     "invalidNumber" : "invalid number",
-    "setText":"set"
+    "setText":"set",
+    "manualAddition" : "manual addition",
+    "submit": "submit"
+
 
 
 

@@ -40,16 +40,8 @@
     "format": "μορφή",
     "invalidFormat" : "μη έγκυρη μορφή",
     "invalidNumber": "μη έγκυρος αριθμός",
-    "setText":"ορισμός"
-
-
-
-
-
-
-
-
-
-
+    "setText":"ορισμός",
+    "manualAddition" : "χειροκίνητη προσθήκη",
+    "submit": "υποβολή"
 
 }
