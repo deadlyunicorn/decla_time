@@ -1,3 +1,4 @@
+import 'package:decla_time/core/constants/constants.dart';
 import 'package:decla_time/core/extensions/capitalize.dart';
 import 'package:decla_time/core/widgets/route_outline.dart';
 import 'package:decla_time/reservations/business/reservation.dart';
@@ -41,65 +42,78 @@ class _ManualReservationEntryRouteState
 
     return RouteOutline(
       title: localized.manualAddition.capitalized,
-      child: Form(
-        key: _formKey,
-        child: Column(
-          children: [
-            PlatformField(
-                localized: localized,
-                platformNameController: platformNameController),
-            const SizedBox.square(
-              dimension: 16,
-            ),
-            ListingNameField(
-                localized: localized,
-                listingNameController: listingNameController),
-            IdField(idController: idController),
-            const Text(
-              "Guest Name",
-            ),
-            PayoutField(
-                payoutController: payoutController, localized: localized),
-            DatePickersField(
-              departureDate: departureDate,
-              arrivalDate: arrivalDate,
-              localized: localized,
-              setArrivalDate: setArrivalDate,
-              setDepartureDate: setDapartureDate,
-            ),
-            StatusField(
-                localized: localized,
-                reservationStatusController: reservationStatusController),
-            TextButton(
-              onPressed: () {
-                _formKey.currentState!.validate();
-
-                // widget.addToReservationsFoundSoFar(
-                //   [
-                //     Reservation(
-                //       bookingPlatform: "Manuual",
-                //       listingName: "Custom to be edited",
-                //       id: "ID",
-                //       guestName: "Someone",
-                //       arrivalDate: DateTime.now(),
-                //       departureDate: DateTime.now(),
-                //       payout: 121,
-                //       reservationStatus: "Έκλεισε",
-                //     )
-                //   ],
-                // );
-              },
-              child: Text(
-                localized.submit.capitalized,
-                style: Theme.of(context)
-                    .textTheme
-                    .headlineLarge
-                    ?.copyWith(color: Theme.of(context).colorScheme.surface),
+      child: SizedBox(
+        width: kMaxWidthLargest,
+        child: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Wrap(
+                spacing: 16,
+                runSpacing: 16,
+                children: [
+                  PlatformField(
+                    localized: localized,
+                    platformNameController: platformNameController,
+                  ),
+                  ListingNameField(
+                    localized: localized,
+                    listingNameController: listingNameController,
+                  ),
+                  StatusField(
+                    localized: localized,
+                    reservationStatusController: reservationStatusController,
+                  ),
+                ],
               ),
-            ),
-            const Expanded(child: Text("heehe")),
-            const CircularProgressIndicator()
-          ],
+
+              IdField(idController: idController),
+              Text(
+                localized.guestName.capitalized,
+              ),
+              PayoutField(
+                payoutController: payoutController,
+                localized: localized,
+              ),
+              DatePickersField(
+                departureDate: departureDate,
+                arrivalDate: arrivalDate,
+                localized: localized,
+                setArrivalDate: setArrivalDate,
+                setDepartureDate: setDapartureDate,
+              ),
+              TextButton(
+                onPressed: () {
+                  _formKey.currentState!.validate();
+
+                  // widget.addToReservationsFoundSoFar(
+                  //   [
+                  //     Reservation(
+                  //       bookingPlatform: "Manuual",
+                  //       listingName: "Custom to be edited",
+                  //       id: "ID",
+                  //       guestName: "Someone",
+                  //       arrivalDate: DateTime.now(),
+                  //       departureDate: DateTime.now(),
+                  //       payout: 121,
+                  //       reservationStatus: "Έκλεισε",
+                  //     )
+                  //   ],
+                  // );
+                },
+                child: Text(
+                  localized.submit.capitalized,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headlineLarge
+                      ?.copyWith(color: Theme.of(context).colorScheme.surface),
+                ),
+              ),
+              // const Expanded(child: Text("heehe")),
+              const CircularProgressIndicator()
+            ],
+          ),
         ),
       ),
     );
