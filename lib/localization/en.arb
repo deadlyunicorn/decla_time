@@ -1,20 +1,26 @@
-{
+{   
     "@@locale": "en",
     "localeFlag": "🇺🇸",
+    "@homeScreen":{},
     "reservations": "reservations",
     "declarations": "declarations",
     "analytics": "analytics",
     "nights": "nights",
     "night": "night",
-    "platform": "platform",
     "at": "at",
+    "@reservationDetails":{},
+    "platform": "platform",
+    "listingPlace": "location",
     "guestName": "name",
     "arrival": "arrival",
     "departure": "departure",
     "details": "details",
+    "status": "status",
+    "@reservationStatus":{},
     "cancelled": "cancelled",
     "upcoming": "upcoming",
     "completed": "completed",
+    "@declarationStatus":{},
     "declared": "declared",
     "undeclared": "undeclared",
     "lastEdit": "last edit",
@@ -27,12 +33,10 @@
     "addFromFile": "import file",
     "reservation": "reservation",
     "found": "found",
-    "addNewPlatform": "add new",
+    "add": "add new",
     "cancel": "cancel",
     "confirm": "confirm",
     "enterMin6Chars": "Please enter atleast 6 characters.",
-    "platformAddition" : "platform addition",
-    "platformAdditionHint" : "enter platform name",
     "entryAlreadyExists": "entry already exists.",
     "addSelected" : "add selected",
     "selectAll": "select all",
@@ -42,7 +46,10 @@
     "invalidNumber" : "invalid number",
     "setText":"set",
     "manualAddition" : "manual addition",
-    "submit": "submit"
+    "submit": "submit",
+    "enter": "enter",
+    "reservationLasted" : "the reservation lasted"
+
 
 
 
