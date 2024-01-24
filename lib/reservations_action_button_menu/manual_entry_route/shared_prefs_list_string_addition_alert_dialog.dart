@@ -39,7 +39,7 @@ class _SharedPrefsListStringAdditionAlertDialogState
       title: widget.title,
       confirmButtonAction: () async {
         if (_formKey.currentState!.validate()) {
-          Navigator.pop(context);
+          Navigator.pop(context, textFieldController.text);
 
           SharedPreferences.getInstance().then((prefs) {
             prefs.setStringList(widget.listStringKey,
@@ -53,6 +53,7 @@ class _SharedPrefsListStringAdditionAlertDialogState
         child: TextFormField(
           decoration: InputDecoration(
             hintText: widget.hintText,
+            errorMaxLines: 2,
           ),
           controller: textFieldController,
           validator: (value) {
