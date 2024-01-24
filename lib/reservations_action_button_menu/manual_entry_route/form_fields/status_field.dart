@@ -21,9 +21,8 @@ class StatusField extends StatelessWidget {
       localized: localized,
       textEditingController: reservationStatusController,
       sharedPrefsListKey: kReservationStatus,
-      headlineText: "Status",
-      label: "Status",
-      defaultDropdownEntries: [
+      label: localized.status,
+      defaultDropdownEntriesList: [
         DropdownMenuEntry(
           value: kCompleted,
           label: localized.completed.capitalized,

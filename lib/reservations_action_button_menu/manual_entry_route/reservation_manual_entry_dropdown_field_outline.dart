@@ -12,20 +12,18 @@ class ReservationManualEntryDropdownFieldOutline extends StatefulWidget {
     super.key,
     required this.localized,
     required this.textEditingController,
-    required this.headlineText,
     required this.sharedPrefsListKey,
     required this.label,
     this.helperText,
-    this.defaultDropdownEntries,
+    this.defaultDropdownEntriesList,
   });
 
   final AppLocalizations localized;
   final TextEditingController textEditingController;
-  final String headlineText;
   final String sharedPrefsListKey;
   final String label;
   final String? helperText;
-  final List<DropdownMenuEntry<String>>? defaultDropdownEntries;
+  final List<DropdownMenuEntry<String>>? defaultDropdownEntriesList;
 
   @override
   State<ReservationManualEntryDropdownFieldOutline> createState() =>
@@ -34,52 +32,48 @@ class ReservationManualEntryDropdownFieldOutline extends StatefulWidget {
 
 class _ReservationManualEntryDropdownFieldOutlineState
     extends State<ReservationManualEntryDropdownFieldOutline> {
-      
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: dropDownMenuEntriesFuture(), //getBookingPlatforms(),
       builder: (context, snapshot) {
-        final dropDownMenuEntries = snapshot.data
-            ?.map((dropdownMenuEntry) => dropdownMenuEntry.value)
-            .toList();
-        final Set<String> dropdownMenuEntries = {
-          widget.localized.addNewPlatform.capitalized,
-          ...(dropDownMenuEntries ?? []),
-        };
+        final List<DropdownMenuEntry<String>> snapshotData =
+            snapshot.data ?? [];
 
         return DropdownMenu(
           menuHeight: 256,
           width: kMaxContainerWidthSmall * 2,
           textStyle: Theme.of(context).textTheme.headlineSmall,
-          label: Text(widget.label),
+          label: Text(widget.label.capitalized),
           controller: widget.textEditingController,
           helperText: widget.helperText,
           dropdownMenuEntries: [
-            ...dropdownMenuEntries.map(
-              (entryName) => DropdownMenuEntry(
-                value: entryName,
-                label: entryName,
-              ),
-            )
+            DropdownMenuEntry(
+              value: "newEntry",
+              label: widget.localized.add.capitalized,
+            ),
+            ...snapshotData,
           ],
-          onSelected: (value) {
-            if (value?.toLowerCase() == widget.localized.addNewPlatform) {
-              showDialog(
+          onSelected: (value) async {
+            if (value == "newEntry") {
+              final String? newEntry = ( await showDialog(
                 context: context,
                 builder: (context) {
                   return SharedPrefsListStringAdditionAlertDialog(
-                    title: widget.localized.platformAddition.capitalized,
-                    listStringKey: widget.sharedPrefsListKey,
-                    hintText: widget.localized.platformAdditionHint.capitalized,
-                    refreshParent: () {
-                      setState(() {});
-                    },
-                    dropdownMenuEntries: dropdownMenuEntries,
-                  );
+                      title:
+                          "${widget.localized.add.capitalized} ${widget.label}",
+                      listStringKey: widget.sharedPrefsListKey,
+                      hintText:
+                          "${widget.localized.enter.capitalized} ${widget.label}",
+                      refreshParent: () {
+                        setState(() {});
+                      },
+                      dropdownMenuEntries:
+                          (snapshot.data ?? []).map((e) => e.value).toSet());
                 },
-              );
-              widget.textEditingController.text = "";
+              ));
+
+              widget.textEditingController.text = newEntry ?? "" ;
             }
           },
         );
@@ -89,23 +83,32 @@ class _ReservationManualEntryDropdownFieldOutlineState
 
   Future<List<DropdownMenuEntry<String>>> dropDownMenuEntriesFuture() async {
     final prefs = await SharedPreferences.getInstance();
+    final Map<String, String>? defaultValuesMap =
+        widget.defaultDropdownEntriesList?.fold(
+            {},
+            (previousValue, element) => {
+                  ...?previousValue,
+                  ...{element.value: element.label}
+                });
 
     final dropdownMenuListStringEntries =
         prefs.getStringList(widget.sharedPrefsListKey);
     if (dropdownMenuListStringEntries != null &&
         dropdownMenuListStringEntries.isNotEmpty) {
-      return dropdownMenuListStringEntries
-          .map((entry) => DropdownMenuEntry(value: entry, label: entry))
-          .toList();
+      return dropdownMenuListStringEntries.map((stringValue) {
+        return DropdownMenuEntry(
+            value: stringValue,
+            label: defaultValuesMap?[stringValue] ?? stringValue);
+      }).toList();
     } else {
       prefs.setStringList(
           widget.sharedPrefsListKey,
-          widget.defaultDropdownEntries
+          widget.defaultDropdownEntriesList
                   ?.map(
                       (dropdownMenuEntry) => dropdownMenuEntry.value.toString())
                   .toList() ??
               []);
-      return widget.defaultDropdownEntries ?? [];
+      return widget.defaultDropdownEntriesList ?? [];
     }
   }
 }
