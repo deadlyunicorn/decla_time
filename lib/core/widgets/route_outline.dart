@@ -35,7 +35,7 @@ class RouteOutline extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                  const SizedBox.square(dimension: 16),
+                  const SizedBox.square(dimension: 32),
                   Expanded(child: child)
                 ],
               ),

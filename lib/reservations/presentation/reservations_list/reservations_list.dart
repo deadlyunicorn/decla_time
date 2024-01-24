@@ -50,9 +50,12 @@ class ReservationsList extends StatelessWidget {
       );
     } else {
       return Center(
-        child: Text(
-          localized.reservationsNotFoundLocally.capitalized,
-          textAlign: TextAlign.center,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            localized.reservationsNotFoundLocally.capitalized,
+            textAlign: TextAlign.center,
+          ),
         ),
       );
     }

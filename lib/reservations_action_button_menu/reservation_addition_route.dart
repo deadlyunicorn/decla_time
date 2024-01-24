@@ -42,16 +42,17 @@ class _ReservationAdditionRouteState extends State<ReservationAdditionRoute> {
                   reservationsFoundSoFar: reservations,
                   addToReservationsFoundSoFar: addToReservationsFoundSoFar,
                 ),
-                ImportManuallyButton(
-                  description: "Manual Entry",
+                ReservationImportButtonOutline(
+                  description: localized.manualAddition.capitalized,
                   icon: Icons.edit,
                   onTap: () {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => ManualReservationEntryRoute(
-                              addToReservationsFoundSoFar:
-                                  addToReservationsFoundSoFar),
+                            addToReservationsFoundSoFar:
+                                addToReservationsFoundSoFar,
+                          ),
                         ));
                     ScaffoldMessenger.of(context).removeCurrentSnackBar();
                     ScaffoldMessenger.of(context).showSnackBar(

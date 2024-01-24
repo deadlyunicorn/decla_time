@@ -1,8 +1,9 @@
 import 'dart:math';
+import 'package:decla_time/core/constants/constants.dart';
 import 'package:flutter/material.dart';
 
-class ImportManuallyButton extends StatelessWidget {
-  const ImportManuallyButton({
+class ReservationImportButtonOutline extends StatelessWidget {
+  const ReservationImportButtonOutline({
     super.key,
     required this.description,
     required this.icon,
@@ -39,24 +40,34 @@ class ImportManuallyButton extends StatelessWidget {
           child: Stack(
             alignment: Alignment.center,
             children: [
-              Positioned(
-                left: dimension < 140 ? 8 : null, 
-                top: dimension < 140 ? 8 : null,
-                child: Icon(
-                  icon,
-                  size: dimension < 140 ? 32 : 48,
-                ),
-              ),
-              Positioned(
-                bottom: 8,
-                child: SizedBox(
-                  width: dimension,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      description,
-                      textAlign: TextAlign.center,
-                    ),
+              Positioned.fill(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: [
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: FittedBox(
+                          child: Icon(
+                            icon,
+                            size: dimension < 140 ? 32 : 48,
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              description.replaceAll( " ", "\n"),
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.bodyLarge,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
