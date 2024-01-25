@@ -15,16 +15,17 @@ class ReservationsFoundList extends StatefulWidget {
   const ReservationsFoundList({
     super.key,
     required this.reservations,
+    required this.removeFromReservationsFoundSoFar,
   });
 
   final List<Reservation> reservations;
+  final void Function( Iterable<Reservation> ) removeFromReservationsFoundSoFar;
 
   @override
   State<ReservationsFoundList> createState() => _ReservationsFoundListState();
 }
 
 class _ReservationsFoundListState extends State<ReservationsFoundList> {
-
   Set<int> selectedReservations = {};
 
   bool isHolding = false;
@@ -33,7 +34,6 @@ class _ReservationsFoundListState extends State<ReservationsFoundList> {
 
   @override
   Widget build(BuildContext context) {
-    
     final localized = AppLocalizations.of(context)!;
 
     if (widget.reservations.isEmpty) {
@@ -42,7 +42,7 @@ class _ReservationsFoundListState extends State<ReservationsFoundList> {
       return SizedBox(
         width: min(MediaQuery.sizeOf(context).width, kMaxWidthLargest),
         child: Padding(
-          padding: const EdgeInsets.symmetric( vertical: 16.0),
+          padding: const EdgeInsets.symmetric(vertical: 16.0),
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
@@ -61,11 +61,11 @@ class _ReservationsFoundListState extends State<ReservationsFoundList> {
                     children: [
                       TextButton(
                         onPressed: unselectAll,
-                        child: Text( localized.clearSelection.capitalized ),
+                        child: Text(localized.clearSelection.capitalized),
                       ),
                       TextButton(
                         onPressed: selectAll,
-                        child: Text( localized.selectAll.capitalized ),
+                        child: Text(localized.selectAll.capitalized),
                       ),
                     ],
                   ),
@@ -79,8 +79,9 @@ class _ReservationsFoundListState extends State<ReservationsFoundList> {
                   onHorizontalDragEnd: stopHolding,
                   child: GridView.builder(
                     shrinkWrap: true,
-                    padding: const EdgeInsets.all( 32),
-                    gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                    padding: const EdgeInsets.all(32),
+                    gridDelegate:
+                        const SliverGridDelegateWithMaxCrossAxisExtent(
                       maxCrossAxisExtent: kMaxContainerWidthSmall,
                       crossAxisSpacing: 8,
                       mainAxisSpacing: 8,
@@ -89,9 +90,6 @@ class _ReservationsFoundListState extends State<ReservationsFoundList> {
                     itemBuilder: (context, indexOfCurrentGridItem) {
                       final reservation =
                           widget.reservations[indexOfCurrentGridItem];
-                      final nights = reservation.departureDate
-                          .difference(reservation.arrivalDate)
-                          .inDays;
 
                       return Stack(
                         clipBehavior: Clip.none,
@@ -117,7 +115,6 @@ class _ReservationsFoundListState extends State<ReservationsFoundList> {
                                     child: ReservationGridItemContainerItems(
                                       //Items.
                                       localized: localized,
-                                      nights: nights,
                                       reservation: reservation,
                                     ),
                                   ),
@@ -159,9 +156,12 @@ class _ReservationsFoundListState extends State<ReservationsFoundList> {
                             .insertMultipleEntriesToDb(selectedReservations
                                 .map((index) => widget.reservations[index])
                                 .toList());
+                        widget.removeFromReservationsFoundSoFar( selectedReservations.map((index) => widget.reservations[index]) );
+                        selectedReservations.clear();
                       },
-                      child:
-                          Text("${localized.addSelected.capitalized}. (${selectedReservations.length})"),
+                      child: Text(
+                        "${localized.addSelected.capitalized}. (${selectedReservations.length})",
+                      ),
                     )
                   : const SizedBox.shrink()
             ],
