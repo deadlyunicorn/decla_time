@@ -37,6 +37,7 @@
     "cancel": "cancel",
     "confirm": "confirm",
     "enterMin6Chars": "Please enter atleast 6 characters.",
+    "invalidDateError": "Please enter a valid date",
     "entryAlreadyExists": "entry already exists.",
     "addSelected" : "add selected",
     "selectAll": "select all",
@@ -51,8 +52,11 @@
     "without": "without",
     "reservationLasted" : "the reservation lasted",
     "insertSomeValue": "insert some value",
+    "selectSomeField": "select some field",
     "insertAtleastSix": "insert atleast six characters",
-    "payout": "payout"
+    "payout": "payout",
+    "addedAReservation" : "added a reservation",
+    "thePayoutIs": "the payout is"
 
 
 

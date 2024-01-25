@@ -36,7 +36,8 @@
     "add": "προσθέστε",
     "cancel": "ακύρωση",
     "confirm": "επιβεβαίωση",
-    "enterMin6Chars": "εισάγετε τουλάχιστον 6 χαρακτήρες.",
+    "enterMin6Chars": "εισάγετε τουλάχιστον 6 χαρακτήρες",
+    "invalidDateError": "εισάγετε μια έγκυρη ημερομηνία",
     "entryAlreadyExists": "η εγγραφή ήδη υπάρχει.",
     "addSelected" : "προσθήκη επιλεγμένων",
     "selectAll": "επιλογή όλων",
@@ -51,8 +52,11 @@
     "without": "χωρίς",
     "reservationLasted" : "η κράτηση διήρκησε",
     "insertSomeValue": "εισάγετε κάποια τιμή",
+    "selectSomeField": "επιλέξτε κάποιο πεδίο",
     "insertAtleastSix": "εισάγετε τουλάχιστον έξι χαρακτήρες",
-    "payout": "πληρωμή"
+    "payout": "πληρωμή",
+    "addedAReservation" : "προστέθηκε μια κράτηση",
+    "thePayoutIs": "η πληρωμή είναι"
 
 
 
