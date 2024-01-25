@@ -1,4 +1,5 @@
 import 'package:decla_time/core/functions/fasthash.dart';
+import 'package:intl/intl.dart';
 import 'package:isar/isar.dart';
 
 part 'reservation.g.dart';
@@ -26,16 +27,22 @@ class Reservation{
 
     required this.id,
     required this.guestName,
+
     required this.arrivalDate,
     required this.departureDate,
+    
     required this.payout,
+
     required this.reservationStatus,
+
     this.lastEdit,
     this.isDeclared = false
     
   }); 
 
   int get nights => departureDate.difference( arrivalDate ).inDays + 1 ; 
+  String get arrivalDateString => DateFormat("dd/MM/y").format( arrivalDate );
+  String get departureDateString => DateFormat("dd/MM/y").format( departureDate );
   Id get isarId => fastHash( id );
   
 
