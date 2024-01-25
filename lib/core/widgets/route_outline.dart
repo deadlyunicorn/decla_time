@@ -15,32 +15,30 @@ class RouteOutline extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          appBar: AppBar(),
-          body: Align(
-            alignment: Alignment.topCenter,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 32,
-                vertical: 32,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Center(
-                    child: Text(
-                      title.capitalized,
-                      style: Theme.of(context).textTheme.headlineLarge,
-                      maxLines: 2,
-                      textAlign: TextAlign.center,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+        appBar: AppBar(),
+        body: Align(
+          alignment: Alignment.topCenter,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all( 16.0),
+                child: Center(
+                  child: Text(
+                    title.capitalized,
+                    style: Theme.of(context).textTheme.headlineLarge,
+                    maxLines: 2,
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  const SizedBox.square(dimension: 32),
-                  Expanded(child: child)
-                ],
+                ),
               ),
-            ),
-          )),
+              const SizedBox.square(dimension: 32),
+              Expanded(child: child)
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
