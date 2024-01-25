@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DatePickersField extends StatelessWidget {
+  
   const DatePickersField({
     super.key,
     required this.departureDate,
@@ -45,6 +46,7 @@ class DatePickersField extends StatelessWidget {
               ),
             ],
           ),
+          const SizedBox.square( dimension:  16,),
           Text(
             (departureDate != null && arrivalDate != null)
                 ? "${localized.reservationLasted.capitalized} ${nightOrNights(localized, departureDate!.difference(arrivalDate!).inDays + 1)}"
@@ -57,7 +59,7 @@ class DatePickersField extends StatelessWidget {
     );
   }
 
-  Future<void> handleArrivalDateButton(BuildContext context) async {
+  Future<DateTime?> handleArrivalDateButton(BuildContext context) async {
     //earliest possible date;
     final lastDate = departureDate ?? DateTime(1999);
     final arrivalDateTemp = await showDatePicker(
@@ -73,11 +75,14 @@ class DatePickersField extends StatelessWidget {
       currentDate: DateTime.now(),
     );
     if (arrivalDateTemp != null) {
+      //Adds 13 hours 
       setArrivalDate(arrivalDateTemp);
     }
+    return arrivalDateTemp; 
+
   }
 
-  Future<void> handleDepartureDateButton(BuildContext context) async {
+  Future<DateTime?> handleDepartureDateButton(BuildContext context) async {
     //earliest possible date;
     final firstDate = arrivalDate ?? DateTime(1999);
 
@@ -91,8 +96,11 @@ class DatePickersField extends StatelessWidget {
               : DateTime.now()),
       currentDate: DateTime.now(),
     );
-    if (departureDateTemp != null) {
-      setDepartureDate(departureDateTemp);
+    if (departureDateTemp != null) { 
+
+      //Adds 11 hours 
+      setDepartureDate(departureDateTemp) ;
     }
+    return departureDateTemp;
   }
 }

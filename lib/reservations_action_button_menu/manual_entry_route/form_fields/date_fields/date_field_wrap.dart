@@ -10,13 +10,11 @@ class DateFieldWrap extends StatefulWidget {
     required this.handleDateSetButton,
     required this.localized,
     required this.label,
-    this.errorText,
     this.date,
   });
 
-  final void Function(BuildContext context) handleDateSetButton;
+  final Future<DateTime?> Function(BuildContext context) handleDateSetButton;
   final AppLocalizations localized;
-  final String? errorText;
   final DateTime? date;
   final String label;
 
@@ -29,26 +27,29 @@ class _DateFieldWrapState extends State<DateFieldWrap> {
 
   @override
   Widget build(BuildContext context) {
-    return FormField(
-
-      onSaved:(newValue) {
-        print( newValue );
-      },
+    
+    return FormField<DateTime>(
       validator: (value) {
-        
+        if (value == null) {
+          return widget.localized.invalidDateError.capitalized;
+        } else {
+          return null;
+        }
       },
-      builder: (field) => SizedBox(
-        height: kMenuHeightWithError,
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Container(
+      builder: (field) {
+        final errorText = field.errorText;
+        return SizedBox(
+          height: kMenuHeightWithError,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Container(
               width: kContainerWidthMedium,
               height: kMenuHeight,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(4),
                 border: Border.symmetric(
                   horizontal: BorderSide(
-                      color: widget.errorText != null
+                      color: errorText != null
                           ? Theme.of(context).colorScheme.error
                           : Theme.of(context).colorScheme.onBackground),
                 ),
@@ -66,16 +67,22 @@ class _DateFieldWrapState extends State<DateFieldWrap> {
                       child: Text(
                         widget.label,
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: widget.errorText != null ? Theme.of(context).colorScheme.error : null
-                        ),
+                            color: errorText != null
+                                ? Theme.of(context).colorScheme.error
+                                : null),
                       ),
                     ),
                   ),
                   Positioned.fill(
                     child: TextButton(
                       style: datePickerTextButtonStyle(context),
-                      onPressed: () {
-                        widget.handleDateSetButton(context);
+                      onPressed: () async {
+                        final newDate = await widget.handleDateSetButton(context);
+                        if ( newDate != null ){
+                          field.didChange( newDate );
+                          field.validate();
+                        }
+
                       },
                       onHover: (value) {
                         setState(() {
@@ -92,18 +99,18 @@ class _DateFieldWrapState extends State<DateFieldWrap> {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        widget.errorText ?? "",
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodySmall
-                            ?.copyWith(color: Theme.of(context).colorScheme.error),
+                        errorText ?? "",
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color: Theme.of(context).colorScheme.error),
                       ),
                     ),
                   )
                 ],
-              )),
-        ),
-      ),
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 
