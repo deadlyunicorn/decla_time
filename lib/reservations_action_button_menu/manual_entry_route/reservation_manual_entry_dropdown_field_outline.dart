@@ -37,58 +37,89 @@ class _ReservationManualEntryDropdownFieldOutlineState
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all( 16 ),
-      child: SizedBox(
-        height: kMenuHeightWithError,
-        child: FutureBuilder(
-          future: dropDownMenuEntriesFuture(), //getBookingPlatforms(),
-          builder: (context, snapshot) {
-            final List<DropdownMenuEntry<String>> snapshotData =
-                snapshot.data ?? [];
-        
-            return DropdownMenu(
-              errorText: widget.isRequired ? widget.localized.insertSomeValue.capitalized : null,
-              menuHeight: 256,
-              width: kMaxContainerWidthSmall * 2,
-              textStyle: Theme.of(context).textTheme.headlineSmall,
-              label: Text(widget.label.capitalized),
-              controller: widget.textEditingController,
-              helperText: widget.helperText,
-              dropdownMenuEntries: [
-                DropdownMenuEntry(
-                  value: "newEntry",
-                  label: widget.localized.add.capitalized,
+      padding: const EdgeInsets.all(16),
+      child: FutureBuilder(
+        future: dropDownMenuEntriesFuture(), //getBookingPlatforms(),
+        builder: (context, snapshot) {
+          final List<DropdownMenuEntry<String>> snapshotData =
+              snapshot.data ?? [];
+
+          return FormField<String>(
+            builder: (field) {
+              return SizedBox(
+                height: kMenuHeightWithError,
+                child: DropdownMenu(
+                  errorText:
+                      (field.hasError) ? field.errorText?.capitalized : null,
+                  menuHeight: 256,
+                  menuStyle:
+                      Theme.of(context).dropdownMenuTheme.menuStyle?.copyWith(
+                            alignment: Alignment.centerLeft,
+                          ),
+                  width: kMaxContainerWidthSmall * 2,
+                  textStyle: Theme.of(context).textTheme.headlineSmall,
+                  label: Text(widget.label.capitalized),
+                  controller: widget.textEditingController,
+                  helperText: widget.helperText,
+                  dropdownMenuEntries: [
+                    DropdownMenuEntry(
+                      value: "newEntry",
+                      label: widget.localized.add.capitalized,
+                    ),
+                    ...snapshotData,
+                  ],
+                  onSelected: (value) async {
+                    if (value == "newEntry") {
+                      final String? newEntry = (await showDialog(
+                        context: context,
+                        builder: (context) {
+                          return SharedPrefsListStringAdditionAlertDialog(
+                              title:
+                                  "${widget.localized.add.capitalized} ${widget.label}",
+                              listStringKey: widget.sharedPrefsListKey,
+                              hintText:
+                                  "${widget.localized.enter.capitalized} ${widget.label}",
+                              refreshParent: () {
+                                setState(() {});
+                              },
+                              dropdownMenuEntries: (snapshot.data ?? [])
+                                  .map((e) => e.value)
+                                  .toSet());
+                        },
+                      ));
+
+                      field.didChange(newEntry ?? "");
+
+                      widget.textEditingController.text = newEntry ?? "";
+                    } else {
+                      field.didChange(value ?? "");
+                      widget.textEditingController.text = value ?? "";
+                    }
+                  },
                 ),
-                ...snapshotData,
-              ],
-              onSelected: (value) async {
-                if (value == "newEntry") {
-                  final String? newEntry = (await showDialog(
-                    context: context,
-                    builder: (context) {
-                      return SharedPrefsListStringAdditionAlertDialog(
-                          title:
-                              "${widget.localized.add.capitalized} ${widget.label}",
-                          listStringKey: widget.sharedPrefsListKey,
-                          hintText:
-                              "${widget.localized.enter.capitalized} ${widget.label}",
-                          refreshParent: () {
-                            setState(() {});
-                          },
-                          dropdownMenuEntries:
-                              (snapshot.data ?? []).map((e) => e.value).toSet());
-                    },
-                  ));
-        
-                  widget.textEditingController.text = newEntry ?? "";
+              );
+            },
+            validator: (value) {
+              final stringValue = value ?? "";
+
+              if (stringValue.isEmpty ||
+                  widget.textEditingController.text.isEmpty) {
+                if (widget.isRequired) {
+                  return widget.localized.selectSomeField;
+                } else {
+                  return null;
                 }
-                else{
-                  widget.textEditingController.text = value ?? "";
+              } else if (stringValue.length < 6) {
+                return widget.localized.insertAtleastSix;
+              } else {
+                if (stringValue != widget.textEditingController.text) {
+                  return widget.localized.selectSomeField;
                 }
-              },
-            );
-          },
-        ),
+                return null;
+              }
+            },
+          );
+        },
       ),
     );
   }
