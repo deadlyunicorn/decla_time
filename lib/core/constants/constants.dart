@@ -37,6 +37,10 @@ const kBookingDotComReservationStatusColumn = 6;
 
 String kPath = 'path';
 
+//360
+const double kSmallScreenWidth = 360;
+
+
 ///480
 const double kMaxWidthSmall = 480;
 
@@ -52,8 +56,11 @@ const double kMaxContainerWidthSmall = 120;
 ///160 
 const double kContainerWidthMedium = 160;
 
-///48
+///64
 const double kMenuHeight = 64; 
+
+///WithErrorText
+const double kMenuHeightWithError = 96; 
 
 
 
