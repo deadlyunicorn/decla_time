@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:decla_time/core/extensions/capitalize.dart';
+import 'package:decla_time/core/functions/night_or_nights.dart';
 import 'package:decla_time/core/widgets/route_outline.dart';
 import 'package:decla_time/reservations/business/reservation.dart';
 import 'package:decla_time/reservations_action_button_menu/import_from_files_button.dart';
@@ -45,8 +46,8 @@ class _ReservationAdditionRouteState extends State<ReservationAdditionRoute> {
                 ReservationImportButtonOutline(
                   description: localized.manualAddition.capitalized,
                   icon: Icons.edit,
-                  onTap: () {
-                    Navigator.push(
+                  onTap: () async {
+                    final reservation = await Navigator.push<Reservation?>(
                         context,
                         MaterialPageRoute(
                           builder: (context) => ManualReservationEntryRoute(
@@ -54,22 +55,40 @@ class _ReservationAdditionRouteState extends State<ReservationAdditionRoute> {
                                 addToReservationsFoundSoFar,
                           ),
                         ));
-                    ScaffoldMessenger.of(context).removeCurrentSnackBar();
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Center(
-                          child:
-                              Text(localized.reservationsNotAdded.capitalized),
-                        ),
-                      ),
-                    );
-                    print("no way");
+                    if (context.mounted) {
+                      ScaffoldMessenger.of(context).removeCurrentSnackBar();
+
+                      if (reservation != null) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Center(
+                              child: Text(
+                                "${localized.addedAReservation.capitalized}. ${localized.reservationLasted.capitalized} ${nightOrNights(localized, reservation.nights)}. ${localized.thePayoutIs.capitalized} ${reservation.payout}€.",
+                              ),
+                            ),
+                          ),
+                        );
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Center(
+                              child: Text(
+                                  localized.reservationsNotAdded.capitalized),
+                            ),
+                          ),
+                        );
+                      }
+                    }
                   },
                 ),
               ],
             ),
             Expanded(
-              child: ReservationsFoundList(reservations: reservations),
+              child: ReservationsFoundList(
+                reservations: reservations,
+                removeFromReservationsFoundSoFar:
+                    removeFromReservationsFoundSoFar,
+              ),
             ),
           ],
         ),
@@ -81,6 +100,15 @@ class _ReservationAdditionRouteState extends State<ReservationAdditionRoute> {
       Iterable<Reservation> newReservationEntries) {
     setState(() {
       reservations.addAll(newReservationEntries);
+    });
+  }
+
+  void removeFromReservationsFoundSoFar(
+      Iterable<Reservation> iterableReservations) {
+    setState(() {
+      reservations.removeWhere(
+        (reservation) => iterableReservations.map((e) => e.id).contains( reservation.id),
+      );
     });
   }
 }
