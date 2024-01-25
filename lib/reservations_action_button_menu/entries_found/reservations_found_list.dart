@@ -41,128 +41,131 @@ class _ReservationsFoundListState extends State<ReservationsFoundList> {
     } else {
       return SizedBox(
         width: min(MediaQuery.sizeOf(context).width, kMaxWidthLargest),
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Align(
-              alignment: Alignment.topRight,
-              child: Padding(
-                //DE/SELECT ALL Buttons
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                child: Wrap(
-                  alignment: WrapAlignment.end,
-                  crossAxisAlignment: WrapCrossAlignment.end,
-                  runAlignment: WrapAlignment.end,
-                  verticalDirection: VerticalDirection.up,
-                  runSpacing: 8,
-                  spacing: 16,
-                  children: [
-                    TextButton(
-                      onPressed: unselectAll,
-                      child: Text( localized.clearSelection.capitalized ),
-                    ),
-                    TextButton(
-                      onPressed: selectAll,
-                      child: Text( localized.selectAll.capitalized ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Expanded(
-              //Actual List
-              child: GestureDetector(
-                //used for keeping track of hold
-                onHorizontalDragStart: startHolding,
-                onHorizontalDragEnd: stopHolding,
-                child: GridView.builder(
-                  shrinkWrap: true,
-                  padding: const EdgeInsets.all(16),
-                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                    maxCrossAxisExtent: kMaxContainerWidthSmall,
-                    crossAxisSpacing: 8,
-                    mainAxisSpacing: 8,
+        child: Padding(
+          padding: const EdgeInsets.symmetric( vertical: 16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Align(
+                alignment: Alignment.topRight,
+                child: Padding(
+                  //DE/SELECT ALL Buttons
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  child: Wrap(
+                    alignment: WrapAlignment.end,
+                    crossAxisAlignment: WrapCrossAlignment.end,
+                    runAlignment: WrapAlignment.end,
+                    verticalDirection: VerticalDirection.up,
+                    runSpacing: 8,
+                    spacing: 16,
+                    children: [
+                      TextButton(
+                        onPressed: unselectAll,
+                        child: Text( localized.clearSelection.capitalized ),
+                      ),
+                      TextButton(
+                        onPressed: selectAll,
+                        child: Text( localized.selectAll.capitalized ),
+                      ),
+                    ],
                   ),
-                  itemCount: widget.reservations.length,
-                  itemBuilder: (context, indexOfCurrentGridItem) {
-                    final reservation =
-                        widget.reservations[indexOfCurrentGridItem];
-                    final nights = reservation.departureDate
-                        .difference(reservation.arrivalDate)
-                        .inDays;
-
-                    return Stack(
-                      clipBehavior: Clip.none,
-                      alignment: Alignment.center,
-                      children: [
-                        Material(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          clipBehavior: Clip.antiAlias,
-                          color: Theme.of(context).colorScheme.secondary,
-                          child: InkWell(
-                            onTap: () {
-                              tapHandler(indexOfCurrentGridItem);
-                            }, //needed for hover to work
-                            onHover: (hovered) {
-                              hoverHandler(indexOfCurrentGridItem);
-                            },
-                            child: Stack(
-                              fit: StackFit.expand,
-                              children: [
-                                Positioned(
-                                  child: ReservationGridItemContainerItems(
-                                    //Items.
-                                    localized: localized,
-                                    nights: nights,
-                                    reservation: reservation,
-                                  ),
-                                ),
-                                Positioned(
-                                  bottom: 0,
-                                  child: IsSelectedUnderline(
-                                      isSelected: selectedReservations
-                                          .contains(indexOfCurrentGridItem)),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          right: -8,
-                          top: -8,
-                          child: Tooltip(
-                            preferBelow: false,
-                            message: "Hello!",
-                            child: Icon(
-                              Icons.info,
-                              color: Theme.of(context).colorScheme.surface,
-                            ),
-                          ),
-                        ),
-                      ],
-                    );
-                  },
                 ),
               ),
-            ),
-            selectedReservations.isNotEmpty
-                ? TextButton(
-                    //Submit button
-                    //Submit Button
-                    onPressed: () async {
-                      await context
-                          .read<IsarHelper>()
-                          .insertMultipleEntriesToDb(selectedReservations
-                              .map((index) => widget.reservations[index])
-                              .toList());
+              Expanded(
+                //Actual List
+                child: GestureDetector(
+                  //used for keeping track of hold
+                  onHorizontalDragStart: startHolding,
+                  onHorizontalDragEnd: stopHolding,
+                  child: GridView.builder(
+                    shrinkWrap: true,
+                    padding: const EdgeInsets.all( 32),
+                    gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                      maxCrossAxisExtent: kMaxContainerWidthSmall,
+                      crossAxisSpacing: 8,
+                      mainAxisSpacing: 8,
+                    ),
+                    itemCount: widget.reservations.length,
+                    itemBuilder: (context, indexOfCurrentGridItem) {
+                      final reservation =
+                          widget.reservations[indexOfCurrentGridItem];
+                      final nights = reservation.departureDate
+                          .difference(reservation.arrivalDate)
+                          .inDays;
+
+                      return Stack(
+                        clipBehavior: Clip.none,
+                        alignment: Alignment.center,
+                        children: [
+                          Material(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            clipBehavior: Clip.antiAlias,
+                            color: Theme.of(context).colorScheme.secondary,
+                            child: InkWell(
+                              onTap: () {
+                                tapHandler(indexOfCurrentGridItem);
+                              }, //needed for hover to work
+                              onHover: (hovered) {
+                                hoverHandler(indexOfCurrentGridItem);
+                              },
+                              child: Stack(
+                                fit: StackFit.expand,
+                                children: [
+                                  Positioned(
+                                    child: ReservationGridItemContainerItems(
+                                      //Items.
+                                      localized: localized,
+                                      nights: nights,
+                                      reservation: reservation,
+                                    ),
+                                  ),
+                                  Positioned(
+                                    bottom: 0,
+                                    child: IsSelectedUnderline(
+                                        isSelected: selectedReservations
+                                            .contains(indexOfCurrentGridItem)),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            right: -8,
+                            top: -8,
+                            child: Tooltip(
+                              preferBelow: false,
+                              message: "Hello!",
+                              child: Icon(
+                                Icons.info,
+                                color: Theme.of(context).colorScheme.surface,
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
                     },
-                    child:
-                        Text("${localized.addSelected.capitalized}. (${selectedReservations.length})"),
-                  )
-                : const SizedBox.shrink()
-          ],
+                  ),
+                ),
+              ),
+              selectedReservations.isNotEmpty
+                  ? TextButton(
+                      //Submit button
+                      //Submit Button
+                      onPressed: () async {
+                        await context
+                            .read<IsarHelper>()
+                            .insertMultipleEntriesToDb(selectedReservations
+                                .map((index) => widget.reservations[index])
+                                .toList());
+                      },
+                      child:
+                          Text("${localized.addSelected.capitalized}. (${selectedReservations.length})"),
+                    )
+                  : const SizedBox.shrink()
+            ],
+          ),
         ),
       );
     }

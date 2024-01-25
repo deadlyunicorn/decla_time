@@ -10,11 +10,13 @@ class DateFieldWrap extends StatefulWidget {
     required this.handleDateSetButton,
     required this.localized,
     required this.label,
+    this.errorText,
     this.date,
   });
 
   final void Function(BuildContext context) handleDateSetButton;
   final AppLocalizations localized;
+  final String? errorText;
   final DateTime? date;
   final String label;
 
@@ -27,50 +29,81 @@ class _DateFieldWrapState extends State<DateFieldWrap> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Container(
-          width: kContainerWidthMedium,
-          height: kMenuHeight,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(4),
-              border: Border.symmetric(
+    return FormField(
+
+      onSaved:(newValue) {
+        print( newValue );
+      },
+      validator: (value) {
+        
+      },
+      builder: (field) => SizedBox(
+        height: kMenuHeightWithError,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Container(
+              width: kContainerWidthMedium,
+              height: kMenuHeight,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(4),
+                border: Border.symmetric(
                   horizontal: BorderSide(
-                      color: Theme.of(context).colorScheme.onBackground))),
-          child: Stack(
-            clipBehavior: Clip.none,
-            alignment: Alignment.center,
-            children: [
-              Positioned(
-                top: -24,
-                left: 8,
-                child: Container(
-                  padding: const EdgeInsets.all(8),
-                  color: Theme.of(context).colorScheme.background,
-                  child: Text(
-                    widget.label,
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
+                      color: widget.errorText != null
+                          ? Theme.of(context).colorScheme.error
+                          : Theme.of(context).colorScheme.onBackground),
                 ),
               ),
-              Positioned.fill(
-                child: TextButton(
-                  style: datePickerTextButtonStyle(context),
-                  onPressed: () {
-                    widget.handleDateSetButton(context);
-                  },
-                  onHover: (value) {
-                    setState(() {
-                      isHovering = value;
-                    });
-                  },
-                  child: Text(
-                    showDateOrSet(widget.date, isHovering),
+              child: Stack(
+                clipBehavior: Clip.none,
+                alignment: Alignment.center,
+                children: [
+                  Positioned(
+                    top: -24,
+                    left: 8,
+                    child: Container(
+                      padding: const EdgeInsets.all(8),
+                      color: Theme.of(context).colorScheme.background,
+                      child: Text(
+                        widget.label,
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: widget.errorText != null ? Theme.of(context).colorScheme.error : null
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-              )
-            ],
-          )),
+                  Positioned.fill(
+                    child: TextButton(
+                      style: datePickerTextButtonStyle(context),
+                      onPressed: () {
+                        widget.handleDateSetButton(context);
+                      },
+                      onHover: (value) {
+                        setState(() {
+                          isHovering = value;
+                        });
+                      },
+                      child: Text(
+                        showDateOrSet(widget.date, isHovering),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    bottom: -32,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        widget.errorText ?? "",
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodySmall
+                            ?.copyWith(color: Theme.of(context).colorScheme.error),
+                      ),
+                    ),
+                  )
+                ],
+              )),
+        ),
+      ),
     );
   }
 

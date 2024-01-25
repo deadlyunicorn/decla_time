@@ -1,4 +1,3 @@
-
 import 'package:decla_time/core/constants/constants.dart';
 import 'package:decla_time/core/extensions/capitalize.dart';
 import 'package:decla_time/reservations_action_button_menu/manual_entry_route/reservation_manual_entry_dropdown_field_outline.dart';
@@ -21,11 +20,14 @@ class PlatformField extends StatelessWidget {
       localized: localized,
       textEditingController: platformNameController,
       sharedPrefsListKey: kBookingPlatforms,
-      label: localized.platform,
-      defaultDropdownEntriesList: ["Airbnb", "Booking.com"]
-          .map((platformEntry) =>
-              DropdownMenuEntry(value: platformEntry, label: platformEntry))
-          .toList(),
+      label: "${localized.platform}*",
+      isRequired: true,
+      defaultDropdownEntriesList: [
+        const DropdownMenuEntry(value: "airbnb", label: "Airbnb"),
+        const DropdownMenuEntry(value: "booking_com", label: "Booking.com"),
+        DropdownMenuEntry(
+            value: "no_platform", label: localized.without.capitalized),
+      ],
     );
   }
 }

@@ -14,6 +14,7 @@ class ReservationManualEntryDropdownFieldOutline extends StatefulWidget {
     required this.textEditingController,
     required this.sharedPrefsListKey,
     required this.label,
+    required this.isRequired,
     this.helperText,
     this.defaultDropdownEntriesList,
   });
@@ -23,6 +24,7 @@ class ReservationManualEntryDropdownFieldOutline extends StatefulWidget {
   final String sharedPrefsListKey;
   final String label;
   final String? helperText;
+  final bool isRequired;
   final List<DropdownMenuEntry<String>>? defaultDropdownEntriesList;
 
   @override
@@ -34,50 +36,60 @@ class _ReservationManualEntryDropdownFieldOutlineState
     extends State<ReservationManualEntryDropdownFieldOutline> {
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: dropDownMenuEntriesFuture(), //getBookingPlatforms(),
-      builder: (context, snapshot) {
-        final List<DropdownMenuEntry<String>> snapshotData =
-            snapshot.data ?? [];
-
-        return DropdownMenu(
-          menuHeight: 256,
-          width: kMaxContainerWidthSmall * 2,
-          textStyle: Theme.of(context).textTheme.headlineSmall,
-          label: Text(widget.label.capitalized),
-          controller: widget.textEditingController,
-          helperText: widget.helperText,
-          dropdownMenuEntries: [
-            DropdownMenuEntry(
-              value: "newEntry",
-              label: widget.localized.add.capitalized,
-            ),
-            ...snapshotData,
-          ],
-          onSelected: (value) async {
-            if (value == "newEntry") {
-              final String? newEntry = ( await showDialog(
-                context: context,
-                builder: (context) {
-                  return SharedPrefsListStringAdditionAlertDialog(
-                      title:
-                          "${widget.localized.add.capitalized} ${widget.label}",
-                      listStringKey: widget.sharedPrefsListKey,
-                      hintText:
-                          "${widget.localized.enter.capitalized} ${widget.label}",
-                      refreshParent: () {
-                        setState(() {});
-                      },
-                      dropdownMenuEntries:
-                          (snapshot.data ?? []).map((e) => e.value).toSet());
-                },
-              ));
-
-              widget.textEditingController.text = newEntry ?? "" ;
-            }
+    return Padding(
+      padding: const EdgeInsets.all( 16 ),
+      child: SizedBox(
+        height: kMenuHeightWithError,
+        child: FutureBuilder(
+          future: dropDownMenuEntriesFuture(), //getBookingPlatforms(),
+          builder: (context, snapshot) {
+            final List<DropdownMenuEntry<String>> snapshotData =
+                snapshot.data ?? [];
+        
+            return DropdownMenu(
+              errorText: widget.isRequired ? widget.localized.insertSomeValue.capitalized : null,
+              menuHeight: 256,
+              width: kMaxContainerWidthSmall * 2,
+              textStyle: Theme.of(context).textTheme.headlineSmall,
+              label: Text(widget.label.capitalized),
+              controller: widget.textEditingController,
+              helperText: widget.helperText,
+              dropdownMenuEntries: [
+                DropdownMenuEntry(
+                  value: "newEntry",
+                  label: widget.localized.add.capitalized,
+                ),
+                ...snapshotData,
+              ],
+              onSelected: (value) async {
+                if (value == "newEntry") {
+                  final String? newEntry = (await showDialog(
+                    context: context,
+                    builder: (context) {
+                      return SharedPrefsListStringAdditionAlertDialog(
+                          title:
+                              "${widget.localized.add.capitalized} ${widget.label}",
+                          listStringKey: widget.sharedPrefsListKey,
+                          hintText:
+                              "${widget.localized.enter.capitalized} ${widget.label}",
+                          refreshParent: () {
+                            setState(() {});
+                          },
+                          dropdownMenuEntries:
+                              (snapshot.data ?? []).map((e) => e.value).toSet());
+                    },
+                  ));
+        
+                  widget.textEditingController.text = newEntry ?? "";
+                }
+                else{
+                  widget.textEditingController.text = value ?? "";
+                }
+              },
+            );
           },
-        );
-      },
+        ),
+      ),
     );
   }
 
