@@ -47,6 +47,7 @@ class AnalyticsPage extends StatelessWidget {
 
               await prefs.setStringList(kListings, []);
               await prefs.setStringList(kBookingPlatforms, []);
+              await prefs.setStringList(kReservationListing, []);
               await prefs.setStringList(kReservationStatus, []);
             },
             child: Text(
