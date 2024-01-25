@@ -3,7 +3,7 @@ import 'package:decla_time/core/extensions/capitalize.dart';
 import 'package:decla_time/core/widgets/route_outline.dart';
 import 'package:decla_time/reservations/business/reservation.dart';
 import 'package:decla_time/reservations_action_button_menu/manual_entry_route/form_fields/date_fields/date_pickers_field.dart';
-import 'package:decla_time/reservations_action_button_menu/manual_entry_route/form_fields/id_field.dart';
+import 'package:decla_time/reservations_action_button_menu/manual_entry_route/form_fields/required_text_field.dart';
 import 'package:decla_time/reservations_action_button_menu/manual_entry_route/form_fields/listing_name_field.dart';
 import 'package:decla_time/reservations_action_button_menu/manual_entry_route/form_fields/payout_field.dart';
 import 'package:decla_time/reservations_action_button_menu/manual_entry_route/form_fields/platform_field.dart';
@@ -38,81 +38,94 @@ class _ManualReservationEntryRouteState
 
   @override
   Widget build(BuildContext context) {
+
     final localized = AppLocalizations.of(context)!;
 
     return RouteOutline(
       title: localized.manualAddition.capitalized,
-      child: SizedBox(
-        width: kMaxWidthLargest,
-        child: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Wrap(
-                spacing: 16,
-                runSpacing: 16,
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: SizedBox(
+            width: kMaxWidthLargest,
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  PlatformField(
-                    localized: localized,
-                    platformNameController: platformNameController,
+                  Wrap(
+                    children: [
+                      PlatformField(
+                        localized: localized,
+                        platformNameController: platformNameController,
+                      ),
+                      ListingNameField(
+                        localized: localized,
+                        listingNameController: listingNameController,
+                      ),
+                      StatusField(
+                        localized: localized,
+                        reservationStatusController: reservationStatusController,
+                      ),
+                    ],
                   ),
-                  ListingNameField(
-                    localized: localized,
-                    listingNameController: listingNameController,
+                  Wrap(
+                    children: [
+                      RequiredTextField(
+                        controller: idController,
+                        label: "ID",
+                        localized: localized,
+                      ),
+                      RequiredTextField(
+                        controller: guestNameController,
+                        label: localized.guestName.capitalized,
+                        localized: localized,
+                      ),
+                    ],
                   ),
-                  StatusField(
+                  PayoutField(
+                    payoutController: payoutController,
                     localized: localized,
-                    reservationStatusController: reservationStatusController,
                   ),
+                  DatePickersField(
+                    departureDate: departureDate,
+                    arrivalDate: arrivalDate,
+                    localized: localized,
+                    setArrivalDate: setArrivalDate,
+                    setDepartureDate: setDapartureDate,
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      _formKey.currentState!.validate();
+                      _formKey.currentState?.save();
+            
+                      // widget.addToReservationsFoundSoFar(
+                      //   [
+                      //     Reservation(
+                      //       bookingPlatform: "Manuual",
+                      //       listingName: "Custom to be edited",
+                      //       id: "ID",
+                      //       guestName: "Someone",
+                      //       arrivalDate: DateTime.now(),
+                      //       departureDate: DateTime.now(),
+                      //       payout: 121,
+                      //       reservationStatus: "Έκλεισε",
+                      //     )
+                      //   ],
+                      // );
+                    },
+                    child: Text(
+                      localized.submit.capitalized,
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineLarge
+                          ?.copyWith(color: Theme.of(context).colorScheme.surface),
+                    ),
+                  ),
+                  // const Expanded(child: Text("heehe")),
                 ],
               ),
-
-              IdField(idController: idController),
-              Text(
-                localized.guestName.capitalized,
-              ),
-              PayoutField(
-                payoutController: payoutController,
-                localized: localized,
-              ),
-              DatePickersField(
-                departureDate: departureDate,
-                arrivalDate: arrivalDate,
-                localized: localized,
-                setArrivalDate: setArrivalDate,
-                setDepartureDate: setDapartureDate,
-              ),
-              TextButton(
-                onPressed: () {
-                  _formKey.currentState!.validate();
-
-                  // widget.addToReservationsFoundSoFar(
-                  //   [
-                  //     Reservation(
-                  //       bookingPlatform: "Manuual",
-                  //       listingName: "Custom to be edited",
-                  //       id: "ID",
-                  //       guestName: "Someone",
-                  //       arrivalDate: DateTime.now(),
-                  //       departureDate: DateTime.now(),
-                  //       payout: 121,
-                  //       reservationStatus: "Έκλεισε",
-                  //     )
-                  //   ],
-                  // );
-                },
-                child: Text(
-                  localized.submit.capitalized,
-                  style: Theme.of(context)
-                      .textTheme
-                      .headlineLarge
-                      ?.copyWith(color: Theme.of(context).colorScheme.surface),
-                ),
-              ),
-              // const Expanded(child: Text("heehe")),
-              const CircularProgressIndicator()
-            ],
+            ),
           ),
         ),
       ),
