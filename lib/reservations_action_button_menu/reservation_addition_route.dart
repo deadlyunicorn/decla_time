@@ -48,13 +48,14 @@ class _ReservationAdditionRouteState extends State<ReservationAdditionRoute> {
                   icon: Icons.edit,
                   onTap: () async {
                     final reservation = await Navigator.push<Reservation?>(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ManualReservationEntryRoute(
-                            addToReservationsFoundSoFar:
-                                addToReservationsFoundSoFar,
-                          ),
-                        ));
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ManualReservationEntryRoute(
+                          addToReservationsFoundSoFar:
+                              addToReservationsFoundSoFar,
+                        ),
+                      ),
+                    );
                     if (context.mounted) {
                       ScaffoldMessenger.of(context).removeCurrentSnackBar();
 
@@ -107,7 +108,8 @@ class _ReservationAdditionRouteState extends State<ReservationAdditionRoute> {
       Iterable<Reservation> iterableReservations) {
     setState(() {
       reservations.removeWhere(
-        (reservation) => iterableReservations.map((e) => e.id).contains( reservation.id),
+        (reservation) =>
+            iterableReservations.map((e) => e.id).contains(reservation.id),
       );
     });
   }

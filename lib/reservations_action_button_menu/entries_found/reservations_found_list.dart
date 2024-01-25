@@ -19,7 +19,7 @@ class ReservationsFoundList extends StatefulWidget {
   });
 
   final List<Reservation> reservations;
-  final void Function( Iterable<Reservation> ) removeFromReservationsFoundSoFar;
+  final void Function(Iterable<Reservation>) removeFromReservationsFoundSoFar;
 
   @override
   State<ReservationsFoundList> createState() => _ReservationsFoundListState();
@@ -133,7 +133,41 @@ class _ReservationsFoundListState extends State<ReservationsFoundList> {
                             top: -8,
                             child: Tooltip(
                               preferBelow: false,
-                              message: "Hello!",
+                              richMessage: TextSpan(children: [
+                                TextSpan(
+                                  text: "ID: ${reservation.id}",
+                                ),
+                                const TextSpan(text: "\n"),
+                                TextSpan(
+                                  text:
+                                      "${localized.listingPlace.capitalized}: ${reservation.listingName ?? localized.without.capitalized}",
+                                ),
+                                const TextSpan(text: "\n"),
+                                TextSpan(
+                                  text:
+                                      "${localized.platform.capitalized}: ${reservation.bookingPlatform}",
+                                ),
+                                const TextSpan(text: "\n"),
+                                TextSpan(
+                                  text:
+                                      "${localized.status.capitalized}: ${reservation.reservationStatus}",
+                                ),
+                                const TextSpan(text: "\n"),
+                                TextSpan(
+                                  text:
+                                      "${localized.arrival.capitalized}: ${reservation.arrivalDateString}",
+                                ),
+                                const TextSpan(text: "\n"),
+                                TextSpan(
+                                  text:
+                                      "${localized.departure.capitalized}: ${reservation.departureDateString}",
+                                ),
+                                const TextSpan(text: "\n"),
+                                TextSpan(
+                                  text:
+                                      "${localized.payout.capitalized}: ${reservation.payout}€",
+                                ),
+                              ]),
                               child: Icon(
                                 Icons.info,
                                 color: Theme.of(context).colorScheme.surface,
@@ -156,7 +190,10 @@ class _ReservationsFoundListState extends State<ReservationsFoundList> {
                             .insertMultipleEntriesToDb(selectedReservations
                                 .map((index) => widget.reservations[index])
                                 .toList());
-                        widget.removeFromReservationsFoundSoFar( selectedReservations.map((index) => widget.reservations[index]) );
+                        widget.removeFromReservationsFoundSoFar(
+                          selectedReservations
+                              .map((index) => widget.reservations[index]),
+                        );
                         selectedReservations.clear();
                       },
                       child: Text(
