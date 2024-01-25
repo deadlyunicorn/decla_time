@@ -20,32 +20,30 @@ class RequiredTextField extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: SizedBox(
+        width: kMaxContainerWidthSmall * 2,
         height: kMenuHeightWithError,
-        child: SizedBox(
-          width: kMaxContainerWidthSmall * 2,
-          child: TextFormField(
-            decoration: InputDecoration(
-                errorMaxLines: 2,
-                errorText: "hahar",
-                labelText: "${label.capitalized}*",
-                border: const OutlineInputBorder(),
-                contentPadding: const EdgeInsets.symmetric(
-                  vertical: 16,
-                  horizontal: 8,
-                )),
-            controller: controller,
-            validator: (value) {
-              if (value != null && value.isNotEmpty) {
-                if (value.length < 6) {
-                  return localized.insertAtleastSix.capitalized;
-                } else {
-                  return null;
-                }
-              } else {
-                return localized.insertSomeValue.capitalized;
-              }
-            },
+        child: TextFormField(
+          decoration: InputDecoration(
+            errorMaxLines: 2,
+            labelText: "${label.capitalized}*",
+            border: const OutlineInputBorder(),
+            contentPadding: const EdgeInsets.symmetric(
+              vertical: 16,
+              horizontal: 8,
+            ),
           ),
+          controller: controller,
+          validator: (value) {
+            if (value != null && value.isNotEmpty) {
+              if (value.length < 6) {
+                return localized.insertAtleastSix.capitalized;
+              } else {
+                return null;
+              }
+            } else {
+              return localized.insertSomeValue.capitalized;
+            }
+          },
         ),
       ),
     );
