@@ -35,6 +35,7 @@ class Reservation{
     
   }); 
 
+  int get nights => departureDate.difference( arrivalDate ).inDays + 1 ; 
   Id get isarId => fastHash( id );
   
 

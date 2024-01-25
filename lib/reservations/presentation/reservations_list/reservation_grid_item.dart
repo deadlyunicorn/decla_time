@@ -14,9 +14,6 @@ class ReservationGridItem extends StatelessWidget {
 
   final Reservation reservation;
 
-  int get nights =>
-      reservation.departureDate.difference(reservation.arrivalDate).inDays + 1;
-
   @override
   Widget build(BuildContext context) {
     final localized = AppLocalizations.of(context)!;
@@ -47,7 +44,6 @@ class ReservationGridItem extends StatelessWidget {
             },
             child: ReservationGridItemContainerItems(
               reservation: reservation,
-              nights: nights,
               localized: localized,
             ),
           ),

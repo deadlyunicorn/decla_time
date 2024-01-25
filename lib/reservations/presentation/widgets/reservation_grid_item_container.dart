@@ -1,3 +1,4 @@
+import 'package:decla_time/core/functions/night_or_nights.dart';
 import 'package:decla_time/reservations/business/reservation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -6,12 +7,10 @@ class ReservationGridItemContainerItems extends StatelessWidget {
   const ReservationGridItemContainerItems({
     super.key,
     required this.reservation,
-    required this.nights,
     required this.localized,
   });
 
   final Reservation reservation;
-  final int nights;
   final AppLocalizations localized;
 
   @override
@@ -45,7 +44,7 @@ class ReservationGridItemContainerItems extends StatelessWidget {
                     softWrap: true,
                   ),
                   Text(
-                    "$nights ${localized.nights}",
+                    nightOrNights(localized, reservation.nights),
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ],
