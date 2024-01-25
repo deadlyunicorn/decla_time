@@ -48,7 +48,13 @@
     "manualAddition" : "χειροκίνητη προσθήκη",
     "submit": "υποβολή",
     "enter": "εισάγετε",
-    "reservationLasted" : "η κράτηση διήρκησε"
+    "without": "χωρίς",
+    "reservationLasted" : "η κράτηση διήρκησε",
+    "insertSomeValue": "εισάγετε κάποια τιμή",
+    "insertAtleastSix": "εισάγετε τουλάχιστον έξι χαρακτήρες",
+    "payout": "πληρωμή"
+
+
 
 
 

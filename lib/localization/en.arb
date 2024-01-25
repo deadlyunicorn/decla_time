@@ -48,7 +48,12 @@
     "manualAddition" : "manual addition",
     "submit": "submit",
     "enter": "enter",
-    "reservationLasted" : "the reservation lasted"
+    "without": "without",
+    "reservationLasted" : "the reservation lasted",
+    "insertSomeValue": "insert some value",
+    "insertAtleastSix": "insert atleast six characters",
+    "payout": "payout"
+
 
 
 
