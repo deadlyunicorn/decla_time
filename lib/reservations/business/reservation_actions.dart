@@ -146,7 +146,7 @@ class ReservationFolderActions {
             arrivalDate: DateFormat('M/d/y HH:mm').parse(
                 "${csvFileRowEntries[i][kAirbnbArrivalDateColumn]} 13:00"),
             departureDate: DateFormat('M/d/y HH:mm').parse(
-                "${csvFileRowEntries[i][kAirbnbDepartureDateColumn]} 09:00"),
+                "${csvFileRowEntries[i][kAirbnbDepartureDateColumn]} 11:00"),
             payout: double.parse(hostPayoutString.join('')),
             reservationStatus: csvFileRowEntries[i]
                 [kAirbnbReservationStatusColumn],
@@ -226,7 +226,7 @@ class ReservationFolderActions {
             arrivalDate: DateFormat('y-MM-dd HH:mm').parse(
                 "${csvFileRowEntries[i][kBookingDotComArrivalDateColumn]} 13:00"),
             departureDate: DateFormat('y-MM-dd HH:mm').parse(
-                "${csvFileRowEntries[i][kBookingDotComDepartureDateColumn]} 09:00"),
+                "${csvFileRowEntries[i][kBookingDotComDepartureDateColumn]} 11:00"),
             payout: hostPayout,
             reservationStatus: csvFileRowEntries[i]
                 [kBookingDotComReservationStatusColumn],
