@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
   static const _white = Color.fromARGB(255, 218, 216, 248);
   static const _primary = Color(0xFF3B197B);
   static const _secondary = Color(0xFF2619B4);
-  static const _tetriary = Color(0xFFB59C0D);
+  static const _tetriary = Color.fromARGB(255, 13, 181, 97);
   static const _background = Color(0xFF040412);
   static const _error = Color.fromARGB(255, 199, 11, 68);
 
@@ -111,6 +111,11 @@ class MyApp extends StatelessWidget {
             _background.withOpacity( 0.94 )
           ),
         ),
+      ),
+      dialogTheme: DialogTheme(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular( 8 )
+        )
       ),
       useMaterial3: true,
     );
