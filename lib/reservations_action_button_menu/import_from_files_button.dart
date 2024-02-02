@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:decla_time/core/extensions/capitalize.dart';
 import 'package:decla_time/reservations/business/reservation.dart';
 import 'package:decla_time/reservations/business/reservation_actions.dart';
+import 'package:decla_time/reservations_action_button_menu/getting_reservation_files_instructions/getting_reservation_files_instructions_route.dart';
 import 'package:decla_time/reservations_action_button_menu/import_manually_button.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -35,7 +36,12 @@ class ImportFromFilesButton extends StatelessWidget {
             message: localized.howToGetTheFiles.capitalized,
             child: IconButton(
               onPressed: () {
-                print("Pop up that shows instructions");
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const GettingReservationFilesInstructionsRoute(),
+                  ),
+                );
               },
               icon: const Icon(Icons.question_mark_rounded),
             ),
