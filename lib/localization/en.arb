@@ -56,7 +56,19 @@
     "insertAtleastSix": "insert atleast six characters",
     "payout": "payout",
     "addedAReservation" : "added a reservation",
-    "thePayoutIs": "the payout is"
+    "thePayoutIs": "the payout is",
+    "getTheFiles": "get the files",
+    "getTheFilesPrompt" : "to get to the reservations page click on",
+    "loginIfNeeded": "log in if needed",
+    "selectTheDatesToImport": "select the dates you want to import to the app",
+    "clickOnExportLikeBelow": "in order to download the file, press on export button like in the image below, then the first option",
+    "clickOnDownloadAndWait": "click on download and wait",
+    "whenReadyDownload": "when your file is ready download it",
+    "needToConvert": "the file is an '.xls' - we need to convert it to '.csv'",
+    "goTo": "get to",
+    "convertWithHelp": "convert  the file with the help of",
+    "yourFilesAreReady": "your file is ready to be imported",
+    "unusedForNonTrailingComma________________________________":""
 
 
 
