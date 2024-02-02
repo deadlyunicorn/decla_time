@@ -1,3 +1,4 @@
+import 'package:decla_time/core/extensions/capitalize.dart';
 import 'package:decla_time/core/widgets/route_outline.dart';
 import 'package:decla_time/reservations_action_button_menu/getting_reservation_files_instructions/airbnb_file_instructions.dart';
 import 'package:decla_time/reservations_action_button_menu/getting_reservation_files_instructions/booking_com_file_instructions.dart';
@@ -18,7 +19,7 @@ class GettingReservationFilesInstructionsRoute extends StatelessWidget {
     final localized = AppLocalizations.of(context)!;
 
     return RouteOutline(
-      title: "Instructions on getting the files",
+      title: localized.instructionsForFiles.capitalized,
       child: SingleChildScrollView(
         child: SizedBox(
           width: MediaQuery.sizeOf(context).width,
