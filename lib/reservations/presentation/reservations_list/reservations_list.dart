@@ -21,32 +21,30 @@ class ReservationsList extends StatelessWidget {
         ReservationFolderActions.genereateYearMonthMap(reservations);
 
     if (reservations.isNotEmpty) {
-      return Center(
-        child: SizedBox(
-          width: min(MediaQuery.sizeOf(context).width, kMaxWidthLargest),
-          child: ListView.builder(
-            // A list where entries are separated by year.
-            itemCount: yearMonthMap.entries.length,
-            itemBuilder: (context, index) {
+      return ListView.builder(
+        // A list where entries are separated by year.
+        itemCount: yearMonthMap.entries.length,
+        itemBuilder: (context, index) {
+          final int year = yearMonthMap.keys.toList()[index];
 
-              final int year = yearMonthMap.keys.toList()[index];
-
-              return Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const SizedBox.square(dimension: 32),
-                  Text(
-                    "$year",
-                    style: Theme.of(context).textTheme.headlineLarge,
-                  ),
-                  ReservationsOfYear(
-                    reservationsMapYear: yearMonthMap[year]!,
-                  ),
-                ],
-              );
-            },
-          ),
-        ),
+          return Column(
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const SizedBox.square(dimension: 32),
+              Text(
+                "$year",
+                style: Theme.of(context).textTheme.headlineLarge,
+              ),
+              SizedBox(
+                width: min(MediaQuery.sizeOf(context).width, kMaxWidthLargest),
+                child: ReservationsOfYear(
+                  reservationsMapYear: yearMonthMap[year]!,
+                ),
+              ),
+            ],
+          );
+        },
       );
     } else {
       return Center(
