@@ -9,8 +9,11 @@ import 'package:decla_time/settings.dart';
 import 'package:decla_time/skeleton/skeleton.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  
   final settingsController = SettingsController();
   await settingsController.loadSettings();
+
   runApp(
     MyApp(
       settingsController: settingsController,
