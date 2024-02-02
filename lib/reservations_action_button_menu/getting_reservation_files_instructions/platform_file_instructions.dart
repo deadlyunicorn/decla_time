@@ -56,7 +56,7 @@ class PlatformFileInstructions extends StatelessWidget {
                     padding: const EdgeInsets.symmetric( horizontal: 4, vertical: 8),
                     child: Image(
                       // width: imageWidth , //? Our desired aspect ratio is 1.616
-                      height: imageHeight / 1.6161,
+                      height: imageHeight, /// 1.6161,
                       image: AssetImage(
                         imageAssetNames[index],
                       ),

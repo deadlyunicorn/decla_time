@@ -1,7 +1,7 @@
 {
     "@@locale": "el",
     "localeFlag": "🇬🇷",
-    "@@homeScreen":{},
+    "@homeScreen":{},
     "reservations": "κρατήσεις",
     "declarations": "δηλώσεις",
     "analytics": "αναλυτικά",
