@@ -44,118 +44,127 @@ class _ManualReservationEntryRouteState
     return RouteOutline(
       title: localized.manualAddition.capitalized,
       child: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: SizedBox(
-            width: kMaxWidthLargest,
-            child: Form(
-              key: _formKey,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Wrap(
-                    alignment: WrapAlignment.center,
-                    children: [
-                      PlatformField(
-                        localized: localized,
-                        platformNameController: platformNameController,
-                      ),
-                      ListingNameField(
-                        localized: localized,
-                        listingNameController: listingNameController,
-                      ),
-                      StatusField(
-                        localized: localized,
-                        reservationStatusController:
-                            reservationStatusController,
-                      ),
-                    ],
-                  ),
-                  Wrap(
-                    children: [
-                      SizedBox(
-                        width: kMaxContainerWidthSmall * 2,
-                        height: kMenuHeightWithError,
-                        child: Stack(
-                          alignment: Alignment.centerRight,
-                          children: [
-                            Positioned(
-                              child: RequiredTextField(
-                                controller: idController,
-                                label: "ID",
-                                localized: localized,
-                              ),
-                            ),
-                            Positioned(
-                              right: 24,
-                              child: IconButton(
-                                onPressed: () {
-                                  idController.text =  fastHash( DateTime.now().toString() ).abs().toRadixString( 16 ).substring(0,10);
-                                },
-                                icon: const Icon(Icons.refresh),
-                              ),
-                            )
-                          ],
+        child: SizedBox(
+          width: MediaQuery.sizeOf(context).width,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: SizedBox(
+              width: kMaxWidthLargest,
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Wrap(
+                      alignment: WrapAlignment.center,
+                      children: [
+                        PlatformField(
+                          localized: localized,
+                          platformNameController: platformNameController,
                         ),
-                      ),
-                      RequiredTextField(
-                        controller: guestNameController,
-                        label: localized.guestName.capitalized,
-                        localized: localized,
-                      ),
-                    ],
-                  ),
-                  PayoutField(
-                    payoutController: payoutController,
-                    localized: localized,
-                  ),
-                  DatePickersField(
-                    departureDate: departureDate,
-                    arrivalDate: arrivalDate,
-                    localized: localized,
-                    setArrivalDate: setArrivalDate,
-                    setDepartureDate: setDapartureDate,
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        final bookingPlatform = platformNameController.text;
-                        final listingName = listingNameController.text;
-                        final id = idController.text;
-                        final guestName = guestNameController.text;
-                        final payout = double.tryParse(payoutController.text)!;
-                        final reservationStatus =
-                            reservationStatusController.text;
-                        final arrivalDate = this.arrivalDate!;
-                        final departureDate = this.departureDate!;
-
-                        final reservation = Reservation(
-                          bookingPlatform: bookingPlatform,
-                          listingName: listingName,
-                          id: id,
-                          guestName: guestName,
-                          arrivalDate: arrivalDate,
-                          departureDate: departureDate,
-                          payout: payout,
-                          reservationStatus: reservationStatus,
-                        );
-
-                        widget.addToReservationsFoundSoFar([reservation]);
-
-                        Navigator.pop(context, reservation);
-                      }
-                    },
-                    child: Text(
-                      localized.submit.capitalized,
-                      style: Theme.of(context)
-                          .textTheme
-                          .headlineLarge
-                          ?.copyWith(
-                              color: Theme.of(context).colorScheme.surface),
+                        ListingNameField(
+                          localized: localized,
+                          listingNameController: listingNameController,
+                        ),
+                        StatusField(
+                          localized: localized,
+                          reservationStatusController:
+                              reservationStatusController,
+                        ),
+                      ],
                     ),
-                  ),
-                  // const Expanded(child: Text("heehe")),
-                ],
+                    Wrap(
+                      children: [
+                        SizedBox(
+                          width: kMaxContainerWidthSmall * 2,
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 32),
+                                child: IconButton(
+                                  onPressed: () {
+                                    idController.text =
+                                        fastHash(DateTime.now().toString())
+                                            .abs()
+                                            .toRadixString(16)
+                                            .substring(0, 10);
+                                  },
+                                  icon: const Icon(Icons.shuffle_rounded),
+                                ),
+                              ),
+                              Flexible(
+                                child: RequiredTextField(
+                                  controller: idController,
+                                  label: "ID",
+                                  localized: localized,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        RequiredTextField(
+                          controller: guestNameController,
+                          label: localized.guestName.capitalized,
+                          localized: localized,
+                        ),
+                      ],
+                    ),
+                    PayoutField(
+                      payoutController: payoutController,
+                      localized: localized,
+                    ),
+                    DatePickersField(
+                      departureDate: departureDate,
+                      arrivalDate: arrivalDate,
+                      localized: localized,
+                      setArrivalDate: setArrivalDate,
+                      setDepartureDate: setDapartureDate,
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          final bookingPlatform = platformNameController.text;
+                          final listingName = listingNameController.text;
+                          final id = idController.text;
+                          final guestName = guestNameController.text;
+                          final payout =
+                              double.tryParse(payoutController.text)!;
+                          final reservationStatus =
+                              reservationStatusController.text;
+                          final arrivalDate = this.arrivalDate!;
+                          final departureDate = this.departureDate!;
+
+                          final reservation = Reservation(
+                            bookingPlatform: bookingPlatform,
+                            listingName: listingName,
+                            id: id,
+                            guestName: guestName,
+                            arrivalDate: arrivalDate,
+                            departureDate: departureDate,
+                            payout: payout,
+                            reservationStatus: reservationStatus,
+                          );
+
+                          widget.addToReservationsFoundSoFar([reservation]);
+
+                          Navigator.pop(context, reservation);
+                        }
+                      },
+                      child: Text(
+                        localized.submit.capitalized,
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineLarge
+                            ?.copyWith(
+                                color: Theme.of(context).colorScheme.surface),
+                      ),
+                    ),
+                    // const Expanded(child: Text("heehe")),
+                  ],
+                ),
               ),
             ),
           ),
