@@ -50,7 +50,9 @@ class BookingComFileInstructions extends StatelessWidget {
           TextButton(
             onPressed: () {
               launchUrl(
-                  Uri.parse("https://docs.google.com/spreadsheets/u/0/create"));
+                Uri.parse("https://www.deadlyunicorn.dev/spreadsheets"),
+                mode: LaunchMode.platformDefault
+              );
             },
             child: Text("${localized.goTo.capitalized} Google Sheets"),
           ),
@@ -62,5 +64,4 @@ class BookingComFileInstructions extends StatelessWidget {
       ),
     );
   }
-
 }
