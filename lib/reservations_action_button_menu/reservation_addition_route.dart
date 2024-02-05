@@ -40,7 +40,7 @@ class _ReservationAdditionRouteState extends State<ReservationAdditionRoute> {
               runSpacing: 32,
               children: [
                 ImportFromFilesButton(
-                  reservationsFoundSoFar: reservations,
+                  reservationsAlreadyImported: reservations,
                   addToReservationsFoundSoFar: addToReservationsFoundSoFar,
                 ),
                 ReservationImportButtonOutline(

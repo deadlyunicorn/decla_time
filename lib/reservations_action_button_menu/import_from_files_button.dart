@@ -13,11 +13,11 @@ import 'package:flutter/material.dart';
 class ImportFromFilesButton extends StatelessWidget {
   const ImportFromFilesButton({
     super.key,
-    required this.reservationsFoundSoFar,
+    required this.reservationsAlreadyImported,
     required this.addToReservationsFoundSoFar,
   });
 
-  final List<Reservation> reservationsFoundSoFar;
+  final List<Reservation> reservationsAlreadyImported;
   final void Function(Iterable<Reservation> reservations)
       addToReservationsFoundSoFar;
 
@@ -39,7 +39,8 @@ class ImportFromFilesButton extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const GettingReservationFilesInstructionsRoute(),
+                    builder: (context) =>
+                        const GettingReservationFilesInstructionsRoute(),
                   ),
                 );
               },
@@ -80,49 +81,44 @@ class ImportFromFilesButton extends StatelessWidget {
 
       if (files.isNotEmpty) {
         //If files are not selected you cannot submit anyways.
-        ReservationFolderActions.generateReservationTableFromMultipleFiles(
+        final reservationsFromFile =
+            await ReservationActions.generateReservationTableFromMultipleFiles(
           files,
-        ).then(
-          (reservationsFromFile) {
-            final Set<String> alreadyFoundIds = reservationsFoundSoFar
-                .map((reservation) => reservation.id)
-                .toSet();
+        );
 
-            final newReservationEntries = reservationsFromFile.where(
-              //make sure we don't add duplicates
-              (reservation) => !alreadyFoundIds.contains(reservation.id),
+        final newReservationEntries = ReservationActions.filterReservations(
+            reservationsFromFile, reservationsAlreadyImported);
+
+        if (context.mounted) {
+          if (newReservationEntries.isEmpty) {
+            //No new reservations found -
+            ScaffoldMessenger.of(context).removeCurrentSnackBar();
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Center(
+                  child: Text(localized.newReservationsNotFound.capitalized),
+                ),
+              ),
+            );
+          } else {
+            //Found new reservations
+
+            final newReservationCount = newReservationEntries.length;
+
+            ScaffoldMessenger.of(context).removeCurrentSnackBar();
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Center(
+                  child: Text(
+                    "${localized.found.capitalized} $newReservationCount ${newReservationCount > 1 ? localized.reservations : localized.reservation}.",
+                  ),
+                ),
+              ),
             );
 
-            if (newReservationEntries.isEmpty) {
-              //No new reservations found -
-              ScaffoldMessenger.of(context).removeCurrentSnackBar();
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Center(
-                    child: Text(localized.newReservationsNotFound.capitalized),
-                  ),
-                ),
-              );
-            } else {
-              //Found new reservations
-
-              final newReservationCount = newReservationEntries.length;
-
-              ScaffoldMessenger.of(context).removeCurrentSnackBar();
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Center(
-                    child: Text(
-                      "${localized.found.capitalized} $newReservationCount ${newReservationCount > 1 ? localized.reservations : localized.reservation}.",
-                    ),
-                  ),
-                ),
-              );
-
-              addToReservationsFoundSoFar(newReservationEntries);
-            }
-          },
-        );
+            addToReservationsFoundSoFar(newReservationEntries);
+          }
+        }
       }
     } else if (context.mounted) {
       ScaffoldMessenger.of(context).removeCurrentSnackBar();

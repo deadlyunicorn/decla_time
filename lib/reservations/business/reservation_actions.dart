@@ -7,7 +7,7 @@ import 'package:decla_time/core/documents_io/documents_io.dart';
 import 'package:decla_time/core/errors/exceptions.dart';
 import 'package:decla_time/reservations/business/reservation.dart';
 
-class ReservationFolderActions {
+class ReservationActions {
   Future<List<List<String>>> getRowEntriesFromCsvFile(String path) async {
     final reservationFileContent = await File(path).readAsString();
     final csvFileRows = reservationFileContent.split('\n');
@@ -43,7 +43,7 @@ class ReservationFolderActions {
   Future<List<Reservation>>
       generateReservationTableFromAllCsvFilesInReservationsDirectory() async {
     final reservationCsvFileNames =
-        (await ReservationFolderActions._listReservationFiles())
+        (await ReservationActions._listReservationFiles())
             .where((file) => file.path.contains(".csv"))
             .map((file) => file.path.substring(file.path.lastIndexOf("/")));
 
@@ -60,16 +60,15 @@ class ReservationFolderActions {
   static Future<List<Reservation>> generateReservationTableFromMultipleFiles(
     List<File> files,
   ) async {
-
-    final reservationsTable = ( await Future.wait(
+    final reservationsTable = (await Future.wait(
       files.map(
         (filename) => (generateReservationTableFromFile(filename.path)),
       ),
     ))
-      .fold<List<Reservation>>(
-        [],
-        (previousValue, element) => [...previousValue, ...element],
-      );
+        .fold<List<Reservation>>(
+      [],
+      (previousValue, element) => [...previousValue, ...element],
+    );
 
     // .fold( [] as List<Reservation>, (previousValue, element) async => [ ...previousValue, ...(await element) ]);
 
@@ -94,20 +93,20 @@ class ReservationFolderActions {
   static Future<List<Reservation>> generateReservationTableFromFile(
       String filename) async {
     final tableFromCsvFile =
-        await ReservationFolderActions().getRowEntriesFromCsvFile(
+        await ReservationActions().getRowEntriesFromCsvFile(
       filename,
     ); //[0][1] => first row, second element of the row;
 
     if (tableFromCsvFile[0].length == 13) {
       //File is Airbnb File
-      return ReservationFolderActions._generateReservationTableFromAirbnbFile(
+      return ReservationActions._generateReservationTableFromAirbnbFile(
           tableFromCsvFile);
     } else if (tableFromCsvFile[0].length == 19 ||
         tableFromCsvFile[0].length == 20) {
       //File is Booking File
       //the columns aren't correctly built ( "Reservation by" names get split into 2 columns, thus getting 20 if it's not the first row).
 
-      return ReservationFolderActions
+      return ReservationActions
           ._generateReservationTableFromBookingDotComFile(tableFromCsvFile);
     } else {
       throw UnsupportedFileException();
@@ -235,5 +234,20 @@ class ReservationFolderActions {
       }
     }
     return bookingDotComTable;
+  }
+
+  static Iterable<Reservation> filterReservations(
+    Iterable<Reservation> reservations,
+    Iterable<Reservation> reservationsToExclude,
+  ) {
+    final Set<String> alreadyFoundIds =
+        reservationsToExclude.map((reservation) => reservation.id).toSet();
+
+    final newReservationEntries = reservations.where(
+      //make sure we don't add duplicates
+      (reservation) => !alreadyFoundIds.contains(reservation.id),
+    );
+
+    return newReservationEntries;
   }
 }
