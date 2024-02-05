@@ -18,7 +18,7 @@ class ReservationsList extends StatelessWidget {
   Widget build(BuildContext context) {
     final localized = AppLocalizations.of(context)!;
     final yearMonthMap =
-        ReservationFolderActions.genereateYearMonthMap(reservations);
+        ReservationActions.genereateYearMonthMap(reservations);
 
     if (reservations.isNotEmpty) {
       return ListView.builder(

@@ -48,7 +48,7 @@ void main() async{
 
       expect( await isar.reservations.count(), 0);
 
-      final entries = await ReservationFolderActions.generateReservationTableFromFile(
+      final entries = await ReservationActions.generateReservationTableFromFile(
       "booking_gr_3.csv"
       );
 

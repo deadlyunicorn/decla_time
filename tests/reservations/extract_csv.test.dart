@@ -10,7 +10,7 @@ void main() {
   setUpDocumentsDirectoryForTesting();
 
   test("Detecting Airbnb file", () async {
-    final csvFileTable = await ReservationFolderActions()
+    final csvFileTable = await ReservationActions()
         .getRowEntriesFromCsvFile(
             'airbnb.csv'); //[0][1] => first row, second element of the row
 
@@ -21,7 +21,7 @@ void main() {
   test( "Testing Airbnb file constants mapping", ()async{
     
     final airbnbTable =
-        await ReservationFolderActions().getRowEntriesFromCsvFile(
+        await ReservationActions().getRowEntriesFromCsvFile(
       'airbnb.csv',
     );
     
@@ -39,7 +39,7 @@ void main() {
   test( "Testing Booking.com file constants mapping", ()async{
     
     final bookingDotComTable =
-        await ReservationFolderActions().getRowEntriesFromCsvFile(
+        await ReservationActions().getRowEntriesFromCsvFile(
       'booking_gr_3.csv',
     );
     
@@ -56,7 +56,7 @@ void main() {
   test("Generating an Airbnb Table from an airbnb file", () async {
 
 
-    List<Reservation> reservationsTable = await ReservationFolderActions.generateReservationTableFromFile("airbnb.csv");
+    List<Reservation> reservationsTable = await ReservationActions.generateReservationTableFromFile("airbnb.csv");
 
     //All files should have booking platform of Airbnb.
     expect(
@@ -71,7 +71,7 @@ void main() {
     
     
 
-    List<Reservation> reservationsTable = await ReservationFolderActions.generateReservationTableFromFile(
+    List<Reservation> reservationsTable = await ReservationActions.generateReservationTableFromFile(
       "booking_gr_3.csv"
     );
 
