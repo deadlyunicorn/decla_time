@@ -6,6 +6,8 @@ import 'package:decla_time/core/extensions/capitalize.dart';
 import 'package:decla_time/reservations/business/reservation.dart';
 import 'package:decla_time/reservations/presentation/widgets/reservation_grid_item_container.dart';
 import 'package:decla_time/reservations_action_button_menu/entries_found/is_selected_underline.dart';
+import 'package:decla_time/reservations_action_button_menu/entries_found/reservation_details_tooltip.dart';
+import 'package:decla_time/reservations_action_button_menu/entries_found/will_overwrite_tooltip.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
@@ -26,7 +28,8 @@ class ReservationsFoundList extends StatefulWidget {
 }
 
 class _ReservationsFoundListState extends State<ReservationsFoundList> {
-  Set<int> selectedReservations = {};
+
+  Set<int> setOfIndicesOfSelectedReservations = {};
 
   bool isHolding = false;
   Set<int>? lastSelectedReservationsSnapshot;
@@ -39,197 +42,176 @@ class _ReservationsFoundListState extends State<ReservationsFoundList> {
     if (widget.reservations.isEmpty) {
       return const SizedBox.shrink();
     } else {
-      return SizedBox(
-        width: min(MediaQuery.sizeOf(context).width, kMaxWidthLargest),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Align(
-                alignment: Alignment.topRight,
-                child: Padding(
-                  //DE/SELECT ALL Buttons
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  child: Wrap(
-                    alignment: WrapAlignment.end,
-                    crossAxisAlignment: WrapCrossAlignment.end,
-                    runAlignment: WrapAlignment.end,
-                    verticalDirection: VerticalDirection.up,
-                    runSpacing: 8,
-                    spacing: 16,
-                    children: [
-                      TextButton(
-                        onPressed: unselectAll,
-                        child: Text(localized.clearSelection.capitalized),
+      return FutureBuilder(
+          future:
+              context.read<IsarHelper>().filterRegistered(widget.reservations),
+          builder: (context, snapshot) {
+            final alreadyExistingReservationIds = (snapshot.data ?? []).map(
+              (databaseNonNullReservations) => databaseNonNullReservations.id,
+            );
+
+            return SizedBox(
+              width: min(MediaQuery.sizeOf(context).width, kMaxWidthLargest),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: Padding(
+                        //DE/SELECT ALL Buttons
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        child: Wrap(
+                          alignment: WrapAlignment.end,
+                          crossAxisAlignment: WrapCrossAlignment.end,
+                          runAlignment: WrapAlignment.end,
+                          verticalDirection: VerticalDirection.up,
+                          runSpacing: 8,
+                          spacing: 16,
+                          children: [
+                            TextButton(
+                              onPressed: unselectAll,
+                              child: Text(localized.clearSelection.capitalized),
+                            ),
+                            TextButton(
+                              onPressed: selectAll,
+                              child: Text(localized.selectAll.capitalized),
+                            ),
+                          ],
+                        ),
                       ),
-                      TextButton(
-                        onPressed: selectAll,
-                        child: Text(localized.selectAll.capitalized),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Expanded(
-                //Actual List
-                child: GestureDetector(
-                  //used for keeping track of hold
-                  onHorizontalDragStart: startHolding,
-                  onHorizontalDragEnd: stopHolding,
-
-                  //For Mobiles
-
-                  //! the handlers below are for mobile
-                  //! finish them at some point..
-                  /*
-                  onTapDown: startHolding,
-                  onTapUp: stopHolding,
-                  onHorizontalDragUpdate: (details) {
-                    print( details.localPosition );
-                  },
-                  onVerticalDragUpdate: (details) {
-                    print( details.localPosition );
-                  },
-
-                  */
-                
-                  child: GridView.builder(
-                    shrinkWrap: true,
-                    padding: const EdgeInsets.all( 32 ),
-                    gridDelegate:
-                        const SliverGridDelegateWithMaxCrossAxisExtent(
-                      maxCrossAxisExtent: kMaxContainerWidthSmall, //? Consider changing?
-                      crossAxisSpacing: 8,
-                      mainAxisSpacing: 8,
                     ),
-                    itemCount: widget.reservations.length,
-                    itemBuilder: (context, indexOfCurrentGridItem) {
+                    Expanded(
+                      //Actual List
+                      child: GestureDetector(
+                        //used for keeping track of hold
+                        onHorizontalDragStart: startHolding,
+                        onHorizontalDragEnd: stopHolding,
 
-                      //!! Below might be useful
-                      //!! when handling events from mobile 
-                      // print( context.findRenderObject() );
+                        //For Mobiles
 
-                      final reservation =
-                          widget.reservations[indexOfCurrentGridItem];
-                
-                      return Stack(
-                        clipBehavior: Clip.none,
-                        alignment: Alignment.center,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Material(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              clipBehavior: Clip.antiAlias,
-                              color: Theme.of(context).colorScheme.secondary,
-                              child: InkWell(
-                                onTap: () {
-                                  tapHandler(indexOfCurrentGridItem);
-                                }, //needed for hover to work
-                                onHover: (hovered) {
-                                  hoverHandler(indexOfCurrentGridItem);
-                                },
-                                child: Stack(
-                                  fit: StackFit.expand,
-                                  children: [
-                                    Positioned(
-                                        child: ReservationGridItemContainerItems(
-                                          //Items.
-                                          localized: localized,
-                                          reservation: reservation,
-                                        ),
+                        //! the handlers below are for mobile
+                        //! finish them at some point..
+                        /*
+                      onTapDown: startHolding,
+                      onTapUp: stopHolding,
+                      onHorizontalDragUpdate: (details) {
+                        print( details.localPosition );
+                      },
+                      onVerticalDragUpdate: (details) {
+                        print( details.localPosition );
+                      },
+          
+                      */
+
+                        child: GridView.builder(
+                          shrinkWrap: true,
+                          padding: const EdgeInsets.all(32),
+                          gridDelegate:
+                              const SliverGridDelegateWithMaxCrossAxisExtent(
+                            maxCrossAxisExtent:
+                                kMaxContainerWidthSmall, //? Consider changing?
+                            crossAxisSpacing: 8,
+                            mainAxisSpacing: 8,
+                          ),
+                          itemCount: widget.reservations.length,
+                          itemBuilder: (context, indexOfCurrentGridItem) {
+                            //!! Below might be useful
+                            //!! when handling events from mobile
+                            // print( context.findRenderObject() );
+
+                            final reservation =
+                                widget.reservations[indexOfCurrentGridItem];
+
+                            return Stack(
+                              clipBehavior: Clip.none,
+                              alignment: Alignment.center,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Material(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8),
                                     ),
-                                    Positioned(
-                                      bottom: 0,
-                                      child: IsSelectedUnderline(
-                                          isSelected: selectedReservations
-                                              .contains(indexOfCurrentGridItem)),
-                                    )
-                                  ],
+                                    clipBehavior: Clip.antiAlias,
+                                    color:
+                                        Theme.of(context).colorScheme.secondary,
+                                    child: InkWell(
+                                      onTap: () {
+                                        tapHandler(indexOfCurrentGridItem);
+                                      }, //needed for hover to work
+                                      onHover: (hovered) {
+                                        hoverHandler(indexOfCurrentGridItem);
+                                      },
+                                      child: Stack(
+                                        fit: StackFit.expand,
+                                        children: [
+                                          Positioned(
+                                            child:
+                                                ReservationGridItemContainerItems(
+                                              //Items.
+                                              localized: localized,
+                                              reservation: reservation,
+                                            ),
+                                          ),
+                                          Positioned(
+                                            bottom: 0,
+                                            child: IsSelectedUnderline(
+                                                isSelected:
+                                                    setOfIndicesOfSelectedReservations
+                                                        .contains(
+                                                            indexOfCurrentGridItem)),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                              ),
+                                ReservationDetailsTooltip(
+                                  reservation: reservation,
+                                  localized: localized,
+                                ),
+                                WillOverwriteTooltip(
+                                  reservationAlreadyInDatabase:
+                                      alreadyExistingReservationIds
+                                          .contains(reservation.id),
+                                  localized: localized,
+                                ),
+                              ],
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                    setOfIndicesOfSelectedReservations.isNotEmpty
+                        ? TextButton(
+                            //Submit button
+                            //Submit Button
+                            onPressed: () async {
+                              await context
+                                  .read<IsarHelper>()
+                                  .insertMultipleEntriesToDb(
+                                      setOfIndicesOfSelectedReservations
+                                          .map((index) =>
+                                              widget.reservations[index])
+                                          .toList());
+                              widget.removeFromReservationsFoundSoFar(
+                                setOfIndicesOfSelectedReservations
+                                    .map((index) => widget.reservations[index]),
+                              );
+                              setOfIndicesOfSelectedReservations.clear();
+                            },
+                            child: Text(
+                              "${localized.addSelected.capitalized}. (${setOfIndicesOfSelectedReservations.length})",
                             ),
-                          ),
-                          Positioned(
-                            right: 0,
-                            top: 0,
-                            child: Tooltip(
-                              preferBelow: false,
-                              richMessage: TextSpan(children: [
-                                TextSpan(
-                                  text: "ID: ${reservation.id}",
-                                ),
-                                const TextSpan(text: "\n"),
-                                TextSpan(
-                                  text:
-                                      "${localized.listingPlace.capitalized}: ${reservation.listingName ?? localized.without.capitalized}",
-                                ),
-                                const TextSpan(text: "\n"),
-                                TextSpan(
-                                  text:
-                                      "${localized.platform.capitalized}: ${reservation.bookingPlatform}",
-                                ),
-                                const TextSpan(text: "\n"),
-                                TextSpan(
-                                  text:
-                                      "${localized.status.capitalized}: ${reservation.reservationStatus}",
-                                ),
-                                const TextSpan(text: "\n"),
-                                TextSpan(
-                                  text:
-                                      "${localized.arrival.capitalized}: ${reservation.arrivalDateString}",
-                                ),
-                                const TextSpan(text: "\n"),
-                                TextSpan(
-                                  text:
-                                      "${localized.departure.capitalized}: ${reservation.departureDateString}",
-                                ),
-                                const TextSpan(text: "\n"),
-                                TextSpan(
-                                  text:
-                                      "${localized.payout.capitalized}: ${reservation.payout}€",
-                                ),
-                              ]),
-                              child: Icon(
-                                Icons.info,
-                                color: Theme.of(context).colorScheme.surface,
-                              ),
-                            ),
-                          ),
-                        ],
-                      );
-                    },
-                  ),
+                          )
+                        : const SizedBox.shrink()
+                  ],
                 ),
               ),
-              selectedReservations.isNotEmpty
-                  ? TextButton(
-                      //Submit button
-                      //Submit Button
-                      onPressed: () async {
-                        await context
-                            .read<IsarHelper>()
-                            .insertMultipleEntriesToDb(selectedReservations
-                                .map((index) => widget.reservations[index])
-                                .toList());
-                        widget.removeFromReservationsFoundSoFar(
-                          selectedReservations
-                              .map((index) => widget.reservations[index]),
-                        );
-                        selectedReservations.clear();
-                      },
-                      child: Text(
-                        "${localized.addSelected.capitalized}. (${selectedReservations.length})",
-                      ),
-                    )
-                  : const SizedBox.shrink()
-            ],
-          ),
-        ),
-      );
+            );
+          });
     }
   }
 
@@ -239,7 +221,7 @@ class _ReservationsFoundListState extends State<ReservationsFoundList> {
         indexOfTheGridItemThatStartedTheHold =
             indexOfCurrentGridItem; //keep track of where the hold started from.
         lastSelectedReservationsSnapshot = //keep track of the previously selected items.
-            selectedReservations;
+            setOfIndicesOfSelectedReservations;
         //Started a new hold.
       } else {
         final indexOfGridItemThatStartedTheHoldUnmuttalbe =
@@ -262,7 +244,7 @@ class _ReservationsFoundListState extends State<ReservationsFoundList> {
             )
           };
 
-          Set<int> finalSet = selectedReservations = {
+          Set<int> finalSet = setOfIndicesOfSelectedReservations = {
             ...currentSelectionOfGridItems,
             ...?lastSelectedReservationsSnapshot
           };
@@ -292,7 +274,7 @@ class _ReservationsFoundListState extends State<ReservationsFoundList> {
           //! ( First and last items of the colections )
 
           setState(() {
-            selectedReservations = finalSet;
+            setOfIndicesOfSelectedReservations = finalSet;
           });
         }
       }
@@ -301,10 +283,10 @@ class _ReservationsFoundListState extends State<ReservationsFoundList> {
 
   void tapHandler(int listIndex) {
     return setState(() {
-      if (selectedReservations.contains(listIndex)) {
-        selectedReservations.remove(listIndex);
+      if (setOfIndicesOfSelectedReservations.contains(listIndex)) {
+        setOfIndicesOfSelectedReservations.remove(listIndex);
       } else {
-        selectedReservations.add(listIndex);
+        setOfIndicesOfSelectedReservations.add(listIndex);
       }
     });
   }
@@ -325,7 +307,7 @@ class _ReservationsFoundListState extends State<ReservationsFoundList> {
 
   void selectAll() {
     setState(() {
-      selectedReservations = List<int>.generate(
+      setOfIndicesOfSelectedReservations = List<int>.generate(
         widget.reservations.length,
         (index) => index,
       ).toSet();
@@ -334,9 +316,7 @@ class _ReservationsFoundListState extends State<ReservationsFoundList> {
 
   void unselectAll() {
     setState(() {
-      selectedReservations = {};
+      setOfIndicesOfSelectedReservations = {};
     });
   }
-
-
 }
