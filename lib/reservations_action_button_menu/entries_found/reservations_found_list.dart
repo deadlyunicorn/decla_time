@@ -77,60 +77,85 @@ class _ReservationsFoundListState extends State<ReservationsFoundList> {
                   //used for keeping track of hold
                   onHorizontalDragStart: startHolding,
                   onHorizontalDragEnd: stopHolding,
+
+                  //For Mobiles
+
+                  //! the handlers below are for mobile
+                  //! finish them at some point..
+                  /*
+                  onTapDown: startHolding,
+                  onTapUp: stopHolding,
+                  onHorizontalDragUpdate: (details) {
+                    print( details.localPosition );
+                  },
+                  onVerticalDragUpdate: (details) {
+                    print( details.localPosition );
+                  },
+
+                  */
+                
                   child: GridView.builder(
                     shrinkWrap: true,
-                    padding: const EdgeInsets.all(32),
+                    padding: const EdgeInsets.all( 32 ),
                     gridDelegate:
                         const SliverGridDelegateWithMaxCrossAxisExtent(
-                      maxCrossAxisExtent: kMaxContainerWidthSmall,
+                      maxCrossAxisExtent: kMaxContainerWidthSmall, //? Consider changing?
                       crossAxisSpacing: 8,
                       mainAxisSpacing: 8,
                     ),
                     itemCount: widget.reservations.length,
                     itemBuilder: (context, indexOfCurrentGridItem) {
+
+                      //!! Below might be useful
+                      //!! when handling events from mobile 
+                      // print( context.findRenderObject() );
+
                       final reservation =
                           widget.reservations[indexOfCurrentGridItem];
-
+                
                       return Stack(
                         clipBehavior: Clip.none,
                         alignment: Alignment.center,
                         children: [
-                          Material(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            clipBehavior: Clip.antiAlias,
-                            color: Theme.of(context).colorScheme.secondary,
-                            child: InkWell(
-                              onTap: () {
-                                tapHandler(indexOfCurrentGridItem);
-                              }, //needed for hover to work
-                              onHover: (hovered) {
-                                hoverHandler(indexOfCurrentGridItem);
-                              },
-                              child: Stack(
-                                fit: StackFit.expand,
-                                children: [
-                                  Positioned(
-                                    child: ReservationGridItemContainerItems(
-                                      //Items.
-                                      localized: localized,
-                                      reservation: reservation,
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Material(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              clipBehavior: Clip.antiAlias,
+                              color: Theme.of(context).colorScheme.secondary,
+                              child: InkWell(
+                                onTap: () {
+                                  tapHandler(indexOfCurrentGridItem);
+                                }, //needed for hover to work
+                                onHover: (hovered) {
+                                  hoverHandler(indexOfCurrentGridItem);
+                                },
+                                child: Stack(
+                                  fit: StackFit.expand,
+                                  children: [
+                                    Positioned(
+                                        child: ReservationGridItemContainerItems(
+                                          //Items.
+                                          localized: localized,
+                                          reservation: reservation,
+                                        ),
                                     ),
-                                  ),
-                                  Positioned(
-                                    bottom: 0,
-                                    child: IsSelectedUnderline(
-                                        isSelected: selectedReservations
-                                            .contains(indexOfCurrentGridItem)),
-                                  )
-                                ],
+                                    Positioned(
+                                      bottom: 0,
+                                      child: IsSelectedUnderline(
+                                          isSelected: selectedReservations
+                                              .contains(indexOfCurrentGridItem)),
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
                           ),
                           Positioned(
-                            right: -8,
-                            top: -8,
+                            right: 0,
+                            top: 0,
                             child: Tooltip(
                               preferBelow: false,
                               richMessage: TextSpan(children: [
@@ -312,4 +337,6 @@ class _ReservationsFoundListState extends State<ReservationsFoundList> {
       selectedReservations = {};
     });
   }
+
+
 }
