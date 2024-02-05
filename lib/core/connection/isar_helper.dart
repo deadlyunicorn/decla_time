@@ -17,6 +17,18 @@ class IsarHelper extends ChangeNotifier {
         .findAll();
   }
 
+  Future<Iterable<Reservation>> filterRegistered( Iterable<Reservation> reservations ) async {
+
+      final Iterable<Reservation> databaseResponse = await ( await isarFuture ).reservations
+          .getAllById(
+            reservations.map((reservation) => reservation.id).toList(),
+          )
+          .then(
+            (databaseReservations) => databaseReservations.nonNulls,
+          );
+      return databaseResponse;
+    }
+
   Future<void> insertOrUpdateReservationEntry(Reservation reservation) async {
     final isar = await isarFuture;
 
