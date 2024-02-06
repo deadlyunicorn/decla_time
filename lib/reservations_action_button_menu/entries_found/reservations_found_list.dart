@@ -89,8 +89,7 @@ class _ReservationsFoundListState extends State<ReservationsFoundList> {
                         onHorizontalDragStart: startHolding,
                         onHorizontalDragEnd: stopHolding,
 
-                        //For Mobiles
-
+                        //TODO For Mobiles
                         //! the handlers below are for mobile
                         //! finish them at some point..
                         /*
@@ -117,6 +116,7 @@ class _ReservationsFoundListState extends State<ReservationsFoundList> {
                           ),
                           itemCount: widget.reservations.length,
                           itemBuilder: (context, indexOfCurrentGridItem) {
+                            //TODO Mobiles
                             //!! Below might be useful
                             //!! when handling events from mobile
                             // print( context.findRenderObject() );

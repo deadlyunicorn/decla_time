@@ -13,8 +13,6 @@ class GettingReservationFilesInstructionsRoute extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //? Scroll vertically to scroll through platforms
-    //? Scroll horizontally for steps for each platform ( images )
 
     final localized = AppLocalizations.of(context)!;
 

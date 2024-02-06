@@ -52,12 +52,16 @@ class ExtractingReservationsFromFileActions {
     AppLocalizations localized,
     List<Reservation> currentReservationList,
   ) async {
+
+    final csvFiles = files.where((file) => file.path.contains(".csv")).toList();
+    //TODO: if we add support for xls be sure to change the above
+
     try {
-      if (files.isNotEmpty) {
+      if (csvFiles.isNotEmpty) {
         //If files are not selected you cannot submit anyways.
         final reservationsFromFile =
             await ReservationActions.generateReservationTableFromMultipleFiles(
-          files,
+          csvFiles,
         );
 
         final newReservationEntries = ReservationActions.filterReservations(
