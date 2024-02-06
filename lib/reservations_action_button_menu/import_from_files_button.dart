@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:decla_time/core/extensions/capitalize.dart';
+import 'package:decla_time/reservations/business/extracting_from_file_actions.dart';
 import 'package:decla_time/reservations/business/reservation.dart';
-import 'package:decla_time/reservations/business/reservation_actions.dart';
 import 'package:decla_time/reservations_action_button_menu/getting_reservation_files_instructions/getting_reservation_files_instructions_route.dart';
 import 'package:decla_time/reservations_action_button_menu/import_manually_button.dart';
 import 'package:file_picker/file_picker.dart';
@@ -66,7 +66,7 @@ class ImportFromFilesButton extends StatelessWidget {
       allowedExtensions: ["csv"],
     );
 
-    if (filePickerResults != null) {
+    if (filePickerResults != null && context.mounted ) {
       //User did select files
 
       final List<File> files = filePickerResults
@@ -79,56 +79,12 @@ class ImportFromFilesButton extends StatelessWidget {
           )
           .toList();
 
-      if (files.isNotEmpty) {
-        //If files are not selected you cannot submit anyways.
-        final reservationsFromFile =
-            await ReservationActions.generateReservationTableFromMultipleFiles(
-          files,
-        );
-
-        final newReservationEntries = ReservationActions.filterReservations(
-            reservationsFromFile, reservationsAlreadyImported);
-
-        if (context.mounted) {
-          if (newReservationEntries.isEmpty) {
-            //No new reservations found -
-            ScaffoldMessenger.of(context).removeCurrentSnackBar();
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Center(
-                  child: Text(localized.newReservationsNotFound.capitalized),
-                ),
-              ),
-            );
-          } else {
-            //Found new reservations
-
-            final newReservationCount = newReservationEntries.length;
-
-            ScaffoldMessenger.of(context).removeCurrentSnackBar();
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Center(
-                  child: Text(
-                    "${localized.found.capitalized} $newReservationCount ${newReservationCount > 1 ? localized.reservations : localized.reservation}.",
-                  ),
-                ),
-              ),
-            );
-
-            addToReservationsFoundSoFar(newReservationEntries);
-          }
-        }
-      }
+      await ExtractingReservationsFromFileActions.handleReservationAdditionFromFiles(files, context, localized, reservationsAlreadyImported );
     } else if (context.mounted) {
-      ScaffoldMessenger.of(context).removeCurrentSnackBar();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Center(
-            child: Text(localized.reservationsNotAdded.capitalized),
-          ),
-        ),
-      );
+      ExtractingReservationsFromFileActions.noReservationsAddedSnackbar(
+          context, localized);
     }
   }
+
+  
 }
