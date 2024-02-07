@@ -1,8 +1,8 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 
-class ReservationImportButtonOutline extends StatelessWidget {
-  const ReservationImportButtonOutline({
+class ReservationAdditionButtonOutline extends StatelessWidget {
+  const ReservationAdditionButtonOutline({
     super.key,
     required this.description,
     required this.icon,

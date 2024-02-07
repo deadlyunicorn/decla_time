@@ -62,7 +62,7 @@ class _ReservationAdditionRouteState extends State<ReservationAdditionRoute> {
                     reservationsAlreadyImported: reservations,
                     addToReservationsFoundSoFar: addToReservationsFoundSoFar,
                   ),
-                  ReservationImportButtonOutline(
+                  ReservationAdditionButtonOutline(
                     description: localized.manualAddition.capitalized,
                     icon: Icons.edit,
                     onTap: () async {
@@ -77,7 +77,7 @@ class _ReservationAdditionRouteState extends State<ReservationAdditionRoute> {
                       );
                       if (context.mounted) {
                         ScaffoldMessenger.of(context).removeCurrentSnackBar();
-
+                  
                         if (reservation != null) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(

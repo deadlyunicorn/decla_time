@@ -25,7 +25,7 @@ class ImportFromFilesButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final localized = AppLocalizations.of(context)!;
 
-    return ReservationImportButtonOutline(
+    return ReservationAdditionButtonOutline(
       description: localized.addFromFile.capitalized,
       icon: Icons.file_copy,
       children: [
