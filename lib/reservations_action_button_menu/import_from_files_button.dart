@@ -66,7 +66,7 @@ class ImportFromFilesButton extends StatelessWidget {
       allowedExtensions: ["csv"],
     );
 
-    if (filePickerResults != null && context.mounted ) {
+    if (filePickerResults != null && context.mounted) {
       //User did select files
 
       final List<File> files = filePickerResults
@@ -79,12 +79,15 @@ class ImportFromFilesButton extends StatelessWidget {
           )
           .toList();
 
-      await ExtractingReservationsFromFileActions.handleReservationAdditionFromFiles(files, context, localized, reservationsAlreadyImported );
+      addToReservationsFoundSoFar(
+        await ExtractingReservationsFromFileActions
+                .handleReservationAdditionFromFiles(
+                    files, context, localized, reservationsAlreadyImported) ??
+            [],
+      );
     } else if (context.mounted) {
       ExtractingReservationsFromFileActions.noReservationsAddedSnackbar(
           context, localized);
     }
   }
-
-  
 }
