@@ -23,28 +23,12 @@ class RouteOutline extends StatelessWidget {
             },
             icon: const Icon(Icons.arrow_back_rounded),
           ),
+          centerTitle: true,
+          title: Text( title.capitalized ),
         ),
         body: Align(
           alignment: Alignment.topCenter,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Center(
-                  child: Text(
-                    title.capitalized,
-                    style: Theme.of(context).textTheme.headlineLarge,
-                    maxLines: 2,
-                    textAlign: TextAlign.center,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-              ),
-              const SizedBox.square(dimension: 32),
-              Expanded(child: child)
-            ],
-          ),
+          child: child,
         ),
       ),
     );
