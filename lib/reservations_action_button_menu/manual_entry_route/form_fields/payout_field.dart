@@ -31,7 +31,7 @@ class PayoutField extends StatelessWidget {
             labelText: "${localized.payout.capitalized}*",
             border: const OutlineInputBorder(),
             errorMaxLines: 2,
-            suffix:const Text("€"),
+            suffix: const Text("€"),
             errorStyle: const TextStyle(overflow: TextOverflow.fade),
             helperText: "${localized.format.capitalized}: 120.34",
           ),

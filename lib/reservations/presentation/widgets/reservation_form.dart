@@ -1,9 +1,9 @@
 import 'package:decla_time/core/connection/isar_helper.dart';
 import 'package:decla_time/core/constants/constants.dart';
 import 'package:decla_time/core/extensions/capitalize.dart';
-import 'package:decla_time/core/functions/fasthash.dart';
 import 'package:decla_time/core/functions/translate_reservation_status.dart';
 import 'package:decla_time/reservations/business/reservation.dart';
+import 'package:decla_time/reservations/presentation/widgets/reservation_form/id_field.dart';
 import 'package:decla_time/reservations_action_button_menu/manual_entry_route/form_fields/date_fields/date_pickers_field.dart';
 import 'package:decla_time/reservations_action_button_menu/manual_entry_route/form_fields/listing_name_field.dart';
 import 'package:decla_time/reservations_action_button_menu/manual_entry_route/form_fields/payout_field.dart';
@@ -105,59 +105,26 @@ class _ReservationFormState extends State<ReservationForm> {
                       ),
                     ],
                   ),
-                  Wrap(
-                    runSpacing: 16,
-                    spacing: 16,
-                    children: [
-                      SizedBox(
-                        width: kMaxContainerWidthSmall * 2,
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            SizedBox(
-                              height: 64,
-                              child: Center(
-                                child: IconButton(
-                                  onPressed: () {
-                                    if (!hasInitialId()) {
-                                      idController.text =
-                                          fastHash(DateTime.now().toString())
-                                              .abs()
-                                              .toRadixString(16)
-                                              .substring(0, 10)
-                                              .toUpperCase();
-                                    }
-                                  },
-                                  icon: const Icon(Icons.shuffle_rounded),
-                                ),
-                              ),
-                            ),
-                            const SizedBox.square(
-                              dimension: 8,
-                            ),
-                            Flexible(
-                              child: RequiredTextField(
-                                  isEditingExistingEntry: hasInitialId(),
-                                  controller: idController,
-                                  label: "ID",
-                                  localized: widget.localized,
-                                  refresh: refresh),
-                            ),
-                          ],
+                  Padding(
+                    padding: const EdgeInsets.all( 16 ),
+                    child: Wrap(
+                      runSpacing: 24,
+                      spacing: 24,
+                      children: [
+                        IdField(
+                          hasInitialId: hasInitialId(),
+                          idController: idController,
+                          refresh: refresh,
+                          localized: widget.localized,
                         ),
-                      ),
-                      RequiredTextField(
-                        controller: guestNameController,
-                        label: widget.localized.guestName.capitalized,
-                        localized: widget.localized,
-                      ),
-                    ],
+                        RequiredTextField(
+                          controller: guestNameController,
+                          label: widget.localized.guestName.capitalized,
+                          localized: widget.localized,
+                        ),
+                      ],
+                    ),
                   ),
-                  const SizedBox.square(
-                    dimension: 16,
-                  ),
-
                   PayoutField(
                     payoutController: payoutController,
                     localized: widget.localized,
@@ -236,6 +203,11 @@ class _ReservationFormState extends State<ReservationForm> {
     );
   }
 
+  bool hasInitialId() {
+    final initialId = widget.id;
+    return (initialId != null && initialId.isNotEmpty);
+  }
+
   Future<bool> idAlreadyExistsFuture() async {
     return await context.read<IsarHelper>().idAlreadyExists(idController.text);
   }
@@ -254,10 +226,5 @@ class _ReservationFormState extends State<ReservationForm> {
     setState(() {
       departureDate = newDate?.add(const Duration(hours: 11));
     });
-  }
-
-  bool hasInitialId() {
-    final initialId = widget.id;
-    return (initialId != null && initialId.isNotEmpty);
   }
 }
