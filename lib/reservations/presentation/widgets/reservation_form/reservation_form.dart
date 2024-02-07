@@ -10,6 +10,7 @@ import 'package:decla_time/reservations/presentation/widgets/reservation_form/fo
 import 'package:decla_time/reservations/presentation/widgets/reservation_form/form_fields/platform_field.dart';
 import 'package:decla_time/reservations/presentation/widgets/reservation_form/form_fields/required_text_field.dart';
 import 'package:decla_time/reservations/presentation/widgets/reservation_form/form_fields/status_field.dart';
+import 'package:decla_time/reservations/presentation/widgets/reservation_form/form_fields/submit_button.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -106,7 +107,7 @@ class _ReservationFormState extends State<ReservationForm> {
                     ],
                   ),
                   Padding(
-                    padding: const EdgeInsets.all( 16 ),
+                    padding: const EdgeInsets.all(16),
                     child: Wrap(
                       runSpacing: 24,
                       spacing: 24,
@@ -157,40 +158,18 @@ class _ReservationFormState extends State<ReservationForm> {
                       }),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          final bookingPlatform = platformNameController.text;
-                          final listingName = listingNameController.text;
-                          final id = idController.text;
-                          final guestName = guestNameController.text;
-                          final payout =
-                              double.tryParse(payoutController.text)!;
-                          final reservationStatus =
-                              reservationStatusController.text;
-                          final arrivalDate = this.arrivalDate!;
-                          final departureDate = this.departureDate!;
-
-                          final reservation = Reservation(
-                            bookingPlatform: bookingPlatform,
-                            listingName: listingName,
-                            id: id,
-                            guestName: guestName,
-                            arrivalDate: arrivalDate,
-                            departureDate: departureDate,
-                            payout: payout,
-                            reservationStatus: reservationStatus,
-                          );
-
-                          widget.handleFormSubmit(reservation);
-                          Navigator.pop(context, reservation);
-                        }
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(widget.localized.submit.capitalized,
-                            style: Theme.of(context).textTheme.headlineLarge),
-                      ),
+                    child: SubmitButton(
+                      formKey: _formKey,
+                      platformNameController: platformNameController,
+                      listingNameController: listingNameController,
+                      idController: idController,
+                      guestNameController: guestNameController,
+                      payoutController: payoutController,
+                      reservationStatusController: reservationStatusController,
+                      arrivalDate: arrivalDate,
+                      departureDate: departureDate,
+                      handleFormSubmit: widget.handleFormSubmit,
+                      localized: widget.localized,
                     ),
                   ),
                   // const Expanded(child: Text("heehe")),
