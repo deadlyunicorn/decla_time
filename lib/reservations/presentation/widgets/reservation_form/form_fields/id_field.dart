@@ -30,6 +30,9 @@ class IdField extends StatelessWidget {
             height: 64,
             child: Center(
               child: IconButton(
+                mouseCursor: hasInitialId 
+                ? SystemMouseCursors.forbidden
+                : SystemMouseCursors.click,
                 onPressed: () {
                   if (!hasInitialId) {
                     idController.text = fastHash(DateTime.now().toString())
@@ -48,7 +51,7 @@ class IdField extends StatelessWidget {
           ),
           Flexible(
             child: RequiredTextField(
-              // isEditingExistingEntry: hasInitialId(),
+              isEditingExistingEntry: hasInitialId,
               controller: idController,
               label: "ID",
               localized: localized,

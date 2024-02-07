@@ -24,6 +24,9 @@ class RequiredTextField extends StatelessWidget {
     return SizedBox(
       width: kMaxContainerWidthSmall * 2,
       child: TextFormField(
+        mouseCursor: isEditingExistingEntry
+          ? SystemMouseCursors.basic
+          : SystemMouseCursors.text,
         onChanged: ( newValue ){
           final refreshFunction = refresh;
           if ( refreshFunction != null ){
