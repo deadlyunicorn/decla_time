@@ -5,6 +5,8 @@ import 'package:decla_time/reservations/business/reservation.dart';
 import 'package:decla_time/reservations/presentation/decleration_status_dot.dart';
 import 'package:decla_time/reservations/presentation/reservation_status_dot.dart';
 import 'package:decla_time/reservations/presentation/reservations_list/reservation_details_route/date_information_widget.dart';
+import 'package:decla_time/reservations/presentation/reservations_list/reservation_details_route/reservation_edit_button.dart';
+import 'package:decla_time/reservations/presentation/reservations_list/reservation_details_route/reservation_editing_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -40,7 +42,7 @@ class ReservationDetailsContainer extends StatelessWidget {
                 color: Theme.of(context).colorScheme.secondary,
               ),
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(16.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -107,14 +109,15 @@ class ReservationDetailsContainer extends StatelessWidget {
                             ),
                           ),
                           const SizedBox.square(dimension: 8),
-                          Text(
-                            reservation.listingName != null
-                                ? "${localized.at.capitalized} '${reservation.listingName}'"
-                                : '',
-                            textAlign: TextAlign.center,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                          ),
+                          (reservation.listingName != null &&
+                                  reservation.listingName!.isNotEmpty)
+                              ? Text(
+                                  "${localized.at.capitalized} '${reservation.listingName}'",
+                                  textAlign: TextAlign.center,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                )
+                              : const SizedBox.shrink(),
                         ],
                       ),
                     ),
@@ -126,7 +129,9 @@ class ReservationDetailsContainer extends StatelessWidget {
                             style: Theme.of(context)
                                 .textTheme
                                 .headlineMedium
-                                ?.copyWith(color: Theme.of(context).colorScheme.surface),
+                                ?.copyWith(
+                                    color:
+                                        Theme.of(context).colorScheme.surface),
                             maxLines: 1,
                             textAlign: TextAlign.center,
                             overflow: TextOverflow.ellipsis,
@@ -155,20 +160,25 @@ class ReservationDetailsContainer extends StatelessWidget {
             ),
             Positioned(
               right: 4,
-              top: 4,
-              child: ReservationStatusDot(
-                size: 16,
-                reservationStatusString: reservation.reservationStatus,
+              bottom: 4,
+              child: DeclarationStatusDot(
+                size: 24,
+                isDeclared: reservation.isDeclared,
               ),
             ),
             Positioned(
               right: 4,
-              bottom: 4,
-              child: DeclarationStatusDot(
-                size: 16,
-                isDeclared: reservation.isDeclared,
+              top: 4,
+              child: ReservationStatusDot(
+                size: 24,
+                reservationStatusString: reservation.reservationStatus,
               ),
-            )
+            ),
+            Positioned(
+              right: 32,
+              top: 4,
+              child: ReservationEditButton(reservation: reservation, size: 24),
+            ),
           ],
         ),
       ),
