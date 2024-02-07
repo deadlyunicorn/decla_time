@@ -1,3 +1,4 @@
+import 'package:decla_time/core/connection/isar_helper.dart';
 import 'package:decla_time/core/extensions/capitalize.dart';
 import 'package:decla_time/core/widgets/route_outline.dart';
 import 'package:decla_time/reservations/business/reservation.dart';
@@ -5,35 +6,41 @@ import 'package:decla_time/reservations/presentation/reservations_list/reservati
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class ReservationDetailsRoute extends StatelessWidget {
   const ReservationDetailsRoute({
     super.key,
-    required this.reservation,
+    required this.initialReservation,
   });
 
-  final Reservation reservation;
+  final Reservation initialReservation;
 
   @override
   Widget build(BuildContext context) {
     final localized = AppLocalizations.of(context)!;
 
     return RouteOutline(
-      title: localized.details.capitalized,
-      child: Column(
-        children: [
-          const SizedBox.square(
-            dimension: 32,
-          ),
-          ReservationDetailsContainer(reservation: reservation),
-          const SizedBox.square(dimension: 16),
-          Text(
-            formatLastEdit(reservation.lastEdit, localized: localized),
-            textAlign: TextAlign.center,
-          ),
-        ],
-      ),
-    );
+                title: localized.details.capitalized,
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 32),
+                    child: Column(
+                      children: [
+                        ReservationDetailsContainer(reservation: initialReservation),
+                        const SizedBox.square(dimension: 32),
+                        Text(
+                          formatLastEdit(
+                            initialReservation.lastEdit,
+                            localized: localized,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              );
   }
 
   String formatLastEdit(DateTime? lastEdit,
