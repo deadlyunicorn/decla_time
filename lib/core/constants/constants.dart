@@ -60,8 +60,10 @@ const double kContainerWidthMedium = 160;
 const double kMenuHeight = 64; 
 
 ///WithErrorText
-const double kMenuHeightWithError = 96; 
+const double kMenuHeightWithError = 96 + 32; 
+const double kMenuHeightWithoutError = kMenuHeightWithError - 48 ; 
 
+const double kDatePickerWidth = 96 + 64;
 const int kMonthInDays = 30;
 
 
