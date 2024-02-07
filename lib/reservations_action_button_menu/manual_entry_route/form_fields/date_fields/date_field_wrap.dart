@@ -27,8 +27,8 @@ class _DateFieldWrapState extends State<DateFieldWrap> {
 
   @override
   Widget build(BuildContext context) {
-    
     return FormField<DateTime>(
+      initialValue: widget.date,
       validator: (value) {
         if (value == null) {
           return widget.localized.invalidDateError.capitalized;
@@ -39,79 +39,93 @@ class _DateFieldWrapState extends State<DateFieldWrap> {
       builder: (field) {
         final errorText = field.errorText;
         return SizedBox(
-          height: kMenuHeightWithError,
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Container(
-              width: kContainerWidthMedium,
-              height: kMenuHeight,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(4),
-                border: Border.symmetric(
-                  horizontal: BorderSide(
+          width: kDatePickerWidth,
+          child: Column(
+            children: [
+              Container(
+                height: kMenuHeight,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(4),
+                  border: Border.symmetric(
+                    horizontal: BorderSide(
+                      //Border Colors
                       color: errorText != null
                           ? Theme.of(context).colorScheme.error
-                          : Theme.of(context).colorScheme.onBackground),
+                          : Theme.of(context).colorScheme.onBackground,
+                    ),
+                  ),
+                ),
+                child: Stack(
+                  clipBehavior: Clip.none,
+                  alignment: Alignment.center,
+                  children: [
+                    Positioned(
+                      //Label
+                      top: -24,
+                      left: 8,
+                      child: Container(
+                        padding: const EdgeInsets.all(8),
+                        color: Theme.of(context).colorScheme.background,
+                        child: Text(
+                          widget.label,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodySmall
+                              ?.copyWith(
+                                  color: errorText != null
+                                      ? Theme.of(context).colorScheme.error
+                                      : null),
+                        ),
+                      ),
+                    ),
+                    Positioned.fill(
+                      //Button
+                      child: TextButton(
+                        style: datePickerTextButtonStyle(context),
+                        onPressed: () async {
+                          await handleButtonPress(context, field);
+                        },
+                        onHover: (value) {
+                          handleButtonHover(value);
+                        },
+                        child: Text(
+                          showDateOrSet(widget.date, isHovering),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              child: Stack(
-                clipBehavior: Clip.none,
-                alignment: Alignment.center,
-                children: [
-                  Positioned(
-                    top: -24,
-                    left: 8,
-                    child: Container(
-                      padding: const EdgeInsets.all(8),
-                      color: Theme.of(context).colorScheme.background,
-                      child: Text(
-                        widget.label,
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color: errorText != null
-                                ? Theme.of(context).colorScheme.error
-                                : null),
+              Padding( //Error Text
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  errorText ?? "",
+                  maxLines: 2,
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: Theme.of(context).colorScheme.error,
                       ),
-                    ),
-                  ),
-                  Positioned.fill(
-                    child: TextButton(
-                      style: datePickerTextButtonStyle(context),
-                      onPressed: () async {
-                        final newDate = await widget.handleDateSetButton(context);
-                        if ( newDate != null ){
-                          field.didChange( newDate );
-                          field.validate();
-                        }
-
-                      },
-                      onHover: (value) {
-                        setState(() {
-                          isHovering = value;
-                        });
-                      },
-                      child: Text(
-                        showDateOrSet(widget.date, isHovering),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    bottom: -32,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        errorText ?? "",
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color: Theme.of(context).colorScheme.error),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
+                ),
+              )
+            ],
           ),
         );
       },
     );
+  }
+
+  void handleButtonHover(bool value) {
+    setState(() {
+      isHovering = value;
+    });
+  }
+
+  Future<void> handleButtonPress(
+      BuildContext context, FormFieldState<DateTime> field) async {
+    final newDate = await widget.handleDateSetButton(context);
+    if (newDate != null) {
+      field.didChange(newDate);
+      field.validate();
+    }
   }
 
   ButtonStyle datePickerTextButtonStyle(BuildContext context) {

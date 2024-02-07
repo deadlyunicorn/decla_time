@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DatePickersField extends StatelessWidget {
-  
   const DatePickersField({
     super.key,
     required this.departureDate,
@@ -27,34 +26,35 @@ class DatePickersField extends StatelessWidget {
       style: Theme.of(context).textTheme.headlineSmall,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Column(children: [
-          Wrap(
-            spacing: 16,
-            runSpacing: 16,
-            children: [
-              DateFieldWrap(
-                label: localized.arrival.capitalized,
-                handleDateSetButton: handleArrivalDateButton,
-                localized: localized,
-                date: arrivalDate,
-              ),
-              DateFieldWrap(
-                label: localized.departure.capitalized,
-                handleDateSetButton: handleDepartureDateButton,
-                localized: localized,
-                date: departureDate,
-              ),
-            ],
-          ),
-          const SizedBox.square( dimension:  16,),
-          Text(
-            (departureDate != null && arrivalDate != null)
-                ? "${localized.reservationLasted.capitalized} ${nightOrNights(localized, departureDate!.difference(arrivalDate!).inDays + 1)}"
-                : "",
-            style: Theme.of(context).textTheme.bodySmall,
-            textAlign: TextAlign.center,
-          ),
-        ]),
+        child: Column(
+          children: [
+            Wrap(
+              spacing: 16,
+              runSpacing: 16,
+              children: [
+                DateFieldWrap(
+                  label: localized.arrival.capitalized,
+                  handleDateSetButton: handleArrivalDateButton,
+                  localized: localized,
+                  date: arrivalDate,
+                ),
+                DateFieldWrap(
+                  label: localized.departure.capitalized,
+                  handleDateSetButton: handleDepartureDateButton,
+                  localized: localized,
+                  date: departureDate,
+                ),
+              ],
+            ),
+            Text(
+              (departureDate != null && arrivalDate != null)
+                  ? "${localized.reservationLasted.capitalized} ${nightOrNights(localized, departureDate!.difference(arrivalDate!).inDays + 1)}"
+                  : "",
+              style: Theme.of(context).textTheme.bodySmall,
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -75,11 +75,10 @@ class DatePickersField extends StatelessWidget {
       currentDate: DateTime.now(),
     );
     if (arrivalDateTemp != null) {
-      //Adds 13 hours 
+      //Adds 13 hours
       setArrivalDate(arrivalDateTemp);
     }
-    return arrivalDateTemp; 
-
+    return arrivalDateTemp;
   }
 
   Future<DateTime?> handleDepartureDateButton(BuildContext context) async {
@@ -96,10 +95,9 @@ class DatePickersField extends StatelessWidget {
               : DateTime.now()),
       currentDate: DateTime.now(),
     );
-    if (departureDateTemp != null) { 
-
-      //Adds 11 hours 
-      setDepartureDate(departureDateTemp) ;
+    if (departureDateTemp != null) {
+      //Adds 11 hours
+      setDepartureDate(departureDateTemp);
     }
     return departureDateTemp;
   }
