@@ -17,6 +17,15 @@ class IsarHelper extends ChangeNotifier {
         .findAll();
   }
 
+  Future<void> removeFromDatabase( String reservationId ) async{
+    
+    final isar = await isarFuture;
+    await isar.writeTxn(() async{
+      await isar.reservations.deleteById( reservationId );
+    });
+    notifyListeners();
+  }
+
   Future<Iterable<Reservation>> filterRegistered(
       Iterable<Reservation> reservations) async {
     final Iterable<Reservation> databaseResponse = await (await isarFuture)
