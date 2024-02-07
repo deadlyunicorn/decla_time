@@ -25,6 +25,7 @@ class ReservationAdditionRoute extends StatefulWidget {
 }
 
 class _ReservationAdditionRouteState extends State<ReservationAdditionRoute> {
+  
   List<Reservation> reservations = [];
 
   @override
@@ -80,7 +81,8 @@ class _ReservationAdditionRouteState extends State<ReservationAdditionRoute> {
                             SnackBar(
                               content: Center(
                                 child: Text(
-                                  "${localized.addedAReservation.capitalized}. ${localized.reservationLasted.capitalized} ${nightOrNights(localized, reservation.nights)}. ${localized.thePayoutIs.capitalized} ${reservation.payout}€.",
+                                  "${localized.addedAReservation.capitalized}.\n${localized.reservationLasted.capitalized} ${nightOrNights(localized, reservation.nights)}.\n${localized.thePayoutIs.capitalized} ${reservation.payout}€.",
+                                  textAlign: TextAlign.center,
                                 ),
                               ),
                             ),
