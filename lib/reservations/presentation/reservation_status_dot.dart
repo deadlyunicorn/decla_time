@@ -5,52 +5,44 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class ReservationStatusDot extends StatelessWidget {
-
   final String reservationStatusString;
   final double size;
 
-  const ReservationStatusDot({
-    super.key,
-    required this.reservationStatusString,
-    this.size = 16
-
-  });
+  const ReservationStatusDot(
+      {super.key, required this.reservationStatusString, this.size = 16});
 
   @override
   Widget build(BuildContext context) {
-
     final localized = AppLocalizations.of(context)!;
-    ReservationStatus reservationStatus = translateReservationStatus(reservationStatusString);
+    ReservationStatus reservationStatus =
+        translateReservationStatus(reservationStatusString);
 
-    switch( reservationStatus ){
+    Color iconColor = Colors.green;
+    String message = "${localized.status.capitalized}: ";
+
+    switch (reservationStatus) {
       case ReservationStatus.completed:
-        return Tooltip(
-          richMessage: TextSpan(text: localized.completed.capitalized),
-          child: Icon( 
-            Icons.circle,
-            size: size,
-            color: Colors.green,
-          ),
-        );
+        message += localized.completed.capitalized;
+        iconColor = Colors.green;
+        break;
       case ReservationStatus.upcoming:
-        return Tooltip(
-          richMessage: TextSpan(text: "${localized.upcoming.capitalized} ( $reservationStatusString )" ),
-          child: Icon( 
-            Icons.circle,
-            size: size,
-            color: Theme.of(context).colorScheme.surface,
-          ),
-        );
+        message +=
+            "${localized.upcoming.capitalized} ( $reservationStatusString )";
+        iconColor = Theme.of(context).colorScheme.surface;
+        break;
       case ReservationStatus.cancelled:
-        return Tooltip(
-          richMessage: TextSpan(text: localized.cancelled.capitalized ),
-          child: Icon( 
-            Icons.circle,
-            size: size,
-            color: Theme.of( context ).colorScheme.error,
-          ),
-        );
+        message += localized.cancelled.capitalized;
+        iconColor = Theme.of(context).colorScheme.error;
+        break;
     }
-  }
 
+    return Tooltip(
+      message: message,
+      child: Icon(
+        Icons.circle,
+        size: size,
+        color: iconColor,
+      ),
+    );
+  }
 }
