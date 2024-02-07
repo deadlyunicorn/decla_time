@@ -20,22 +20,33 @@ class CustomAlertDialog extends StatelessWidget {
     final localized = AppLocalizations.of(context)!;
 
     return AlertDialog(
-      title: Text(title),
+      title: FittedBox(
+        fit: BoxFit.scaleDown,
+        child: Text(title),
+      ),
       content: SizedBox(
         width: kMaxWidthSmall,
         child: child,
       ),
       actions: [
-        TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: Text(localized.cancel.capitalized)),
-        TextButton(
-          onPressed: () {
-            confirmButtonAction();
-          },
-          child: Text(localized.confirm.capitalized),
+        FittedBox(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text(localized.cancel.capitalized),
+              ),
+              TextButton(
+                onPressed: () {
+                  confirmButtonAction();
+                },
+                child: Text(localized.confirm.capitalized),
+              )
+            ],
+          ),
         )
       ],
     );
