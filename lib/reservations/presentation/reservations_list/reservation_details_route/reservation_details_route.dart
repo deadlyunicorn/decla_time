@@ -20,18 +20,27 @@ class ReservationDetailsRoute extends StatelessWidget {
   Widget build(BuildContext context) {
     final localized = AppLocalizations.of(context)!;
 
-    return RouteOutline(
+    return FutureBuilder(
+      future: context
+          .watch<IsarHelper>()
+          .getReservationEntry(initialReservation.id),
+      builder: (context, snapshot) {
+        final reservation = snapshot.data;
+
+        return reservation == null
+            ? const Center(child: CircularProgressIndicator())
+            : RouteOutline(
                 title: localized.details.capitalized,
                 child: SingleChildScrollView(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 32),
                     child: Column(
                       children: [
-                        ReservationDetailsContainer(reservation: initialReservation),
+                        ReservationDetailsContainer(reservation: reservation),
                         const SizedBox.square(dimension: 32),
                         Text(
                           formatLastEdit(
-                            initialReservation.lastEdit,
+                            reservation.lastEdit,
                             localized: localized,
                           ),
                           textAlign: TextAlign.center,
@@ -41,6 +50,8 @@ class ReservationDetailsRoute extends StatelessWidget {
                   ),
                 ),
               );
+      },
+    );
   }
 
   String formatLastEdit(DateTime? lastEdit,

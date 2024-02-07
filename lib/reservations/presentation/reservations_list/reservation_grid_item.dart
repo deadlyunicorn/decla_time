@@ -36,7 +36,7 @@ class ReservationGridItem extends StatelessWidget {
                 MaterialPageRoute(
                   builder: (context) {
                     return ReservationDetailsRoute(
-                      reservation: reservation,
+                      initialReservation: reservation,
                     );
                   },
                 ),
