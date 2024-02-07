@@ -24,7 +24,7 @@ class RouteOutline extends StatelessWidget {
             icon: const Icon(Icons.arrow_back_rounded),
           ),
           centerTitle: true,
-          title: Text( title.capitalized ),
+          title: FittedBox(child: Text( title.capitalized )),
         ),
         body: Align(
           alignment: Alignment.topCenter,
