@@ -9,42 +9,49 @@ class RequiredTextField extends StatelessWidget {
     required this.controller,
     required this.label,
     required this.localized,
+    this.refresh,
+    this.isEditingExistingEntry = false,
   });
 
   final TextEditingController controller;
   final String label;
   final AppLocalizations localized;
+  final bool isEditingExistingEntry; //? This field is used so that when we edit an entry, we disable editing the ID of the entry.
+  final void Function()? refresh;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: SizedBox(
-        width: kMaxContainerWidthSmall * 2,
-        height: kMenuHeightWithError,
-        child: TextFormField(
-          decoration: InputDecoration(
-            errorMaxLines: 2,
-            labelText: "${label.capitalized}*",
-            border: const OutlineInputBorder(),
-            contentPadding: const EdgeInsets.symmetric(
-              vertical: 16,
-              horizontal: 8,
-            ),
+    return SizedBox(
+      width: kMaxContainerWidthSmall * 2,
+      child: TextFormField(
+        onChanged: ( newValue ){
+          final refreshFunction = refresh;
+          if ( refreshFunction != null ){
+            refreshFunction();
+          }
+        },
+        readOnly: isEditingExistingEntry,
+        decoration: InputDecoration(
+          errorMaxLines: 2,
+          labelText: "${label.capitalized}*",
+          border: const OutlineInputBorder(),
+          contentPadding: const EdgeInsets.symmetric(
+            vertical: 16,
+            horizontal: 8,
           ),
-          controller: controller,
-          validator: (value) {
-            if (value != null && value.isNotEmpty) {
-              if (value.length < 6) {
-                return localized.insertAtleastSix.capitalized;
-              } else {
-                return null;
-              }
-            } else {
-              return localized.insertSomeValue.capitalized;
-            }
-          },
         ),
+        controller: controller,
+        validator: (value) {
+          if (value != null && value.isNotEmpty) {
+            if (value.length < 6) {
+              return localized.insertAtleastSix.capitalized;
+            } else {
+              return null;
+            }
+          } else {
+            return localized.insertSomeValue.capitalized;
+          }
+        },
       ),
     );
   }
