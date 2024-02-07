@@ -22,6 +22,9 @@ class ReservationDetailsRoute extends StatelessWidget {
       title: localized.details.capitalized,
       child: Column(
         children: [
+          const SizedBox.square(
+            dimension: 32,
+          ),
           ReservationDetailsContainer(reservation: reservation),
           const SizedBox.square(dimension: 16),
           Text(

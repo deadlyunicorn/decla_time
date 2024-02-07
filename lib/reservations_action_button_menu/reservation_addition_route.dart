@@ -25,7 +25,6 @@ class ReservationAdditionRoute extends StatefulWidget {
 }
 
 class _ReservationAdditionRouteState extends State<ReservationAdditionRoute> {
-  
   List<Reservation> reservations = [];
 
   @override
@@ -51,6 +50,9 @@ class _ReservationAdditionRouteState extends State<ReservationAdditionRoute> {
           width: min(MediaQuery.sizeOf(context).width, 900),
           child: Column(
             children: [
+              const SizedBox.square(
+                dimension: 32,
+              ),
               Wrap(
                 alignment: WrapAlignment.center,
                 spacing: 32,

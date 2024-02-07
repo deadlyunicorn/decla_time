@@ -88,6 +88,9 @@ class _ReservationFormState extends State<ReservationForm> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  const SizedBox.square(
+                    dimension: 16,
+                  ),
                   Wrap(
                     alignment: WrapAlignment.center,
                     children: [
