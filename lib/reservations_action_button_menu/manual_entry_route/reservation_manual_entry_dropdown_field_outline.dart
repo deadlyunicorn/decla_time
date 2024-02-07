@@ -45,9 +45,9 @@ class _ReservationManualEntryDropdownFieldOutlineState
               snapshot.data ?? [];
 
           return FormField<String>(
+            initialValue: widget.textEditingController.text,
             builder: (field) {
               return SizedBox(
-                height: kMenuHeightWithError,
                 child: DropdownMenu(
                   errorText:
                       (field.hasError) ? field.errorText?.capitalized : null,
@@ -89,7 +89,6 @@ class _ReservationManualEntryDropdownFieldOutlineState
                       ));
 
                       field.didChange(newEntry ?? "");
-
                       widget.textEditingController.text = newEntry ?? "";
                     } else {
                       field.didChange(value ?? "");
