@@ -5,8 +5,7 @@ import 'package:isar/isar.dart';
 part 'reservation.g.dart';
 
 @collection
-class Reservation{
-  
+class Reservation {
   final String bookingPlatform;
   final String? listingName;
 
@@ -24,26 +23,30 @@ class Reservation{
   Reservation({
     required this.bookingPlatform,
     required this.listingName,
-
     required this.id,
     required this.guestName,
-
     required this.arrivalDate,
     required this.departureDate,
-    
     required this.payout,
-
     required this.reservationStatus,
-
+    this.isDeclared = false,
     this.lastEdit,
-    this.isDeclared = false
-    
-  }); 
+  });
 
-  int get nights => departureDate.difference( arrivalDate ).inDays + 1 ; 
-  String get arrivalDateString => DateFormat("dd/MM/y").format( arrivalDate );
-  String get departureDateString => DateFormat("dd/MM/y").format( departureDate );
-  Id get isarId => fastHash( id );
-  
+  int get nights => departureDate.difference(arrivalDate).inDays + 1;
+  String get arrivalDateString => DateFormat("dd/MM/y").format(arrivalDate);
+  String get departureDateString => DateFormat("dd/MM/y").format(departureDate);
+  Id get isarId => fastHash(id);
 
+  bool isEqualTo(Reservation reservation) {
+    return reservation.bookingPlatform == bookingPlatform &&
+        reservation.listingName == listingName &&
+        reservation.id == id &&
+        reservation.guestName == guestName &&
+        reservation.arrivalDate == arrivalDate &&
+        reservation.departureDate == departureDate &&
+        reservation.payout == payout &&
+        reservation.reservationStatus == reservationStatus &&
+        reservation.isDeclared == isDeclared;
+  }
 }
