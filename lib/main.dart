@@ -10,7 +10,7 @@ import 'package:decla_time/skeleton/skeleton.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   final settingsController = SettingsController();
   await settingsController.loadSettings();
 
@@ -72,8 +72,9 @@ class MyApp extends StatelessWidget {
           surface: _tetriary,
           onSurface: _white),
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
-          backgroundColor: _tetriary,
-          foregroundColor: _white),
+        backgroundColor: _tetriary,
+        foregroundColor: _white,
+      ),
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
         backgroundColor: _background,
         selectedItemColor: _tetriary,
@@ -103,22 +104,26 @@ class MyApp extends StatelessWidget {
       datePickerTheme: const DatePickerThemeData(
         backgroundColor: _background,
         dividerColor: Colors.transparent,
-        todayBorder: BorderSide( 
-          style: BorderStyle.none
-        ),
-        todayForegroundColor: MaterialStatePropertyAll( _tetriary ),
+        todayBorder: BorderSide(style: BorderStyle.none),
+        todayForegroundColor: MaterialStatePropertyAll(_tetriary),
       ),
       dropdownMenuTheme: DropdownMenuThemeData(
         menuStyle: MenuStyle(
           backgroundColor: MaterialStatePropertyAll(
-            _background.withOpacity( 0.94 )
+            _background.withOpacity(0.94),
           ),
         ),
       ),
       dialogTheme: DialogTheme(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular( 8 )
-        )
+          borderRadius: BorderRadius.circular(8),
+        ),
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: TextButton.styleFrom(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+          foregroundColor: _tetriary,
+        ),
       ),
       useMaterial3: true,
     );
