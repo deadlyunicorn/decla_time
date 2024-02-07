@@ -1,10 +1,10 @@
-import 'dart:math';
 import 'package:decla_time/core/constants/constants.dart';
 import 'package:decla_time/core/extensions/capitalize.dart';
 import 'package:decla_time/reservations/business/reservation.dart';
 import 'package:decla_time/reservations/presentation/decleration_status_dot.dart';
 import 'package:decla_time/reservations/presentation/reservation_status_dot.dart';
 import 'package:decla_time/reservations/presentation/reservations_list/reservation_details_route/date_information_widget.dart';
+import 'package:decla_time/reservations/presentation/reservations_list/reservation_details_route/reservation_delete_button.dart';
 import 'package:decla_time/reservations/presentation/reservations_list/reservation_details_route/reservation_edit_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -124,8 +124,7 @@ class ReservationDetailsContainer extends StatelessWidget {
                               .textTheme
                               .headlineMedium
                               ?.copyWith(
-                                  color:
-                                      Theme.of(context).colorScheme.surface),
+                                  color: Theme.of(context).colorScheme.surface),
                           maxLines: 1,
                           textAlign: TextAlign.center,
                           overflow: TextOverflow.ellipsis,
@@ -171,7 +170,20 @@ class ReservationDetailsContainer extends StatelessWidget {
           Positioned(
             right: 32,
             top: 4,
-            child: ReservationEditButton(reservation: reservation, size: 24),
+            child: ReservationEditButton(
+              reservation: reservation,
+              size: 24,
+              localized: localized,
+            ),
+          ),
+          Positioned(
+            left: 4,
+            top: 4,
+            child: ReservationDeleteButton(
+              localized: localized,
+              reservationId: reservation.id,
+              size: 24,
+            ),
           ),
         ],
       ),

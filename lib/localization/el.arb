@@ -72,6 +72,8 @@
     "willOverwriteExistingReservation": "θα γίνει μεταβολή μιας ήδη καταχωρημένης κράτησης",
     "alreadyExists": "ήδη υπάρχει",
     "reservationEntryChange" : "τροποποίηση εγγραφής κράτησης",
+    "reservationEntryDelete" : "διαγραφή εγγραφής κράτησης",
+    "thisActionWillPermanentlyDeleteReservation" : "αυτή η ενέργεια θα διαγράψει οριστικά αυτήν την εγγραφή κράτησης από την συσκευή σας",
     "unusedForNonTrailingComma________________________________":""
 
 

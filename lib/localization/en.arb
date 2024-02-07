@@ -71,7 +71,9 @@
     "instructionsForFiles": "getting the files",
     "willOverwriteExistingReservation": "will overwrite an already registered reservation",
     "alreadyExists": "already exists",
-    "reservationEntryChange" : "reservation entry change",
+    "reservationEntryChange" : "reservation entry modification",
+    "reservationEntryDelete" : "delete reservation entry",
+    "thisActionWillPermanentlyDeleteReservation" : "this action will permanently delete this reservation entry from your device",
     "unusedForNonTrailingComma________________________________":""
 
 
