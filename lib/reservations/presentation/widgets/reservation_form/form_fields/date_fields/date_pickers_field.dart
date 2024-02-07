@@ -1,6 +1,6 @@
 import 'package:decla_time/core/extensions/capitalize.dart';
 import 'package:decla_time/core/functions/night_or_nights.dart';
-import 'package:decla_time/reservations_action_button_menu/manual_entry_route/form_fields/date_fields/date_field_wrap.dart';
+import 'package:decla_time/reservations/presentation/widgets/reservation_form/form_fields/date_fields/date_field_wrap.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
