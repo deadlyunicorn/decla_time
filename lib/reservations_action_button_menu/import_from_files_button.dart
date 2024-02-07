@@ -10,8 +10,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:flutter/material.dart';
 
-class ImportFromFilesButton extends StatelessWidget {
-  const ImportFromFilesButton({
+class AddReservationsFromFileButton extends StatelessWidget {
+  const AddReservationsFromFileButton({
     super.key,
     required this.reservationsAlreadyImported,
     required this.addToReservationsFoundSoFar,
