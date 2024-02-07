@@ -70,6 +70,8 @@
     "yourFilesAreReady": "your file is ready to be imported",
     "instructionsForFiles": "getting the files",
     "willOverwriteExistingReservation": "will overwrite an already registered reservation",
+    "alreadyExists": "already exists",
+    "reservationEntryChange" : "reservation entry change",
     "unusedForNonTrailingComma________________________________":""
 
 

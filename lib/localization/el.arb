@@ -70,6 +70,8 @@
     "yourFilesAreReady": "το αρχείο σας είναι έτοιμο για εισαγωγή",
     "instructionsForFiles": "απόκτηση αρχείων",
     "willOverwriteExistingReservation": "θα γίνει μεταβολή μιας ήδη καταχωρημένης κράτησης",
+    "alreadyExists": "ήδη υπάρχει",
+    "reservationEntryChange" : "τροποποίηση εγγραφής κράτησης",
     "unusedForNonTrailingComma________________________________":""
 
 
