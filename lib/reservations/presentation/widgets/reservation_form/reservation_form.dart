@@ -142,19 +142,19 @@ class _ReservationFormState extends State<ReservationForm> {
                       builder: (context, snapshot) {
                         final reservationAlreadyRegistered =
                             snapshot.data ?? false;
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            reservationAlreadyRegistered
-                                ? widget
-                                    .localized
-                                    .willOverwriteExistingReservation
-                                    .capitalized
-                                : "",
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(color: Colors.amber),
-                          ),
-                        );
+                        return reservationAlreadyRegistered
+                            ? Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  widget
+                                      .localized
+                                      .willOverwriteExistingReservation
+                                      .capitalized,
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(color: Colors.amber),
+                                ),
+                              )
+                            : const SizedBox.shrink();
                       }),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
