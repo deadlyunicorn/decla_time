@@ -21,6 +21,7 @@
     "upcoming": "αναμένεται",
     "completed": "ολοκληρώθηκε",
     "@declarationStatus":{},
+    "declaration_status": "κατάσταση δήλωσης",
     "declared": "δηλωμένο",
     "undeclared": "αδήλωτο",
     "lastEdit": "τελευταία αλλαγή",

@@ -21,6 +21,7 @@
     "upcoming": "upcoming",
     "completed": "completed",
     "@declarationStatus":{},
+    "declaration_status": "declaration status",
     "declared": "declared",
     "undeclared": "undeclared",
     "lastEdit": "last edit",
