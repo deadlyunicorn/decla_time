@@ -15,14 +15,22 @@ class RouteOutline extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          leading: IconButton(
+            onPressed: () {
+              ScaffoldMessenger.of(context).removeCurrentSnackBar();
+              Navigator.pop(context);
+            },
+            icon: const Icon(Icons.arrow_back_rounded),
+          ),
+        ),
         body: Align(
           alignment: Alignment.topCenter,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Padding(
-                padding: const EdgeInsets.all( 16.0),
+                padding: const EdgeInsets.all(16.0),
                 child: Center(
                   child: Text(
                     title.capitalized,
