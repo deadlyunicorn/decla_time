@@ -81,7 +81,14 @@ class _DateFieldWrapState extends State<DateFieldWrap> {
                     Positioned.fill(
                       //Button
                       child: TextButton(
-                        style: datePickerTextButtonStyle(context),
+                        style: datePickerTextButtonStyle(context).copyWith(
+                          overlayColor: MaterialStateColor.resolveWith(
+                            (states) => Theme.of(context)
+                                .colorScheme
+                                .primary
+                                .withAlpha(24),
+                          ),
+                        ),
                         onPressed: () async {
                           await handleButtonPress(context, field);
                         },
@@ -90,13 +97,17 @@ class _DateFieldWrapState extends State<DateFieldWrap> {
                         },
                         child: Text(
                           showDateOrSet(widget.date, isHovering),
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.onBackground,
+                          ),
                         ),
                       ),
                     ),
                   ],
                 ),
               ),
-              Padding( //Error Text
+              Padding(
+                //Error Text
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
                   errorText ?? "",

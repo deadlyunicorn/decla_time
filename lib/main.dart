@@ -123,6 +123,9 @@ class MyApp extends StatelessWidget {
         style: TextButton.styleFrom(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
           foregroundColor: _tetriary,
+          backgroundColor: _secondary.withAlpha(64),
+        ).copyWith(
+          overlayColor: MaterialStatePropertyAll(  _secondary.withAlpha(64) )
         ),
       ),
       useMaterial3: true,
