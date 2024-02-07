@@ -191,7 +191,7 @@ class _ReservationFormState extends State<ReservationForm> {
   }
 
   Future<bool> idAlreadyExistsFuture() async {
-    return await context.read<IsarHelper>().idAlreadyExists(idController.text);
+    return await context.watch<IsarHelper>().idAlreadyExists(idController.text);
   }
 
   void refresh() {

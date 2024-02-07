@@ -44,7 +44,7 @@ class _ReservationsFoundListState extends State<ReservationsFoundList> {
     } else {
       return FutureBuilder(
           future:
-              context.read<IsarHelper>().filterRegistered(widget.reservations),
+              context.watch<IsarHelper>().filterRegistered(widget.reservations),
           builder: (context, snapshot) {
             final alreadyExistingReservationIds = (snapshot.data ?? []).map(
               (databaseNonNullReservations) => databaseNonNullReservations.id,
