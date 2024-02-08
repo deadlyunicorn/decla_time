@@ -119,7 +119,7 @@ class ReservationDetailsContainer extends StatelessWidget {
                     child: Column(
                       children: [
                         Text(
-                          "${reservation.payout} €",
+                          "${reservation.payout.toStringAsFixed(2)} €",
                           style: Theme.of(context)
                               .textTheme
                               .headlineMedium

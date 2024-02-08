@@ -52,7 +52,7 @@ class ReservationDetailsTooltip extends StatelessWidget {
           const TextSpan(text: "\n"),
           TextSpan(
             text:
-                "${localized.payout.capitalized}: ${reservation.payout}€",
+                "${localized.payout.capitalized}: ${reservation.payout.toStringAsFixed(2)}€",
           ),
         ]),
         child: Icon(
