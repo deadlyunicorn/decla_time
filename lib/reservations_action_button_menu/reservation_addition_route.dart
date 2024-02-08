@@ -45,41 +45,49 @@ class _ReservationAdditionRouteState extends State<ReservationAdditionRoute> {
             });
           }
         },
-        child: SizedBox(
-          width: min(MediaQuery.sizeOf(context).width, 900),
-          child: Column(
-            children: [
-              const SizedBox.square(
-                dimension: 32,
-              ),
-              Wrap(
-                alignment: WrapAlignment.center,
-                spacing: 32,
-                runSpacing: 32,
-                children: [
-                  AddReservationsFromFileButton(
-                    reservationsAlreadyImported: reservations,
-                    addToReservationsFoundSoFar: addToReservationsFoundSoFar,
-                  ),
-                  AddReservationsManuallyButton(
-                    localized: localized,
-                    addToReservationsFoundSoFar: addToReservationsFoundSoFar,
-                  ),
-                ],
-              ),
-              Expanded(
-                child: ReservationsFoundList(
-                  reservations: reservations,
-                  removeFromReservationsFoundSoFar:
-                      removeFromReservationsFoundSoFar,
+        child: Flex(
+          direction: isLandscapeMode ? Axis.horizontal : Axis.vertical,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(
+              width: isLandscapeMode
+                  ? MediaQuery.sizeOf(context).width / 3
+                  : MediaQuery.sizeOf(context).width,
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Wrap(
+                  alignment: WrapAlignment.center,
+                  spacing: 32,
+                  runSpacing: 32,
+                  children: [
+                    AddReservationsFromFileButton(
+                      reservationsAlreadyImported: reservations,
+                      addToReservationsFoundSoFar:
+                          addToReservationsFoundSoFar,
+                    ),
+                    AddReservationsManuallyButton(
+                      localized: localized,
+                      addToReservationsFoundSoFar:
+                          addToReservationsFoundSoFar,
+                    ),
+                  ],
                 ),
               ),
-            ],
-          ),
+            ),
+            Expanded(
+              child: ReservationsFoundList(
+                reservations: reservations,
+                removeFromReservationsFoundSoFar:
+                    removeFromReservationsFoundSoFar,
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
+
+  bool get isLandscapeMode => MediaQuery.sizeOf(context).height < 640;
 
   void addToReservationsFoundSoFar(
       Iterable<Reservation> newReservationEntries) {
