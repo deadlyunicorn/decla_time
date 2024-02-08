@@ -15,20 +15,21 @@ class ReservationStatusDot extends StatelessWidget {
   Widget build(BuildContext context) {
     final localized = AppLocalizations.of(context)!;
     ReservationStatus reservationStatus =
-        translateReservationStatus(reservationStatusString);
+        translateReservationStatus(reservationStatusString, localized);
 
-    Color iconColor = Colors.green;
+    Color iconColor = Theme.of(context)
+        .colorScheme
+        .surface; //?surface color looks like green.
     String message = "${localized.status.capitalized}: ";
 
     switch (reservationStatus) {
       case ReservationStatus.completed:
         message += localized.completed.capitalized;
-        iconColor = Colors.green;
         break;
       case ReservationStatus.upcoming:
         message +=
             "${localized.upcoming.capitalized} ( $reservationStatusString )";
-        iconColor = Theme.of(context).colorScheme.surface;
+        iconColor = Colors.amber;
         break;
       case ReservationStatus.cancelled:
         message += localized.cancelled.capitalized;
