@@ -53,24 +53,27 @@ class _ReservationAdditionRouteState extends State<ReservationAdditionRoute> {
               width: isLandscapeMode
                   ? MediaQuery.sizeOf(context).width / 3
                   : MediaQuery.sizeOf(context).width,
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Wrap(
-                  alignment: WrapAlignment.center,
-                  spacing: 32,
-                  runSpacing: 32,
-                  children: [
-                    AddReservationsFromFileButton(
-                      reservationsAlreadyImported: reservations,
-                      addToReservationsFoundSoFar:
-                          addToReservationsFoundSoFar,
-                    ),
-                    AddReservationsManuallyButton(
-                      localized: localized,
-                      addToReservationsFoundSoFar:
-                          addToReservationsFoundSoFar,
-                    ),
-                  ],
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Wrap(
+                    alignment: WrapAlignment.center,
+                    runAlignment: WrapAlignment.center,
+                    spacing: 32,
+                    runSpacing: 32,
+                    children: [
+                      AddReservationsFromFileButton(
+                        reservationsAlreadyImported: reservations,
+                        addToReservationsFoundSoFar:
+                            addToReservationsFoundSoFar,
+                      ),
+                      AddReservationsManuallyButton(
+                        localized: localized,
+                        addToReservationsFoundSoFar:
+                            addToReservationsFoundSoFar,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
