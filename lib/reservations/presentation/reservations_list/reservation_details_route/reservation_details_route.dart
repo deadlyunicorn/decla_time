@@ -32,20 +32,23 @@ class ReservationDetailsRoute extends StatelessWidget {
             : RouteOutline(
                 title: localized.details.capitalized,
                 child: SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 32),
-                    child: Column(
-                      children: [
-                        ReservationDetailsContainer(reservation: reservation),
-                        const SizedBox.square(dimension: 32),
-                        Text(
-                          formatLastEdit(
-                            reservation.lastEdit,
-                            localized: localized,
+                  child: SizedBox(
+                    width: MediaQuery.sizeOf(context).width,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 32),
+                      child: Column(
+                        children: [
+                          ReservationDetailsContainer(reservation: reservation),
+                          const SizedBox.square(dimension: 32),
+                          Text(
+                            formatLastEdit(
+                              reservation.lastEdit,
+                              localized: localized,
+                            ),
+                            textAlign: TextAlign.center,
                           ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
