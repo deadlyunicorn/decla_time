@@ -91,8 +91,15 @@ class _ReservationManualEntryDropdownFieldOutlineState
                       field.didChange(newEntry ?? "");
                       widget.textEditingController.text = newEntry ?? "";
                     } else {
-                      field.didChange(value ?? "");
-                      widget.textEditingController.text = value ?? "";
+                      String finalValue = widget.defaultDropdownEntriesList
+                              ?.firstWhere((dropdownMenuEntry) =>
+                                  dropdownMenuEntry.value == value)
+                              .label ??
+                          value ??
+                          "";
+
+                      field.didChange(finalValue);
+                      widget.textEditingController.text = finalValue;
                     }
                   },
                 ),

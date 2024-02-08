@@ -1,4 +1,5 @@
 import 'package:decla_time/core/extensions/capitalize.dart';
+import 'package:decla_time/core/functions/translate_reservation_status.dart';
 import 'package:decla_time/reservations/business/reservation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -41,7 +42,7 @@ class SubmitButton extends StatelessWidget {
           final id = idController.text;
           final guestName = guestNameController.text;
           final payout = double.tryParse(payoutController.text)!;
-          final reservationStatus = reservationStatusController.text;
+          final reservationStatus = translateReservationStatus(reservationStatusController.text, localized).name;
           final arrivalDate = this.arrivalDate!;
           final departureDate = this.departureDate!;
 

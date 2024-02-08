@@ -67,9 +67,7 @@ class _ReservationFormState extends State<ReservationForm> {
     idController.text = widget.id ?? "";
     guestNameController.text = widget.guestName ?? "";
     payoutController.text = widget.payout ?? "";
-    reservationStatusController.text = widget.reservationStatus != null
-        ? translateReservationStatus(widget.reservationStatus ?? "").name
-        : "";
+    reservationStatusController.text = widget.reservationStatus?.capitalized ?? "";
     arrivalDate = widget.arrivalDate;
     departureDate = widget.departureDate;
   }
