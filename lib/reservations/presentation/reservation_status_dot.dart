@@ -7,13 +7,17 @@ import 'package:flutter/material.dart';
 class ReservationStatusDot extends StatelessWidget {
   final String reservationStatusString;
   final double size;
+  final AppLocalizations localized;
 
-  const ReservationStatusDot(
-      {super.key, required this.reservationStatusString, this.size = 16});
+  const ReservationStatusDot({
+    super.key,
+    required this.reservationStatusString,
+    this.size = 16,
+    required this.localized,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final localized = AppLocalizations.of(context)!;
     ReservationStatus reservationStatus =
         translateReservationStatus(reservationStatusString, localized);
 

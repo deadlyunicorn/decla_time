@@ -9,14 +9,14 @@ class ManualReservationEntryRoute extends StatelessWidget {
   const ManualReservationEntryRoute({
     super.key,
     required this.addToReservationsFoundSoFar,
+    required this.localized,
   });
 
   final void Function(Iterable<Reservation> list) addToReservationsFoundSoFar;
+  final AppLocalizations localized;
 
   @override
   Widget build(BuildContext context) {
-    final localized = AppLocalizations.of(context)!;
-
     return RouteOutline(
         title: localized.manualAddition.capitalized,
         child: ReservationForm(

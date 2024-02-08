@@ -10,14 +10,14 @@ class ReservationGridItem extends StatelessWidget {
   const ReservationGridItem({
     super.key,
     required this.reservation,
+    required this.localized,
   });
 
   final Reservation reservation;
+  final AppLocalizations localized;
 
   @override
   Widget build(BuildContext context) {
-    final localized = AppLocalizations.of(context)!;
-
     return Material(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8),
@@ -36,6 +36,7 @@ class ReservationGridItem extends StatelessWidget {
                 MaterialPageRoute(
                   builder: (context) {
                     return ReservationDetailsRoute(
+                      localized: localized,
                       initialReservation: reservation,
                     );
                   },
@@ -51,6 +52,7 @@ class ReservationGridItem extends StatelessWidget {
             top: -4,
             right: -4,
             child: ReservationStatusDot(
+              localized: localized,
               reservationStatusString: reservation.reservationStatus,
             ),
           ),

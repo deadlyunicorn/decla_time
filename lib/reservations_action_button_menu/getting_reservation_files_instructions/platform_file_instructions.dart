@@ -11,16 +11,17 @@ class PlatformFileInstructions extends StatelessWidget {
     required this.platformFilesURL,
     required this.imageAssetNames,
     required this.instructionsDescription,
+    required this.localized,
   });
 
   final String platformName;
   final String platformFilesURL;
   final List<String> imageAssetNames;
   final Widget instructionsDescription;
+  final AppLocalizations localized;
 
   @override
   Widget build(BuildContext context) {
-    final localized = AppLocalizations.of(context)!;
     final imageHeight = MediaQuery.sizeOf(context).height * 0.5;
 
     return SizedBox(
@@ -47,16 +48,19 @@ class PlatformFileInstructions extends StatelessWidget {
             SizedBox(
               height: kSmallScreenWidth,
               child: ListView.builder(
-                padding: const EdgeInsets.symmetric( horizontal: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 shrinkWrap: true,
                 scrollDirection: Axis.horizontal,
                 itemCount: imageAssetNames.length,
                 itemBuilder: (context, index) {
                   return Padding(
-                    padding: const EdgeInsets.symmetric( horizontal: 4, vertical: 8),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
                     child: Image(
                       // width: imageWidth , //? Our desired aspect ratio is 1.616
-                      height: imageHeight, /// 1.6161,
+                      height: imageHeight,
+
+                      /// 1.6161,
                       image: AssetImage(
                         imageAssetNames[index],
                       ),

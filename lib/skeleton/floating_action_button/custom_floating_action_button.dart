@@ -8,14 +8,14 @@ class CustomFloatingActionButton extends StatelessWidget {
   const CustomFloatingActionButton({
     super.key,
     required this.selectedPage,
+    required this.localized,
   });
 
   final SelectedPage selectedPage;
+  final AppLocalizations localized;
 
   @override
   Widget build(BuildContext context) {
-    final localized = AppLocalizations.of(context)!;
-
     switch (selectedPage) {
       case SelectedPage.reservations:
       case SelectedPage.declarations:
@@ -34,7 +34,9 @@ class CustomFloatingActionButton extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return const ReservationAdditionRoute();
+                      return ReservationAdditionRoute(
+                        localized: localized,
+                      );
                     },
                   ),
                 );

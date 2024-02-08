@@ -22,6 +22,7 @@ class BookingComFileInstructions extends StatelessWidget {
     );
 
     return PlatformFileInstructions(
+      localized: localized,
       platformName: "Booking.com",
       platformFilesURL:
           "https://admin.booking.com/hotel/hoteladmin/extranet_ng/manage/search_reservations.html?upcoming_reservations=1&hotel_id=null&ses=null&date_from=$dateFormatted3MonthsAgo&date_to=$dateFormattedToday&date_type=arrival",

@@ -8,13 +8,17 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 class ReservationEditingRoute extends StatelessWidget {
-  const ReservationEditingRoute({super.key, required this.reservation});
+  const ReservationEditingRoute({
+    super.key,
+    required this.reservation,
+    required this.localized,
+  });
 
   final Reservation reservation;
+  final AppLocalizations localized;
 
   @override
   Widget build(BuildContext context) {
-    final localized = AppLocalizations.of(context)!;
 
     return RouteOutline(
         title: localized.reservationEntryChange.capitalized,
@@ -24,18 +28,17 @@ class ReservationEditingRoute extends StatelessWidget {
           guestName: reservation.guestName,
           id: reservation.id,
           listingName: reservation.listingName,
-          payout: reservation.payout.toStringAsFixed( 2 ),
+          payout: reservation.payout.toStringAsFixed(2),
           platformName: reservation.bookingPlatform,
           reservationStatus: reservation.reservationStatus,
           localized: localized,
           handleFormSubmit: (Reservation editedReservation) {
-            if (!editedReservation.isEqualTo( reservation )) {
+            if (!editedReservation.isEqualTo(reservation)) {
               editedReservation.lastEdit = DateTime.now();
               context
                   .read<IsarHelper>()
                   .insertOrUpdateReservationEntry(editedReservation);
             }
-
           },
         ));
   }

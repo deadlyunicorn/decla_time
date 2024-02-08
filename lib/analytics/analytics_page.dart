@@ -9,12 +9,15 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AnalyticsPage extends StatelessWidget {
-  const AnalyticsPage({super.key});
+  const AnalyticsPage({
+    super.key,
+    required this.localized,
+  });
+
+  final AppLocalizations localized;
 
   @override
   Widget build(BuildContext context) {
-    final localized = AppLocalizations.of(context)!;
-
     return Column(
       children: [
         const Expanded(child: Text("Analytics here")),
@@ -39,7 +42,8 @@ class AnalyticsPage extends StatelessWidget {
               final isarFuture = context.read<IsarHelper>().isarFuture;
               final prefsFuture = SharedPreferences.getInstance();
 
-              final [ isar as Isar ,prefs as SharedPreferences ] = await Future.wait([isarFuture,prefsFuture]);
+              final [isar as Isar, prefs as SharedPreferences] =
+                  await Future.wait([isarFuture, prefsFuture]);
 
               await isar.writeTxn(() async {
                 await isar.clear();

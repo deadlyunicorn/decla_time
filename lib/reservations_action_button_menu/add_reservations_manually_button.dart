@@ -26,6 +26,7 @@ class AddReservationsManuallyButton extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: (context) => ManualReservationEntryRoute(
+              localized: localized,
               addToReservationsFoundSoFar: addToReservationsFoundSoFar,
             ),
           ),

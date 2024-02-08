@@ -1,4 +1,3 @@
-
 import 'package:decla_time/core/extensions/capitalize.dart';
 import 'package:decla_time/core/widgets/custom_alert_dialog.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +12,7 @@ class SharedPrefsListStringAdditionAlertDialog extends StatefulWidget {
     required this.title,
     required this.listStringKey,
     required this.hintText,
+    required this.localized,
   });
 
   final void Function() refreshParent;
@@ -20,6 +20,7 @@ class SharedPrefsListStringAdditionAlertDialog extends StatefulWidget {
   final String title;
   final String listStringKey;
   final String hintText;
+  final AppLocalizations localized;
 
   @override
   State<SharedPrefsListStringAdditionAlertDialog> createState() =>
@@ -33,9 +34,8 @@ class _SharedPrefsListStringAdditionAlertDialogState
 
   @override
   Widget build(BuildContext context) {
-    final localized = AppLocalizations.of(context)!;
-
     return CustomAlertDialog(
+      localized: widget.localized,
       title: widget.title,
       confirmButtonAction: () async {
         if (_formKey.currentState!.validate()) {
@@ -58,9 +58,9 @@ class _SharedPrefsListStringAdditionAlertDialogState
           controller: textFieldController,
           validator: (value) {
             if (value!.length < 6) {
-              return localized.enterMin6Chars.capitalized;
+              return widget.localized.enterMin6Chars.capitalized;
             } else if (widget.dropdownMenuEntries.contains(value)) {
-              return localized.entryAlreadyExists.capitalized;
+              return widget.localized.entryAlreadyExists.capitalized;
             }
             return null;
           },

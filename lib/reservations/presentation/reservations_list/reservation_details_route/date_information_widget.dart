@@ -10,15 +10,15 @@ class DateInformationWidget extends StatelessWidget {
     super.key,
     required this.reservation,
     required this.nights,
+    required this.localized,
   });
 
   final Reservation reservation;
   final int nights;
+  final AppLocalizations localized;
 
   @override
   Widget build(BuildContext context) {
-    final localized = AppLocalizations.of(context)!;
-
     return SizedBox(
       width: kMaxWidthSmall,
       child: Column(

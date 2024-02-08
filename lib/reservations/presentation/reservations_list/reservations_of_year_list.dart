@@ -4,22 +4,26 @@ import 'package:decla_time/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ReservationsOfYear extends StatelessWidget {
-  const ReservationsOfYear(
-      {super.key, required this.reservationsMapYear});
+  const ReservationsOfYear({
+    super.key,
+    required this.reservationsMapYear,
+    required this.localized,
+  });
 
   final Map<int, List<Reservation>> reservationsMapYear;
+  final AppLocalizations localized;
 
   @override
   Widget build(BuildContext context) {
-
-    return ListView.builder( // A list where entries are separated by month.
+    return ListView.builder(
+        // A list where entries are separated by month.
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         itemCount: reservationsMapYear.values.length,
         itemBuilder: (context, index) {
-
           int month = reservationsMapYear.keys.toList()[index];
           final reservationsOfMonth = reservationsMapYear[month]!;
 
@@ -33,20 +37,25 @@ class ReservationsOfYear extends StatelessWidget {
                       Theme.of(context).colorScheme.secondary.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(8)),
               child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
                 child: Column(
                   children: [
-                    Padding( //Month in local format.
+                    Padding(
+                      //Month in local format.
                       padding: const EdgeInsets.all(16),
                       child: Text(
-                        DateFormat.MMMM( context.watch<SettingsController>().locale ).format(
+                        DateFormat.MMMM(
+                                context.watch<SettingsController>().locale)
+                            .format(
                           DateTime(0, month),
                         ),
                         style: Theme.of(context).textTheme.headlineMedium,
                       ),
                     ),
                     ReservationOfMonthGridView(
-                      reservationsOfMonth: reservationsOfMonth
+                      reservationsOfMonth: reservationsOfMonth,
+                      localized: localized,
                     ),
                   ],
                 ),

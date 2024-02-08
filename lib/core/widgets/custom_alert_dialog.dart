@@ -9,16 +9,16 @@ class CustomAlertDialog extends StatelessWidget {
     required this.confirmButtonAction,
     required this.title,
     required this.child,
+    required this.localized,
   });
 
   final void Function() confirmButtonAction;
   final String title;
   final Widget child;
+  final AppLocalizations localized;
 
   @override
   Widget build(BuildContext context) {
-    final localized = AppLocalizations.of(context)!;
-
     return AlertDialog(
       title: FittedBox(
         fit: BoxFit.scaleDown,

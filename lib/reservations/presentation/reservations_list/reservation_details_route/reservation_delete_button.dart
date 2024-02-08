@@ -29,6 +29,7 @@ class ReservationDeleteButton extends StatelessWidget {
             showDialog(
               context: context,
               builder: (context) => CustomAlertDialog(
+                localized: localized,
                 confirmButtonAction: () {
                   context.read<IsarHelper>().removeFromDatabase(reservationId);
                   Navigator.popUntil(context, (route) {

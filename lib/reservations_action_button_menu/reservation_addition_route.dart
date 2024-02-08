@@ -12,7 +12,9 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class ReservationAdditionRoute extends StatefulWidget {
   const ReservationAdditionRoute({
     super.key,
+    required this.localized,
   });
+  final AppLocalizations localized;
 
   @override
   State<ReservationAdditionRoute> createState() =>
@@ -24,16 +26,14 @@ class _ReservationAdditionRouteState extends State<ReservationAdditionRoute> {
 
   @override
   Widget build(BuildContext context) {
-    final localized = AppLocalizations.of(context)!;
-
     return RouteOutline(
-      title: localized.addEntries,
+      title: widget.localized.addEntries,
       child: DropTarget(
         onDragDone: (details) async {
           final files = details.files.map((xFile) => File(xFile.path)).toList();
           final newReservations = await ExtractingReservationsFromFileActions
                   .handleReservationAdditionFromFiles(
-                      files, context, localized, reservations) ??
+                      files, context, widget.localized, reservations) ??
               [];
           if (newReservations.isNotEmpty) {
             setState(() {
@@ -62,9 +62,10 @@ class _ReservationAdditionRouteState extends State<ReservationAdditionRoute> {
                         reservationsAlreadyImported: reservations,
                         addToReservationsFoundSoFar:
                             addToReservationsFoundSoFar,
+                        localized: widget.localized,
                       ),
                       AddReservationsManuallyButton(
-                        localized: localized,
+                        localized: widget.localized,
                         addToReservationsFoundSoFar:
                             addToReservationsFoundSoFar,
                       ),
@@ -78,6 +79,7 @@ class _ReservationAdditionRouteState extends State<ReservationAdditionRoute> {
                 reservations: reservations,
                 removeFromReservationsFoundSoFar:
                     removeFromReservationsFoundSoFar,
+                localized: widget.localized,
               ),
             ),
           ],
@@ -85,7 +87,6 @@ class _ReservationAdditionRouteState extends State<ReservationAdditionRoute> {
       ),
     );
   }
-
   bool get isLandscapeMode => MediaQuery.sizeOf(context).height < 640;
 
   void addToReservationsFoundSoFar(

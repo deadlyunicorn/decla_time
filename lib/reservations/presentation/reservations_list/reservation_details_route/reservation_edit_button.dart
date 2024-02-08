@@ -30,6 +30,7 @@ class ReservationEditButton extends StatelessWidget {
               MaterialPageRoute(
                 builder: (context) {
                   return ReservationEditingRoute(
+                    localized: localized,
                     reservation: reservation,
                   );
                 },

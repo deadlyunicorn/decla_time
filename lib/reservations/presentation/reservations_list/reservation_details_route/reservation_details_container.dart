@@ -12,17 +12,17 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class ReservationDetailsContainer extends StatelessWidget {
   const ReservationDetailsContainer({
     super.key,
-    required this.reservation,
+    required this.reservation, required this.localized,
   });
 
   final Reservation reservation;
+  final AppLocalizations localized;
+
   int get nights =>
       reservation.departureDate.difference(reservation.arrivalDate).inDays + 1;
 
   @override
   Widget build(BuildContext context) {
-    final localized = AppLocalizations.of(context)!;
-
     return DefaultTextStyle.merge(
       style: Theme.of(context).textTheme.bodyLarge,
       child: Stack(
@@ -143,6 +143,7 @@ class ReservationDetailsContainer extends StatelessWidget {
                   ),
                   OutlineContainer(
                     child: DateInformationWidget(
+                      localized: localized,
                       reservation: reservation,
                       nights: nights,
                     ),
@@ -155,6 +156,7 @@ class ReservationDetailsContainer extends StatelessWidget {
             right: 4,
             bottom: 4,
             child: DeclarationStatusDot(
+              localized: localized,
               size: 24,
               isDeclared: reservation.isDeclared,
             ),
@@ -163,6 +165,7 @@ class ReservationDetailsContainer extends StatelessWidget {
             right: 4,
             top: 4,
             child: ReservationStatusDot(
+              localized: localized,
               size: 24,
               reservationStatusString: reservation.reservationStatus,
             ),

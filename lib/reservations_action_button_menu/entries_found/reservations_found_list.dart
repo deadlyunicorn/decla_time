@@ -18,17 +18,18 @@ class ReservationsFoundList extends StatefulWidget {
     super.key,
     required this.reservations,
     required this.removeFromReservationsFoundSoFar,
+    required this.localized,
   });
 
   final List<Reservation> reservations;
   final void Function(Iterable<Reservation>) removeFromReservationsFoundSoFar;
+  final AppLocalizations localized;
 
   @override
   State<ReservationsFoundList> createState() => _ReservationsFoundListState();
 }
 
 class _ReservationsFoundListState extends State<ReservationsFoundList> {
-
   Set<int> setOfIndicesOfSelectedReservations = {};
 
   bool isHolding = false;
@@ -37,8 +38,6 @@ class _ReservationsFoundListState extends State<ReservationsFoundList> {
 
   @override
   Widget build(BuildContext context) {
-    final localized = AppLocalizations.of(context)!;
-
     if (widget.reservations.isEmpty) {
       return const SizedBox.shrink();
     } else {
@@ -70,11 +69,11 @@ class _ReservationsFoundListState extends State<ReservationsFoundList> {
                         children: [
                           TextButton(
                             onPressed: unselectAll,
-                            child: Text(localized.clearSelection.capitalized),
+                            child: Text(widget.localized.clearSelection.capitalized),
                           ),
                           TextButton(
                             onPressed: selectAll,
-                            child: Text(localized.selectAll.capitalized),
+                            child: Text(widget.localized.selectAll.capitalized),
                           ),
                         ],
                       ),
@@ -86,7 +85,7 @@ class _ReservationsFoundListState extends State<ReservationsFoundList> {
                       //used for keeping track of hold
                       onHorizontalDragStart: startHolding,
                       onHorizontalDragEnd: stopHolding,
-              
+
                       //TODO For Mobiles
                       //! the handlers below are for mobile
                       //! finish them at some point..
@@ -101,7 +100,7 @@ class _ReservationsFoundListState extends State<ReservationsFoundList> {
                     },
                         
                     */
-              
+
                       child: GridView.builder(
                         shrinkWrap: true,
                         padding: const EdgeInsets.all(16),
@@ -118,10 +117,10 @@ class _ReservationsFoundListState extends State<ReservationsFoundList> {
                           //!! Below might be useful
                           //!! when handling events from mobile
                           // print( context.findRenderObject() );
-              
+
                           final reservation =
                               widget.reservations[indexOfCurrentGridItem];
-              
+
                           return Stack(
                             clipBehavior: Clip.none,
                             alignment: Alignment.center,
@@ -149,7 +148,7 @@ class _ReservationsFoundListState extends State<ReservationsFoundList> {
                                           child:
                                               ReservationGridItemContainerItems(
                                             //Items.
-                                            localized: localized,
+                                            localized: widget.localized,
                                             reservation: reservation,
                                           ),
                                         ),
@@ -168,13 +167,13 @@ class _ReservationsFoundListState extends State<ReservationsFoundList> {
                               ),
                               ReservationDetailsTooltip(
                                 reservation: reservation,
-                                localized: localized,
+                                localized: widget.localized,
                               ),
                               WillOverwriteTooltip(
                                 reservationAlreadyInDatabase:
                                     alreadyExistingReservationIds
                                         .contains(reservation.id),
-                                localized: localized,
+                                localized: widget.localized,
                               ),
                             ],
                           );
@@ -184,8 +183,8 @@ class _ReservationsFoundListState extends State<ReservationsFoundList> {
                   ),
                   setOfIndicesOfSelectedReservations.isNotEmpty
                       ? Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: TextButton(
+                          padding: const EdgeInsets.all(16.0),
+                          child: TextButton(
                             //Submit button
                             //Submit Button
                             onPressed: () async {
@@ -203,11 +202,11 @@ class _ReservationsFoundListState extends State<ReservationsFoundList> {
                               setOfIndicesOfSelectedReservations.clear();
                             },
                             child: Text(
-                              "${localized.addSelected.capitalized} (${setOfIndicesOfSelectedReservations.length})",
+                              "${widget.localized.addSelected.capitalized} (${setOfIndicesOfSelectedReservations.length})",
                               textAlign: TextAlign.center,
                             ),
                           ),
-                      )
+                        )
                       : const SizedBox.shrink()
                 ],
               ),

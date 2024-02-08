@@ -12,14 +12,14 @@ class ReservationDetailsRoute extends StatelessWidget {
   const ReservationDetailsRoute({
     super.key,
     required this.initialReservation,
+    required this.localized,
   });
 
   final Reservation initialReservation;
+  final AppLocalizations localized;
 
   @override
   Widget build(BuildContext context) {
-    final localized = AppLocalizations.of(context)!;
-
     return FutureBuilder(
       future: context
           .watch<IsarHelper>()
@@ -38,7 +38,10 @@ class ReservationDetailsRoute extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(vertical: 32),
                       child: Column(
                         children: [
-                          ReservationDetailsContainer(reservation: reservation),
+                          ReservationDetailsContainer(
+                            reservation: reservation,
+                            localized: localized,
+                          ),
                           const SizedBox.square(dimension: 32),
                           Text(
                             formatLastEdit(

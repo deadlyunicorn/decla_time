@@ -5,14 +5,17 @@ import 'package:flutter/material.dart';
 class DeclarationStatusDot extends StatelessWidget {
   final bool isDeclared;
   final double size;
+  final AppLocalizations localized;
 
-  const DeclarationStatusDot(
-      {super.key, required this.isDeclared, this.size = 16});
+  const DeclarationStatusDot({
+    super.key,
+    required this.isDeclared,
+    this.size = 16,
+    required this.localized,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final localized = AppLocalizations.of(context)!;
-
     return Tooltip(
       message:
           "${localized.declaration_status.capitalized}: ${isDeclared ? localized.declared : localized.undeclared.capitalized}",

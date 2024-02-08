@@ -5,24 +5,21 @@ import 'package:decla_time/reservations_action_button_menu/getting_reservation_f
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 class GettingReservationFilesInstructionsRoute extends StatelessWidget {
   const GettingReservationFilesInstructionsRoute({
     super.key,
+    required this.localized,
   });
-
+  final AppLocalizations localized;
   @override
   Widget build(BuildContext context) {
-
-    final localized = AppLocalizations.of(context)!;
-
     return RouteOutline(
       title: localized.instructionsForFiles.capitalized,
       child: SingleChildScrollView(
         child: SizedBox(
           width: MediaQuery.sizeOf(context).width,
           child: Padding(
-            padding: const EdgeInsets.only( bottom: 64),
+            padding: const EdgeInsets.only(bottom: 64),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
@@ -39,6 +36,4 @@ class GettingReservationFilesInstructionsRoute extends StatelessWidget {
       ),
     );
   }
-
-
 }

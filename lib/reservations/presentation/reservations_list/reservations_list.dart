@@ -10,13 +10,13 @@ import 'package:decla_time/reservations/presentation/reservations_list/reservati
 import 'package:flutter/material.dart';
 
 class ReservationsList extends StatelessWidget {
-  const ReservationsList({super.key, required this.reservations});
+  const ReservationsList({super.key, required this.reservations, required this.localized});
 
   final List<Reservation> reservations;
+  final AppLocalizations localized; 
 
   @override
   Widget build(BuildContext context) {
-    final localized = AppLocalizations.of(context)!;
     final yearMonthMap =
         ReservationActions.genereateYearMonthMap(reservations);
 
@@ -39,6 +39,7 @@ class ReservationsList extends StatelessWidget {
               SizedBox(
                 width: min(MediaQuery.sizeOf(context).width, kMaxWidthLargest),
                 child: ReservationsOfYear(
+                  localized: localized,
                   reservationsMapYear: yearMonthMap[year]!,
                 ),
               ),

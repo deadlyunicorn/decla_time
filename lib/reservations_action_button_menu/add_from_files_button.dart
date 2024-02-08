@@ -15,16 +15,16 @@ class AddReservationsFromFileButton extends StatelessWidget {
     super.key,
     required this.reservationsAlreadyImported,
     required this.addToReservationsFoundSoFar,
+    required this.localized,
   });
 
   final List<Reservation> reservationsAlreadyImported;
   final void Function(Iterable<Reservation> reservations)
       addToReservationsFoundSoFar;
+  final AppLocalizations localized;
 
   @override
   Widget build(BuildContext context) {
-    final localized = AppLocalizations.of(context)!;
-
     return ReservationAdditionButtonOutline(
       description: localized.addFromFile.capitalized,
       icon: Icons.file_copy,
@@ -40,7 +40,9 @@ class AddReservationsFromFileButton extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) =>
-                        const GettingReservationFilesInstructionsRoute(),
+                        GettingReservationFilesInstructionsRoute(
+                          localized: localized,
+                        ),
                   ),
                 );
               },
@@ -58,7 +60,6 @@ class AddReservationsFromFileButton extends StatelessWidget {
   }
 
   void getFilesFromFileSystem(BuildContext context) async {
-    final localized = AppLocalizations.of(context)!;
 
     final filePickerResults = await FilePicker.platform.pickFiles(
       allowMultiple: true,

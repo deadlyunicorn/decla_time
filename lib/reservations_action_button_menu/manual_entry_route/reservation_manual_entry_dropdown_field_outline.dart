@@ -74,6 +74,7 @@ class _ReservationManualEntryDropdownFieldOutlineState
                         context: context,
                         builder: (context) {
                           return SharedPrefsListStringAdditionAlertDialog(
+                            localized: widget.localized,
                               title:
                                   "${widget.localized.add.capitalized} ${widget.label}",
                               listStringKey: widget.sharedPrefsListKey,

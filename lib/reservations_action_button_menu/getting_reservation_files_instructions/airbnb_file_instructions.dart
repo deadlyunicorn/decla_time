@@ -15,6 +15,7 @@ class AirbnbFileInstructions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PlatformFileInstructions(
+      localized: localized,
       platformName: "Airbnb",
       platformFilesURL: "https://www.airbnb.com/hosting/reservations/completed",
       imageAssetNames: const [
