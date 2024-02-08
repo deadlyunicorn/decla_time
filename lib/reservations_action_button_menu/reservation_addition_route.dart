@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:decla_time/core/functions/is_landscape_mode.dart';
 import 'package:decla_time/core/widgets/route_outline.dart';
 import 'package:decla_time/reservations/business/extracting_from_file_actions.dart';
 import 'package:decla_time/reservations/business/reservation.dart';
@@ -42,11 +43,11 @@ class _ReservationAdditionRouteState extends State<ReservationAdditionRoute> {
           }
         },
         child: Flex(
-          direction: isLandscapeMode ? Axis.horizontal : Axis.vertical,
+          direction: isLandscapeMode(context) ? Axis.horizontal : Axis.vertical,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(
-              width: isLandscapeMode
+              width: isLandscapeMode(context)
                   ? MediaQuery.sizeOf(context).width / 3
                   : MediaQuery.sizeOf(context).width,
               child: Center(
@@ -87,7 +88,6 @@ class _ReservationAdditionRouteState extends State<ReservationAdditionRoute> {
       ),
     );
   }
-  bool get isLandscapeMode => MediaQuery.sizeOf(context).height < 640;
 
   void addToReservationsFoundSoFar(
       Iterable<Reservation> newReservationEntries) {
