@@ -46,8 +46,8 @@ class RequiredTextField extends StatelessWidget {
         controller: controller,
         validator: (value) {
           if (value != null && value.isNotEmpty) {
-            if (value.length < 6) {
-              return localized.insertAtleastSix.capitalized;
+            if (value.length < 4) {
+              return localized.insertAtleastFour.capitalized;
             } else {
               return null;
             }

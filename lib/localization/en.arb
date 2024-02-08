@@ -54,7 +54,7 @@
     "reservationLasted" : "the reservation lasted",
     "insertSomeValue": "insert some value",
     "selectSomeField": "select some field",
-    "insertAtleastSix": "insert atleast six characters",
+    "insertAtleastFour": "insert atleast four characters",
     "payout": "payout",
     "addedAReservation" : "added a reservation",
     "thePayoutIs": "the payout is",

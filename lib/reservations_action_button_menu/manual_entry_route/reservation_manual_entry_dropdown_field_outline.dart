@@ -48,7 +48,7 @@ class _ReservationManualEntryDropdownFieldOutlineState
             initialValue: widget.textEditingController.text,
             builder: (field) {
               return SizedBox(
-                child: DropdownMenu(
+                child: DropdownMenu<String>(
                   errorText:
                       (field.hasError) ? field.errorText?.capitalized : null,
                   menuHeight: 256,
@@ -108,8 +108,8 @@ class _ReservationManualEntryDropdownFieldOutlineState
                 } else {
                   return null;
                 }
-              } else if (stringValue.length < 6) {
-                return widget.localized.insertAtleastSix;
+              } else if (stringValue.length < 4) {
+                return widget.localized.insertAtleastFour;
               } else {
                 if (stringValue != widget.textEditingController.text) {
                   return widget.localized.selectSomeField;

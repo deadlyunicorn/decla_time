@@ -54,7 +54,7 @@
     "reservationLasted" : "η κράτηση διήρκησε",
     "insertSomeValue": "εισάγετε κάποια τιμή",
     "selectSomeField": "επιλέξτε κάποιο πεδίο",
-    "insertAtleastSix": "εισάγετε τουλάχιστον έξι χαρακτήρες",
+    "insertAtleastFour": "εισάγετε τουλάχιστον τέσσερις χαρακτήρες",
     "payout": "πληρωμή",
     "addedAReservation" : "προστέθηκε μια κράτηση",
     "thePayoutIs": "η πληρωμή είναι",
