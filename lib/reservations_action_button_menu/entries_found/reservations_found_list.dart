@@ -52,140 +52,140 @@ class _ReservationsFoundListState extends State<ReservationsFoundList> {
 
             return SizedBox(
               width: min(MediaQuery.sizeOf(context).width, kMaxWidthLargest),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Align(
-                      alignment: Alignment.topRight,
-                      child: Padding(
-                        //DE/SELECT ALL Buttons
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        child: Wrap(
-                          alignment: WrapAlignment.end,
-                          crossAxisAlignment: WrapCrossAlignment.end,
-                          runAlignment: WrapAlignment.end,
-                          verticalDirection: VerticalDirection.up,
-                          runSpacing: 8,
-                          spacing: 16,
-                          children: [
-                            TextButton(
-                              onPressed: unselectAll,
-                              child: Text(localized.clearSelection.capitalized),
-                            ),
-                            TextButton(
-                              onPressed: selectAll,
-                              child: Text(localized.selectAll.capitalized),
-                            ),
-                          ],
-                        ),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: Padding(
+                      //DE/SELECT ALL Buttons
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      child: Wrap(
+                        alignment: WrapAlignment.end,
+                        crossAxisAlignment: WrapCrossAlignment.end,
+                        runAlignment: WrapAlignment.end,
+                        verticalDirection: VerticalDirection.up,
+                        runSpacing: 8,
+                        spacing: 16,
+                        children: [
+                          TextButton(
+                            onPressed: unselectAll,
+                            child: Text(localized.clearSelection.capitalized),
+                          ),
+                          TextButton(
+                            onPressed: selectAll,
+                            child: Text(localized.selectAll.capitalized),
+                          ),
+                        ],
                       ),
                     ),
-                    Expanded(
-                      //Actual List
-                      child: GestureDetector(
-                        //used for keeping track of hold
-                        onHorizontalDragStart: startHolding,
-                        onHorizontalDragEnd: stopHolding,
-
-                        //TODO For Mobiles
-                        //! the handlers below are for mobile
-                        //! finish them at some point..
-                        /*
-                      onTapDown: startHolding,
-                      onTapUp: stopHolding,
-                      onHorizontalDragUpdate: (details) {
-                        print( details.localPosition );
-                      },
-                      onVerticalDragUpdate: (details) {
-                        print( details.localPosition );
-                      },
-          
-                      */
-
-                        child: GridView.builder(
-                          shrinkWrap: true,
-                          padding: const EdgeInsets.all(32),
-                          gridDelegate:
-                              const SliverGridDelegateWithMaxCrossAxisExtent(
-                            maxCrossAxisExtent:
-                                kMaxContainerWidthSmall, //? Consider changing?
-                            crossAxisSpacing: 8,
-                            mainAxisSpacing: 8,
-                          ),
-                          itemCount: widget.reservations.length,
-                          itemBuilder: (context, indexOfCurrentGridItem) {
-                            //TODO Mobiles
-                            //!! Below might be useful
-                            //!! when handling events from mobile
-                            // print( context.findRenderObject() );
-
-                            final reservation =
-                                widget.reservations[indexOfCurrentGridItem];
-
-                            return Stack(
-                              clipBehavior: Clip.none,
-                              alignment: Alignment.center,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Material(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    clipBehavior: Clip.antiAlias,
-                                    color:
-                                        Theme.of(context).colorScheme.secondary,
-                                    child: InkWell(
-                                      onTap: () {
-                                        tapHandler(indexOfCurrentGridItem);
-                                      }, //needed for hover to work
-                                      onHover: (hovered) {
-                                        hoverHandler(indexOfCurrentGridItem);
-                                      },
-                                      child: Stack(
-                                        fit: StackFit.expand,
-                                        children: [
-                                          Positioned(
-                                            child:
-                                                ReservationGridItemContainerItems(
-                                              //Items.
-                                              localized: localized,
-                                              reservation: reservation,
-                                            ),
+                  ),
+                  Expanded(
+                    //Actual List
+                    child: GestureDetector(
+                      //used for keeping track of hold
+                      onHorizontalDragStart: startHolding,
+                      onHorizontalDragEnd: stopHolding,
+              
+                      //TODO For Mobiles
+                      //! the handlers below are for mobile
+                      //! finish them at some point..
+                      /*
+                    onTapDown: startHolding,
+                    onTapUp: stopHolding,
+                    onHorizontalDragUpdate: (details) {
+                      print( details.localPosition );
+                    },
+                    onVerticalDragUpdate: (details) {
+                      print( details.localPosition );
+                    },
+                        
+                    */
+              
+                      child: GridView.builder(
+                        shrinkWrap: true,
+                        padding: const EdgeInsets.all(16),
+                        gridDelegate:
+                            const SliverGridDelegateWithMaxCrossAxisExtent(
+                          maxCrossAxisExtent:
+                              kMaxContainerWidthSmall, //? Consider changing?
+                          crossAxisSpacing: 8,
+                          mainAxisSpacing: 8,
+                        ),
+                        itemCount: widget.reservations.length,
+                        itemBuilder: (context, indexOfCurrentGridItem) {
+                          //TODO Mobiles
+                          //!! Below might be useful
+                          //!! when handling events from mobile
+                          // print( context.findRenderObject() );
+              
+                          final reservation =
+                              widget.reservations[indexOfCurrentGridItem];
+              
+                          return Stack(
+                            clipBehavior: Clip.none,
+                            alignment: Alignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Material(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  clipBehavior: Clip.antiAlias,
+                                  color:
+                                      Theme.of(context).colorScheme.secondary,
+                                  child: InkWell(
+                                    onTap: () {
+                                      tapHandler(indexOfCurrentGridItem);
+                                    }, //needed for hover to work
+                                    onHover: (hovered) {
+                                      hoverHandler(indexOfCurrentGridItem);
+                                    },
+                                    child: Stack(
+                                      fit: StackFit.expand,
+                                      children: [
+                                        Positioned(
+                                          child:
+                                              ReservationGridItemContainerItems(
+                                            //Items.
+                                            localized: localized,
+                                            reservation: reservation,
                                           ),
-                                          Positioned(
-                                            bottom: 0,
-                                            child: IsSelectedUnderline(
-                                                isSelected:
-                                                    setOfIndicesOfSelectedReservations
-                                                        .contains(
-                                                            indexOfCurrentGridItem)),
-                                          ),
-                                        ],
-                                      ),
+                                        ),
+                                        Positioned(
+                                          bottom: 0,
+                                          child: IsSelectedUnderline(
+                                              isSelected:
+                                                  setOfIndicesOfSelectedReservations
+                                                      .contains(
+                                                          indexOfCurrentGridItem)),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ),
-                                ReservationDetailsTooltip(
-                                  reservation: reservation,
-                                  localized: localized,
-                                ),
-                                WillOverwriteTooltip(
-                                  reservationAlreadyInDatabase:
-                                      alreadyExistingReservationIds
-                                          .contains(reservation.id),
-                                  localized: localized,
-                                ),
-                              ],
-                            );
-                          },
-                        ),
+                              ),
+                              ReservationDetailsTooltip(
+                                reservation: reservation,
+                                localized: localized,
+                              ),
+                              WillOverwriteTooltip(
+                                reservationAlreadyInDatabase:
+                                    alreadyExistingReservationIds
+                                        .contains(reservation.id),
+                                localized: localized,
+                              ),
+                            ],
+                          );
+                        },
                       ),
                     ),
-                    setOfIndicesOfSelectedReservations.isNotEmpty
-                        ? TextButton(
+                  ),
+                  setOfIndicesOfSelectedReservations.isNotEmpty
+                      ? Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: TextButton(
                             //Submit button
                             //Submit Button
                             onPressed: () async {
@@ -203,12 +203,13 @@ class _ReservationsFoundListState extends State<ReservationsFoundList> {
                               setOfIndicesOfSelectedReservations.clear();
                             },
                             child: Text(
-                              "${localized.addSelected.capitalized}. (${setOfIndicesOfSelectedReservations.length})",
+                              "${localized.addSelected.capitalized} (${setOfIndicesOfSelectedReservations.length})",
+                              textAlign: TextAlign.center,
                             ),
-                          )
-                        : const SizedBox.shrink()
-                  ],
-                ),
+                          ),
+                      )
+                      : const SizedBox.shrink()
+                ],
               ),
             );
           });
