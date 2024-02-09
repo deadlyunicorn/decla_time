@@ -26,7 +26,7 @@ class PlatformField extends StatelessWidget {
         const DropdownMenuEntry(value: "airbnb", label: "Airbnb"),
         const DropdownMenuEntry(value: "booking_com", label: "Booking.com"),
         DropdownMenuEntry(
-            value: "no_platform", label: localized.without.capitalized),
+            value: "no_platform", label: localized.other.capitalized),
       ],
     );
   }

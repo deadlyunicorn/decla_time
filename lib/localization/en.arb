@@ -50,7 +50,7 @@
     "manualAddition" : "manual addition",
     "submit": "submit",
     "enter": "enter",
-    "without": "without",
+    "other": "other",
     "reservationLasted" : "the reservation lasted",
     "insertSomeValue": "insert some value",
     "selectSomeField": "select some field",

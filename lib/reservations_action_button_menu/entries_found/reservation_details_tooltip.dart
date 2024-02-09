@@ -27,7 +27,7 @@ class ReservationDetailsTooltip extends StatelessWidget {
           const TextSpan(text: "\n"),
           TextSpan(
             text:
-                "${localized.listingPlace.capitalized}: ${reservation.listingName ?? localized.without.capitalized}",
+                "${localized.listingPlace.capitalized}: ${reservation.listingName ?? localized.other.capitalized}",
           ),
           const TextSpan(text: "\n"),
           TextSpan(
