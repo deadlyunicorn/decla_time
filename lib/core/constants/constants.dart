@@ -53,6 +53,10 @@ const double kMaxWidthLargest = 960;
 ///120
 const double kMaxContainerWidthSmall = 120; 
 
+//240
+const double kFormFieldWidth = 240;
+
+
 ///160 
 const double kContainerWidthMedium = 160;
 
@@ -63,7 +67,8 @@ const double kMenuHeight = 64;
 const double kMenuHeightWithError = 96 + 32; 
 const double kMenuHeightWithoutError = kMenuHeightWithError - 48 ; 
 
-const double kDatePickerWidth = 96 + 64;
+
+const double kDatePickerWidth = kContainerWidthMedium;
 const int kMonthInDays = 30;
 
 
@@ -75,3 +80,4 @@ const kListings = 'booking_listings';
 const kCompleted = "completed";
 const kCancelled = "cancelled";
 const kUpcoming = "upcoming";
+const kGovUsername = "gov_username";
