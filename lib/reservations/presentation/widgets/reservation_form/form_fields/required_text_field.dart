@@ -11,25 +11,29 @@ class RequiredTextField extends StatelessWidget {
     required this.localized,
     this.refresh,
     this.isEditingExistingEntry = false,
+    this.obscureText = false,
   });
 
   final TextEditingController controller;
   final String label;
   final AppLocalizations localized;
-  final bool isEditingExistingEntry; //? This field is used so that when we edit an entry, we disable editing the ID of the entry.
+  final bool
+      isEditingExistingEntry; //? This field is used so that when we edit an entry, we disable editing the ID of the entry.
   final void Function()? refresh;
+  final bool obscureText;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: kMaxContainerWidthSmall * 2,
+      width: kFormFieldWidth,
       child: TextFormField(
+        obscureText: obscureText,
         mouseCursor: isEditingExistingEntry
-          ? SystemMouseCursors.basic
-          : SystemMouseCursors.text,
-        onChanged: ( newValue ){
+            ? SystemMouseCursors.basic
+            : SystemMouseCursors.text,
+        onChanged: (newValue) {
           final refreshFunction = refresh;
-          if ( refreshFunction != null ){
+          if (refreshFunction != null) {
             refreshFunction();
           }
         },
