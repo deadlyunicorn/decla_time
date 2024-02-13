@@ -58,3 +58,4 @@ tests/mockFs
 airbnb.csv
 booking_gr_3.csv
 tests/declaration_tests/values.dart
+tests/declaration_tests/random.txt
