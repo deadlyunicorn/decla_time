@@ -66,23 +66,23 @@ class DeclarationBody {
     return "appForm%3ArentalFrom_input=${translateDate(arrivalDate)}&appForm%3ArentalTo_input=${translateDate(departureDate)}&appForm%3AsumAmount_hinput=${payout ?? ""}&appForm%3Aplatform_input=$_translatedPlatform&appForm%3AcancelAmount_hinput=${cancellationAmount ?? ""}&appForm%3AcancelDate_input=${cancellationDate != null ? translateDate(cancellationDate!) : ""}&appForm%3ArenterAfm=000000000&appForm%3ApaymentType_focus=&appForm%3ApaymentType_input=4&appForm%3Aplatform_focus=&appForm%3Aj_idt93=&${viewStateParsed}javax.faces.partial.ajax=true&javax.faces.source=appForm%3AsaveButton&javax.faces.partial.execute=%40all&javax.faces.partial.render=appForm&appForm%3AsaveButton=appForm%3AsaveButton&appForm=appForm";
   }
 
-  String get submitReservationBody {
-    double? payout = this.payout;
+  // String get submitReservationBody { //!To be removed.
+  //   double? payout = this.payout;
 
-    if (cancellationAmount != null) {
-      if (payout > 0) {
-        throw ("Cancellation Amount while Payout > 0");
-      }
-      if (cancellationDate == null) {
-        throw "Cancellation date missing";
-      }
-      payout = null;
-    } else if (cancellationDate != null) {
-      // && cancellation Amount == null
-      throw "Cancellation date missing";
-    }
-    return "${viewStateParsed}appForm%3ArentalFrom_input=${translateDate(arrivalDate)}&appForm%3ArentalTo_input=${translateDate(departureDate)}&appForm%3AsumAmount_hinput=${payout ?? ""}&appForm%3Aplatform_input=$_translatedPlatform&appForm%3AcancelAmount_hinput=${cancellationAmount ?? ""}&appForm%3AcancelDate_input=${cancellationDate != null ? translateDate(cancellationDate!) : ""}&appForm%3ArenterAfm=000000000&appForm%3ApaymentType_focus=&appForm%3ApaymentType_input=4&appForm%3Aplatform_focus=&appForm%3Aj_idt93=&javax.faces.partial.ajax=true&javax.faces.source=appForm%3AsaveButton&javax.faces.partial.execute=%40all&javax.faces.partial.render=appForm&appForm%3AsaveButton=appForm%3AsaveButton&appForm=appForm&";
-  }
+  //   if (cancellationAmount != null) {
+  //     if (payout > 0) {
+  //       throw ("Cancellation Amount while Payout > 0");
+  //     }
+  //     if (cancellationDate == null) {
+  //       throw "Cancellation date missing";
+  //     }
+  //     payout = null;
+  //   } else if (cancellationDate != null) {
+  //     // && cancellation Amount == null
+  //     throw "Cancellation date missing";
+  //   }
+  //   return "${viewStateParsed}appForm%3ArentalFrom_input=${translateDate(arrivalDate)}&appForm%3ArentalTo_input=${translateDate(departureDate)}&appForm%3AsumAmount_hinput=${payout ?? ""}&appForm%3Aplatform_input=$_translatedPlatform&appForm%3AcancelAmount_hinput=${cancellationAmount ?? ""}&appForm%3AcancelDate_input=${cancellationDate != null ? translateDate(cancellationDate!) : ""}&appForm%3ArenterAfm=000000000&appForm%3ApaymentType_focus=&appForm%3ApaymentType_input=4&appForm%3Aplatform_focus=&appForm%3Aj_idt93=&javax.faces.partial.ajax=true&javax.faces.source=appForm%3AsaveButton&javax.faces.partial.execute=%40all&javax.faces.partial.render=appForm&appForm%3AsaveButton=appForm%3AsaveButton&appForm=appForm&";
+  // }
 
   String get viewStateParsed => viewState == null 
     ? "" 
