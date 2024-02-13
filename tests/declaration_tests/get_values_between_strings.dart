@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 
-List<String> getValuesFromHtml(
+List<String> getAllBetweenStrings(
     String html, String startingString, String endingString) {
   final values = <String>[];
 
@@ -18,10 +18,20 @@ List<String> getValuesFromHtml(
   return values;
 }
 
+String getBetweenStrings(
+    String html, String startingString, String endingString) {
+  final startingIndex = html.indexOf(startingString) + startingString.length;
+
+  return html.substring(
+    startingIndex,
+    html.indexOf(endingString, startingIndex),
+  );
+}
+
 //? Tests
 void main() {
   test("Testing if get values from html works", () {
-    final values = getValuesFromHtml(
+    final values = getAllBetweenStrings(
       "value=[4211]asderq value=[4311]asderqvalue=[4611]asderqvalue=[4711]",
       "[",
       "]",

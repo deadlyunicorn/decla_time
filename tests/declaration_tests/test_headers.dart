@@ -5,7 +5,7 @@ import 'dart:io';
 import 'package:decla_time/declarations/login/declarations_page_headers.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'get_values_from_html.dart';
+import 'get_values_between_strings.dart';
 import 'values.dart';
 
 Future<DeclarationsPageHeaders> getTestHeaders() async {
@@ -28,12 +28,12 @@ Future<DeclarationsPageHeaders> getTestHeaders() async {
 Future<DeclarationsPageHeaders> getTestHeadersFromFileFuture(File file) async {
   final fileContent = await file.readAsString();
 
-  final gsisCookie = getValuesFromHtml(fileContent, ">gsisCookie:", ";")[0];
+  final gsisCookie = getAllBetweenStrings(fileContent, ">gsisCookie:", ";")[0];
   final wl_authCookie_jSessionId =
-      getValuesFromHtml(fileContent, ">wl_authCookie_jSessionId:", ";")[0];
-  final jSessionId = getValuesFromHtml(fileContent, ">jSessionId:", ";")[0];
+      getAllBetweenStrings(fileContent, ">wl_authCookie_jSessionId:", ";")[0];
+  final jSessionId = getAllBetweenStrings(fileContent, ">jSessionId:", ";")[0];
   final oamAuthnCookie =
-      getValuesFromHtml(fileContent, ">oamAuthnCookie:", ";")[0];
+      getAllBetweenStrings(fileContent, ">oamAuthnCookie:", ";")[0];
 
   final testingHeaders = DeclarationsPageHeaders(
     gsisCookie: gsisCookie,

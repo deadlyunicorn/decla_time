@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_declarations, non_constant_identifier_names, avoid_print
 
-import 'get_values_from_html.dart';
+import 'get_values_between_strings.dart';
 
 class UserPropertiesInformation {
 
@@ -17,14 +17,14 @@ class UserPropertiesInformation {
   );
 
   static UserPropertiesInformation generateFromHtml(String body) {
-    final propertyIds = getValuesFromHtml(body, "propertyId',value:'", "'}");
+    final propertyIds = getAllBetweenStrings(body, "propertyId',value:'", "'}");
     final atakNumbers =
-        getValuesFromHtml(body, 'atakOutput" style="width:90px;">', "</span>");
-    final addressOfProperties = getValuesFromHtml(body, 'addressOutput">', "<")
+        getAllBetweenStrings(body, 'atakOutput" style="width:90px;">', "</span>");
+    final addressOfProperties = getAllBetweenStrings(body, 'addressOutput">', "<")
         .map((addressEntry) => addressEntry.trim())
         .toList();
     final registryNumbers =
-        getValuesFromHtml(body, 'amaOutput" style="width:90px;">', '<');
+        getAllBetweenStrings(body, 'amaOutput" style="width:90px;">', '<');
     return UserPropertiesInformation(
         atakNumbers, propertyIds, addressOfProperties, registryNumbers);
   }
