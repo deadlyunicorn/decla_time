@@ -9,26 +9,30 @@ import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 
 import 'test_headers.dart';
+import 'values.dart';
 
 void main() async {
-  test("Test that edits a declaration", () async{
+  test("Test that edits a declaration", () async {
+    final testingHeaders = await getTestHeaders();
+
     final declarationBody = DeclarationBody(
       arrivalDate: DateTime.now(),
       departureDate: DateTime.now().add(const Duration(days: 2)),
-      payout: 0.01,
+      payout: 0.08,
       platform: "booking",
+      viewState: sampleViewState,
     );
 
-    final testingHeaders = await getTestHeadersFromFileFuture( File("headers.txt")); //? Is in .gitignore
-    final res = await editDeclarationRequest( 
+    final res = await editDeclarationRequest(
       headersObject: testingHeaders,
-      bodyString: declarationBody.bodyString,//!Outdated - need to specify a viewState - this specifies the declaration..
+      bodyString: declarationBody.bodyString,
     );
 
-    expect( res.statusCode, 200); //TODO make an actual test.
+    expect(
+        res.body.contains(
+            '<span class="ui-messages-info-detail">Επιτυχής Αποθήκευση</span>'),
+        true);
   });
-
-  
 }
 
 Future<Response> editDeclarationRequest({
@@ -36,10 +40,12 @@ Future<Response> editDeclarationRequest({
   required String bodyString,
 }) async {
   declarationAttemptResponse() async => await http.post(
-        Uri.https("www1.aade.gr",
-            "taxisnet/short_term_letting/views/declaration.xhtml"),
+        Uri.https(
+          "www1.aade.gr",
+          "taxisnet/short_term_letting/views/declaration.xhtml",
+        ),
         headers: headersObject.getHeaders(),
-        body: bodyString, 
+        body: bodyString,
       );
 
   final res = (await declarationAttemptResponse());
@@ -58,4 +64,3 @@ Future<Response> editDeclarationRequest({
 
   return res;
 }
-
