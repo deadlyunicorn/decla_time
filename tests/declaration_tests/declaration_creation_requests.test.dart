@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_declarations, non_constant_identifier_names, avoid_print
 
+import 'dart:io';
+
 import 'package:decla_time/declarations/login/declaration_body.dart';
 import 'package:decla_time/declarations/login/declarations_page_headers.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -12,7 +14,9 @@ void main() async {
   //! Step 1: Get to the Declaration Form. Get a valid view_state from it.
 
   test("Test that creates a new declaration", () async {
-    final testingHeaders = getTestHeaders();
+    final testingHeaders = await getTestHeadersFromFileFuture(
+        File("headers.txt")); //? Is in .gitignore
+
     // final res1 = await createNewDeclarationRequest(
     //   headersObject: testingHeaders,
     //   newDeclarationBodyString: DeclarationBody.declarationCreationBody,

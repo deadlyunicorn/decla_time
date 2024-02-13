@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_declarations, non_constant_identifier_names, avoid_print
 
+import 'dart:io';
+
 import 'package:decla_time/declarations/functions/check_if_logged_in.dart';
 import 'package:decla_time/declarations/http_requests/get_user_properties.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -10,7 +12,7 @@ import 'user_property_information.dart';
 void main() async {
   test("Test that gets a list of the available property Ids", () async {
     
-    final testingHeaders = getTestHeaders();
+    final testingHeaders = await getTestHeadersFromFileFuture( File("headers.txt")); //? Is in .gitignore
 
     final res = await getPropertiesRequest(
       headersObject: testingHeaders,

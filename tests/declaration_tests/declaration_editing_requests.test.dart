@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_declarations, non_constant_identifier_names, avoid_print
 
+import 'dart:io';
+
 import 'package:decla_time/declarations/login/declaration_body.dart';
 import 'package:decla_time/declarations/login/declarations_page_headers.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -17,7 +19,7 @@ void main() async {
       platform: "booking",
     );
 
-    final testingHeaders = getTestHeaders();
+    final testingHeaders = await getTestHeadersFromFileFuture( File("headers.txt")); //? Is in .gitignore
     final res = await editDeclarationRequest( 
       headersObject: testingHeaders,
       bodyString: declarationBody.bodyString,//!Outdated - need to specify a viewState - this specifies the declaration..
