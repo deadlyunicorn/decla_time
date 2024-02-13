@@ -57,5 +57,4 @@ libisar.so
 tests/mockFs
 airbnb.csv
 booking_gr_3.csv
-credentials.txt
-headers.txt
+tests/declaration_tests/values.dart
