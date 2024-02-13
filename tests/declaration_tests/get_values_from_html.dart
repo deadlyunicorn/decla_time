@@ -10,7 +10,7 @@ List<String> getValuesFromHtml(
     values.add(
       html.substring(
         i + startingString.length,
-        html.indexOf(endingString, i),
+        html.indexOf(endingString, i + startingString.length),
       ),
     );
   }
