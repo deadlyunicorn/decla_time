@@ -11,8 +11,7 @@ import 'user_property_information.dart';
 
 void main() async {
   test("Test that gets a list of the available property Ids", () async {
-    
-    final testingHeaders = await getTestHeadersFromFileFuture( File("headers.txt")); //? Is in .gitignore
+    final testingHeaders = await getTestHeaders(); 
 
     final res = await getPropertiesRequest(
       headersObject: testingHeaders,
@@ -36,10 +35,11 @@ void main() async {
 
     print(res.statusCode);
 
-    expect(userProperties.atakNumbers.length, userProperties.propertyIds.length);
-    expect(userProperties.addressOfProperties.length, userProperties.propertyIds.length);
-    expect(userProperties.registryNumbers.length, userProperties.propertyIds.length);
+    expect(
+        userProperties.atakNumbers.length, userProperties.propertyIds.length);
+    expect(userProperties.addressOfProperties.length,
+        userProperties.propertyIds.length);
+    expect(userProperties.registryNumbers.length,
+        userProperties.propertyIds.length);
   });
 }
-
-

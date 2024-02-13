@@ -14,8 +14,7 @@ void main() async {
   //! Step 1: Get to the Declaration Form. Get a valid view_state from it.
 
   test("Test that creates a new declaration", () async {
-    final testingHeaders = await getTestHeadersFromFileFuture(
-        File("headers.txt")); //? Is in .gitignore
+    final testingHeaders = await getTestHeaders();
 
     // final res1 = await createNewDeclarationRequest(
     //   headersObject: testingHeaders,
