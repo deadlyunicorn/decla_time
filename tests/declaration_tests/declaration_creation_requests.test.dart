@@ -14,7 +14,11 @@ void main() async {
   //! Step 1: Get to the Declaration Form. Get a valid view_state from it.
 
   test("Test that creates a new declaration", () async {
-    final testingHeaders = await getTestHeaders();
+    final testingHeaders = DeclarationsPageHeaders(///? Either use the login function or provide manual values.
+      gsisCookie: "",
+      jSessionId: "",
+      wl_authCookie_jSessionId: "",
+    );
 
     // final res1 = await createNewDeclarationRequest(
     //   headersObject: testingHeaders,
@@ -47,7 +51,7 @@ Future<Response> createNewDeclarationRequest({
   return http.post(
     Uri.https(
         "www1.aade.gr", "taxisnet/short_term_letting/views/declaration.xhtml"),
-    headers: headersObject.getHeaders(),
+    headers: headersObject.getHeadersForPOST(),
     body: newDeclarationBodyString,
   );
 }

@@ -10,7 +10,12 @@ import 'user_property_information.dart';
 
 void main() async {
   test("Test that gets a list of the available property Ids", () async {
-    final testingHeaders = await getTestHeaders();
+
+    final testingHeaders = DeclarationsPageHeaders(///? Either use the login function or provide manual values.
+      gsisCookie: "",
+      jSessionId: "",
+      wl_authCookie_jSessionId: "",
+    );
 
     final userProperties = await getUserProperties(testingHeaders);
     if (userProperties.propertyIds.isEmpty) {

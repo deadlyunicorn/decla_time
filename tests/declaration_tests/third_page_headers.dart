@@ -8,14 +8,16 @@ import 'second_page_headers.dart';
 class ThirdPageHeaders extends SecondPageHeaders {
   @override
   // ignore: overridden_fields
-  final String gsisCookie;
+  // final String gsisCookie;
 
   @override
   // ignore: overridden_fields
-  final Uri nextUrl = Uri.parse( "https://login.gsis.gr/oam/server/auth_cred_submit" );
+  final Uri nextUrl = Uri.parse(
+    "https://login.gsis.gr/oam/server/auth_cred_submit",
+  );
 
   final String oam_JSESSIONID;
-  //!SOS 
+  //!SOS
   final String oam_req_count = "VERSION_4~1";
 
   @override
@@ -26,10 +28,17 @@ class ThirdPageHeaders extends SecondPageHeaders {
   }
 
   ThirdPageHeaders({
-    required this.gsisCookie,
+    // required this.gsisCookie,
     required this.oam_JSESSIONID,
     required SecondPageHeaders previousPageHeaders,
   }) : super.fromObject(headersObject: previousPageHeaders);
+
+  ThirdPageHeaders.fromObject({required ThirdPageHeaders headersObject})
+      : // gsisCookie = headersObject.gsisCookie,
+        oam_JSESSIONID = headersObject.oam_JSESSIONID,
+        super.fromObject(
+          headersObject: headersObject,
+        );
 
   @override
   String get cookies =>
@@ -43,7 +52,7 @@ class ThirdPageHeaders extends SecondPageHeaders {
 
     return ThirdPageHeaders(
       oam_JSESSIONID: getBetweenStrings(headers, "OAM_JSESSIONID=", ";"),
-      gsisCookie: getBetweenStrings(headers, "gsis_cookie=", ";"),
+      // gsisCookie: getBetweenStrings(headers, "gsis_cookie=", ";"),
       previousPageHeaders: previousPageHeaders,
     );
   }

@@ -1,12 +1,9 @@
 // ignore_for_file: non_constant_identifier_names
 
-import 'package:flutter/foundation.dart';
-
 import 'get_values_between_strings.dart';
 import 'first_page_headers.dart';
 import 'package:http/http.dart';
 import 'login_test.dart';
-import 'values.dart';
 
 class SecondPageHeaders extends FirstPageHeaders {
   @override
@@ -41,7 +38,9 @@ class SecondPageHeaders extends FirstPageHeaders {
         requestId = headersObject.requestId,
         ecidContext = headersObject.ecidContext,
         oam_req_0 = headersObject.oam_req_0,
-        super.fromObject(headersObject: headersObject);
+        super.fromObject(
+          headersObject: headersObject,
+        );
 
   @override
   String get cookies =>
