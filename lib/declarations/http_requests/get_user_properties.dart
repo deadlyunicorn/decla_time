@@ -10,6 +10,6 @@ Future<Response> getPropertiesRequest({
       "www1.aade.gr",
       "taxisnet/short_term_letting/views/propertyRegistry/propertyRegistrySearch.xhtml",
     ),
-    headers: headersObject.getHeaders(),
+    headers: headersObject.getHeadersForPOST(),
   );
 }

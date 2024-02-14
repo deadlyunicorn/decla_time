@@ -17,18 +17,23 @@ class DeclarationsPageHeaders {
   });
 
   //if requestStatus == 302, we need to refresh the `OAMAuthnCookie_www1.aade.gr:443` cookie
-
-  Map<String, String> getHeaders() {
+  Map<String, String> getHeadersForGET() {
     if (oamAuthnCookie == null) {
       //Or if we get a 302 response throw we need a new session.
       throw "You need to get a new session!";
     } else {
       return {
-        "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
         "cookie":
             "JSESSIONID=$jSessionId; _WL_AUTHCOOKIE_JSESSIONID=$wl_authCookie_jSessionId; OAMAuthnCookie_www1.aade.gr:443=$oamAuthnCookie",
         //NOT NEEDED FOR EDITING A DECLARATION: gsis_cookie=$gsisCookie;
       };
     }
+  }
+
+  Map<String, String> getHeadersForPOST() {
+    return getHeadersForGET()
+      ..addAll({
+        "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+      });
   }
 }

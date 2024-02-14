@@ -14,7 +14,7 @@ Future<Response> editDeclarationRequest({
           "www1.aade.gr",
           "taxisnet/short_term_letting/views/declaration.xhtml",
         ),
-        headers: headersObject.getHeaders(),
+        headers: headersObject.getHeadersForPOST(),
         body: bodyString,
       );
 
