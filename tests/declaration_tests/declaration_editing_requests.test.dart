@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_declarations, non_constant_identifier_names, avoid_print
 
 import 'package:decla_time/declarations/login/declaration_body.dart';
-import 'package:decla_time/declarations/login/declarations_page_headers.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'edit_declaration_request.dart';
@@ -10,11 +9,7 @@ import 'values.dart';
 void main() async {
   test("Test that edits a declaration", () async {
 
-    final testingHeaders = DeclarationsPageHeaders( ///? Either use the login function or provide manual values.
-      gsisCookie: "", 
-      jSessionId: "",
-      wl_authCookie_jSessionId: "",
-    );
+    final testingHeaders = getTestHeaders(); //?From values.dart
 
     final viewState = sampleViewState;  //* Change this for your tests
 

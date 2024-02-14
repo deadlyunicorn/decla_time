@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_const_declarations, non_constant_identifier_names, avoid_print
 
-import 'dart:io';
 
 import 'package:decla_time/declarations/login/declaration_body.dart';
 import 'package:decla_time/declarations/login/declarations_page_headers.dart';
@@ -8,17 +7,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 
-import 'test_headers.dart';
+import 'values.dart';
 
+//TODO Finish this test.
 void main() async {
   //! Step 1: Get to the Declaration Form. Get a valid view_state from it.
 
   test("Test that creates a new declaration", () async {
-    final testingHeaders = DeclarationsPageHeaders(///? Either use the login function or provide manual values.
-      gsisCookie: "",
-      jSessionId: "",
-      wl_authCookie_jSessionId: "",
-    );
+    final testingHeaders = getTestHeaders();
 
     // final res1 = await createNewDeclarationRequest(
     //   headersObject: testingHeaders,

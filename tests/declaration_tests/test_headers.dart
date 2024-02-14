@@ -6,23 +6,6 @@ import 'package:decla_time/declarations/login/declarations_page_headers.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'get_values_between_strings.dart';
-import 'values.dart';
-
-// Future<DeclarationsPageHeaders> getTestHeaders() async {
-  
-//   final testingHeaders = DeclarationsPageHeaders(
-//     gsisCookie: gsisCookie,
-//     wl_authCookie_jSessionId: wl_authCookie_jSessionId,
-//     jSessionId: jSessionId,
-//   );
-
-//   testingHeaders.newSession(
-//     oamAuthnCookie: oamAuthnCookie,
-//   );
-
-//   return testingHeaders;
-// }
-
 
 
 Future<DeclarationsPageHeaders> getTestHeadersFromFileFuture(File file) async {

@@ -5,17 +5,13 @@ import 'package:decla_time/declarations/http_requests/get_user_properties.dart';
 import 'package:decla_time/declarations/login/declarations_page_headers.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'test_headers.dart';
 import 'user_property_information.dart';
+import 'values.dart';
 
 void main() async {
   test("Test that gets a list of the available property Ids", () async {
 
-    final testingHeaders = DeclarationsPageHeaders(///? Either use the login function or provide manual values.
-      gsisCookie: "",
-      jSessionId: "",
-      wl_authCookie_jSessionId: "",
-    );
+    final testingHeaders = getTestHeaders();
 
     final userProperties = await getUserProperties(testingHeaders);
     if (userProperties.propertyIds.isEmpty) {
