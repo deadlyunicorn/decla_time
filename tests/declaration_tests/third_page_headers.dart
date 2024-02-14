@@ -9,7 +9,13 @@ class ThirdPageHeaders extends SecondPageHeaders {
   @override
   // ignore: overridden_fields
   final String gsisCookie;
+
+  @override
+  // ignore: overridden_fields
+  final Uri nextUrl = Uri.parse( "https://login.gsis.gr/oam/server/auth_cred_submit" );
+
   final String oam_JSESSIONID;
+  //!SOS 
   final String oam_req_count = "VERSION_4~1";
 
   @override

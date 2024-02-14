@@ -18,17 +18,19 @@ void main() async {
     () async {
       //*0th request (login page) GET //No Cookies
       final res0 = await nonRedirectingRequest(
+        method: "GET",
         url: Uri.https("www1.aade.gr", "taxisnet/short_term_letting"),
         cookies: "",
-      );
+      ).send();
 
       final firstResponseHeaders = FirstPageHeaders.getFromResponse(res0);
 
       //*1st request (obrareq) GET //First set of Cookies
       final res1 = await nonRedirectingRequest(
+        method: "GET",
         url: firstResponseHeaders.nextUrl,
         cookies: firstResponseHeaders.cookies,
-      );
+      ).send();
 
       final secondResponseHeaders = SecondPageHeaders.getFromResponse(
         previousPageHeaders: firstResponseHeaders,
@@ -37,9 +39,10 @@ void main() async {
 
       //*2nd request (login.jsp?bmctx) GET //Second set of Cookies
       final res2 = await nonRedirectingRequest(
+        method: "GET",
         url: secondResponseHeaders.nextUrl,
         cookies: secondResponseHeaders.cookies,
-      );
+      ).send();
 
       final thirdResponseHeaders = ThirdPageHeaders.getFromResponse(
         streamedResponse: res2,
@@ -47,9 +50,9 @@ void main() async {
       ); //* We don't get a nextUrl from this one
 
       {
-        // //*3rd request (submit button) - POST
-        final req3 = await loginPostRequest( headers: thirdResponseHeaders);
-        print( req3.headers ); 
+        // //*3rd request (login submit button) - POST
+        final res3 = await loginRequest(thirdResponseHeaders).send();
+        print(res3.headers);
       }
 
 /*
@@ -68,38 +71,30 @@ void main() async {
   );
 }
 
-Future<StreamedResponse> loginPostRequest( {
-  required ThirdPageHeaders headers
-  }) async {
-  final loginRequest = http.Request(
-    "POST",
-    Uri.parse(
-      "https://login.gsis.gr/oam/server/auth_cred_submit",
-    ),
+http.Request loginRequest(ThirdPageHeaders thirdResponseHeaders) {
+  final req3 = nonRedirectingRequest(
+    method: "POST",
+    url: thirdResponseHeaders.nextUrl,
+    cookies: thirdResponseHeaders.cookies,
   );
-  loginRequest.headers.addAll({
-    "cookie": headers.cookies,
-    // "OAM_REQ_0=${headers.oam_req_0}; OAM_REQ_COUNT=VERSION_4~1; ECID-Context=${headers.ecidContext}; gsis_cookie=${headers.gsisCookie}; OAM_JSESSIONID=${headers.oam_JSESSIONID}",
-    "content-type": "application/x-www-form-urlencoded", //!SOS just like OAM_REQ_COUNT=VERSION_4~1
+  req3.headers.addAll({
+    "content-type": "application/x-www-form-urlencoded",
   });
-  loginRequest.body = LoginBodyFields(
+  req3.body = LoginBodyFields(
     username: username,
     password: password,
-    requestId: headers.requestId,
+    requestId: thirdResponseHeaders.requestId,
   ).loginBody;
-  loginRequest.followRedirects = false;
-  return await loginRequest.send();
+  return req3;
 }
 
-Future<StreamedResponse> nonRedirectingRequest({
-  required Uri url,
-  required String? cookies,
-}) async {
-  final request = http.Request("GET", url);
+Request nonRedirectingRequest(
+    {required Uri url, required String? cookies, required String method}) {
+  final request = http.Request(method, url);
 
   request.headers.addAll({"Cookie": cookies ?? ""});
   request.followRedirects = false;
-  return await request.send();
+  return request;
 }
 
 String toStringMax60(Object anyObject) {
