@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_const_declarations, non_constant_identifier_names, avoid_print, dead_code
 
-
 import 'package:decla_time/declarations/login/declaration_body.dart';
 import 'package:decla_time/declarations/login/declarations_page_headers.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -10,7 +9,9 @@ import 'declaration_list_page_data.dart';
 import 'edit_declaration_request.dart';
 import 'get_property_ids.test.dart';
 import 'get_values_between_strings.dart';
-import 'test_headers.dart';
+import 'login_test.dart';
+import 'user_credentials.dart';
+import 'values.dart';
 
 void main() async {
   test("Test that edits a declaration", () async {
@@ -35,15 +36,14 @@ void main() async {
 
     //? What if our authCookie expires during the operation..
 
-    //* STEP 0: Getting the required cookies.
-    // final credentials = LoginBodyFields(username: username, password: password);
-    // throw UnimplementedError();
+    //* STEP 0: Getting the required cookies. -- Logging in User
 
-
-
-    final testingHeaders = await getTestHeaders(); //? Is in .gitignore
-
-
+    final testingHeaders = await loginUser(
+      credentials: UserCredentials(
+        username: username,
+        password: password,
+      ),
+    ); //? Is in .gitignore
 
     //* STEP 1:GETTING THE propertyId
     final propertyId = (await getUserProperties(testingHeaders))
@@ -56,7 +56,8 @@ void main() async {
       propertyId: propertyId,
     );
 
-    if (declarationsList.arrivalDates.length != declarationsList.departureDates.length) {
+    if (declarationsList.arrivalDates.length !=
+        declarationsList.departureDates.length) {
       throw "Invalid data";
     }
     for (int i = 0; i < declarationsList.arrivalDates.length; i++) {
@@ -67,16 +68,15 @@ void main() async {
     print("Select one: ");
     final String? userInput = null;
     final int selectedDeclarationIndex = int.parse(userInput ?? "0");
-    print("Nvm io won't working during tests.. Selecting $selectedDeclarationIndex...");
-    
+    print(
+        "Nvm io won't working during tests.. Selecting $selectedDeclarationIndex...");
+
     final declarationDbId = await getDeclarationDbIdFromDeclarationsListPage(
-      declarationIndex: selectedDeclarationIndex,
-      headers: testingHeaders,
-      parsedViewState: declarationsList.viewStateParsed
-    );
+        declarationIndex: selectedDeclarationIndex,
+        headers: testingHeaders,
+        parsedViewState: declarationsList.viewStateParsed);
 
-    print( "Your selected declaration has an id of: $declarationDbId" );
-
+    print("Your selected declaration has an id of: $declarationDbId");
 
     final declarationQueryParameters = {
       "propertyId": propertyId,
@@ -95,8 +95,8 @@ void main() async {
     final newDeclarationBody = DeclarationBody(
       arrivalDate: DateTime.now(),
       departureDate: DateTime.now().add(const Duration(days: 2)),
-      payout: 0.06,
-      platform: "booking",
+      payout: 0.12,
+      platform: "airbnb",
       viewState: viewState,
     );
 
@@ -123,7 +123,7 @@ Future<String> getDeclarationViewState(
       "taxisnet/short_term_letting/views/declaration.xhtml",
       declarationQueryParameters,
     ),
-    headers: testingHeaders.getHeaders(),
+    headers: testingHeaders.getHeadersForPOST(),
   )
       .then(
     (res) {
@@ -144,7 +144,7 @@ Future<DeclarationListPageData> getDeclarationListData(
       "taxisnet/short_term_letting/views/declarationSearch.xhtml",
       {"propertyId": propertyId},
     ),
-    headers: headers.getHeaders(),
+    headers: headers.getHeadersForPOST(),
   )
       .then((res) {
     return DeclarationListPageData.getFromHtml(res.body);
@@ -163,7 +163,9 @@ Future<String> getDeclarationDbIdFromDeclarationsListPage(
         ), //?Once the viewState has been used in a POST request - it can't be used again..
         body:
             "${parsedViewState}javax.faces.source=appForm%3AbasicDT%3A$declarationIndex%3AdeclarationDetails&javax.faces.partial.ajax=true&javax.faces.partial.execute=%40all&appForm=appForm&appForm%3AbasicDT%3A$declarationIndex%3AdeclarationDetails=appForm%3AbasicDT%3A$declarationIndex%3AdeclarationDetails",
-        headers: headers.getHeaders(),
+        headers: headers.getHeadersForPOST(),
       )
-      .then((res) => getAllBetweenStrings(res.body, "declarationDbId=", '"')[0]);
+      .then(
+        (res) => getAllBetweenStrings(res.body, "declarationDbId=", '"')[0],
+      );
 }
