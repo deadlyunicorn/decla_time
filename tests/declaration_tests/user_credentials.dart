@@ -1,14 +1,13 @@
 // ignore_for_file: non_constant_identifier_names
 
-class LoginBodyFields {
+class UserCredentials {
   final String _username;
   final String _password;
-  final String _requestId;
 
-  LoginBodyFields( {required String username, required String password, required requestId})
+  UserCredentials({required String username, required String password})
       : _username = username,
-        _password = password,
-        _requestId = requestId;
+        _password = password;
 
-  String get loginBody => "request_id=$_requestId&username=$_username&password=$_password&btn_login=";
+  String generateLoginBody(String requestId) =>
+      "request_id=$requestId&username=$_username&password=$_password&btn_login=";
 }
