@@ -4,14 +4,14 @@ import 'get_values_between_strings.dart';
 import 'login_test.dart';
 
 class FirstPageHeaders {
-  final String oamAuthnCookie;
+  final String oamAuthnHintCookie;
   final String oamRequestContext;
   String gsisCookie;
   final Uri nextUrl;
 
   void printProperties() {
     // ignore: avoid_print
-    print("oamAuthnCookie:${toStringMax60(oamAuthnCookie)}");
+    print("oamAuthnHintCookie:${toStringMax60(oamAuthnHintCookie)}");
     // ignore: avoid_print
     print("oamRequestContext:${toStringMax60(oamRequestContext)}");
     // ignore: avoid_print
@@ -21,7 +21,7 @@ class FirstPageHeaders {
   }
 
   FirstPageHeaders({
-    required this.oamAuthnCookie,
+    required this.oamAuthnHintCookie,
     required this.oamRequestContext,
     required this.gsisCookie,
     required this.nextUrl,
@@ -29,19 +29,19 @@ class FirstPageHeaders {
 
   FirstPageHeaders.fromObject({required FirstPageHeaders headersObject})
       : nextUrl = headersObject.nextUrl,
-        oamAuthnCookie = headersObject.oamAuthnCookie,
+        oamAuthnHintCookie = headersObject.oamAuthnHintCookie,
         oamRequestContext = headersObject.oamRequestContext,
         gsisCookie = headersObject.gsisCookie;
 
   String get cookies =>
-      "gsis_cookie=$gsisCookie; OAMAuthnHintCookie=$oamAuthnCookie; OAMRequestContext_www1.aade.gr:443_$oamRequestContext;";
+      "gsis_cookie=$gsisCookie; OAMAuthnHintCookie=$oamAuthnHintCookie; OAMRequestContext_www1.aade.gr:443_$oamRequestContext;";
 
   static FirstPageHeaders getFromResponse(StreamedResponse streamedResponse) {
     final headers = streamedResponse.headers.toString();
 
     return FirstPageHeaders(
       gsisCookie: getBetweenStrings(headers, "gsis_cookie=", ";"),
-      oamAuthnCookie: getBetweenStrings(headers, "OAMAuthnHintCookie=", ";"),
+      oamAuthnHintCookie: getBetweenStrings(headers, "OAMAuthnHintCookie=", ";"),
       oamRequestContext: getBetweenStrings(
           headers, "OAMRequestContext_www1.aade.gr:443_", ";"),
       nextUrl: Uri.parse(
