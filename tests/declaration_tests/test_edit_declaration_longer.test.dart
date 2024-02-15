@@ -51,18 +51,13 @@ void main() async {
 
     //* STEP 2:GETTING THE declarationDbId
 
-    final declarationsList = await getDeclarationListData(
+    final declarationsSearchPageData = await getDeclarationListData(
       headers: testingHeaders,
       propertyId: propertyId,
     );
 
-    if (declarationsList.arrivalDates.length !=
-        declarationsList.departureDates.length) {
-      throw "Invalid data";
-    }
-    for (int i = 0; i < declarationsList.arrivalDates.length; i++) {
-      print(
-          "$i. ${declarationsList.arrivalDates[i]} - ${declarationsList.departureDates[i]} | ${declarationsList.payouts[i]} EUR");
+    for (int i = 0; i < declarationsSearchPageData.declarations.length; i++) {
+      declarationsSearchPageData.declarations[i].printData();
     }
 
     print("Select one: ");
@@ -72,9 +67,10 @@ void main() async {
         "Nvm io won't working during tests.. Selecting $selectedDeclarationIndex...");
 
     final declarationDbId = await getDeclarationDbIdFromDeclarationsListPage(
-        declarationIndex: selectedDeclarationIndex,
-        headers: testingHeaders,
-        parsedViewState: declarationsList.viewStateParsed);
+      declarationIndex: selectedDeclarationIndex,
+      headers: testingHeaders,
+      parsedViewState: declarationsSearchPageData.viewStateParsed,
+    );
 
     print("Your selected declaration has an id of: $declarationDbId");
 
@@ -134,7 +130,7 @@ Future<String> getDeclarationViewState(
   );
 }
 
-Future<DeclarationListPageData> getDeclarationListData(
+Future<SearchPageData> getDeclarationListData(
     {required DeclarationsPageHeaders headers,
     required String propertyId}) async {
   return await http
@@ -147,7 +143,7 @@ Future<DeclarationListPageData> getDeclarationListData(
     headers: headers.getHeadersForPOST(),
   )
       .then((res) {
-    return DeclarationListPageData.getFromHtml(res.body);
+    return SearchPageData.getFromHtml(res.body);
   });
 }
 
