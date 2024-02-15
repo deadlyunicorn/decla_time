@@ -1,11 +1,8 @@
-// ignore_for_file: avoid_print
 import 'package:decla_time/core/documents_io/documents_io.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'setup_documents_directory.dart';
 
-
-//use 'flutter test filename.dart'
 
 void main() {
 
@@ -22,15 +19,6 @@ void main() {
       );
 
     });
-
-    // test("Read test file", () async{
-    //   setUpDocumentsDirectoryForTesting();
-
-    //   String randomText = "hello does this work?";
-    //   await DocumentsIO.editReservationFile( "test", content: randomText);
-    //   String fileContent = await DocumentsIO.readReservationFile("test");
-    //   expect( fileContent, equals( randomText ) );
-    // });
 
     test("Delete test file", () async{
       setUpDocumentsDirectoryForTesting();

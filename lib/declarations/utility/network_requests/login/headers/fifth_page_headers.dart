@@ -1,8 +1,7 @@
-// ignore_for_file: non_constant_identifier_names
+import 'package:decla_time/core/extensions/get_values_between_strings.dart';
+import 'package:decla_time/core/extensions/to_string_max_60.dart';
 
 import 'fourth_page_headers.dart';
-import 'get_values_between_strings.dart';
-import 'login_test.dart';
 import 'package:http/http.dart';
 
 class FifthPageHeaders extends FourthPageHeaders {
@@ -18,7 +17,7 @@ class FifthPageHeaders extends FourthPageHeaders {
   void printProperties() {
     super.printProperties();
     // ignore: avoid_print
-    print("oamAuthnCookie:${toStringMax60(oamAuthnCookie)}");
+    print("oamAuthnCookie:${oamAuthnCookie.toStringMax60}");
   }
 
   FifthPageHeaders({

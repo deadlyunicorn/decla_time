@@ -1,11 +1,7 @@
-// ignore_for_file: prefer_const_declarations, non_constant_identifier_names, avoid_print
-
 import 'package:decla_time/core/enums/declaration_status.dart';
-
-import 'get_values_between_strings.dart';
+import 'package:decla_time/core/extensions/get_values_between_strings.dart';
+import 'package:decla_time/declarations/utility/search_page_declaration.dart';
 import 'package:intl/intl.dart';
-
-import 'search_page_declaration.dart';
 
 class SearchPageData {
   final List<SearchPageDeclaration> _declarations;
@@ -19,7 +15,6 @@ class SearchPageData {
 
   List<SearchPageDeclaration> get declarations => _declarations;
 
-  // String get viewState => _viewState;
 
   String get viewStateParsed => _viewState.contains(":")
       ? "${_viewState.split(":")[0]}%3A${_viewState.split(":")[1]}"

@@ -1,7 +1,7 @@
 // ignore_for_file: non_constant_identifier_names
 
-import 'get_values_between_strings.dart';
-import 'login_test.dart';
+import 'package:decla_time/core/extensions/get_values_between_strings.dart';
+import 'package:decla_time/core/extensions/to_string_max_60.dart';
 import 'package:http/http.dart';
 import 'third_page_headers.dart';
 
@@ -23,7 +23,7 @@ class FourthPageHeaders extends ThirdPageHeaders {
   void printProperties() {
     super.printProperties();
     // ignore: avoid_print
-    print("OAM_ID:${toStringMax60(oam_id)}");
+    print("OAM_ID:${oam_id.toStringMax60}");
   }
 
   FourthPageHeaders({

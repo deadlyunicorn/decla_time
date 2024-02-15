@@ -1,16 +1,20 @@
 import 'package:decla_time/core/enums/declaration_status.dart';
-import 'package:decla_time/declarations/login/declarations_page_headers.dart';
+import 'package:decla_time/declarations/utility/network_requests/get_declaration_search_page.dart';
+import 'package:decla_time/declarations/utility/network_requests/get_user_properties_request.dart';
+import 'package:decla_time/declarations/utility/network_requests/headers/declarations_page_headers.dart';
+import 'package:decla_time/declarations/utility/network_requests/login/login_user.dart';
+import 'package:decla_time/declarations/utility/search_page_declaration.dart';
+import 'package:decla_time/declarations/utility/user_credentials.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'get_property_ids.test.dart';
-import 'search_page_declaration.dart';
-import 'test_edit_declaration_longer.test.dart';
 import 'values.dart';
 import 'package:http/http.dart' as http;
 
 void main() async {
   test("Test that deletes a temporary declaration", () async {
-    final testingHeaders = getTestHeaders();
+    final DeclarationsPageHeaders testingHeaders = await loginUser(
+      credentials: UserCredentials(username: username, password: password),
+    );
 
     //* STEP 1:GETTING THE propertyId
     final propertyId = (await getUserProperties(testingHeaders))
@@ -29,7 +33,7 @@ void main() async {
         .toList();
 
     if (temporaryDeclarationsBefore.isEmpty) throw "Can't delete - no entries";
-    await deleteTemporaryDeclarationFromSearchPage(
+    await ___TESTING___deleteTemporaryDeclarationFromSearchPage(
       searchPageDeclaration: temporaryDeclarationsBefore[0],
       headersObj: testingHeaders,
       viewState: declarationSearchPageDataBefore.viewStateParsed,
@@ -45,8 +49,10 @@ void main() async {
             (declaration) => declaration.status == DeclarationStatus.temporary)
         .toList();
 
+    // ignore: avoid_print
     print(
-        "Reservations before deletion: ${temporaryDeclarationsBefore.length}\nReservations after deletion: ${temporaryDeclarationsAfter.length}");
+      "Reservations before deletion: ${temporaryDeclarationsBefore.length}\nReservations after deletion: ${temporaryDeclarationsAfter.length}",
+    );
 
     expect(
       temporaryDeclarationsAfter.length,
@@ -55,7 +61,8 @@ void main() async {
   });
 }
 
-Future<void> deleteTemporaryDeclarationFromSearchPage({
+// ignore: non_constant_identifier_names
+Future<void> ___TESTING___deleteTemporaryDeclarationFromSearchPage({ //? We will make a safer deletion with a DeclarationDbId for production.
   required SearchPageDeclaration searchPageDeclaration,
   required DeclarationsPageHeaders headersObj,
   required String viewState,

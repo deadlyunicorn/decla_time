@@ -1,7 +1,6 @@
+import 'package:decla_time/core/extensions/get_values_between_strings.dart';
+import 'package:decla_time/core/extensions/to_string_max_60.dart';
 import 'package:http/http.dart';
-
-import 'get_values_between_strings.dart';
-import 'login_test.dart';
 
 class FirstPageHeaders {
   final String oamAuthnHintCookie;
@@ -11,13 +10,13 @@ class FirstPageHeaders {
 
   void printProperties() {
     // ignore: avoid_print
-    print("oamAuthnHintCookie:${toStringMax60(oamAuthnHintCookie)}");
+    print("oamAuthnHintCookie:${oamAuthnHintCookie.toStringMax60}");
     // ignore: avoid_print
-    print("oamRequestContext:${toStringMax60(oamRequestContext)}");
+    print("oamRequestContext:${oamRequestContext.toStringMax60}");
     // ignore: avoid_print
-    print("gsisCookie:${toStringMax60(gsisCookie)}");
+    print("gsisCookie:${gsisCookie.toStringMax60}");
     // ignore: avoid_print
-    print("nextUrl:${toStringMax60(nextUrl)}");
+    print("nextUrl:${nextUrl.toStringMax60}");
   }
 
   FirstPageHeaders({
@@ -41,7 +40,8 @@ class FirstPageHeaders {
 
     return FirstPageHeaders(
       gsisCookie: getBetweenStrings(headers, "gsis_cookie=", ";"),
-      oamAuthnHintCookie: getBetweenStrings(headers, "OAMAuthnHintCookie=", ";"),
+      oamAuthnHintCookie:
+          getBetweenStrings(headers, "OAMAuthnHintCookie=", ";"),
       oamRequestContext: getBetweenStrings(
           headers, "OAMRequestContext_www1.aade.gr:443_", ";"),
       nextUrl: Uri.parse(

@@ -1,4 +1,4 @@
-import 'package:decla_time/declarations/login/declarations_page_headers.dart';
+import 'package:decla_time/declarations/utility/network_requests/headers/declarations_page_headers.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
 

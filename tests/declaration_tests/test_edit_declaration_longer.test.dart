@@ -1,17 +1,15 @@
-// ignore_for_file: prefer_const_declarations, non_constant_identifier_names, avoid_print, dead_code
+// ignore_for_file: avoid_print
 
-import 'package:decla_time/declarations/functions/check_if_logged_in.dart';
 import 'package:decla_time/declarations/login/declaration_body.dart';
-import 'package:decla_time/declarations/login/declarations_page_headers.dart';
+import 'package:decla_time/declarations/utility/network_requests/edit_declaration_request.dart';
+import 'package:decla_time/declarations/utility/network_requests/get_declaration_db_id_from_declarations_list_page.dart';
+import 'package:decla_time/declarations/utility/network_requests/get_declaration_page_view_state.dart';
+import 'package:decla_time/declarations/utility/network_requests/get_declaration_search_page.dart';
+import 'package:decla_time/declarations/utility/network_requests/get_user_properties_request.dart';
+import 'package:decla_time/declarations/utility/network_requests/login/login_user.dart';
+import 'package:decla_time/declarations/utility/user_credentials.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:http/http.dart' as http;
 
-import 'declaration_list_page_data.dart';
-import 'edit_declaration_request.dart';
-import 'get_property_ids.test.dart';
-import 'get_values_between_strings.dart';
-import 'login_test.dart';
-import 'user_credentials.dart';
 import 'values.dart';
 
 void main() async {
@@ -62,7 +60,7 @@ void main() async {
     }
 
     print("Select one: ");
-    final String? userInput = null;
+    const String? userInput = null;
     final int selectedDeclarationIndex = int.parse(userInput ?? "0");
     print(
         "Nvm io won't working during tests.. Selecting $selectedDeclarationIndex...");
@@ -83,8 +81,8 @@ void main() async {
     //* STEP 3: GETTING THE viewState for the declaration edit page
 
     final viewState = await getDeclarationPageViewState(
-      declarationQueryParameters:  declarationQueryParameters,
-      testingHeaders:  testingHeaders,
+      declarationQueryParameters: declarationQueryParameters,
+      testingHeaders: testingHeaders,
     );
 
     //* STEP 4: Edit the selected declaration
@@ -98,7 +96,8 @@ void main() async {
 
     final res = await editDeclarationRequest(
       headersObject: testingHeaders,
-      bodyString: newDeclarationBody.bodyStringPOST(viewState),
+      declarationBody: newDeclarationBody,
+      viewState: viewState,
     );
 
     expect(
@@ -106,63 +105,4 @@ void main() async {
             '<span class="ui-messages-info-detail">Επιτυχής Αποθήκευση</span>'),
         true);
   });
-}
-
-Future<String> getDeclarationPageViewState({
-  required Map<String, String> declarationQueryParameters,
-  required DeclarationsPageHeaders testingHeaders,
-}) async {
-  return await http
-      .get(
-    Uri.https(
-      "www1.aade.gr",
-      "taxisnet/short_term_letting/views/declaration.xhtml",
-      declarationQueryParameters,
-    ),
-    headers: testingHeaders.getHeadersForGET(),
-  )
-      .then(
-    (res) {
-      final body = res.body;
-      checkIfLoggedIn(body);
-      return getAllBetweenStrings(
-          body, 'id="javax.faces.ViewState" value="', '"')[0];
-    },
-  );
-}
-
-Future<SearchPageData> getDeclarationSearchPage(
-    {required DeclarationsPageHeaders headers,
-    required String propertyId}) async {
-  return await http
-      .get(
-    Uri.https(
-      "www1.aade.gr",
-      "taxisnet/short_term_letting/views/declarationSearch.xhtml",
-      {"propertyId": propertyId},
-    ),
-    headers: headers.getHeadersForGET(),
-  )
-      .then((res) {
-    return SearchPageData.getFromHtml(res.body);
-  });
-}
-
-Future<String> getDeclarationDbIdFromDeclarationsListPage(
-    {required String parsedViewState,
-    required int declarationIndex,
-    required DeclarationsPageHeaders headers}) async {
-  return await http
-      .post(
-        Uri.https(
-          "www1.aade.gr",
-          "taxisnet/short_term_letting/views/declarationSearch.xhtml",
-        ), //?Once the viewState has been used in a POST request - it can't be used again..
-        body:
-            "${parsedViewState}javax.faces.source=appForm%3AbasicDT%3A$declarationIndex%3AdeclarationDetails&javax.faces.partial.ajax=true&javax.faces.partial.execute=%40all&appForm=appForm&appForm%3AbasicDT%3A$declarationIndex%3AdeclarationDetails=appForm%3AbasicDT%3A$declarationIndex%3AdeclarationDetails",
-        headers: headers.getHeadersForPOST(),
-      )
-      .then(
-        (res) => getAllBetweenStrings(res.body, "declarationDbId=", '"')[0],
-      );
 }

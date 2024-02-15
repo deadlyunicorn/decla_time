@@ -1,17 +1,19 @@
-// ignore_for_file: prefer_const_declarations, non_constant_identifier_names, avoid_print
+// ignore_for_file: avoid_print
 
-import 'package:decla_time/declarations/functions/check_if_logged_in.dart';
-import 'package:decla_time/declarations/http_requests/get_user_properties.dart';
-import 'package:decla_time/declarations/login/declarations_page_headers.dart';
+import 'package:decla_time/declarations/utility/network_requests/get_user_properties_request.dart';
+import 'package:decla_time/declarations/utility/network_requests/headers/declarations_page_headers.dart';
+import 'package:decla_time/declarations/utility/network_requests/login/login_user.dart';
+import 'package:decla_time/declarations/utility/user_credentials.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'user_property_information.dart';
 import 'values.dart';
 
 void main() async {
   test("Test that gets a list of the available property Ids", () async {
 
-    final testingHeaders = getTestHeaders();
+    final DeclarationsPageHeaders testingHeaders = await loginUser(
+        credentials: UserCredentials(username: username, password: password));
+
 
     final userProperties = await getUserProperties(testingHeaders);
     if (userProperties.propertyIds.isEmpty) {
@@ -32,18 +34,4 @@ void main() async {
     expect(userProperties.registryNumbers.length,
         userProperties.propertyIds.length);
   });
-}
-
-Future<UserPropertiesInformation> getUserProperties(
-  DeclarationsPageHeaders headers,
-) async {
-  final res = await getPropertiesRequest(
-    headersObject: headers,
-  );
-
-  final body = res.body;
-  print(res.statusCode);
-  checkIfLoggedIn(body); //! Can throw error
-
-  return UserPropertiesInformation.generateFromHtml(body);
 }

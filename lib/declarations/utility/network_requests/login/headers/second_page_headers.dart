@@ -1,9 +1,10 @@
 // ignore_for_file: non_constant_identifier_names
 
-import 'get_values_between_strings.dart';
+import 'package:decla_time/core/extensions/get_values_between_strings.dart';
+import 'package:decla_time/core/extensions/to_string_max_60.dart';
+
 import 'first_page_headers.dart';
 import 'package:http/http.dart';
-import 'login_test.dart';
 
 class SecondPageHeaders extends FirstPageHeaders {
   @override
@@ -18,11 +19,11 @@ class SecondPageHeaders extends FirstPageHeaders {
   void printProperties() {
     super.printProperties();
     // ignore: avoid_print
-    print("oam_req_0:${toStringMax60(oam_req_0)}");
+    print("oam_req_0:${oam_req_0.toStringMax60}");
     // ignore: avoid_print
-    print("ecidContext:${toStringMax60(ecidContext)}");
+    print("ecidContext:${ecidContext.toStringMax60}");
     // ignore: avoid_print
-    print("requestId:${toStringMax60(requestId)}");
+    print("requestId:${requestId.toStringMax60}");
   }
 
   SecondPageHeaders({
@@ -63,10 +64,3 @@ class SecondPageHeaders extends FirstPageHeaders {
     );
   }
 }
-
-// final requestId =
-  //     getValuesFromHtml(loginPageResponse.body, 'request_id" value="', '"')[0] ( getting it from html)
-  //         .replaceAll(
-  //   "&#45;",
-  //   "-",
-  // );

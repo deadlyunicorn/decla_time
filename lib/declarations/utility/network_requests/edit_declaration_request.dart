@@ -1,13 +1,12 @@
-// ignore_for_file: prefer_const_declarations, non_constant_identifier_names, avoid_print
-
-import 'package:decla_time/declarations/login/declarations_page_headers.dart';
-import 'package:flutter_test/flutter_test.dart';
+import 'package:decla_time/declarations/login/declaration_body.dart';
+import 'package:decla_time/declarations/utility/network_requests/headers/declarations_page_headers.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
 
 Future<Response> editDeclarationRequest({
   required DeclarationsPageHeaders headersObject,
-  required String bodyString,
+  required DeclarationBody declarationBody,
+  required String viewState,
 }) async {
   declarationAttemptResponse() async => await http.post(
         Uri.https(
@@ -15,14 +14,14 @@ Future<Response> editDeclarationRequest({
           "taxisnet/short_term_letting/views/declaration.xhtml",
         ),
         headers: headersObject.getHeadersForPOST(),
-        body: bodyString,
+        body: declarationBody.bodyStringPOST(viewState),
       );
 
   final res = (await declarationAttemptResponse());
   if (res.statusCode == 302) {
     print("our cookie timed out..");
 
-    // headersObject.customSession( //?new session.. @Unimplemented..
+    // headersObject.customSession( //?new session.. @Unimplemented.. TODO
     //   oamAuthnCookie:",
     // );
     // await declarationAttemptResponse(); //or do something recursive with delat() like await sendPaymentRequest();
