@@ -1,7 +1,7 @@
 import 'package:decla_time/core/connection/isar_helper.dart';
 import 'package:decla_time/core/constants/constants.dart';
 import 'package:decla_time/core/extensions/capitalize.dart';
-import 'package:decla_time/reservations/business/reservation.dart';
+import 'package:decla_time/reservations/reservation.dart';
 import 'package:decla_time/reservations/presentation/widgets/reservation_form/form_fields/id_field.dart';
 import 'package:decla_time/reservations/presentation/widgets/reservation_form/form_fields/date_fields/date_pickers_field.dart';
 import 'package:decla_time/reservations/presentation/widgets/reservation_form/form_fields/listing_name_field.dart';

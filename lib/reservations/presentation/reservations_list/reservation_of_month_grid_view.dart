@@ -1,5 +1,5 @@
 import 'dart:math';
-import 'package:decla_time/reservations/business/reservation.dart';
+import 'package:decla_time/reservations/reservation.dart';
 import 'package:decla_time/reservations/presentation/reservations_list/reservation_grid_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';

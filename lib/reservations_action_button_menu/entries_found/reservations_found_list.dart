@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:decla_time/core/connection/isar_helper.dart';
 import 'package:decla_time/core/constants/constants.dart';
 import 'package:decla_time/core/extensions/capitalize.dart';
-import 'package:decla_time/reservations/business/reservation.dart';
+import 'package:decla_time/reservations/reservation.dart';
 import 'package:decla_time/reservations/presentation/widgets/reservation_grid_item_container.dart';
 import 'package:decla_time/reservations_action_button_menu/entries_found/is_selected_underline.dart';
 import 'package:decla_time/reservations_action_button_menu/entries_found/reservation_details_tooltip.dart';

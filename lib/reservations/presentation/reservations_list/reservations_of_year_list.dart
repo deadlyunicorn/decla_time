@@ -1,4 +1,4 @@
-import 'package:decla_time/reservations/business/reservation.dart';
+import 'package:decla_time/reservations/reservation.dart';
 import 'package:decla_time/reservations/presentation/reservations_list/reservation_of_month_grid_view.dart';
 import 'package:decla_time/settings.dart';
 import 'package:flutter/material.dart';

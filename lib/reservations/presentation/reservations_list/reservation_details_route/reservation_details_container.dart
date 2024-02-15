@@ -1,6 +1,6 @@
 import 'package:decla_time/core/constants/constants.dart';
 import 'package:decla_time/core/extensions/capitalize.dart';
-import 'package:decla_time/reservations/business/reservation.dart';
+import 'package:decla_time/reservations/reservation.dart';
 import 'package:decla_time/reservations/presentation/decleration_status_dot.dart';
 import 'package:decla_time/reservations/presentation/reservation_status_dot.dart';
 import 'package:decla_time/reservations/presentation/reservations_list/reservation_details_route/date_information_widget.dart';

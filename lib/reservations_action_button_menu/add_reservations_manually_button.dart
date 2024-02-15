@@ -1,6 +1,6 @@
 import 'package:decla_time/core/extensions/capitalize.dart';
 import 'package:decla_time/core/functions/night_or_nights.dart';
-import 'package:decla_time/reservations/business/reservation.dart';
+import 'package:decla_time/reservations/reservation.dart';
 import 'package:decla_time/reservations_action_button_menu/reservation_addition_button_outline.dart';
 import 'package:decla_time/reservations_action_button_menu/manual_entry_route/manual_reservation_entry_route.dart';
 import 'package:flutter/material.dart';

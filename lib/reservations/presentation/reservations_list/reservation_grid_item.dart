@@ -1,4 +1,4 @@
-import 'package:decla_time/reservations/business/reservation.dart';
+import 'package:decla_time/reservations/reservation.dart';
 import 'package:decla_time/reservations/presentation/reservation_status_dot.dart';
 import 'package:decla_time/reservations/presentation/reservations_list/reservation_details_route/reservation_details_route.dart';
 import 'package:decla_time/reservations/presentation/widgets/reservation_grid_item_container.dart';

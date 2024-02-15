@@ -1,5 +1,5 @@
 import 'package:decla_time/core/documents_io/documents_io.dart';
-import 'package:decla_time/reservations/business/reservation.dart';
+import 'package:decla_time/reservations/reservation.dart';
 import 'package:flutter/foundation.dart';
 import 'package:isar/isar.dart';
 
