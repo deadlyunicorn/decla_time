@@ -1,4 +1,0 @@
->gsisCookie:thisIsGsis;
->wl_authCookie_jSessionId:ThisIsWl_auth;
->jSessionId:thisIsJsessionId;
->oamAuthnCookie:thisIsOam;
