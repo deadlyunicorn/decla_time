@@ -20,11 +20,13 @@ List<String> getAllBetweenStrings(
 
 String getBetweenStrings(
     String html, String startingString, String endingString) {
-  final startingIndex = html.indexOf(startingString) + startingString.length;
+  final indexOfKeyword = html.indexOf(startingString);
+  if (indexOfKeyword == -1) return "";
+  final targetStartingIndex = indexOfKeyword + startingString.length;
 
   return html.substring(
-    startingIndex,
-    html.indexOf(endingString, startingIndex),
+    targetStartingIndex,
+    html.indexOf(endingString, targetStartingIndex),
   );
 }
 
