@@ -59,3 +59,6 @@ airbnb.csv
 booking_gr_3.csv
 tests/declaration_tests/values.dart
 tests/declaration_tests/random.txt
+lib/reservations/reservation.g.dart
+lib/declarations/declaration_types/finalized_declaration_details.g.dart
+lib/declarations/declaration_types/declaration.g.dart
