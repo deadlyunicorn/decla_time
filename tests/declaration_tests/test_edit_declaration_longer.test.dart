@@ -81,7 +81,7 @@ void main() async {
 
     //* STEP 3: GETTING THE viewState for the declaration edit page
 
-    final viewState = await getDeclarationViewState(
+    final viewState = await getDeclarationPageViewState(
       declarationQueryParameters:  declarationQueryParameters,
       testingHeaders:  testingHeaders,
     );
@@ -107,7 +107,7 @@ void main() async {
   });
 }
 
-Future<String> getDeclarationViewState({
+Future<String> getDeclarationPageViewState({
   required Map<String, String> declarationQueryParameters,
   required DeclarationsPageHeaders testingHeaders,
 }) async {
