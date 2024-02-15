@@ -1,0 +1,4 @@
+enum DeclarationType{
+  initial,
+  amending
+}
