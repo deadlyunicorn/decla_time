@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_declarations, non_constant_identifier_names, avoid_print, dead_code
 
+import 'package:decla_time/declarations/functions/check_if_logged_in.dart';
 import 'package:decla_time/declarations/login/declaration_body.dart';
 import 'package:decla_time/declarations/login/declarations_page_headers.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -123,6 +124,7 @@ Future<String> getDeclarationPageViewState({
       .then(
     (res) {
       final body = res.body;
+      checkIfLoggedIn(body);
       return getAllBetweenStrings(
           body, 'id="javax.faces.ViewState" value="', '"')[0];
     },
