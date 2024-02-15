@@ -51,7 +51,7 @@ void main() async {
 
     //* STEP 2:GETTING THE declarationDbId
 
-    final declarationsSearchPageData = await getDeclarationListData(
+    final declarationsSearchPageData = await getDeclarationSearchPage(
       headers: testingHeaders,
       propertyId: propertyId,
     );
@@ -82,8 +82,8 @@ void main() async {
     //* STEP 3: GETTING THE viewState for the declaration edit page
 
     final viewState = await getDeclarationViewState(
-      declarationQueryParameters,
-      testingHeaders,
+      declarationQueryParameters:  declarationQueryParameters,
+      testingHeaders:  testingHeaders,
     );
 
     //* STEP 4: Edit the selected declaration
@@ -93,12 +93,11 @@ void main() async {
       departureDate: DateTime.now().add(const Duration(days: 2)),
       payout: 0.12,
       platform: "airbnb",
-      viewState: viewState,
     );
 
     final res = await editDeclarationRequest(
       headersObject: testingHeaders,
-      bodyString: newDeclarationBody.bodyString,
+      bodyString: newDeclarationBody.bodyStringPOST(viewState),
     );
 
     expect(
@@ -108,10 +107,10 @@ void main() async {
   });
 }
 
-Future<String> getDeclarationViewState(
-  Map<String, String> declarationQueryParameters,
-  DeclarationsPageHeaders testingHeaders,
-) async {
+Future<String> getDeclarationViewState({
+  required Map<String, String> declarationQueryParameters,
+  required DeclarationsPageHeaders testingHeaders,
+}) async {
   return await http
       .get(
     Uri.https(
@@ -119,7 +118,7 @@ Future<String> getDeclarationViewState(
       "taxisnet/short_term_letting/views/declaration.xhtml",
       declarationQueryParameters,
     ),
-    headers: testingHeaders.getHeadersForPOST(),
+    headers: testingHeaders.getHeadersForGET(),
   )
       .then(
     (res) {
@@ -130,7 +129,7 @@ Future<String> getDeclarationViewState(
   );
 }
 
-Future<SearchPageData> getDeclarationListData(
+Future<SearchPageData> getDeclarationSearchPage(
     {required DeclarationsPageHeaders headers,
     required String propertyId}) async {
   return await http
@@ -140,7 +139,7 @@ Future<SearchPageData> getDeclarationListData(
       "taxisnet/short_term_letting/views/declarationSearch.xhtml",
       {"propertyId": propertyId},
     ),
-    headers: headers.getHeadersForPOST(),
+    headers: headers.getHeadersForGET(),
   )
       .then((res) {
     return SearchPageData.getFromHtml(res.body);

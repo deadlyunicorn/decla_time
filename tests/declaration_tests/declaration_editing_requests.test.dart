@@ -8,22 +8,20 @@ import 'values.dart';
 
 void main() async {
   test("Test that edits a declaration", () async {
-
     final testingHeaders = getTestHeaders(); //?From values.dart
-
-    final viewState = sampleViewState;  //* Change this for your tests
+    final viewStateParsed = //?from sample
+        "${sampleViewState.split(":")[0]}%3A${sampleViewState.split(":")[1]}"; //* Change this for your tests
 
     final declarationBody = DeclarationBody(
       arrivalDate: DateTime.now(),
       departureDate: DateTime.now().add(const Duration(days: 2)),
       payout: 0.01,
       platform: "booking",
-      viewState: viewState,
     );
 
     final res = await editDeclarationRequest(
       headersObject: testingHeaders,
-      bodyString: declarationBody.bodyString,
+      bodyString: declarationBody.bodyStringPOST(viewStateParsed),
     );
 
     expect(

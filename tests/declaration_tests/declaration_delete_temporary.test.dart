@@ -17,7 +17,7 @@ void main() async {
         .propertyIds[0]; //? Also checks if Logged In
 
     //* STEP 2:GETTING the available declarations
-    final declarationSearchPageDataBefore = await getDeclarationListData(
+    final declarationSearchPageDataBefore = await getDeclarationSearchPage(
       headers: testingHeaders,
       propertyId: propertyId,
     );
@@ -35,7 +35,7 @@ void main() async {
       viewState: declarationSearchPageDataBefore.viewStateParsed,
     );
 
-    final declarationSearchPageDataAfter = await getDeclarationListData(
+    final declarationSearchPageDataAfter = await getDeclarationSearchPage(
       headers: testingHeaders,
       propertyId: propertyId,
     );
