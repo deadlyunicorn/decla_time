@@ -5,7 +5,7 @@ class DeclarationBody {
   final DateTime arrivalDate;
   final DateTime departureDate;
   final double payout;
-  final String? _viewState;
+  final String _viewState;
   final DateTime? cancellationDate;
   final double? cancellationAmount;
 
@@ -14,10 +14,10 @@ class DeclarationBody {
     required this.departureDate,
     required this.payout,
     required this.platform,
-    String? viewState,
+    required String viewState,
     this.cancellationDate,
     this.cancellationAmount,
-  }) : _viewState = viewState;
+  }): _viewState = viewState;
 
   int get _translatedPlatform {
     final platformName = platform.toLowerCase();
@@ -63,7 +63,7 @@ class DeclarationBody {
       throw "Cancellation date missing";
     }
 
-    return "appForm%3ArentalFrom_input=${translateDate(arrivalDate)}&appForm%3ArentalTo_input=${translateDate(departureDate)}&appForm%3AsumAmount_hinput=${payout ?? ""}&appForm%3Aplatform_input=$_translatedPlatform&appForm%3AcancelAmount_hinput=${cancellationAmount ?? ""}&appForm%3AcancelDate_input=${cancellationDate != null ? translateDate(cancellationDate!) : ""}&appForm%3ArenterAfm=000000000&appForm%3ApaymentType_focus=&appForm%3ApaymentType_input=4&appForm%3Aplatform_focus=&appForm%3Aj_idt93=&${viewStateParsed}javax.faces.partial.ajax=true&javax.faces.source=appForm%3AsaveButton&javax.faces.partial.execute=%40all&javax.faces.partial.render=appForm&appForm%3AsaveButton=appForm%3AsaveButton&appForm=appForm";
+    return "appForm%3ArentalFrom_input=${translateDate(arrivalDate)}&appForm%3ArentalTo_input=${translateDate(departureDate)}&appForm%3AsumAmount_hinput=${payout ?? ""}&appForm%3Aplatform_input=$_translatedPlatform&appForm%3AcancelAmount_hinput=${cancellationAmount ?? ""}&appForm%3AcancelDate_input=${cancellationDate != null ? translateDate(cancellationDate!) : ""}&appForm%3ArenterAfm=000000000&appForm%3ApaymentType_focus=&appForm%3ApaymentType_input=4&appForm%3Aplatform_focus=&appForm%3Aj_idt93=&javax.faces.ViewState=$viewStateParsed&javax.faces.partial.ajax=true&javax.faces.source=appForm%3AsaveButton&javax.faces.partial.execute=%40all&javax.faces.partial.render=appForm&appForm%3AsaveButton=appForm%3AsaveButton&appForm=appForm";
   }
 
   // String get submitReservationBody { //!To be removed.
@@ -84,9 +84,7 @@ class DeclarationBody {
   //   return "${viewStateParsed}appForm%3ArentalFrom_input=${translateDate(arrivalDate)}&appForm%3ArentalTo_input=${translateDate(departureDate)}&appForm%3AsumAmount_hinput=${payout ?? ""}&appForm%3Aplatform_input=$_translatedPlatform&appForm%3AcancelAmount_hinput=${cancellationAmount ?? ""}&appForm%3AcancelDate_input=${cancellationDate != null ? translateDate(cancellationDate!) : ""}&appForm%3ArenterAfm=000000000&appForm%3ApaymentType_focus=&appForm%3ApaymentType_input=4&appForm%3Aplatform_focus=&appForm%3Aj_idt93=&javax.faces.partial.ajax=true&javax.faces.source=appForm%3AsaveButton&javax.faces.partial.execute=%40all&javax.faces.partial.render=appForm&appForm%3AsaveButton=appForm%3AsaveButton&appForm=appForm&";
   // }
 
-  String get viewStateParsed => _viewState == null 
-    ? "" 
-    : "javax.faces.ViewState=${_viewState.split(":")[0]}%3A${_viewState.split(":")[1] }&";
+  String get viewStateParsed => "${_viewState.split(":")[0]}%3A${_viewState.split(":")[1] }";
 
 
   static String get declarationCreationBody { 
