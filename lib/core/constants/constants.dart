@@ -53,7 +53,7 @@ const double kMaxWidthLargest = 960;
 ///120
 const double kMaxContainerWidthSmall = 120; 
 
-//240
+///240
 const double kFormFieldWidth = 240;
 
 
@@ -67,8 +67,10 @@ const double kMenuHeight = 64;
 const double kMenuHeightWithError = 96 + 32; 
 const double kMenuHeightWithoutError = kMenuHeightWithError - 48 ; 
 
-
+///160
 const double kDatePickerWidth = kContainerWidthMedium;
+
+///30
 const int kMonthInDays = 30;
 
 
