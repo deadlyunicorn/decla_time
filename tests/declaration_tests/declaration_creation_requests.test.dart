@@ -1,8 +1,8 @@
 import 'package:decla_time/core/extensions/get_values_between_strings.dart';
-import 'package:decla_time/declarations/login/declaration_body.dart';
+import 'package:decla_time/declarations/utility/declaration_body.dart';
 import 'package:decla_time/declarations/utility/network_requests/headers/declarations_page_headers.dart';
 import 'package:decla_time/declarations/utility/network_requests/login/login_user.dart';
-import 'package:decla_time/declarations/utility/post_new_declaration_request.dart';
+import 'package:decla_time/declarations/utility/network_requests/post_new_declaration_request.dart';
 import 'package:decla_time/declarations/utility/user_credentials.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'values.dart';

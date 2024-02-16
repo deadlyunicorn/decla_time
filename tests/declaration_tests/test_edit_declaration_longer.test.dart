@@ -1,6 +1,6 @@
 // ignore_for_file: avoid_print
 
-import 'package:decla_time/declarations/login/declaration_body.dart';
+import 'package:decla_time/declarations/utility/declaration_body.dart';
 import 'package:decla_time/declarations/utility/network_requests/edit_declaration_request.dart';
 import 'package:decla_time/declarations/utility/network_requests/get_declaration_db_id_from_declarations_list_page.dart';
 import 'package:decla_time/declarations/utility/network_requests/get_declaration_page_view_state.dart';
