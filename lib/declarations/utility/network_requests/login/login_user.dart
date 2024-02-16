@@ -1,3 +1,5 @@
+import 'package:decla_time/core/errors/exceptions.dart';
+import 'package:decla_time/declarations/functions/check_if_logged_in.dart';
 import 'package:decla_time/declarations/utility/network_requests/headers/declarations_page_headers.dart';
 import 'package:decla_time/declarations/utility/network_requests/login/generate_session_cookies.dart';
 import 'package:decla_time/declarations/utility/network_requests/login/headers/fifth_page_headers.dart';
@@ -9,7 +11,6 @@ import 'package:decla_time/declarations/utility/network_requests/login/submit_lo
 import 'package:decla_time/declarations/utility/network_requests/non_redirecting_request.dart';
 import 'package:decla_time/declarations/utility/user_credentials.dart';
 import 'package:http/http.dart' as http;
-
 
 Future<DeclarationsPageHeaders> loginUser({
   required UserCredentials credentials,
@@ -76,6 +77,13 @@ Future<DeclarationsPageHeaders> loginUser({
     fifthPageHeaders.nextUrl,
     headers: {"cookie": fifthPageHeaders.cookies},
   );
+
+  try{
+    checkIfLoggedIn(res5.body);
+  }
+  on NotLoggedInException{
+      throw LoginFailedExcepetion();
+  }
 
   return generateSessionCookies(
     res5,
