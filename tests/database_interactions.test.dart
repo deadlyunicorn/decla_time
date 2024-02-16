@@ -29,8 +29,8 @@ void main() async{
         reservationStatus: "ok",
       );
 
-      await IsarHelper().insertOrUpdateReservationEntry(newReservation);
-      final reservationInDb = await IsarHelper().getReservationEntry( newReservation.id );
+      await IsarHelper().reservationActions.insertOrUpdateReservationEntry(newReservation);
+      final reservationInDb = await IsarHelper().reservationActions.getReservationEntry( newReservation.id );
       expect( reservationInDb?.guestName, newReservation.guestName);
     });
 
@@ -52,7 +52,7 @@ void main() async{
       "booking_gr_3.csv"
       );
 
-      await IsarHelper().insertMultipleEntriesToDb(
+      await IsarHelper().reservationActions.insertMultipleEntriesToDb(
         entries
       );
 

@@ -1,3 +1,4 @@
+import 'package:decla_time/core/connection/reservation_actions.dart';
 import 'package:decla_time/core/documents_io/documents_io.dart';
 import 'package:decla_time/reservations/reservation.dart';
 import 'package:flutter/foundation.dart';
@@ -9,69 +10,15 @@ class IsarHelper extends ChangeNotifier {
           directory: (await DocumentsIO.appDirFuture).path)
       : await Future.value(Isar.getInstance()!);
 
-  Future<List<Reservation>> getAllEntriesFromReservations() async {
-    return (await isarFuture)
-        .reservations
-        .where()
-        .sortByDepartureDateDesc()
-        .findAll();
-  }
+  //? The only bad thing about this design is that in the future
+  //? if we change it - it will notify listeners from all the pages.
 
-  Future<void> removeFromDatabase( String reservationId ) async{
-    
-    final isar = await isarFuture;
-    await isar.writeTxn(() async{
-      await isar.reservations.deleteById( reservationId );
-    });
-    notifyListeners();
-  }
+  //? however currently we remove the other pages that are not selected
+  //? thus their listeners do not exist.
 
-  Future<Iterable<Reservation>> filterRegistered(
-      Iterable<Reservation> reservations) async {
-    final Iterable<Reservation> databaseResponse = await (await isarFuture)
-        .reservations
-        .getAllById(
-          reservations.map((reservation) => reservation.id).toList(),
-        )
-        .then(
-          (databaseReservations) => databaseReservations.nonNulls,
-        );
-    return databaseResponse;
-  }
-
-  Future<bool> idAlreadyExists(String id) async {
-    final Reservation? databaseResponse =
-        await (await isarFuture).reservations.getById(
-              id,
-            );
-    return databaseResponse != null;
-  }
-
-  Future<void> insertOrUpdateReservationEntry(Reservation reservation) async {
-    final isar = await isarFuture;
-
-    await isar.writeTxn(() async {
-      await isar.reservations.put(reservation);
-    });
-    notifyListeners();
-  }
-
-  Future<Reservation?> getReservationEntry(String reservationId) async {
-    final isar = await isarFuture;
-    return await isar.reservations
-        .filter()
-        .idEqualTo(reservationId)
-        .findFirst();
-  }
-
-  Future<void> insertMultipleEntriesToDb(List<Reservation> reservations) async {
-    final isar = await isarFuture;
-
-    await isar.writeTxn(() async {
-      for (final reservation in reservations) {
-        await isar.reservations.put(reservation);
-      }
-    });
-    notifyListeners();
-  }
+  //? This is basically a notifier that listens for all database changes..
+  ReservationActions get reservationActions => ReservationActions(
+        isarFuture: isarFuture,
+        notifyListeners: notifyListeners,
+      );
 }

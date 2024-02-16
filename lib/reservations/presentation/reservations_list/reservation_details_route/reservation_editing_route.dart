@@ -37,6 +37,7 @@ class ReservationEditingRoute extends StatelessWidget {
               editedReservation.lastEdit = DateTime.now();
               context
                   .read<IsarHelper>()
+                  .reservationActions
                   .insertOrUpdateReservationEntry(editedReservation);
             }
           },

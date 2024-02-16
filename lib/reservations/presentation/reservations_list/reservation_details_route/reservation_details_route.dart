@@ -23,6 +23,7 @@ class ReservationDetailsRoute extends StatelessWidget {
     return FutureBuilder(
       future: context
           .watch<IsarHelper>()
+          .reservationActions
           .getReservationEntry(initialReservation.id),
       builder: (context, snapshot) {
         final reservation = snapshot.data;

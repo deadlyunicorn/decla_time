@@ -28,7 +28,10 @@ class ReservationsPage extends StatelessWidget {
           return const Center(child: CircularProgressIndicator());
         }
       },
-      future: context.watch<IsarHelper>().getAllEntriesFromReservations(),
+      future: context
+          .watch<IsarHelper>()
+          .reservationActions
+          .getAllEntriesFromReservations(),
     );
   }
 }

@@ -43,7 +43,7 @@ class _ReservationsFoundListState extends State<ReservationsFoundList> {
     } else {
       return FutureBuilder(
           future:
-              context.watch<IsarHelper>().filterRegistered(widget.reservations),
+              context.watch<IsarHelper>().reservationActions.filterRegistered(widget.reservations),
           builder: (context, snapshot) {
             final alreadyExistingReservationIds = (snapshot.data ?? []).map(
               (databaseNonNullReservations) => databaseNonNullReservations.id,
@@ -190,6 +190,7 @@ class _ReservationsFoundListState extends State<ReservationsFoundList> {
                             onPressed: () async {
                               await context
                                   .read<IsarHelper>()
+                                  .reservationActions
                                   .insertMultipleEntriesToDb(
                                       setOfIndicesOfSelectedReservations
                                           .map((index) =>
