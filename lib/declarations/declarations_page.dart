@@ -14,6 +14,7 @@ class DeclarationsPage extends StatefulWidget {
 
 class _DeclarationsPageState extends State<DeclarationsPage> {
   bool isLogged = false;
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -24,36 +25,50 @@ class _DeclarationsPageState extends State<DeclarationsPage> {
           const SizedBox.square(
             dimension: 32,
           ),
-          Center(
-            child: FutureBuilder<String>(
-              future: getSavedUsernameFuture(),
-              builder: (context, snapshot) {
-                final username = snapshot.data;
-                
-                if (snapshot.connectionState == ConnectionState.done) {
-                  return LoginForm(
-                    initialUsername: username ?? "",
-                    localized: widget.localized,
-                    setLoginStatus: setLoginStatus,
-                  );
-                } else {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-              },
+          Expanded(
+            child: Center(
+              child: FutureBuilder<String>(
+                future: getSavedUsernameFuture(),
+                builder: (context, snapshot) {
+                  final username = snapshot.data;
+
+                  if (snapshot.connectionState == ConnectionState.done &&
+                      !isLoading) {
+                    return LoginForm(
+                      initialUsername: username ?? "",
+                      localized: widget.localized,
+                      setLoginStatus: setLoginStatus,
+                      setLoadingStatus: setLoadingStatus,
+                    );
+                  } else {
+                    return const CircularProgressIndicator();
+                  }
+                },
+              ),
             ),
           ),
-          Text("logged in: $isLogged")
+          const SizedBox.square(
+            dimension: 32,
+          ),
         ],
       ),
     );
   }
 
-  void setLoginStatus(bool newStatus) {
-    setState(() {
-      isLogged = newStatus;
-    });
+  void setLoginStatus(bool newLoginStatus) {
+    if (isLogged != newLoginStatus) {
+      setState(() {
+        isLogged = newLoginStatus;
+      });
+    }
+  }
+
+  void setLoadingStatus(bool newLoadingStatus) {
+    if (isLoading != newLoadingStatus) {
+      setState(() {
+        isLoading = newLoadingStatus;
+      });
+    }
   }
 
   Future<String> getSavedUsernameFuture() async {
