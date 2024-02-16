@@ -14,6 +14,7 @@ class Skeleton extends StatefulWidget {
 
 class _SkeletonState extends State<Skeleton> {
   SelectedPage selectedPage = SelectedPage.reservations;
+  final scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +23,7 @@ class _SkeletonState extends State<Skeleton> {
     return SafeArea(
       child: Scaffold(
         body: SelectPageToDisplay(
+          scrollController: scrollController,
           selectedPage: selectedPage,
           localized: localized,
         ),
@@ -38,9 +40,21 @@ class _SkeletonState extends State<Skeleton> {
     );
   }
 
-  void setSelectedPage(index) {
-    setState(() {
-      selectedPage = convertIndexToSelectedPage(index);
-    });
+  void setSelectedPage(newPageIndex) {
+    final newPage = convertIndexToSelectedPage(newPageIndex);
+
+    if (selectedPage != newPage) {
+      setState(() {
+        selectedPage = newPage;
+      });
+    } else {
+      if (scrollController.hasClients) {
+        scrollController.animateTo(
+          0,
+          duration: const Duration(milliseconds: 480),
+          curve: Curves.decelerate,
+        );
+      }
+    }
   }
 }

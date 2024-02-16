@@ -12,14 +12,17 @@ class SelectPageToDisplay extends StatelessWidget {
     super.key,
     required this.selectedPage,
     required this.localized,
+    required this.scrollController,
   });
   final AppLocalizations localized;
+  final ScrollController scrollController;
 
   @override
   Widget build(BuildContext context) {
     switch (selectedPage) {
       case SelectedPage.reservations:
         return ReservationsPage(
+          scrollController: scrollController,
           localized: localized,
         );
       case SelectedPage.declarations:

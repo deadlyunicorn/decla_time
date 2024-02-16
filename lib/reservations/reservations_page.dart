@@ -5,9 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ReservationsPage extends StatelessWidget {
-  const ReservationsPage({super.key, required this.localized});
+  const ReservationsPage({
+    super.key,
+    required this.localized,
+    required this.scrollController,
+  });
 
   final AppLocalizations localized;
+  final ScrollController scrollController;
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +21,7 @@ class ReservationsPage extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.done) {
           return ReservationsList(
             reservations: snapshot.data ?? [],
+            scrollController: scrollController,
             localized: localized,
           );
         } else {

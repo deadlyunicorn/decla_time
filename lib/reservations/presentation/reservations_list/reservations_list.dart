@@ -10,10 +10,16 @@ import 'package:decla_time/reservations/presentation/reservations_list/reservati
 import 'package:flutter/material.dart';
 
 class ReservationsList extends StatelessWidget {
-  const ReservationsList({super.key, required this.reservations, required this.localized});
+  const ReservationsList({
+    super.key,
+    required this.reservations,
+    required this.localized,
+    required this.scrollController,
+  });
 
   final List<Reservation> reservations;
-  final AppLocalizations localized; 
+  final AppLocalizations localized;
+  final ScrollController scrollController;
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +28,7 @@ class ReservationsList extends StatelessWidget {
 
     if (reservations.isNotEmpty) {
       return ListView.builder(
+        controller: scrollController,
         // A list where entries are separated by year.
         itemCount: yearMonthMap.entries.length,
         itemBuilder: (context, index) {
