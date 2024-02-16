@@ -75,6 +75,9 @@
     "reservationEntryChange" : "τροποποίηση εγγραφής κράτησης",
     "reservationEntryDelete" : "διαγραφή εγγραφής κράτησης",
     "thisActionWillPermanentlyDeleteReservation" : "αυτή η ενέργεια θα διαγράψει οριστικά αυτήν την εγγραφή κράτησης από την συσκευή σας",
+    "errorNoConnection": "δεν υπάρχει σύνδεση στο διαδίκτυο",
+    "errorLoginFailed": "αποτυχία ταυτοποίησης",
+    "errorUnknown": "άγνωστο σφάλμα",
     "unusedForNonTrailingComma________________________________":""
 
 

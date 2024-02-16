@@ -75,6 +75,9 @@
     "reservationEntryChange" : "reservation entry modification",
     "reservationEntryDelete" : "delete reservation entry",
     "thisActionWillPermanentlyDeleteReservation" : "this action will permanently delete this reservation entry from your device",
+    "errorNoConnection": "there is no connection to the internet",
+    "errorLoginFailed": "login failed",
+    "errorUnknown": "unknown error",
     "unusedForNonTrailingComma________________________________":""
 
 
