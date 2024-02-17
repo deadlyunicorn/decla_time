@@ -1,4 +1,6 @@
+import 'package:decla_time/core/connection/isar_helper.dart';
 import 'package:decla_time/core/constants/constants.dart';
+import 'package:decla_time/core/enums/enums.dart';
 import 'package:decla_time/core/errors/exceptions.dart';
 import 'package:decla_time/core/extensions/capitalize.dart';
 import 'package:decla_time/core/widgets/column_with_spacings.dart';
@@ -7,6 +9,7 @@ import 'package:decla_time/declarations/login/user_credentials_provider.dart';
 import 'package:decla_time/declarations/utility/network_requests/login/login_user.dart';
 import 'package:decla_time/declarations/utility/user_credentials.dart';
 import 'package:decla_time/reservations/presentation/widgets/reservation_form/form_fields/required_text_field.dart';
+import 'package:decla_time/users/users_controller.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
@@ -49,6 +52,9 @@ class _LoginFormState extends State<LoginForm> {
   Widget build(BuildContext context) {
     final declarationsAccountProvider =
         context.watch<DeclarationsAccountController>();
+
+    final usersController = context.watch<UsersController>();
+    final isarHelper = context.watch<IsarHelper>();
 
     return isLoading
         ? const CircularProgressIndicator()
@@ -96,10 +102,17 @@ class _LoginFormState extends State<LoginForm> {
                           );
                         });
 
-                        await attemptLogin(
+                        final loginResult = await attemptLogin(
                           credentials,
                           declarationsAccountProvider,
                         );
+
+                        if (loginResult == ProcedureResult.success) {
+                          isarHelper.userActions
+                              .addNew(username: credentials.username)
+                              .then((_) => usersController.sync());
+                          usersController.selectUser(credentials.username);
+                        }
                       }
                       setLoadingStatus(false);
                     },
@@ -121,7 +134,7 @@ class _LoginFormState extends State<LoginForm> {
           );
   }
 
-  Future<void> attemptLogin(
+  Future<ProcedureResult> attemptLogin(
     UserCredentials credentials,
     DeclarationsAccountController declarationsAccountProvider,
   ) async {
@@ -129,6 +142,7 @@ class _LoginFormState extends State<LoginForm> {
       final headers = await loginUser(credentials: credentials);
       declarationsAccountProvider.setUserCredentials(credentials);
       declarationsAccountProvider.setDeclarationsPageHeaders(headers);
+      return ProcedureResult.success;
     } on LoginFailedExcepetion {
       setErrorMessage(widget.localized.errorLoginFailed.capitalized);
     } on ClientException {
@@ -136,6 +150,7 @@ class _LoginFormState extends State<LoginForm> {
     } catch (any) {
       setErrorMessage(widget.localized.errorUnknown.capitalized);
     }
+    return ProcedureResult.failed;
   }
 
   void setRememberUsername(bool? remember) {
