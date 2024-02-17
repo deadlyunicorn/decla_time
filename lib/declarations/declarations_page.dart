@@ -17,7 +17,9 @@ class DeclarationsPage extends StatelessWidget {
         context.watch<DeclarationsAccountNotifier>().userCredentials != null;
 
     return isLoggedIn
-        ? const SyncedDeclarations()
+        ? SyncedDeclarations(
+            localized: localized,
+          )
         : Padding(
             padding: const EdgeInsets.symmetric(vertical: 16.0),
             child: Center(
