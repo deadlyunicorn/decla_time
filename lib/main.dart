@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:decla_time/core/connection/isar_helper.dart';
 import 'package:decla_time/core/constants/constants.dart';
 import 'package:decla_time/declarations/login/user_credentials_provider.dart';
+import 'package:decla_time/users/users_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
@@ -15,26 +16,41 @@ void main() async {
   final settingsController = SettingsController();
   await settingsController.loadSettings();
 
+  final isarHelper = IsarHelper();
+  final usersController = await UsersController.initialize(isarHelper);
+
   runApp(
     MyApp(
       settingsController: settingsController,
+      isarHelper: isarHelper,
+      usersController: usersController,
     ),
   );
 }
 
 class MyApp extends StatelessWidget {
   final SettingsController settingsController;
+  final IsarHelper isarHelper;
+  final UsersController usersController;
 
-  const MyApp({super.key, required this.settingsController});
+  const MyApp({
+    super.key,
+    required this.settingsController,
+    required this.isarHelper,
+    required this.usersController,
+  });
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => settingsController),
-        ChangeNotifierProvider(create: (context) => IsarHelper()),
+        ChangeNotifierProvider(create: (context) => isarHelper),
         ChangeNotifierProvider(
-          create: (context) => DeclarationsAccountNotifier(),
+          create: (context) => DeclarationsAccountController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => usersController,
         ),
       ],
       builder: (context, child) => Consumer<SettingsController>(
