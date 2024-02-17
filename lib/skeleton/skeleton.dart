@@ -22,21 +22,30 @@ class _SkeletonState extends State<Skeleton> {
 
     return SafeArea(
       child: Scaffold(
-        body: SelectPageToDisplay(
-          scrollController: scrollController,
-          selectedPage: selectedPage,
-          localized: localized,
-        ),
-        floatingActionButton: CustomFloatingActionButton(
-          localized: localized,
-          selectedPage: selectedPage,
-        ),
-        bottomNavigationBar: CustomBottomNavigationBar(
-          localized: localized,
-          selectedPage: selectedPage,
-          setSelectedPage: setSelectedPage,
-        ),
-      ),
+          body: Stack(
+            children: [
+              Positioned.fill(
+                child: SelectPageToDisplay(
+                  scrollController: scrollController,
+                  selectedPage: selectedPage,
+                  localized: localized,
+                ),
+              ),
+              Positioned(
+                bottom: 32,
+                right: 16,
+                child: CustomFloatingActionButton(
+                  localized: localized,
+                  selectedPage: selectedPage,
+                ),
+              ),
+            ],
+          ),
+          bottomNavigationBar: CustomBottomNavigationBar(
+            localized: localized,
+            selectedPage: selectedPage,
+            setSelectedPage: setSelectedPage,
+          )),
     );
   }
 
