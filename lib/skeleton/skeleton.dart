@@ -2,6 +2,8 @@ import 'package:decla_time/core/enums/selected_page.dart';
 import 'package:decla_time/skeleton/custom_bottom_navigation_bar.dart';
 import 'package:decla_time/skeleton/floating_action_button/custom_floating_action_button.dart';
 import 'package:decla_time/skeleton/select_page_to_display.dart';
+import 'package:decla_time/skeleton/access_users_drawer.dart';
+import 'package:decla_time/users/drawer/users_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -39,8 +41,14 @@ class _SkeletonState extends State<Skeleton> {
                   selectedPage: selectedPage,
                 ),
               ),
+              Positioned.fill(
+                child: UsersDrawerAccess(
+                  localized: localized,
+                ),
+              ),
             ],
           ),
+          drawer: const UsersDrawer(),
           bottomNavigationBar: CustomBottomNavigationBar(
             localized: localized,
             selectedPage: selectedPage,
