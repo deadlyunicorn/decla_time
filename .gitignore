@@ -64,3 +64,4 @@ lib/reservations/reservation.g.dart
 lib/declarations/database/finalized_declaration_details.g.dart
 lib/declarations/database/user/property.g.dart
 lib/declarations/database/user/user.g.dart
+lib/declarations/database/user/user_property.g.dart
