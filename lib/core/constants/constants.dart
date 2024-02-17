@@ -11,6 +11,7 @@ const kArrivalDate = 'arrival_date';
 const kDepartureDate = 'departure_date';
 const kPayout = 'payout';
 const kBookingPlatform = 'booking_platform';
+const kLastSelectedUser = 'selected_user';
 
 const kSynced     = 'synced';
 const kStatus     = 'status'; 
