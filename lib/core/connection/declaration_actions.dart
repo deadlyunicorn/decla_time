@@ -44,17 +44,22 @@ class UserActions {
   }) async {
     final isar = await _isarFuture;
 
-    Set<String> oldPropertyIdList = Set.from(
+    final Set<String> oldPropertyIdSet = Set.from(
         (await isar.users.getByUsername(username))?.propertyIds.toSet() ?? {});
-    final newPropertyList = oldPropertyIdList..add(property.propertyId);
+    final Set<String> newPropertySet = Set.from(oldPropertyIdSet)
+      ..add(property.propertyId);
 
-    if (newPropertyList.length == oldPropertyIdList.length) {
+    if (newPropertySet.length == oldPropertyIdSet.length) {
       throw EntryAlreadyExistsException();
     }
 
     isar.writeTxn(() async {
       await isar.users.put(
-          User(username: username, propertyIds: oldPropertyIdList.toList()));
+        User(
+          username: username,
+          propertyIds: newPropertySet.toList(),
+        ),
+      );
       await isar.userPropertys.put(property);
     });
     _notifyListeners();
