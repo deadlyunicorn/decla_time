@@ -67,6 +67,9 @@ const double kMenuHeight = 64;
 const double kMenuHeightWithError = 96 + 32; 
 const double kMenuHeightWithoutError = kMenuHeightWithError - 48 ; 
 
+///32
+const double kDrawerHandleButtonsFromTop = 32;
+
 ///160
 const double kDatePickerWidth = kContainerWidthMedium;
 
