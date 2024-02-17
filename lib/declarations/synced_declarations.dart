@@ -19,7 +19,7 @@ class SyncedDeclarations extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final declarationsAccountProvider =
-        context.watch<DeclarationsAccountNotifier>();
+        context.watch<DeclarationsAccountController>();
 
     void displayError(String message) {
       showErrorSnackbar(
@@ -41,16 +41,16 @@ class SyncedDeclarations extends StatelessWidget {
         ),
         TextButton(
             onPressed: () async {
-              final declarationsHelper =
-                  context.read<IsarHelper>().declarationActions;
-              final users = await declarationsHelper.userActions.getAll();
+              final isarHelper =
+                  context.read<IsarHelper>();
+              final users = await isarHelper.userActions.getAll();
               if (users.isEmpty) {
-                await declarationsHelper.userActions.add(username: "testUser");
+                await isarHelper.userActions.add(username: "testUser");
               } else {
                 final testUser = users.first;
                 if (testUser.propertyIds.isEmpty) {
                   try {
-                    await declarationsHelper.userActions.addProperty(
+                    await isarHelper.userActions.addProperty(
                       username: testUser.username,
                       property: UserProperty(
                         propertyId: "test123",
@@ -65,7 +65,7 @@ class SyncedDeclarations extends StatelessWidget {
                     displayError(localized.errorUnknown);
                   }
                 } else {
-                  final properties = await declarationsHelper.userActions
+                  final properties = await isarHelper.userActions
                       .getProperties(username: testUser.username);
                   for (var element in properties) {
                     print(element.propertyId);

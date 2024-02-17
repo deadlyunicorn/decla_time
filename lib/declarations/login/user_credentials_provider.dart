@@ -2,7 +2,7 @@ import 'package:decla_time/declarations/utility/network_requests/headers/declara
 import 'package:decla_time/declarations/utility/user_credentials.dart';
 import 'package:flutter/material.dart';
 
-class DeclarationsAccountNotifier extends ChangeNotifier {
+class DeclarationsAccountController extends ChangeNotifier {
   UserCredentials? _userCredentials;
   DeclarationsPageHeaders? _headers;
 

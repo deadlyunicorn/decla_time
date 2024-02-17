@@ -48,7 +48,7 @@ class _LoginFormState extends State<LoginForm> {
   @override
   Widget build(BuildContext context) {
     final declarationsAccountProvider =
-        context.watch<DeclarationsAccountNotifier>();
+        context.watch<DeclarationsAccountController>();
 
     return isLoading
         ? const CircularProgressIndicator()
@@ -123,7 +123,7 @@ class _LoginFormState extends State<LoginForm> {
 
   Future<void> attemptLogin(
     UserCredentials credentials,
-    DeclarationsAccountNotifier declarationsAccountProvider,
+    DeclarationsAccountController declarationsAccountProvider,
   ) async {
     try {
       final headers = await loginUser(credentials: credentials);

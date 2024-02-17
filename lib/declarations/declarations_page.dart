@@ -14,7 +14,7 @@ class DeclarationsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isLoggedIn =
-        context.watch<DeclarationsAccountNotifier>().userCredentials != null;
+        context.watch<DeclarationsAccountController>().userCredentials != null;
 
     return isLoggedIn
         ? SyncedDeclarations(
