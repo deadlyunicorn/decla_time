@@ -3,9 +3,11 @@ import 'package:decla_time/skeleton/custom_bottom_navigation_bar.dart';
 import 'package:decla_time/skeleton/floating_action_button/custom_floating_action_button.dart';
 import 'package:decla_time/skeleton/select_page_to_display.dart';
 import 'package:decla_time/skeleton/access_users_drawer.dart';
+import 'package:decla_time/skeleton/selected_page_controller.dart';
 import 'package:decla_time/users/drawer/users_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
 
 class Skeleton extends StatefulWidget {
   const Skeleton({super.key});
@@ -15,7 +17,6 @@ class Skeleton extends StatefulWidget {
 }
 
 class _SkeletonState extends State<Skeleton> {
-  SelectedPage selectedPage = SelectedPage.reservations;
   final scrollController = ScrollController();
 
   @override
@@ -23,55 +24,39 @@ class _SkeletonState extends State<Skeleton> {
     final localized = AppLocalizations.of(context)!;
 
     return SafeArea(
-      child: Scaffold(
-          body: Stack(
-            children: [
-              Positioned.fill(
-                child: SelectPageToDisplay(
-                  scrollController: scrollController,
-                  selectedPage: selectedPage,
-                  localized: localized,
+      child: ChangeNotifierProvider(
+        create: (_) =>
+            SelectedPageController(scrollController: scrollController),
+        child: Scaffold(
+            body: Stack(
+              children: [
+                Positioned.fill(
+                  child: SelectPageToDisplay(
+                    scrollController: scrollController,
+                    localized: localized,
+                  ),
                 ),
-              ),
-              Positioned(
-                bottom: 32,
-                right: 16,
-                child: CustomFloatingActionButton(
-                  localized: localized,
-                  selectedPage: selectedPage,
+                Positioned(
+                  bottom: 32,
+                  right: 16,
+                  child: CustomFloatingActionButton(
+                    localized: localized,
+                  ),
                 ),
-              ),
-              Positioned.fill(
-                child: UsersDrawerAccess(
-                  localized: localized,
+                Positioned.fill(
+                  child: UsersDrawerAccess(
+                    localized: localized,
+                  ),
                 ),
-              ),
-            ],
-          ),
-          drawer: const UsersDrawer(),
-          bottomNavigationBar: CustomBottomNavigationBar(
-            localized: localized,
-            selectedPage: selectedPage,
-            setSelectedPage: setSelectedPage,
-          )),
+              ],
+            ),
+            drawer: UsersDrawer(
+              localized: localized,
+            ),
+            bottomNavigationBar: CustomBottomNavigationBar(
+              localized: localized,
+            )),
+      ),
     );
-  }
-
-  void setSelectedPage(newPageIndex) {
-    final newPage = convertIndexToSelectedPage(newPageIndex);
-
-    if (selectedPage != newPage) {
-      setState(() {
-        selectedPage = newPage;
-      });
-    } else {
-      if (scrollController.hasClients) {
-        scrollController.animateTo(
-          0,
-          duration: const Duration(milliseconds: 480),
-          curve: Curves.decelerate,
-        );
-      }
-    }
   }
 }
