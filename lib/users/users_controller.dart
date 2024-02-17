@@ -2,22 +2,25 @@ import 'package:decla_time/core/connection/isar_helper.dart';
 import 'package:decla_time/core/constants/constants.dart';
 import 'package:decla_time/declarations/database/user/user.dart';
 import 'package:flutter/material.dart';
+import 'package:isar/isar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UsersController extends ChangeNotifier {
-
   String _selectedUser;
   List<User> _availableUsers;
+  final IsarHelper _isarHelper;
 
   String get selectedUser => _selectedUser;
 
   UsersController({
-    required availableUsers,
-    required selectedUser
-  }):_availableUsers = availableUsers, _selectedUser = selectedUser;
+    required List<User> availableUsers,
+    required String selectedUser,
+    required IsarHelper isarHelper,
+  })  : _availableUsers = availableUsers,
+        _selectedUser = selectedUser,
+        _isarHelper = isarHelper;
 
-  void selectUser( String username ) async{
-    
+  Future<void> selectUser(String username) async {
     _selectedUser = username;
 
     final prefs = await SharedPreferences.getInstance();
@@ -26,22 +29,24 @@ class UsersController extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<User> get users => _availableUsers; 
+  List<User> get users => _availableUsers;
 
-  void sync( IsarHelper isarHelper )async{
-
-    _availableUsers = await isarHelper.userActions.getAll();
+  void sync() async {
+    _availableUsers = await _isarHelper.userActions.getAll();
     notifyListeners();
-
   }
 
-  static Future<UsersController> initialize( IsarHelper isarHelper )async{
+  static Future<UsersController> initialize(IsarHelper isarHelper) async {
     final prefs = await SharedPreferences.getInstance();
-    final String lastSelectedUsername = prefs.getString(kLastSelectedUser) ?? "";
+    final String lastSelectedUsername =
+        prefs.getString(kLastSelectedUser) ?? "";
 
     final List<User> users = await isarHelper.userActions.getAll();
 
-    return UsersController(availableUsers: users, selectedUser: lastSelectedUsername);
-
+    return UsersController(
+      availableUsers: users,
+      selectedUser: lastSelectedUsername,
+      isarHelper: isarHelper,
+    );
   }
 }
