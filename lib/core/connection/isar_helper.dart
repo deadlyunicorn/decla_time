@@ -1,5 +1,6 @@
 import 'package:decla_time/core/connection/declaration_actions.dart';
 import 'package:decla_time/core/connection/reservation_actions.dart';
+import 'package:decla_time/core/connection/user_actions.dart';
 import 'package:decla_time/core/documents_io/documents_io.dart';
 import 'package:decla_time/declarations/database/declaration.dart';
 import 'package:decla_time/declarations/database/finalized_declaration_details.dart';
@@ -32,6 +33,10 @@ class IsarHelper extends ChangeNotifier {
         notifyListeners: notifyListeners,
       );
   DeclarationActions get declarationActions => DeclarationActions(
+        isarFuture: isarFuture,
+        notifyListeners: notifyListeners,
+      );
+  UserActions get userActions => UserActions(
         isarFuture: isarFuture,
         notifyListeners: notifyListeners,
       );
