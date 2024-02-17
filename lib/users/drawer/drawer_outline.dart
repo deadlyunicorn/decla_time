@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:decla_time/core/constants/constants.dart';
 import 'package:decla_time/core/widgets/minimalistic_icon_button.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +17,7 @@ class DrawerOutline extends StatelessWidget {
     return Drawer(
       surfaceTintColor: Colors.transparent,
       backgroundColor: Colors.transparent,
-      width: MediaQuery.sizeOf(context).width * 0.7,
+      width: min(480, MediaQuery.sizeOf(context).width * 0.7),
       child: Stack(
         children: [
           Positioned(
@@ -37,8 +39,8 @@ class DrawerOutline extends StatelessWidget {
                   color: Theme.of(context).colorScheme.background,
                 ),
                 child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: kDrawerHandleButtonsFromTop),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 16, vertical: kDrawerHandleButtonsFromTop),
                   child: child,
                 ),
               ),
