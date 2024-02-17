@@ -4,6 +4,7 @@ import 'package:decla_time/declarations/database/user/user_property.dart';
 import 'package:isar/isar.dart';
 
 class UserActions {
+  
   final Future<Isar> _isarFuture;
   final void Function() _notifyListeners;
 
@@ -15,14 +16,16 @@ class UserActions {
     return (await _isarFuture).users.where().findAll();
   }
 
-  Future<void> add({
+  Future<void> addNew({
     required String username,
   }) async {
     final isar = await _isarFuture;
-    isar.writeTxn(() async {
-      await isar.users.put(User(username: username, propertyIds: []));
-    });
-    _notifyListeners();
+    if ((await isar.users.getByUsername(username)) == null) {
+      await isar.writeTxn(() async {
+        await isar.users.put(User(username: username, propertyIds: []));
+      });
+      _notifyListeners();
+    }
   }
 
   Future<void> addProperty({
@@ -40,7 +43,7 @@ class UserActions {
       throw EntryAlreadyExistsException();
     }
 
-    isar.writeTxn(() async {
+    await isar.writeTxn(() async {
       await isar.users.put(
         User(
           username: username,
