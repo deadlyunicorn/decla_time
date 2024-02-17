@@ -79,6 +79,7 @@
     "errorLoginFailed": "login failed",
     "errorUnknown": "unknown error",
     "errorAlreadyRegistered": "already registered",
+    "noUsersFound": "no users found",
     "unusedForNonTrailingComma________________________________":""
 
 

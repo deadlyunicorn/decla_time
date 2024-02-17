@@ -34,7 +34,7 @@
     "addFromFile": "εισαγωγή αρχείου",
     "reservation": "κράτηση",
     "found": "βρέθηκαν",
-    "add": "προσθέστε",
+    "add": "προσθήκη",
     "cancel": "ακύρωση",
     "confirm": "επιβεβαίωση",
     "enterMin6Chars": "εισάγετε τουλάχιστον 6 χαρακτήρες",
@@ -79,6 +79,7 @@
     "errorLoginFailed": "αποτυχία ταυτοποίησης",
     "errorAlreadyRegistered": "είναι ήδη καταχωρημένο",
     "errorUnknown": "άγνωστο σφάλμα",
+    "noUsersFound": "δεν βρέθηκαν χρήστες",
     "unusedForNonTrailingComma________________________________":""
 
 
