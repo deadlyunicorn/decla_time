@@ -16,12 +16,21 @@ class UsersDrawerAccess extends StatelessWidget {
       children: [
         Positioned(
           top: kDrawerHandleButtonsFromTop,
-          left: 16,
-          child: IconButton(
-            onPressed: () {
-              Scaffold.of(context).openDrawer();
-            },
-            icon: const Icon(Icons.home_work_rounded),
+          left: 0,
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.horizontal(right: Radius.circular(8)),
+              color: Theme.of(context).colorScheme.primary,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.only(left: 16.0),
+              child: IconButton(
+                onPressed: () {
+                  Scaffold.of(context).openDrawer();
+                },
+                icon: const Icon(Icons.home_work_rounded),
+              ),
+            ),
           ),
         ),
         Positioned(
