@@ -3,8 +3,10 @@ import 'package:decla_time/declarations/database/user/user.dart';
 import 'package:decla_time/users/drawer/add_user_button.dart';
 import 'package:decla_time/users/drawer/drawer_outline.dart';
 import 'package:decla_time/users/drawer/users_list.dart';
+import 'package:decla_time/users/users_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
 
 class UsersDrawer extends StatelessWidget {
   const UsersDrawer({
@@ -16,7 +18,7 @@ class UsersDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<User> users = []; // context.watch<UsersController>().users;
+    final List<User> users = context.watch<UsersController>().users;
 
     return DrawerOutline(
       child: ColumnWithSpacings(

@@ -98,14 +98,15 @@ class MyApp extends StatelessWidget {
         selectedItemColor: _tetriary,
       ),
       textTheme: const TextTheme(
-          headlineLarge: TextStyle(fontFamily: "Do Hyeon", fontSize: 40),
-          headlineMedium: TextStyle(fontFamily: "Do Hyeon", fontSize: 32),
-          headlineSmall: TextStyle(
-            fontFamily: "Do Hyeon",
-          ),
-          bodyLarge: TextStyle(fontSize: 24),
-          bodyMedium: TextStyle(fontSize: 16),
-          bodySmall: TextStyle(fontSize: 16)),
+        headlineLarge: TextStyle(fontFamily: "Do Hyeon", fontSize: 40),
+        headlineMedium: TextStyle(fontFamily: "Do Hyeon", fontSize: 32),
+        headlineSmall: TextStyle(
+          fontFamily: "Do Hyeon",
+        ),
+        bodyLarge: TextStyle(fontSize: 24),
+        bodyMedium: TextStyle(fontSize: 16),
+        bodySmall: TextStyle(fontSize: 16), //TODO CHECK THIS AND CHANGE THIS TO A SMALLER VALUE.
+      ),
       appBarTheme: const AppBarTheme(backgroundColor: _primary),
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(

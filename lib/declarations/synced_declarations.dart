@@ -45,7 +45,7 @@ class SyncedDeclarations extends StatelessWidget {
                   context.read<IsarHelper>();
               final users = await isarHelper.userActions.getAll();
               if (users.isEmpty) {
-                await isarHelper.userActions.add(username: "testUser");
+                await isarHelper.userActions.addNew(username: "testUser");
               } else {
                 final testUser = users.first;
                 if (testUser.propertyIds.isEmpty) {
