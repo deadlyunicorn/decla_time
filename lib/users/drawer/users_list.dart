@@ -76,7 +76,7 @@ class UsersList extends StatelessWidget {
                     future: context
                         .read<IsarHelper>()
                         .userActions
-                        .getProperties(username: currentUser),
+                        .readProperties(username: currentUser),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.done) {
                         final properties = snapshot.data!;

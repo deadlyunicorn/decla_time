@@ -4,7 +4,6 @@ import 'package:decla_time/declarations/database/user/user_property.dart';
 import 'package:isar/isar.dart';
 
 class UserActions {
-  
   final Future<Isar> _isarFuture;
   final void Function() _notifyListeners;
 
@@ -55,7 +54,7 @@ class UserActions {
     _notifyListeners();
   }
 
-  Future<Set<UserProperty>> getProperties({
+  Future<Set<UserProperty>> readProperties({
     required String username,
   }) async {
     final isar = await _isarFuture;

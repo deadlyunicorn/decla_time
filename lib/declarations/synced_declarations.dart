@@ -73,7 +73,7 @@ class SyncedDeclarations extends StatelessWidget {
   Future<Set<UserProperty>> readPropertiesFuture( //?Read == Local
       {required BuildContext context, required String selectedUser}) async {
     final isarHelper = context.read<IsarHelper>();
-    return await isarHelper.userActions.getProperties(username: selectedUser);
+    return await isarHelper.userActions.readProperties(username: selectedUser);
   }
 
   Future<void> testFunc1(
@@ -102,7 +102,7 @@ class SyncedDeclarations extends StatelessWidget {
         }
       } else {
         final properties = await isarHelper.userActions
-            .getProperties(username: testUser.username);
+            .readProperties(username: testUser.username);
         for (var element in properties) {
           print(element.propertyId);
         }

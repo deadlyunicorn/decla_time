@@ -29,17 +29,18 @@ class Declaration {
   @Index(unique: true)
   int? serialNumber; //used for getting finalized declaration details.
 
-  Declaration(
-      {required this.propertyId,
-      required this.declarationDbId,
-      this.declarationStatus = DeclarationStatus.temporary,
-      this.cancellationDate,
-      this.cancellationAmount,
-      required this.bookingPlatform,
-      required this.arrivalDate,
-      required this.departureDate,
-      required this.payout,
-      this.serialNumber});
+  Declaration({
+    required this.propertyId,
+    required this.declarationDbId,
+    this.declarationStatus = DeclarationStatus.temporary,
+    this.cancellationDate,
+    this.cancellationAmount,
+    required this.bookingPlatform,
+    required this.arrivalDate,
+    required this.departureDate,
+    required this.payout,
+    this.serialNumber,
+  });
 
   int get nights => departureDate.difference(arrivalDate).inDays + 1;
   String get arrivalDateString => DateFormat("dd/MM/y").format(arrivalDate);
