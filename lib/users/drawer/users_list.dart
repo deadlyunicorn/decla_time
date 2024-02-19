@@ -1,4 +1,5 @@
 import 'package:decla_time/core/extensions/capitalize.dart';
+import 'package:decla_time/core/widgets/custom_list_tile_outline.dart';
 import 'package:decla_time/declarations/database/user/user.dart';
 import 'package:decla_time/users/users_controller.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -10,16 +11,20 @@ class UsersList extends StatelessWidget {
     super.key,
     required this.users,
     required this.localized,
+    required this.switchToDeclarationsPage,
   });
 
   final List<User> users;
   final AppLocalizations localized;
+  final void Function() switchToDeclarationsPage;
 
   @override
   Widget build(BuildContext context) {
+    final usersController = context.watch<UsersController>();
+    final String loggedInUser =
+        context.watch<UsersController>().loggedUser.userCredentials?.username ??
+            "";
 
-    //TODO IN PROGRESS
-    final selectedUser = context.watch<UsersController>().selectedUser;
     if (users.isEmpty) {
       return Column(
         children: [
@@ -34,47 +39,46 @@ class UsersList extends StatelessWidget {
           shrinkWrap: true,
           itemCount: users.length,
           itemBuilder: (context, index) {
-            final bool isCurrentlySelectedUser =
-                selectedUser == users[index].username;
+            final String currentUser = users[index].username;
+            final bool isLoggedInUser = loggedInUser == currentUser;
+            final bool isSelectedUser = //? We will underline the selected property...
+                usersController.selectedUser == currentUser;
 
             return Column(
               children: [
-                ListTile(
-                  title: RichText(
-                    text: TextSpan(
-                        text: users[index].username,
-                        style:
-                            Theme.of(context).textTheme.bodyLarge?.copyWith(),
-                        children: isCurrentlySelectedUser
-                            ? [
-                                TextSpan(
-                                    text: "logged in", //TODO change this.
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodySmall
-                                        ?.copyWith(
-                                          fontSize: 12,
-                                          color: isCurrentlySelectedUser
-                                              ? Theme.of(context)
-                                                  .colorScheme
-                                                  .surface
-                                              : Theme.of(context)
-                                                  .colorScheme
-                                                  .onBackground,
-                                        ))
-                              ]
-                            : []),
+                CustomListTileOutline(
+                  child: ListTile(
+                    trailing: isLoggedInUser
+                        ? const Icon(Icons.cloud_done_rounded)
+                        : const SizedBox.shrink(),
+                    title: Text(
+                      currentUser,
+                    ),
+                    onLongPress: () {
+                      print("deleting user");
+                    },
+                    onTap: () {
+                      usersController.selectUser(currentUser);
+                      switchToDeclarationsPage();
+                    },
                   ),
                 ),
                 ListView.builder(
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
-                    return ListTile(
-                      leading: SizedBox.square( dimension: 4,),
-                        title: Text(
-                      "selecteed property",
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ));
+                    return Padding(
+                      padding: const EdgeInsets.only(left: 32.0),
+                      child: CustomListTileOutline(
+                        child: ListTile(
+                            onTap: () {
+                              print("no wayy");
+                            },
+                            title: Text(
+                              "selecteed property",
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            )),
+                      ),
+                    );
                   },
                   itemCount: 2,
                 )
