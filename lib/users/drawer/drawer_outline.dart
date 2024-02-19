@@ -38,10 +38,12 @@ class DrawerOutline extends StatelessWidget {
                   ),
                   color: Theme.of(context).colorScheme.background,
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 16, vertical: kDrawerHandleButtonsFromTop),
-                  child: child,
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: kDrawerHandleButtonsFromTop),
+                    child: child,
+                  ),
                 ),
               ),
             ),
