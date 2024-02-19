@@ -13,8 +13,13 @@ class UsersController extends ChangeNotifier {
 
   LoggedUser? _loggedUser;
 
+  bool _requestLogin = false;
+
   List<User> get users => _availableUsers;
   String get selectedUser => _selectedUser;
+  bool get requestLogin => _requestLogin;
+  bool get isLoggedIn => (loggedUser.userCredentials != null &&
+      loggedUser.userCredentials?.username == selectedUser);
 
   UsersController({
     required List<User> availableUsers,
@@ -23,6 +28,11 @@ class UsersController extends ChangeNotifier {
   })  : _availableUsers = availableUsers,
         _selectedUser = selectedUser,
         _isarHelper = isarHelper;
+
+  void setRequestLogin(bool newValue) {
+    _requestLogin = newValue;
+    notifyListeners();
+  }
 
   Future<void> selectUser(String username) async {
     _selectedUser = username;
