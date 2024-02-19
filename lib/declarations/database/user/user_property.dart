@@ -8,12 +8,13 @@ class UserProperty {
   //!!! DONT NAME YOUR COLLECTION "PROPERTY" :))))))))
 
   @Index(unique: true)
-  String propertyId;
+  final String propertyId;
+  final String address;
 
-  String address;
+  final String atak;
+  final String serialNumber;
 
-  String atak;
-  String serialNumber;
+  String? friendlyName;
 
   Id get isarId => fastHash(propertyId);
 
@@ -22,5 +23,6 @@ class UserProperty {
     required this.address,
     required this.atak,
     required this.serialNumber,
+    this.friendlyName,
   });
 }
