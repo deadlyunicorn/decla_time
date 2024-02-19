@@ -13,20 +13,22 @@ class DeclarationsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final usersController = context.watch<UsersController>();
     final selectedUser = usersController.selectedUser;
-    final isLoggedIn = usersController.loggedUser.userCredentials != null &&
-        selectedUser == usersController.loggedUser.userCredentials?.username;
+    final isLoggedIn = usersController.isLoggedIn;
+    final requestLogin = usersController.requestLogin;
 
-    return isLoggedIn
-        ? SyncedDeclarations(
-            localized: localized,
-          )
-        : Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16.0),
-            child: Center(
-                child: LoginForm(
-              initialUsername: selectedUser,
+    return SingleChildScrollView(
+      child: !requestLogin || isLoggedIn
+          ? SyncedDeclarations(
               localized: localized,
-            )),
-          );
+            )
+          : Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              child: Center(
+                  child: LoginForm(
+                initialUsername: selectedUser,
+                localized: localized,
+              )),
+            ),
+    );
   }
 }
