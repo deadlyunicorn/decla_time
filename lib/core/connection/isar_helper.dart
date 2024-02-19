@@ -21,6 +21,10 @@ class IsarHelper extends ChangeNotifier {
         ], directory: (await DocumentsIO.appDirFuture).path)
       : await Future.value(Isar.getInstance()!);
 
+  ReservationActions? _reservationActions;
+  DeclarationActions? _declarationActions;
+  UserActions? _userActions;
+
   //? The only bad thing about this design is that in the future
   //? if we change it - it will notify listeners from all the pages.
 
@@ -28,16 +32,32 @@ class IsarHelper extends ChangeNotifier {
   //? thus their listeners do not exist.
 
   //? This is basically a notifier that listens for all database changes..
-  ReservationActions get reservationActions => ReservationActions(
-        isarFuture: isarFuture,
-        notifyListeners: notifyListeners,
-      );
-  DeclarationActions get declarationActions => DeclarationActions(
-        isarFuture: isarFuture,
-        notifyListeners: notifyListeners,
-      );
-  UserActions get userActions => UserActions(
-        isarFuture: isarFuture,
-        notifyListeners: notifyListeners,
-      );
+  ReservationActions get reservationActions {
+    final ReservationActions initializedReservationActions =
+        _reservationActions ??
+            ReservationActions(
+                isarFuture: isarFuture, notifyListeners: notifyListeners);
+    _reservationActions ??= initializedReservationActions;
+    return initializedReservationActions;
+  }
+
+  DeclarationActions get declarationActions {
+    final initializedDeclarationActions = _declarationActions ??
+        DeclarationActions(
+          isarFuture: isarFuture,
+          notifyListeners: notifyListeners,
+        );
+    _declarationActions ??= initializedDeclarationActions;
+    return initializedDeclarationActions;
+  }
+
+  UserActions get userActions {
+    final initializedUserActions = _userActions ??
+        UserActions(
+          isarFuture: isarFuture,
+          notifyListeners: notifyListeners,
+        );
+    _userActions ??= initializedUserActions;
+    return initializedUserActions;
+  }
 }
