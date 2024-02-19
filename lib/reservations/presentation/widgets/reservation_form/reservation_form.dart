@@ -1,6 +1,7 @@
 import 'package:decla_time/core/connection/isar_helper.dart';
 import 'package:decla_time/core/constants/constants.dart';
 import 'package:decla_time/core/extensions/capitalize.dart';
+import 'package:decla_time/core/functions/translate_reservation_status.dart';
 import 'package:decla_time/reservations/reservation.dart';
 import 'package:decla_time/reservations/presentation/widgets/reservation_form/form_fields/id_field.dart';
 import 'package:decla_time/reservations/presentation/widgets/reservation_form/form_fields/date_fields/date_pickers_field.dart';
@@ -119,6 +120,7 @@ class _ReservationFormState extends State<ReservationForm> {
                           localized: widget.localized,
                         ),
                         RequiredTextField(
+                          submitFormHandler: submitReservationForm,
                           controller: guestNameController,
                           label: widget.localized.guestName.capitalized,
                           localized: widget.localized,
@@ -159,7 +161,7 @@ class _ReservationFormState extends State<ReservationForm> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: SubmitButton(
-                      formKey: _formKey,
+                      submitReservationForm: submitReservationForm,
                       platformNameController: platformNameController,
                       listingNameController: listingNameController,
                       idController: idController,
@@ -180,6 +182,33 @@ class _ReservationFormState extends State<ReservationForm> {
         ),
       ),
     );
+  }
+
+  void submitReservationForm(){
+    if (_formKey.currentState!.validate()) {
+          final bookingPlatform = platformNameController.text;
+          final listingName = listingNameController.text;
+          final id = idController.text;
+          final guestName = guestNameController.text;
+          final payout = double.tryParse(payoutController.text)!;
+          final reservationStatus = translateReservationStatus(reservationStatusController.text, widget.localized).name;
+          final arrivalDate = this.arrivalDate!;
+          final departureDate = this.departureDate!;
+
+          final reservation = Reservation(
+            bookingPlatform: bookingPlatform,
+            listingName: listingName,
+            id: id,
+            guestName: guestName,
+            arrivalDate: arrivalDate,
+            departureDate: departureDate,
+            payout: payout,
+            reservationStatus: reservationStatus,
+          );
+
+          widget.handleFormSubmit(reservation);
+          Navigator.pop(context, reservation);
+        }
   }
 
   bool hasInitialId() {

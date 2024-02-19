@@ -51,6 +51,7 @@ class IdField extends StatelessWidget {
           ),
           Flexible(
             child: RequiredTextField(
+              submitFormHandler: (){},
               isEditingExistingEntry: hasInitialId,
               controller: idController,
               label: "ID",

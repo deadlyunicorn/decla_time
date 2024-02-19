@@ -11,10 +11,12 @@ class RequiredTextField extends StatelessWidget {
     required this.localized,
     this.refresh,
     this.isEditingExistingEntry = false,
-    this.obscureText = false,
+    this.obscureText = false, 
+    required this.submitFormHandler,
   });
 
   final TextEditingController controller;
+  final void Function() submitFormHandler;
   final String label;
   final AppLocalizations localized;
   final bool
@@ -24,9 +26,13 @@ class RequiredTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     return SizedBox(
       width: kFormFieldWidth,
       child: TextFormField(
+        onFieldSubmitted: (_) {
+          submitFormHandler();
+        },
         obscureText: obscureText,
         mouseCursor: isEditingExistingEntry
             ? SystemMouseCursors.basic
