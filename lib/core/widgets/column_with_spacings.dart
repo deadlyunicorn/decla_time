@@ -16,7 +16,7 @@ class ColumnWithSpacings extends StatelessWidget {
       children: children
           .map(
             (child) => Padding(
-              padding: EdgeInsets.symmetric(vertical: spacing / 2),
+              padding: EdgeInsets.only(bottom: spacing.toDouble() ),
               child: child,
             ),
           )
