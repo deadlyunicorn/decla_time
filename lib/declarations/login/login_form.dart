@@ -59,7 +59,12 @@ class _LoginFormState extends State<LoginForm> {
     final isarHelper = context.watch<IsarHelper>();
 
     return isLoading
-        ? const CircularProgressIndicator()
+        ? SizedBox(
+            height: MediaQuery.sizeOf(context).height,
+            child: const Center(
+              child: CircularProgressIndicator(),
+            ),
+          )
         : Column(
             children: [
               SizedBox(
