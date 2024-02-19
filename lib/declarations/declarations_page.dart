@@ -1,10 +1,8 @@
-import 'package:decla_time/core/constants/constants.dart';
 import 'package:decla_time/declarations/login/login_form.dart';
-import 'package:decla_time/declarations/login/user_credentials_provider.dart';
 import 'package:decla_time/declarations/synced_declarations.dart';
+import 'package:decla_time/users/users_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DeclarationsPage extends StatelessWidget {
@@ -13,8 +11,10 @@ class DeclarationsPage extends StatelessWidget {
   final AppLocalizations localized;
   @override
   Widget build(BuildContext context) {
-    final isLoggedIn =
-        context.watch<DeclarationsAccountController>().userCredentials != null;
+    final usersController = context.watch<UsersController>();
+    final selectedUser = usersController.selectedUser;
+    final isLoggedIn = usersController.loggedUser.userCredentials != null &&
+        selectedUser == usersController.loggedUser.userCredentials?.username;
 
     return isLoggedIn
         ? SyncedDeclarations(
@@ -23,24 +23,10 @@ class DeclarationsPage extends StatelessWidget {
         : Padding(
             padding: const EdgeInsets.symmetric(vertical: 16.0),
             child: Center(
-              child: FutureBuilder<String>(
-                  future: getSavedUsernameFuture(),
-                  builder: (context, snapshot) {
-                    final username = snapshot.data;
-
-                    return snapshot.connectionState == ConnectionState.done
-                        ? LoginForm(
-                            initialUsername: username ?? "",
-                            localized: localized,
-                          )
-                        : const CircularProgressIndicator();
-                  }),
-            ),
+                child: LoginForm(
+              initialUsername: selectedUser,
+              localized: localized,
+            )),
           );
-  }
-
-  Future<String> getSavedUsernameFuture() async {
-    return await SharedPreferences.getInstance()
-        .then((prefs) => prefs.getString(kGovUsername) ?? "");
   }
 }
