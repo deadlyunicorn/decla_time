@@ -1,5 +1,6 @@
+import 'package:decla_time/core/enums/selected_page.dart';
 import 'package:decla_time/core/widgets/column_with_spacings.dart';
-import 'package:decla_time/declarations/database/user/user.dart';
+import 'package:decla_time/skeleton/selected_page_controller.dart';
 import 'package:decla_time/users/drawer/add_user_button.dart';
 import 'package:decla_time/users/drawer/drawer_outline.dart';
 import 'package:decla_time/users/drawer/users_list.dart';
@@ -18,7 +19,7 @@ class UsersDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<User> users = context.watch<UsersController>().users;
+    final UsersController usersController = context.watch<UsersController>();
 
     return DrawerOutline(
       child: ColumnWithSpacings(
@@ -32,14 +33,28 @@ class UsersDrawer extends StatelessWidget {
             dimension: 16,
           ),
           UsersList(
-            users: users,
+            switchToDeclarationsPage: () {
+              switchToDeclarationsPage(context);
+            },
+            users: usersController.users,
             localized: localized,
           ),
           AddUserButton(
+            onTap: () {
+              switchToDeclarationsPage(context);
+              usersController.selectUser("");
+            },
             localized: localized,
           ),
         ],
       ),
     );
+  }
+
+  void switchToDeclarationsPage(BuildContext context) {
+    context
+        .read<SelectedPageController>()
+        .setSelectedPage(SelectedPage.declarations);
+    Scaffold.of(context).closeDrawer();
   }
 }
