@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:decla_time/core/connection/isar_helper.dart';
 import 'package:decla_time/core/constants/constants.dart';
-import 'package:decla_time/declarations/login/user_credentials_provider.dart';
 import 'package:decla_time/users/users_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -46,12 +45,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (context) => settingsController),
         ChangeNotifierProvider(create: (context) => isarHelper),
-        ChangeNotifierProvider(
-          create: (context) => DeclarationsAccountController(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => usersController,
-        ),
+        ChangeNotifierProvider(create: (context) => usersController),
       ],
       builder: (context, child) => Consumer<SettingsController>(
         builder: (context, value, child) => MaterialApp(
@@ -105,7 +99,8 @@ class MyApp extends StatelessWidget {
         ),
         bodyLarge: TextStyle(fontSize: 24),
         bodyMedium: TextStyle(fontSize: 16),
-        bodySmall: TextStyle(fontSize: 16), //TODO CHECK THIS AND CHANGE THIS TO A SMALLER VALUE.
+        bodySmall: TextStyle(
+            fontSize: 16), //TODO CHECK THIS AND CHANGE THIS TO A SMALLER VALUE.
       ),
       appBarTheme: const AppBarTheme(backgroundColor: _primary),
       textButtonTheme: TextButtonThemeData(
