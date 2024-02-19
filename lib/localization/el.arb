@@ -80,6 +80,12 @@
     "errorAlreadyRegistered": "είναι ήδη καταχωρημένο",
     "errorUnknown": "άγνωστο σφάλμα",
     "noUsersFound": "δεν βρέθηκαν χρήστες",
+    "sync": "συγχρονισμός",
+    "login": "σύνδεση",
+    "password": "κωδικός",
+    "username": "όνομα χρήστη",
+    "rememberUsername": "θυμήσου το όνομα χρήστη",
+    "loginForm": "φόρμα σύνδεσης",
     "unusedForNonTrailingComma________________________________":""
 
 

@@ -80,6 +80,12 @@
     "errorUnknown": "unknown error",
     "errorAlreadyRegistered": "already registered",
     "noUsersFound": "no users found",
+    "sync": "sync",
+    "login": "log in",
+    "password": "password",
+    "username": "username",
+    "rememberUsername": "remember username",
+    "loginForm": "login form",
     "unusedForNonTrailingComma________________________________":""
 
 

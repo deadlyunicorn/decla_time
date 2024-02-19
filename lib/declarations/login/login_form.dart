@@ -60,60 +60,72 @@ class _LoginFormState extends State<LoginForm> {
 
     return isLoading
         ? const CircularProgressIndicator()
-        : SizedBox(
-            width: kFormFieldWidth,
-            child: Form(
-              key: _formKey,
-              child: ColumnWithSpacings(
-                spacing: 16,
-                children: [
-                  SizedBox(
-                    child: Text(
-                      "Login Form",
-                      style: Theme.of(context).textTheme.headlineMedium,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  RequiredTextField(
-                    submitFormHandler: () {
-                      submitLoginForm(isarHelper, usersController);
-                    },
-                    localized: widget.localized,
-                    label: "Username",
-                    controller: usernameController,
-                  ),
-                  RequiredTextField(
-                    submitFormHandler: () {
-                      submitLoginForm(isarHelper, usersController);
-                    },
-                    localized: widget.localized,
-                    label: "password",
-                    controller: passwordController,
-                    obscureText: true,
-                  ),
-                  RememberUsernameCheckbox(
-                    rememberUsername: rememberUsername,
-                    setRememberUsername: setRememberUsername,
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      submitLoginForm(isarHelper, usersController);
-                    },
-                    child: Text(
-                      "Log in",
-                      style: Theme.of(context).textTheme.headlineMedium,
-                    ),
-                  ),
-                  Text(
-                    errorMessage,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.error,
-                    ),
-                  ),
-                ],
+        : Column(
+            children: [
+              SizedBox(
+                child: Text(
+                  widget.localized.loginForm.capitalizedAll,
+                  style: Theme.of(context).textTheme.headlineMedium,
+                  textAlign: TextAlign.center,
+                  maxLines: 1,
+                ),
               ),
-            ),
+              const SizedBox.square(
+                dimension: 32,
+              ),
+              SizedBox(
+                width: kFormFieldWidth,
+                child: Form(
+                  key: _formKey,
+                  child: ColumnWithSpacings(
+                    spacing: 16,
+                    children: [
+                      RequiredTextField(
+                        submitFormHandler: () {
+                          submitLoginForm(isarHelper, usersController);
+                        },
+                        localized: widget.localized,
+                        label: widget.localized.username.capitalized,
+                        controller: usernameController,
+                      ),
+                      RequiredTextField(
+                        submitFormHandler: () {
+                          submitLoginForm(isarHelper, usersController);
+                        },
+                        localized: widget.localized,
+                        label: widget.localized.password.capitalized,
+                        controller: passwordController,
+                        obscureText: true,
+                      ),
+                      RememberUsernameCheckbox(
+                        localized: widget.localized,
+                        rememberUsername: rememberUsername,
+                        setRememberUsername: setRememberUsername,
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          submitLoginForm(isarHelper, usersController);
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            widget.localized.login.capitalized,
+                            style: Theme.of(context).textTheme.headlineMedium,
+                          ),
+                        ),
+                      ),
+                      Text(
+                        errorMessage,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.error,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           );
   }
 
