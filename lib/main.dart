@@ -141,6 +141,17 @@ class MyApp extends StatelessWidget {
         ).copyWith(
             overlayColor: MaterialStatePropertyAll(_secondary.withAlpha(64))),
       ),
+      menuBarTheme: const MenuBarThemeData(
+        style: MenuStyle(
+          backgroundColor: MaterialStatePropertyAll(_background),
+          padding: MaterialStatePropertyAll(EdgeInsets.zero),
+        ),
+      ),
+      menuTheme: const MenuThemeData(
+        style: MenuStyle(
+          backgroundColor: MaterialStatePropertyAll(Colors.transparent),
+        ),
+      ),
       useMaterial3: true,
     );
   }
