@@ -1,8 +1,10 @@
 import 'package:decla_time/core/connection/isar_helper.dart';
+import 'package:decla_time/core/constants/constants.dart';
 import 'package:decla_time/core/errors/exceptions.dart';
 import 'package:decla_time/core/extensions/capitalize.dart';
 import 'package:decla_time/core/functions/show_error_snackbar.dart';
 import 'package:decla_time/core/widgets/column_with_spacings.dart';
+import 'package:decla_time/declarations/available_user_properties.dart';
 import 'package:decla_time/declarations/database/user/user_property.dart';
 import 'package:decla_time/users/users_controller.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -39,41 +41,27 @@ class SyncedDeclarations extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 32.0),
       child: ColumnWithSpacings(
-        spacing: 16,
+        spacing: 32,
         children: [
           Text(
-            "Viewing the  of ${usersController.selectedUser}",
+            "Viewing the  of $usersController.selectedUser}",
             style: Theme.of(context).textTheme.headlineMedium,
             textAlign: TextAlign.center,
           ),
           FutureBuilder(
-            future: readPropertiesFuture(
-                //TODO FINISH THIS
-                context: context,
-                selectedUser: usersController.selectedUser),
+            future: context
+                .watch<IsarHelper>()
+                .userActions
+                .readProperties(username: usersController.selectedUser),
             builder: (context, snapshot) {
-              return Center(
-                child: CircularProgressIndicator(),
+              return AvailableUserProperties(
+                userProperties: [...?snapshot.data],
               );
             },
-          ),
-          TextButton(
-            onPressed: () async {
-              if (!usersController.isLoggedIn) {
-                usersController.setRequestLogin(true);
-              }
-            },
-            child: const Text("add properties"), //?Sync Button
           )
         ],
       ),
     );
-  }
-
-  Future<Set<UserProperty>> readPropertiesFuture( //?Read == Local
-      {required BuildContext context, required String selectedUser}) async {
-    final isarHelper = context.read<IsarHelper>();
-    return await isarHelper.userActions.readProperties(username: selectedUser);
   }
 
   Future<void> testFunc1(
@@ -109,4 +97,5 @@ class SyncedDeclarations extends StatelessWidget {
       }
     }
   }
+
 }

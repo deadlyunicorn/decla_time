@@ -11,13 +11,15 @@ class DeclarationsPage extends StatelessWidget {
   final AppLocalizations localized;
   @override
   Widget build(BuildContext context) {
+
     final usersController = context.watch<UsersController>();
     final selectedUser = usersController.selectedUser;
     final isLoggedIn = usersController.isLoggedIn;
     final requestLogin = usersController.requestLogin;
 
+
     return SingleChildScrollView(
-      child: !requestLogin || isLoggedIn
+      child: ( selectedUser.isNotEmpty && !requestLogin ) || isLoggedIn
           ? SyncedDeclarations(
               localized: localized,
             )
