@@ -1,11 +1,6 @@
 import 'package:decla_time/core/connection/isar_helper.dart';
-import 'package:decla_time/core/constants/constants.dart';
-import 'package:decla_time/core/errors/exceptions.dart';
-import 'package:decla_time/core/extensions/capitalize.dart';
-import 'package:decla_time/core/functions/show_error_snackbar.dart';
 import 'package:decla_time/core/widgets/column_with_spacings.dart';
 import 'package:decla_time/declarations/available_user_properties.dart';
-import 'package:decla_time/declarations/database/user/user_property.dart';
 import 'package:decla_time/users/users_controller.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
@@ -55,6 +50,8 @@ class SyncedDeclarations extends StatelessWidget {
                 .readProperties(username: usersController.selectedUser),
             builder: (context, snapshot) {
               return AvailableUserProperties(
+                localized: localized,
+                currentUser: usersController.selectedUser,
                 userProperties: [...?snapshot.data],
               );
             },
@@ -63,39 +60,4 @@ class SyncedDeclarations extends StatelessWidget {
       ),
     );
   }
-
-  Future<void> testFunc1(
-      BuildContext context, void displayError(String message)) async {
-    final isarHelper = context.read<IsarHelper>();
-    final users = await isarHelper.userActions.getAll();
-    if (users.isEmpty) {
-      await isarHelper.userActions.addNew(username: "testUser");
-    } else {
-      final testUser = users.first;
-      if (testUser.propertyIds.isEmpty) {
-        try {
-          await isarHelper.userActions.addProperty(
-            username: testUser.username,
-            property: UserProperty(
-              propertyId: "test123",
-              address: "home address",
-              atak: "Free attack",
-              serialNumber: "no serial numbers",
-            ),
-          );
-        } on EntryAlreadyExistsException {
-          displayError(localized.errorAlreadyRegistered.capitalized);
-        } catch (error) {
-          displayError(localized.errorUnknown);
-        }
-      } else {
-        final properties = await isarHelper.userActions
-            .readProperties(username: testUser.username);
-        for (var element in properties) {
-          print(element.propertyId);
-        }
-      }
-    }
-  }
-
 }
