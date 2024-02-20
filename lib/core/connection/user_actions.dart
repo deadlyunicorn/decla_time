@@ -27,18 +27,18 @@ class UserActions {
     }
   }
 
-  Future<void> addProperty({
+  Future<void> addProperties({
     required String username,
-    required UserProperty property,
+    required Iterable<UserProperty> propertyIterable,
   }) async {
     final isar = await _isarFuture;
 
     final Set<String> oldPropertyIdSet = Set.from(
         (await isar.users.getByUsername(username))?.propertyIds.toSet() ?? {});
-    final Set<String> newPropertySet = Set.from(oldPropertyIdSet)
-      ..add(property.propertyId);
+    final Set<String> newPropertyIdsSet = Set.from(oldPropertyIdSet)
+      ..addAll(propertyIterable.map((property) => property.propertyId));
 
-    if (newPropertySet.length == oldPropertyIdSet.length) {
+    if (newPropertyIdsSet.length == oldPropertyIdSet.length) {
       throw EntryAlreadyExistsException();
     }
 
@@ -46,10 +46,10 @@ class UserActions {
       await isar.users.put(
         User(
           username: username,
-          propertyIds: newPropertySet.toList(),
+          propertyIds: newPropertyIdsSet.toList(),
         ),
       );
-      await isar.userPropertys.put(property);
+      await isar.userPropertys.putAll( propertyIterable.toList() );
     });
     _notifyListeners();
   }
