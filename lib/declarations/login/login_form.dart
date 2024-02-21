@@ -155,7 +155,7 @@ class _LoginFormState extends State<LoginForm> {
       );
 
       if (loginResult != null) {
-        isarHelper.userActions //? Keep in db
+        await isarHelper.userActions //? Keep in db
             .addNew(username: credentials.username)
             .then((_) {
           usersController.selectUser(credentials.username);
