@@ -99,8 +99,7 @@ class MyApp extends StatelessWidget {
         ),
         bodyLarge: TextStyle(fontSize: 24),
         bodyMedium: TextStyle(fontSize: 16),
-        bodySmall: TextStyle(
-            fontSize: 16), //TODO CHECK THIS AND CHANGE THIS TO A SMALLER VALUE.
+        bodySmall: TextStyle(fontSize: 12),
       ),
       appBarTheme: const AppBarTheme(backgroundColor: _primary),
       textButtonTheme: TextButtonThemeData(
