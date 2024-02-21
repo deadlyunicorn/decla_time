@@ -3,8 +3,10 @@ import 'package:decla_time/core/extensions/capitalize.dart';
 import 'package:decla_time/core/widgets/column_with_spacings.dart';
 import 'package:decla_time/declarations/database/user/user_property.dart';
 import 'package:decla_time/declarations/property_sync_button.dart';
+import 'package:decla_time/users/users_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
 
 class AvailableUserProperties extends StatefulWidget {
   const AvailableUserProperties({
@@ -25,26 +27,28 @@ class AvailableUserProperties extends StatefulWidget {
 
 class _AvailableUserPropertiesState extends State<AvailableUserProperties> {
   String helperText = "";
-  String menuText = "";
-
-  @override
-  void initState() {
-    super.initState();
-    menuText = widget.localized.select.capitalized;
-  }
 
   @override
   Widget build(BuildContext context) {
+    final selectedProperty = context.select<UsersController, UserProperty?>(
+      (controller) => widget.userProperties
+          .where(
+              (property) => controller.selectedProperty == property.propertyId)
+          .firstOrNull,
+    );
+
+    final menuText = selectedProperty == null
+        ? widget.localized.select.capitalized
+        : propertyShortDetails(selectedProperty);
+
     final userPropertyEntries = widget.userProperties.map((property) {
-      final String entryText = "${property.address} - ${property.atak}";
+      final String entryText = propertyShortDetails(property);
 
       return MenuItemButton(
-        onPressed: () {
-          //TODO MenuText takes from selectedPropertyId.
-          print("set selected property to ${property.propertyId}");
-          setState(() {
-            menuText = entryText;
-          });
+        onPressed: () async {
+          await context
+              .read<UsersController>()
+              .selectProperty(property.propertyId);
         },
         child: Text(entryText),
       );
@@ -117,4 +121,7 @@ class _AvailableUserPropertiesState extends State<AvailableUserProperties> {
       helperText = newText;
     });
   }
+
+  String propertyShortDetails(UserProperty property) =>
+      "${property.address} - ${property.atak}";
 }
