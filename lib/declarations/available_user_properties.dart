@@ -40,6 +40,7 @@ class _AvailableUserPropertiesState extends State<AvailableUserProperties> {
 
       return MenuItemButton(
         onPressed: () {
+          //TODO MenuText takes from selectedPropertyId.
           print("set selected property to ${property.propertyId}");
           setState(() {
             menuText = entryText;

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UsersController extends ChangeNotifier {
+  
   String _selectedUser;
   List<User> _availableUsers;
   final IsarHelper _isarHelper;
