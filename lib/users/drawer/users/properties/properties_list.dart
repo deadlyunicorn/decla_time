@@ -1,6 +1,9 @@
 import 'package:decla_time/core/widgets/custom_list_tile_outline.dart';
 import 'package:decla_time/declarations/database/user/user_property.dart';
+import 'package:decla_time/users/drawer/users_drawer.dart';
+import 'package:decla_time/users/users_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class PropertiesList extends StatelessWidget {
   const PropertiesList({
@@ -19,7 +22,10 @@ class PropertiesList extends StatelessWidget {
         return CustomListTileOutline(
           child: ListTile(
               onTap: () {
-                //TODO Select the selected property. => The reservations section adds to this property.
+                context
+                    .read<UsersController>()
+                    .selectProperty(property.propertyId);
+                UsersDrawer.switchToDeclarationsPage(context);
               },
               onLongPress: () {
                 //TODO Prompt to give a friendly name.
