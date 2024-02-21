@@ -14,12 +14,10 @@ class PropertySyncButton extends StatelessWidget {
   const PropertySyncButton({
     super.key,
     required this.localized,
-    required this.setHelperText,
     required this.parentContext,
   });
 
   final AppLocalizations localized;
-  final void Function(String) setHelperText;
   final BuildContext parentContext;
 
   @override
@@ -36,13 +34,25 @@ class PropertySyncButton extends StatelessWidget {
             userController.setRequestLogin(true);
             return;
           }
-          setHelperText("${localized.synchronizing.capitalized}...");
+          showNormalSnackbar(
+            context: parentContext,
+            message: "${localized.synchronizing.capitalized}...",
+          );
           try {
             final userProperties = await getUserProperties(headers);
 
             await isarHelper.userActions.addProperties(
               username: userController.selectedUser,
               propertyIterable: userProperties,
+            );
+
+            final propertiesCount = userProperties.length;
+
+            if (!parentContext.mounted) return;
+            showNormalSnackbar(
+              context: parentContext,
+              message:
+                  "${localized.found.capitalized}: $propertiesCount ${propertiesCount > 1 ? localized.properties : localized.property} ",
             );
           } on EntryAlreadyExistsException {
             if (!parentContext.mounted) return;
@@ -71,7 +81,6 @@ class PropertySyncButton extends StatelessWidget {
               message: localized.errorUnknown.capitalized,
             );
           }
-          setHelperText("");
         },
         trailingIcon: const Icon(Icons.refresh),
         child: Text(

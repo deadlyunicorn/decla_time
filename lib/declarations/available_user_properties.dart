@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
-class AvailableUserProperties extends StatefulWidget {
+class AvailableUserProperties extends StatelessWidget {
   const AvailableUserProperties({
     super.key,
     required this.userProperties,
@@ -22,27 +22,19 @@ class AvailableUserProperties extends StatefulWidget {
   final String currentUser;
 
   @override
-  State<AvailableUserProperties> createState() =>
-      _AvailableUserPropertiesState();
-}
-
-class _AvailableUserPropertiesState extends State<AvailableUserProperties> {
-  String helperText = "";
-
-  @override
   Widget build(BuildContext context) {
     final selectedProperty = context.select<UsersController, UserProperty?>(
-      (controller) => widget.userProperties
+      (controller) => userProperties
           .where(
               (property) => controller.selectedProperty == property.propertyId)
           .firstOrNull,
     );
 
     final menuText = selectedProperty == null
-        ? widget.localized.select.capitalized
+        ? localized.selectProperty.capitalized
         : PropertiesList.propertyShortDetails(selectedProperty);
 
-    final userPropertyEntries = widget.userProperties.map(
+    final userPropertyEntries = userProperties.map(
       (property) {
         final String entryText = PropertiesList.propertyShortDetails(property);
 
@@ -105,8 +97,7 @@ class _AvailableUserPropertiesState extends State<AvailableUserProperties> {
                         ...userPropertyEntries,
                         PropertySyncButton(
                           parentContext: context,
-                          localized: widget.localized,
-                          setHelperText: setHelperText,
+                          localized: localized,
                         ),
                       ],
                     )
@@ -122,16 +113,8 @@ class _AvailableUserPropertiesState extends State<AvailableUserProperties> {
               ),
             ],
           ),
-          Text(helperText)
         ],
       ),
     );
-  }
-
-  void setHelperText(String newText) {
-    if (newText == helperText) return;
-    setState(() {
-      helperText = newText;
-    });
   }
 }
