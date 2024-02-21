@@ -18,8 +18,6 @@ class _DrawerAccessButtonState extends State<DrawerAccessButton> {
   @override
   Widget build(BuildContext context) {
 
-    //TODO CHECK ON MOBILES IF IT WORKS>
-    
     return Positioned(
       top: distanceFromTop,
       left: 0,

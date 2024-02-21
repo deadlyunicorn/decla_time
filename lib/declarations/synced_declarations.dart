@@ -22,9 +22,6 @@ class SyncedDeclarations extends StatelessWidget {
 
     //TODO!!! display declarations even if the user is not logged in ( if they are synced. ?)
 
-    //TODO We need to add a property select --grid-- DropDown List? -> SYnc Now is an option of the list. ( and handle the ( initial ) case where there are no properties in the local db)
-    //TODO We need to add a SYNC properties button ( that exists even after we have synced our local properties - in case there are changes. )
-
     //TODO After we sync the properties we need to SYNC the existing declarations
 
     //TODO When submitting declarations:
