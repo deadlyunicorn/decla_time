@@ -32,8 +32,9 @@ class PropertiesList extends StatelessWidget {
               },
               title: Text(
                 property.friendlyName ??
-                    property
-                        .atak, //? ATAK is more relevant to the end user than the propertyId..
+                    propertyShortDetails(
+                      property,
+                    ),
                 style: Theme.of(context).textTheme.bodyMedium,
               )),
         );
@@ -41,4 +42,7 @@ class PropertiesList extends StatelessWidget {
       itemCount: properties.length,
     );
   }
+
+  static String propertyShortDetails(UserProperty property) =>
+      "${property.address} - ${property.atak}"; //? ATAK is more relevant to the end user than the propertyId..
 }

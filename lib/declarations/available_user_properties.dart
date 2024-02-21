@@ -3,6 +3,7 @@ import 'package:decla_time/core/extensions/capitalize.dart';
 import 'package:decla_time/core/widgets/column_with_spacings.dart';
 import 'package:decla_time/declarations/database/user/user_property.dart';
 import 'package:decla_time/declarations/property_sync_button.dart';
+import 'package:decla_time/users/drawer/users/properties/properties_list.dart';
 import 'package:decla_time/users/users_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -39,20 +40,28 @@ class _AvailableUserPropertiesState extends State<AvailableUserProperties> {
 
     final menuText = selectedProperty == null
         ? widget.localized.select.capitalized
-        : propertyShortDetails(selectedProperty);
+        : PropertiesList.propertyShortDetails(selectedProperty);
 
-    final userPropertyEntries = widget.userProperties.map((property) {
-      final String entryText = propertyShortDetails(property);
+    final userPropertyEntries = widget.userProperties.map(
+      (property) {
+        final String entryText = PropertiesList.propertyShortDetails(property);
 
-      return MenuItemButton(
-        onPressed: () async {
-          await context
-              .read<UsersController>()
-              .selectProperty(property.propertyId);
-        },
-        child: Text(entryText),
-      );
-    });
+        return MenuItemButton(
+          onPressed: () async {
+            await context
+                .read<UsersController>()
+                .selectProperty(property.propertyId);
+          },
+          child: SizedBox(
+            width: kMaxContainerWidthSmall * 2 - 24,
+            child: Text(
+              entryText,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+        );
+      },
+    );
 
     return MenuButtonTheme(
       data: MenuButtonThemeData(
@@ -102,8 +111,12 @@ class _AvailableUserPropertiesState extends State<AvailableUserProperties> {
                       ],
                     )
                   ],
-                  child: Text(
-                    menuText,
+                  child: SizedBox(
+                    width: kMaxContainerWidthSmall * 2 - 24,
+                    child: Text(
+                      menuText,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                 ),
               ),
@@ -121,7 +134,4 @@ class _AvailableUserPropertiesState extends State<AvailableUserProperties> {
       helperText = newText;
     });
   }
-
-  String propertyShortDetails(UserProperty property) =>
-      "${property.address} - ${property.atak}";
 }
