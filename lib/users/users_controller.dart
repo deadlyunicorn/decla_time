@@ -30,11 +30,13 @@ class UsersController extends ChangeNotifier {
         _isarHelper = isarHelper;
 
   void setRequestLogin(bool newValue) {
+    if ( newValue == _requestLogin ) return;
     _requestLogin = newValue;
     notifyListeners();
   }
 
   Future<void> selectUser(String username) async {
+    if (username == _selectedUser) return;
     _selectedUser = username;
 
     final prefs = await SharedPreferences.getInstance();

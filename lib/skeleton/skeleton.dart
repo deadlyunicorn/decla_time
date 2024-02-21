@@ -20,6 +20,7 @@ class _SkeletonState extends State<Skeleton> {
 
   @override
   Widget build(BuildContext context) {
+
     final localized = AppLocalizations.of(context)!;
 
     return SafeArea(

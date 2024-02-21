@@ -11,21 +11,19 @@ import 'package:provider/provider.dart';
 class UsersList extends StatelessWidget {
   const UsersList({
     super.key,
-    required this.users,
     required this.localized,
     required this.switchToDeclarationsPage,
   });
 
-  final List<User> users;
   final AppLocalizations localized;
   final void Function() switchToDeclarationsPage;
 
   @override
   Widget build(BuildContext context) {
     final usersController = context.watch<UsersController>();
+    final users = usersController.users;
     final String loggedInUser =
-        context.watch<UsersController>().loggedUser.userCredentials?.username ??
-            "";
+        usersController.loggedUser.userCredentials?.username ?? "";
 
     if (users.isEmpty) {
       return Column(

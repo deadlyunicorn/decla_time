@@ -19,7 +19,7 @@ class UsersDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final UsersController usersController = context.watch<UsersController>();
+
 
     return DrawerOutline(
       child: ColumnWithSpacings(
@@ -36,13 +36,12 @@ class UsersDrawer extends StatelessWidget {
             switchToDeclarationsPage: () {
               switchToDeclarationsPage(context);
             },
-            users: usersController.users,
             localized: localized,
           ),
           AddUserButton(
             onTap: () {
               switchToDeclarationsPage(context);
-              usersController.selectUser("");
+              context.read<UsersController>().selectUser("");
             },
             localized: localized,
           ),
