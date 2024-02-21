@@ -1,6 +1,6 @@
 // ignore_for_file: avoid_print
 
-import 'package:decla_time/declarations/utility/network_requests/get_user_properties_request.dart';
+import 'package:decla_time/declarations/utility/network_requests/get_user_properties.dart';
 import 'package:decla_time/declarations/utility/network_requests/headers/declarations_page_headers.dart';
 import 'package:decla_time/declarations/utility/network_requests/login/login_user.dart';
 import 'package:decla_time/declarations/utility/user_credentials.dart';
@@ -15,23 +15,26 @@ void main() async {
         credentials: UserCredentials(username: username, password: password));
 
 
-    final userProperties = await getUserProperties(testingHeaders);
-    if (userProperties.propertyIds.isEmpty) {
+    final userProperties = ( await getUserProperties(testingHeaders));
+    if (userProperties.isEmpty) {
       throw "No properties found";
     } else {
-      print("${userProperties.propertyIds.length} found!");
+      print("${userProperties.length} found!");
     }
 
-    print(userProperties.atakNumbers);
-    print(userProperties.propertyIds);
-    print(userProperties.addressOfProperties);
-    print(userProperties.registryNumbers);
+    for ( int i = 0; i < userProperties.length; i++){
+      print(userProperties[i].atak);
+    print(userProperties[i].propertyId);
+    print(userProperties[i].address);
+    print(userProperties[i].serialNumber);
 
     expect(
-        userProperties.atakNumbers.length, userProperties.propertyIds.length);
-    expect(userProperties.addressOfProperties.length,
-        userProperties.propertyIds.length);
-    expect(userProperties.registryNumbers.length,
-        userProperties.propertyIds.length);
+        userProperties[i].atak.length, userProperties[i].propertyId.length);
+    expect(userProperties[i].address.length,
+        userProperties[i].propertyId.length);
+    expect(userProperties[i].serialNumber.length,
+        userProperties[i].propertyId.length);
+    }
+    
   });
 }

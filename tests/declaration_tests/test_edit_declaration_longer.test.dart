@@ -5,7 +5,7 @@ import 'package:decla_time/declarations/utility/network_requests/edit_declaratio
 import 'package:decla_time/declarations/utility/network_requests/get_declaration_db_id_from_declarations_list_page.dart';
 import 'package:decla_time/declarations/utility/network_requests/get_declaration_page_view_state.dart';
 import 'package:decla_time/declarations/utility/network_requests/get_declaration_search_page.dart';
-import 'package:decla_time/declarations/utility/network_requests/get_user_properties_request.dart';
+import 'package:decla_time/declarations/utility/network_requests/get_user_properties.dart';
 import 'package:decla_time/declarations/utility/network_requests/login/login_user.dart';
 import 'package:decla_time/declarations/utility/user_credentials.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -45,8 +45,7 @@ void main() async {
     ); //? Is in .gitignore
 
     //* STEP 1:GETTING THE propertyId
-    final propertyId = (await getUserProperties(testingHeaders))
-        .propertyIds[0]; //? Also checks if Logged In
+    final propertyId = (await getUserProperties(testingHeaders))[0].propertyId; //? Also checks if Logged In
 
     //* STEP 2:GETTING THE declarationDbId
 

@@ -1,6 +1,6 @@
 import 'package:decla_time/core/enums/declaration_status.dart';
 import 'package:decla_time/declarations/utility/network_requests/get_declaration_search_page.dart';
-import 'package:decla_time/declarations/utility/network_requests/get_user_properties_request.dart';
+import 'package:decla_time/declarations/utility/network_requests/get_user_properties.dart';
 import 'package:decla_time/declarations/utility/network_requests/headers/declarations_page_headers.dart';
 import 'package:decla_time/declarations/utility/network_requests/login/login_user.dart';
 import 'package:decla_time/declarations/utility/search_page_declaration.dart';
@@ -17,8 +17,7 @@ void main() async {
     );
 
     //* STEP 1:GETTING THE propertyId
-    final propertyId = (await getUserProperties(testingHeaders))
-        .propertyIds[0]; //? Also checks if Logged In
+    final propertyId = (await getUserProperties(testingHeaders) )[0].propertyId;//? Also checks if Logged In
 
     //* STEP 2:GETTING the available declarations
     final declarationSearchPageDataBefore = await getDeclarationSearchPage(
@@ -62,7 +61,8 @@ void main() async {
 }
 
 // ignore: non_constant_identifier_names
-Future<void> ___TESTING___deleteTemporaryDeclarationFromSearchPage({ //? We will make a safer deletion with a DeclarationDbId for production.
+Future<void> ___TESTING___deleteTemporaryDeclarationFromSearchPage({
+  //? We will make a safer deletion with a DeclarationDbId for production.
   required SearchPageDeclaration searchPageDeclaration,
   required DeclarationsPageHeaders headersObj,
   required String viewState,
