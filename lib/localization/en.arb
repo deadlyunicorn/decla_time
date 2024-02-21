@@ -86,6 +86,9 @@
     "username": "username",
     "rememberUsername": "remember username",
     "loginForm": "login form",
+    "select": "select",
+    "noNewEntriesFound": "no new entries found",
+    "synchronizing": "synchronizing",
     "unusedForNonTrailingComma________________________________":""
 
 

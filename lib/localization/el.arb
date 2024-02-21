@@ -86,6 +86,9 @@
     "username": "όνομα χρήστη",
     "rememberUsername": "θυμήσου το όνομα χρήστη",
     "loginForm": "φόρμα σύνδεσης",
+    "select": "επιλογή",
+    "noNewEntriesFound": "δεν βρέθηκαν νέες εγγραφές",
+    "synchronizing": "γίνεται συγχρονισμός",
     "unusedForNonTrailingComma________________________________":""
 
 
