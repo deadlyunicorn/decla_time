@@ -16,7 +16,9 @@ class SyncedDeclarations extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final usersController = context.watch<UsersController>();
+    final selectedUser = context.select<UsersController, String>(
+      (controller) => controller.selectedUser,
+    );
 
     //TODO!!! display declarations even if the user is not logged in ( if they are synced. ?)
 
@@ -39,7 +41,7 @@ class SyncedDeclarations extends StatelessWidget {
         spacing: 32,
         children: [
           Text(
-            "Viewing the  of $usersController.selectedUser}",
+            "Viewing the  of selectedUser",
             style: Theme.of(context).textTheme.headlineMedium,
             textAlign: TextAlign.center,
           ),
@@ -47,11 +49,11 @@ class SyncedDeclarations extends StatelessWidget {
             future: context
                 .watch<IsarHelper>()
                 .userActions
-                .readProperties(username: usersController.selectedUser),
+                .readProperties(username: selectedUser),
             builder: (context, snapshot) {
               return AvailableUserProperties(
                 localized: localized,
-                currentUser: usersController.selectedUser,
+                currentUser: selectedUser,
                 userProperties: [...?snapshot.data],
               );
             },
