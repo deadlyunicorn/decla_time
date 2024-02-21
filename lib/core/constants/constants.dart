@@ -12,6 +12,7 @@ const kDepartureDate = 'departure_date';
 const kPayout = 'payout';
 const kBookingPlatform = 'booking_platform';
 const kLastSelectedUser = 'selected_user';
+const kLastSelectedPropertyId = 'selected_property';
 
 const kSynced     = 'synced';
 const kStatus     = 'status'; 

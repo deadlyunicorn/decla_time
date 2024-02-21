@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UsersController extends ChangeNotifier {
-  
   String _selectedUser;
+  String _selectedPropertyId;
   List<User> _availableUsers;
   final IsarHelper _isarHelper;
 
@@ -21,18 +21,31 @@ class UsersController extends ChangeNotifier {
   bool get requestLogin => _requestLogin;
   bool get isLoggedIn => (loggedUser.userCredentials != null &&
       loggedUser.userCredentials?.username == selectedUser);
+  String get selectedProperty => _selectedPropertyId;
 
   UsersController({
     required List<User> availableUsers,
     required String selectedUser,
     required IsarHelper isarHelper,
+    String? propertyId,
   })  : _availableUsers = availableUsers,
         _selectedUser = selectedUser,
+        _selectedPropertyId = propertyId ?? "",
         _isarHelper = isarHelper;
 
   void setRequestLogin(bool newValue) {
-    if ( newValue == _requestLogin ) return;
+    if (newValue == _requestLogin) return;
     _requestLogin = newValue;
+    notifyListeners();
+  }
+
+  Future<void> selectProperty(String propertyId) async {
+    if (propertyId == _selectedPropertyId) return;
+    _selectedPropertyId = propertyId;
+
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString(kLastSelectedPropertyId, propertyId);
+
     notifyListeners();
   }
 
@@ -43,6 +56,8 @@ class UsersController extends ChangeNotifier {
     final prefs = await SharedPreferences.getInstance();
     prefs.setString(kLastSelectedUser, username);
 
+    await selectProperty("");
+
     notifyListeners();
   }
 
@@ -52,19 +67,22 @@ class UsersController extends ChangeNotifier {
   }
 
   static Future<UsersController> initialize(IsarHelper isarHelper) async {
-    final String lastSelectedUsername =
-        await SharedPreferences.getInstance().then((prefs) {
-      final rememberedUsername = prefs.getString(kGovUsername) ?? "";
-      return rememberedUsername.isNotEmpty
-          ? rememberedUsername
-          : prefs.getString(kLastSelectedUser) ?? "";
-    });
+    final prefs = await SharedPreferences.getInstance();
+    final rememberedUsername = prefs.getString(kGovUsername) ?? "";
+
+    final String lastSelectedUsername = rememberedUsername.isNotEmpty
+        ? rememberedUsername
+        : prefs.getString(kLastSelectedUser) ?? "";
+
+    final String lastSelectedProperty =
+        prefs.getString(kLastSelectedPropertyId) ?? "";
 
     final List<User> users = await isarHelper.userActions.getAll();
 
     return UsersController(
       availableUsers: users,
       selectedUser: lastSelectedUsername,
+      propertyId: lastSelectedProperty,
       isarHelper: isarHelper,
     );
   }
