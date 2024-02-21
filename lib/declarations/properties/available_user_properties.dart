@@ -2,7 +2,7 @@ import 'package:decla_time/core/constants/constants.dart';
 import 'package:decla_time/core/extensions/capitalize.dart';
 import 'package:decla_time/core/widgets/column_with_spacings.dart';
 import 'package:decla_time/declarations/database/user/user_property.dart';
-import 'package:decla_time/declarations/property_sync_button.dart';
+import 'package:decla_time/declarations/properties/property_sync_button.dart';
 import 'package:decla_time/users/drawer/users/properties/properties_list.dart';
 import 'package:decla_time/users/users_controller.dart';
 import 'package:flutter/material.dart';

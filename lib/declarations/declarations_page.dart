@@ -1,5 +1,5 @@
 import 'package:decla_time/declarations/login/login_form.dart';
-import 'package:decla_time/declarations/synced_declarations.dart';
+import 'package:decla_time/declarations/property_selector.dart';
 import 'package:decla_time/users/users_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -20,7 +20,7 @@ class DeclarationsPage extends StatelessWidget {
 
     return SingleChildScrollView(
       child: ( selectedUser.isNotEmpty && !requestLogin ) || isLoggedIn
-          ? SyncedDeclarations(
+          ? PropertySelector(
               localized: localized,
             )
           : Padding(

@@ -1,15 +1,16 @@
 import 'package:decla_time/core/connection/isar_helper.dart';
 import 'package:decla_time/core/widgets/column_with_spacings.dart';
-import 'package:decla_time/declarations/available_user_properties.dart';
+import 'package:decla_time/declarations/properties/available_user_properties.dart';
+import 'package:decla_time/declarations/property_declarations_loader.dart';
 import 'package:decla_time/users/users_controller.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class SyncedDeclarations extends StatelessWidget {
+class PropertySelector extends StatelessWidget {
   final AppLocalizations localized;
 
-  const SyncedDeclarations({
+  const PropertySelector({
     super.key,
     required this.localized,
   });
@@ -54,7 +55,8 @@ class SyncedDeclarations extends StatelessWidget {
                 userProperties: [...?snapshot.data],
               );
             },
-          )
+          ),
+          const PropertyDeclarationsLoader(),
         ],
       ),
     );
