@@ -79,14 +79,25 @@ class UsersController extends ChangeNotifier {
     final prefs = await SharedPreferences.getInstance();
     final rememberedUsername = prefs.getString(kGovUsername) ?? "";
 
-    final String lastSelectedUsername = rememberedUsername.isNotEmpty
+    String lastSelectedUsername = rememberedUsername.isNotEmpty
         ? rememberedUsername
         : prefs.getString(kLastSelectedUser) ?? "";
 
-    final String lastSelectedProperty =
+    String lastSelectedProperty =
         prefs.getString(kLastSelectedPropertyId) ?? "";
 
     final List<User> users = await isarHelper.userActions.getAll();
+    if (users
+        .where((user) => user.username.contains(lastSelectedUsername))
+        .isEmpty) {
+      lastSelectedUsername = "";
+      lastSelectedProperty = "";
+    } else if ((await isarHelper.userActions
+            .readProperties(username: lastSelectedUsername))
+        .where((property) => property.propertyId == lastSelectedProperty)
+        .isEmpty) {
+      lastSelectedProperty = "";
+    }
 
     return UsersController(
       availableUsers: users,
