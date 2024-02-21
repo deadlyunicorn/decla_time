@@ -90,6 +90,9 @@
     "noNewEntriesFound": "no new entries found",
     "synchronizing": "synchronizing",
     "users": "users",
+    "selectProperty": "select property",
+    "property": "property",
+    "properties": "properties",
     "unusedForNonTrailingComma________________________________":""
 
 
