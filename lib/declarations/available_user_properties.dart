@@ -90,6 +90,7 @@ class _AvailableUserPropertiesState extends State<AvailableUserProperties> {
                         const SizedBox.shrink(),
                         ...userPropertyEntries,
                         PropertySyncButton(
+                          parentContext: context,
                           localized: widget.localized,
                           setHelperText: setHelperText,
                         ),

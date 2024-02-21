@@ -15,58 +15,59 @@ class PropertySyncButton extends StatelessWidget {
     super.key,
     required this.localized,
     required this.setHelperText,
+    required this.parentContext,
   });
 
   final AppLocalizations localized;
   final void Function(String) setHelperText;
+  final BuildContext parentContext;
 
   @override
   Widget build(BuildContext context) {
     return MenuItemButton(
         onPressed: () async {
-          final userController = context.read<UsersController>();
-          if (!userController.isLoggedIn) {
+          //! Will instantly unmount. - that's why we use the parentContext.
+          final userController = parentContext.read<UsersController>();
+          final isarHelper = parentContext.read<IsarHelper>();
+          final DeclarationsPageHeaders? headers =
+              userController.loggedUser.headers;
+
+          if (!userController.isLoggedIn || headers == null) {
             userController.setRequestLogin(true);
             return;
           }
           setHelperText("${localized.synchronizing.capitalized}...");
           try {
-            final DeclarationsPageHeaders? headers =
-                userController.loggedUser.headers;
-            if (headers == null) throw NotLoggedInException();
-
             final userProperties = await getUserProperties(headers);
 
-            if (context.mounted) {
-              await context.read<IsarHelper>().userActions.addProperties(
-                    username: userController.selectedUser,
-                    propertyIterable: userProperties,
-                  );
-            }
+            await isarHelper.userActions.addProperties(
+              username: userController.selectedUser,
+              propertyIterable: userProperties,
+            );
           } on EntryAlreadyExistsException {
-            if (!context.mounted) return;
+            if (!parentContext.mounted) return;
             showNormalSnackbar(
-              context: context,
+              context: parentContext,
               message: localized.noNewEntriesFound.capitalized,
             );
           } on NotLoggedInException {
-            if (!context.mounted) return;
+            if (!parentContext.mounted) return;
 
             //TODO make it so that we refresh the cookies.
             showErrorSnackbar(
-              context: context,
+              context: parentContext,
               message: localized.errorLoginFailed.capitalized,
             );
           } on ClientException {
-            if (!context.mounted) return;
+            if (!parentContext.mounted) return;
             showErrorSnackbar(
-              context: context,
+              context: parentContext,
               message: localized.errorNoConnection.capitalized,
             );
           } catch (any) {
-            if (!context.mounted) return;
+            if (!parentContext.mounted) return;
             showErrorSnackbar(
-              context: context,
+              context: parentContext,
               message: localized.errorUnknown.capitalized,
             );
           }
