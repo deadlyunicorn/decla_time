@@ -41,6 +41,15 @@ class UsersController extends ChangeNotifier {
 
   Future<void> selectProperty(String propertyId) async {
     if (propertyId == _selectedPropertyId) return;
+
+    final userThatOwnsPropert = _availableUsers
+        .where((user) => user.propertyIds.contains(propertyId))
+        .firstOrNull;
+    if (userThatOwnsPropert == null) return;
+    if (userThatOwnsPropert.username != selectedUser) {
+      await selectUser(userThatOwnsPropert.username);
+    }
+
     _selectedPropertyId = propertyId;
 
     final prefs = await SharedPreferences.getInstance();
