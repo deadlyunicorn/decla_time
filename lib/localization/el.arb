@@ -89,10 +89,13 @@
     "select": "επιλογή",
     "noNewEntriesFound": "δεν βρέθηκαν νέες εγγραφές",
     "synchronizing": "γίνεται συγχρονισμός",
+    "syncProperties": "συγχρονισμός ακινήτων",
+    "syncDeclarations": "συγχρονισμός δηλώσεων",
     "users": "χρήστες",
     "selectProperty": "επιλογή ακινήτου",
     "property": "ακίνητο",
     "properties": "ακίνητα",
+    "noDeclarationsFound": "δεν βρέθηκαν δηλώσεις",
     "unusedForNonTrailingComma________________________________":""
 
 

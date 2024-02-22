@@ -89,10 +89,14 @@
     "select": "select",
     "noNewEntriesFound": "no new entries found",
     "synchronizing": "synchronizing",
+    "syncProperties": "sync properties",
+    "syncDeclarations": "sync declarations",
     "users": "users",
     "selectProperty": "select property",
     "property": "property",
     "properties": "properties",
+    "noDeclarationsFound": "no declarations found",
+
     "unusedForNonTrailingComma________________________________":""
 
 
