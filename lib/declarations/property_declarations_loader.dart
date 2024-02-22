@@ -26,7 +26,7 @@ class PropertyDeclarationsLoader extends StatelessWidget {
           .watch<IsarHelper>()
           .declarationActions
           .getAllDeclarationsFrom(propertyId: selectedPropertyId),
-      builder: (context, snapshot) {
+      builder: (_, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           return Row(
             mainAxisSize: MainAxisSize.max,
@@ -36,8 +36,12 @@ class PropertyDeclarationsLoader extends StatelessWidget {
               TextButton(
                 onPressed: () async {
                   showDialog(
-                    context: context,
-                    builder: (context) => DeclarationSyncRangePickerDialog(localized: localized),
+                    context: _,
+                    builder: (_) => DeclarationSyncRangePickerDialog(
+                      parentContext: context,
+                      localized: localized,
+                      propertyId: selectedPropertyId,
+                    ),
                   );
                 },
                 child: Text(localized.syncDeclarations.capitalized),
