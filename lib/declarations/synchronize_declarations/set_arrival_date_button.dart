@@ -23,7 +23,7 @@ class SetArrivalDateButton extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text("Arrival:"),
+        Text( "${localized.arrival.capitalized}: "),
         TextButton(
             onPressed: () async {
               final tempArrivalDate = await handleArrivalDatePicker(
