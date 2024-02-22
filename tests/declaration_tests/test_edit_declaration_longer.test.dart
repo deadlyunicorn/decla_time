@@ -2,7 +2,7 @@
 
 import 'package:decla_time/declarations/utility/declaration_body.dart';
 import 'package:decla_time/declarations/utility/network_requests/edit_declaration_request.dart';
-import 'package:decla_time/declarations/utility/network_requests/get_declaration_db_id_from_declarations_list_page.dart';
+import 'package:decla_time/declarations/utility/network_requests/get_declaration_details_from_searchPageData.dart';
 import 'package:decla_time/declarations/utility/network_requests/get_declaration_page_view_state.dart';
 import 'package:decla_time/declarations/utility/network_requests/get_declaration_search_page.dart';
 import 'package:decla_time/declarations/utility/network_requests/get_user_properties.dart';
@@ -46,11 +46,13 @@ void main() async {
     ); //? Is in .gitignore
 
     //* STEP 1:GETTING THE propertyId
-    final propertyId = (await getUserProperties(testingHeaders))[0].propertyId; //? Also checks if Logged In
+    final propertyId = (await getUserProperties(testingHeaders))[0]
+        .propertyId; //? Also checks if Logged In
 
     //* STEP 2:GETTING THE declarationDbId
 
-    final SearchPageData declarationsSearchPageData = await getDeclarationSearchPage(
+    final SearchPageData declarationsSearchPageData =
+        await getDeclarationSearchPage(
       headers: testingHeaders,
       propertyId: propertyId,
     );
@@ -65,11 +67,12 @@ void main() async {
     print(
         "Nvm io won't working during tests.. Selecting $selectedDeclarationIndex...");
 
-    final declarationDbId = await getDeclarationDbIdFromDeclarationsListPage(
+    final declarationDbId = await getDeclarationFromSearchPageData(
+      propertyId: propertyId,
       declarationIndex: selectedDeclarationIndex,
       headers: testingHeaders,
       parsedViewState: declarationsSearchPageData.viewStateParsed,
-    );
+    ).then((declaration) => declaration.declarationDbId.toString());
 
     print("Your selected declaration has an id of: $declarationDbId");
 
