@@ -1,3 +1,4 @@
+import 'package:decla_time/core/enums/booking_platform.dart';
 import 'package:intl/intl.dart';
 
 class DeclarationBody {
@@ -45,7 +46,7 @@ class DeclarationBody {
     return DateFormat("dd%2FMM%2Fy").format(date);
   }
 
-  String bodyStringPOST( String viewStateParsed ) {
+  String bodyStringPOST(String viewStateParsed) {
     double? payout = this.payout;
 
     if (cancellationAmount != null) {
@@ -64,8 +65,31 @@ class DeclarationBody {
     return "appForm%3ArentalFrom_input=${translateDate(arrivalDate)}&appForm%3ArentalTo_input=${translateDate(departureDate)}&appForm%3AsumAmount_hinput=${payout ?? ""}&appForm%3Aplatform_input=$_translatedPlatform&appForm%3AcancelAmount_hinput=${cancellationAmount ?? ""}&appForm%3AcancelDate_input=${cancellationDate != null ? translateDate(cancellationDate!) : ""}&appForm%3ArenterAfm=000000000&appForm%3ApaymentType_focus=&appForm%3ApaymentType_input=4&appForm%3Aplatform_focus=&appForm%3Aj_idt93=&javax.faces.ViewState=$viewStateParsed&javax.faces.partial.ajax=true&javax.faces.source=appForm%3AsaveButton&javax.faces.partial.execute=%40all&javax.faces.partial.render=appForm&appForm%3AsaveButton=appForm%3AsaveButton&appForm=appForm";
   }
 
- 
-  static String get declarationCreationBody { 
+  static String get declarationCreationBody {
     return "javax.faces.partial.ajax=true&javax.faces.source=appForm%3AnewDeclarationButtonLower&javax.faces.partial.execute=%40all&appForm%3AnewDeclarationButtonLower=appForm%3AnewDeclarationButtonLower&appForm=appForm";
+  }
+
+  static BookingPlatform extractBookingPlatform(String text) {
+    final textToLowercase = text.toLowerCase();
+
+    if (textToLowercase.contains("airbnb")) {
+      return BookingPlatform.airbnb;
+    } else if (textToLowercase.contains("booking")) {
+      return BookingPlatform.booking;
+    } else if (textToLowercase.contains("clickstay")) {
+      return BookingPlatform.clickstay;
+    } else if (textToLowercase.contains("homeaway")) {
+      return BookingPlatform.homeaway;
+    } else if (textToLowercase.contains("homestay")) {
+      return BookingPlatform.homestay;
+    } else if (textToLowercase.contains("luxury")) {
+      return BookingPlatform.luxury;
+    } else if (textToLowercase.contains("apartments")) {
+      return BookingPlatform.apartments;
+    } else if (textToLowercase.contains("tripadvisor")) {
+      return BookingPlatform.tripadvisor;
+    } else {
+      return BookingPlatform.other;
+    }
   }
 }
