@@ -1,5 +1,5 @@
 import 'package:decla_time/declarations/database/declaration.dart';
-import 'package:decla_time/declarations/utility/network_requests/get_declaration_db_id_from_declarations_list_page.dart';
+import 'package:decla_time/declarations/utility/network_requests/get_declaration_details_from_searchPageData.dart';
 import 'package:decla_time/declarations/utility/network_requests/get_declaration_search_page.dart';
 import 'package:decla_time/declarations/utility/network_requests/get_user_properties.dart';
 import 'package:decla_time/declarations/utility/network_requests/headers/declarations_page_headers.dart';
@@ -101,7 +101,7 @@ Future<void> importDeclarationsFromDateRangeFuture({
         propertyId: propertyId,
       );
 
-      final declaration = await getDeclarationFromDeclarationsListPage(
+      final declaration = await getDeclarationFromSearchPageData(
         declarationIndex: i,
         headers: headers,
         parsedViewState: searchPageData.viewStateParsed,

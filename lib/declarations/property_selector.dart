@@ -56,7 +56,9 @@ class PropertySelector extends StatelessWidget {
               );
             },
           ),
-          const PropertyDeclarationsLoader(),
+          PropertyDeclarationsLoader(
+            localized: localized,
+          ),
         ],
       ),
     );

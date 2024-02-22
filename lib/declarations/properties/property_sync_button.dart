@@ -84,7 +84,7 @@ class PropertySyncButton extends StatelessWidget {
         },
         trailingIcon: const Icon(Icons.refresh),
         child: Text(
-          localized.sync.capitalized,
+          localized.syncProperties.capitalized,
         ));
   }
 }
