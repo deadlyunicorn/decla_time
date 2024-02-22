@@ -78,6 +78,9 @@ const double kDatePickerWidth = kContainerWidthMedium;
 ///30
 const int kMonthInDays = 30;
 
+/// 30 * 12 
+const int kYearInDays = kMonthInDays * 12;
+
 
 
 const kBookingPlatforms = 'booking_platforms';
