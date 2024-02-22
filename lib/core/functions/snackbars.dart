@@ -3,12 +3,16 @@ import 'package:flutter/material.dart';
 void showErrorSnackbar({
   required BuildContext context,
   required String message,
+  TextAlign? textAlign,
 }) {
   ScaffoldMessenger.of(context).removeCurrentSnackBar();
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
       content: Center(
-        child: Text(message),
+        child: Text(
+          message,
+          textAlign: textAlign,
+        ),
       ),
       backgroundColor: Theme.of(context).colorScheme.error,
     ),
@@ -18,12 +22,16 @@ void showErrorSnackbar({
 void showNormalSnackbar({
   required BuildContext context,
   required String message,
+  TextAlign? textAlign,
 }) {
   ScaffoldMessenger.of(context).removeCurrentSnackBar();
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
       content: Center(
-        child: Text(message),
+        child: Text(
+          message,
+          textAlign: textAlign,
+        ),
       ),
     ),
   );
