@@ -64,8 +64,9 @@ class AvailableUserProperties extends StatelessWidget {
             ),
           ),
           backgroundColor: MaterialStatePropertyAll(
-            Theme.of(context).colorScheme.primary.withAlpha(48),
+            Theme.of(context).colorScheme.primary,
           ),
+          overlayColor: MaterialStatePropertyAll( Theme.of(context).colorScheme.secondary.withAlpha(48) ),
           fixedSize: const MaterialStatePropertyAll(
             Size(kMaxContainerWidthSmall * 2, 48),
           ),
