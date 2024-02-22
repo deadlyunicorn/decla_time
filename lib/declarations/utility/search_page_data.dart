@@ -6,15 +6,18 @@ import 'package:intl/intl.dart';
 class SearchPageData {
   final List<SearchPageDeclaration> _declarations;
   final String _viewState;
+  final int _total;
 
-  SearchPageData({
-    required List<SearchPageDeclaration> declarations,
-    required String viewState,
-  })  : _declarations = declarations,
+  SearchPageData(
+      {required List<SearchPageDeclaration> declarations,
+      required String viewState,
+      required int total})
+      : _declarations = declarations,
+        _total = total,
         _viewState = viewState;
 
   List<SearchPageDeclaration> get declarations => _declarations;
-
+  int get total => _total;
 
   String get viewStateParsed => _viewState.contains(":")
       ? "${_viewState.split(":")[0]}%3A${_viewState.split(":")[1]}"
@@ -55,6 +58,8 @@ class SearchPageData {
       throw "Invalid search page data";
     }
 
+    final total = int.tryParse( getBetweenStrings(body, 'totalResults" class="ui-outputlabel ui-widget paginationLabel">', '</label>'));
+
     final List<SearchPageDeclaration> declarations = List.generate(
       arrivalDates.length,
       (index) => SearchPageDeclaration(
@@ -69,6 +74,7 @@ class SearchPageData {
     final String viewState =
         getAllBetweenStrings(body, 'faces.ViewState" value="', '"')[0];
     return SearchPageData(
+      total: total ?? 0 ,
       declarations: declarations,
       viewState: viewState,
     );
