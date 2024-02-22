@@ -1,4 +1,11 @@
 enum BookingPlatform {
   airbnb,
-  booking
+  booking,
+  clickstay,
+  homeaway,
+  homestay,
+  luxury,
+  apartments,
+  tripadvisor,
+  other
 }
