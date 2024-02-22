@@ -13,7 +13,7 @@ void main() async {
       credentials: UserCredentials(username: username, password: password),
     );
 
-    const samplePropertyId = propertyId;
+    final samplePropertyId = propertyId;
 
     final testDeclarationBody = DeclarationBody(
       arrivalDate: DateTime.now(),

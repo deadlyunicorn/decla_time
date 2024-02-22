@@ -7,6 +7,7 @@ import 'package:decla_time/declarations/utility/network_requests/get_declaration
 import 'package:decla_time/declarations/utility/network_requests/get_declaration_search_page.dart';
 import 'package:decla_time/declarations/utility/network_requests/get_user_properties.dart';
 import 'package:decla_time/declarations/utility/network_requests/login/login_user.dart';
+import 'package:decla_time/declarations/utility/search_page_data.dart';
 import 'package:decla_time/declarations/utility/user_credentials.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -49,7 +50,7 @@ void main() async {
 
     //* STEP 2:GETTING THE declarationDbId
 
-    final declarationsSearchPageData = await getDeclarationSearchPage(
+    final SearchPageData declarationsSearchPageData = await getDeclarationSearchPage(
       headers: testingHeaders,
       propertyId: propertyId,
     );
