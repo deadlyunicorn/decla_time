@@ -1,3 +1,4 @@
+import 'package:decla_time/core/constants/constants.dart';
 import 'package:decla_time/declarations/login/login_form.dart';
 import 'package:decla_time/declarations/property_selector.dart';
 import 'package:decla_time/users/users_controller.dart';
@@ -11,26 +12,28 @@ class DeclarationsPage extends StatelessWidget {
   final AppLocalizations localized;
   @override
   Widget build(BuildContext context) {
-
     final usersController = context.watch<UsersController>();
     final selectedUser = usersController.selectedUser;
     final isLoggedIn = usersController.isLoggedIn;
     final requestLogin = usersController.requestLogin;
 
-
     return SingleChildScrollView(
-      child: ( selectedUser.isNotEmpty && !requestLogin ) || isLoggedIn
-          ? PropertySelector(
-              localized: localized,
-            )
-          : Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: Center(
-                  child: LoginForm(
-                initialUsername: selectedUser,
-                localized: localized,
-              )),
-            ),
+      child: Center(
+        child: SizedBox(
+          width: kMaxWidthLargest,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: (selectedUser.isNotEmpty && !requestLogin) || isLoggedIn
+                ? PropertySelector(
+                    localized: localized,
+                  )
+                : LoginForm(
+                    initialUsername: selectedUser,
+                    localized: localized,
+                  ),
+          ),
+        ),
+      ),
     );
   }
 }
