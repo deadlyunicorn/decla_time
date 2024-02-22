@@ -9,6 +9,15 @@ class DeclarationActions {
       : _isarFuture = isarFuture,
         _notifyListeners = notifyListeners;
 
+  Future<List<Declaration>> getAllDeclarationsFrom(
+      {required String propertyId}) async {
+    return (await _isarFuture)
+        .declarations
+        .filter()
+        .propertyIdEqualTo(propertyId)
+        .findAll();
+  }
+
   Future<List<Declaration>> getAllEntriesFromDeclarations() async {
     return (await _isarFuture)
         .declarations
