@@ -115,6 +115,9 @@ class MyApp extends StatelessWidget {
         contentTextStyle: const TextStyle(color: _white),
       ),
       datePickerTheme: const DatePickerThemeData(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(8)),
+        ),
         backgroundColor: _background,
         dividerColor: Colors.transparent,
         todayBorder: BorderSide(style: BorderStyle.none),
