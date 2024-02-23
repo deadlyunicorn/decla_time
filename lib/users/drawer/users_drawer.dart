@@ -20,15 +20,11 @@ class UsersDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return DrawerOutline(
       child: ColumnWithSpacings(
         spacing: 16,
         children: [
-          Text(
-            localized.users.capitalized,
-            style: Theme.of(context).textTheme.headlineMedium,
-          ),
+          Headline(localized: localized),
           const SizedBox.square(
             dimension: 16,
           ),
@@ -52,5 +48,24 @@ class UsersDrawer extends StatelessWidget {
         .read<SelectedPageController>()
         .setSelectedPage(SelectedPage.declarations);
     Scaffold.of(context).closeDrawer();
+  }
+}
+
+class Headline extends StatelessWidget {
+  const Headline({
+    super.key,
+    required this.localized,
+  });
+
+  final AppLocalizations localized;
+
+  @override
+  Widget build(BuildContext context) {
+    return FittedBox(
+      child: Text(
+        localized.users.capitalized,
+        style: Theme.of(context).textTheme.headlineMedium,
+      ),
+    );
   }
 }

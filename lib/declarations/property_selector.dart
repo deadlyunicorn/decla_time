@@ -1,4 +1,5 @@
 import 'package:decla_time/core/connection/isar_helper.dart';
+import 'package:decla_time/core/extensions/capitalize.dart';
 import 'package:decla_time/core/widgets/column_with_spacings.dart';
 import 'package:decla_time/declarations/properties/available_user_properties.dart';
 import 'package:decla_time/declarations/property_declarations_loader.dart';
@@ -38,10 +39,9 @@ class PropertySelector extends StatelessWidget {
       child: ColumnWithSpacings(
         spacing: 32,
         children: [
-          Text(
-            "Viewing the  of selectedUser",
-            style: Theme.of(context).textTheme.headlineMedium,
-            textAlign: TextAlign.center,
+          Headline(
+            selectedUser: selectedUser,
+            localized: localized,
           ),
           FutureBuilder(
             future: context
@@ -61,6 +61,29 @@ class PropertySelector extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class Headline extends StatelessWidget {
+  const Headline({
+    super.key,
+    required this.localized, required this.selectedUser,
+  });
+
+  final AppLocalizations localized;
+  final String selectedUser;
+
+  @override
+  Widget build(BuildContext context) {
+    // print("Haha");
+
+    return Text(
+      "${localized.viewingDeclarationsOf.capitalized}: $selectedUser",
+      style: Theme.of(context)
+          .textTheme
+          .headlineMedium, //?Apparently this line of code causes a lot of rebuilds :)
+      textAlign: TextAlign.center,
     );
   }
 }
