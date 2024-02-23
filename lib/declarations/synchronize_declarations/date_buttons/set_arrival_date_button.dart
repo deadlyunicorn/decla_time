@@ -1,5 +1,6 @@
 import 'package:decla_time/core/extensions/capitalize.dart';
 import 'package:decla_time/core/functions/handle_range_date_pickers.dart';
+import 'package:decla_time/declarations/synchronize_declarations/date_buttons/date_buttons_outline.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
@@ -20,10 +21,9 @@ class SetArrivalDateButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+    return DateButtonsOutline(
       children: [
-        Text( "${localized.arrival.capitalized}: "),
+        Text("${localized.arrival.capitalized}: "),
         TextButton(
             onPressed: () async {
               final tempArrivalDate = await handleArrivalDatePicker(
