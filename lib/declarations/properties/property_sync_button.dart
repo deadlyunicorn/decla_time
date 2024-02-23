@@ -2,6 +2,7 @@ import 'package:decla_time/core/connection/isar_helper.dart';
 import 'package:decla_time/core/errors/exceptions.dart';
 import 'package:decla_time/core/extensions/capitalize.dart';
 import 'package:decla_time/core/functions/snackbars.dart';
+import 'package:decla_time/declarations/properties/available_user_properties.dart';
 import 'package:decla_time/declarations/utility/network_requests/get_user_properties.dart';
 import 'package:decla_time/declarations/utility/network_requests/headers/declarations_page_headers.dart';
 import 'package:decla_time/users/users_controller.dart';
@@ -15,15 +16,17 @@ class PropertySyncButton extends StatelessWidget {
     super.key,
     required this.localized,
     required this.parentContext,
+    required this.closeMenu,
   });
 
   final AppLocalizations localized;
   final BuildContext parentContext;
+  final void Function() closeMenu;
 
   @override
   Widget build(BuildContext context) {
-    return MenuItemButton(
-        onPressed: () async {
+    return AvailablePropertiesListTile(
+        onTap: () async {
           //! Will instantly unmount. - that's why we use the parentContext.
           final userController = parentContext.read<UsersController>();
           final isarHelper = parentContext.read<IsarHelper>();
@@ -81,8 +84,9 @@ class PropertySyncButton extends StatelessWidget {
               message: localized.errorUnknown.capitalized,
             );
           }
+          closeMenu();
         },
-        trailingIcon: const Icon(Icons.refresh),
+        icon: const Icon(Icons.refresh),
         child: Text(
           localized.syncProperties.capitalized,
         ));

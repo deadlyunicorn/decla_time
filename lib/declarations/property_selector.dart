@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:decla_time/core/connection/isar_helper.dart';
+import 'package:decla_time/core/constants/constants.dart';
 import 'package:decla_time/core/extensions/capitalize.dart';
 import 'package:decla_time/core/widgets/column_with_spacings.dart';
 import 'package:decla_time/declarations/properties/available_user_properties.dart';
@@ -68,7 +71,8 @@ class PropertySelector extends StatelessWidget {
 class Headline extends StatelessWidget {
   const Headline({
     super.key,
-    required this.localized, required this.selectedUser,
+    required this.localized,
+    required this.selectedUser,
   });
 
   final AppLocalizations localized;
@@ -78,12 +82,21 @@ class Headline extends StatelessWidget {
   Widget build(BuildContext context) {
     // print("Haha");
 
-    return Text(
-      "${localized.viewingDeclarationsOf.capitalized}: $selectedUser",
-      style: Theme.of(context)
-          .textTheme
-          .headlineMedium, //?Apparently this line of code causes a lot of rebuilds :)
-      textAlign: TextAlign.center,
+    return FittedBox(
+      child: SizedBox(
+        width: max(
+          min(MediaQuery.sizeOf(context).width, kMaxWidthLargest),
+          256,
+        ),
+        child: Text(
+          "${localized.viewingDeclarationsOf.capitalized}\n $selectedUser",
+          style: Theme.of(context)
+              .textTheme
+              .headlineMedium, //?Apparently this line of code causes a lot of rebuilds :)
+          maxLines: 3,
+          textAlign: TextAlign.center,
+        ),
+      ),
     );
   }
 }
