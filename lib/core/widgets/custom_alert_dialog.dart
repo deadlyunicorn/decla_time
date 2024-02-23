@@ -19,36 +19,42 @@ class CustomAlertDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      title: FittedBox(
-        fit: BoxFit.scaleDown,
-        child: Text(title),
-      ),
-      content: SizedBox(
-        width: kMaxWidthSmall,
-        child: child,
-      ),
-      actions: [
-        FittedBox(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Text(localized.cancel.capitalized),
-              ),
-              TextButton(
-                onPressed: () {
-                  confirmButtonAction();
-                },
-                child: Text(localized.confirm.capitalized),
-              )
-            ],
+    final screenHeight = MediaQuery.sizeOf(context).height;
+    return SingleChildScrollView(
+      child: SizedBox(
+        height: screenHeight > kMaxWidthSmall ? screenHeight : null,
+        child: AlertDialog(
+          title: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(title),
           ),
-        )
-      ],
+          content: SizedBox(
+            width: kMaxWidthSmall,
+            child: child,
+          ),
+          actions: [
+            FittedBox(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text(localized.cancel.capitalized),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      confirmButtonAction();
+                    },
+                    child: Text(localized.confirm.capitalized),
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 }
