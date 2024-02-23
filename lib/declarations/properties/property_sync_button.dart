@@ -11,25 +11,33 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 
-class PropertySyncButton extends StatelessWidget {
+class PropertySyncButton extends StatefulWidget {
   const PropertySyncButton({
     super.key,
     required this.localized,
     required this.parentContext,
-    required this.closeMenu,
   });
 
   final AppLocalizations localized;
   final BuildContext parentContext;
-  final void Function() closeMenu;
+
+  @override
+  State<PropertySyncButton> createState() => _PropertySyncButtonState();
+}
+
+class _PropertySyncButtonState extends State<PropertySyncButton> {
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
     return AvailablePropertiesListTile(
         onTap: () async {
+          setState(() {
+            isLoading = true;
+          });
           //! Will instantly unmount. - that's why we use the parentContext.
-          final userController = parentContext.read<UsersController>();
-          final isarHelper = parentContext.read<IsarHelper>();
+          final userController = widget.parentContext.read<UsersController>();
+          final isarHelper = widget.parentContext.read<IsarHelper>();
           final DeclarationsPageHeaders? headers =
               userController.loggedUser.headers;
 
@@ -38,8 +46,8 @@ class PropertySyncButton extends StatelessWidget {
             return;
           }
           showNormalSnackbar(
-            context: parentContext,
-            message: "${localized.synchronizing.capitalized}...",
+            context: widget.parentContext,
+            message: "${widget.localized.synchronizing.capitalized}...",
           );
           try {
             final userProperties = await getUserProperties(headers);
@@ -51,44 +59,71 @@ class PropertySyncButton extends StatelessWidget {
 
             final propertiesCount = userProperties.length;
 
-            if (!parentContext.mounted) return;
+            if (!widget.parentContext.mounted) return;
             showNormalSnackbar(
-              context: parentContext,
+              context: widget.parentContext,
               message:
-                  "${localized.found.capitalized}: $propertiesCount ${propertiesCount > 1 ? localized.properties : localized.property} ",
+                  "${widget.localized.found.capitalized}: $propertiesCount ${propertiesCount > 1 ? widget.localized.properties : widget.localized.property} ",
             );
           } on EntryAlreadyExistsException {
-            if (!parentContext.mounted) return;
+            if (!widget.parentContext.mounted) return;
             showNormalSnackbar(
-              context: parentContext,
-              message: localized.noNewPropertiesFound.capitalized,
+              context: widget.parentContext,
+              message: widget.localized.noNewPropertiesFound.capitalized,
             );
           } on NotLoggedInException {
-            if (!parentContext.mounted) return;
+            if (!widget.parentContext.mounted) return;
 
             //TODO make it so that we refresh the cookies.
             showErrorSnackbar(
-              context: parentContext,
-              message: localized.errorLoginFailed.capitalized,
+              context: widget.parentContext,
+              message: widget.localized.errorLoginFailed.capitalized,
             );
           } on ClientException {
-            if (!parentContext.mounted) return;
+            if (!widget.parentContext.mounted) return;
             showErrorSnackbar(
-              context: parentContext,
-              message: localized.errorNoConnection.capitalized,
+              context: widget.parentContext,
+              message: widget.localized.errorNoConnection.capitalized,
             );
           } catch (any) {
-            if (!parentContext.mounted) return;
+            if (!widget.parentContext.mounted) return;
             showErrorSnackbar(
-              context: parentContext,
-              message: localized.errorUnknown.capitalized,
+              context: widget.parentContext,
+              message: widget.localized.errorUnknown.capitalized,
             );
           }
-          closeMenu();
+          setState(() {
+            isLoading = false;
+          });
         },
-        icon: const Icon(Icons.refresh),
+        icon: StreamBuilder(
+          stream: rotationStream(isLoading),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.active) {
+              return AnimatedRotation(
+                turns: snapshot.data! * 0.1,
+                duration: const Duration(milliseconds: 1000),
+                child: const Icon(Icons.refresh),
+              );
+            } else {
+              return AnimatedRotation(
+                turns: (snapshot.data != null ? snapshot.data! * 0.1 : 0).roundToDouble(),
+                duration: const Duration(milliseconds: 1000),
+                child: const Icon(Icons.refresh),
+              );
+            }
+          },
+        ),
         child: Text(
-          localized.syncProperties.capitalized,
+          widget.localized.syncProperties.capitalized,
         ));
+  }
+
+  Stream<int> rotationStream(bool isRunning) async* {
+    int i = 0;
+    while (isRunning) {
+      yield ++i;
+      await Future.delayed(const Duration(milliseconds: 96));
+    }
   }
 }
