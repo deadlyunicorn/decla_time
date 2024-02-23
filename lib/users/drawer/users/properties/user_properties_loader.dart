@@ -28,14 +28,9 @@ class UserPropertiesLoader extends StatelessWidget {
           final properties = snapshot.data!;
 
           return Padding(
-              padding: const EdgeInsets.only(left: 32.0),
-              child: Column(
-                children: [
-                  PropertiesList(properties: properties.toList()),
-                  SynchronizeDrawerButton(
-                      currentUser: currentUser, localized: localized)
-                ],
-              ));
+            padding: const EdgeInsets.only(left: 32.0),
+            child: PropertiesList(properties: properties.toList()),
+          );
         } else {
           return const Padding(
             padding: EdgeInsets.all(16.0),
