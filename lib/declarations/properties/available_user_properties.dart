@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
-class AvailableUserProperties extends StatelessWidget {
+class AvailableUserProperties extends StatefulWidget {
   const AvailableUserProperties({
     super.key,
     required this.userProperties,
@@ -16,32 +16,41 @@ class AvailableUserProperties extends StatelessWidget {
     required this.currentUser,
   });
 
+  @override
+  State<AvailableUserProperties> createState() =>
+      _AvailableUserPropertiesState();
   final List<UserProperty> userProperties;
   final AppLocalizations localized;
   final String currentUser;
+}
 
+class _AvailableUserPropertiesState extends State<AvailableUserProperties> {
+  bool isOpen = false;
   @override
   Widget build(BuildContext context) {
     final selectedProperty = context.select<UsersController, UserProperty?>(
-      (controller) => userProperties
+      (controller) => widget.userProperties
           .where(
               (property) => controller.selectedProperty == property.propertyId)
           .firstOrNull,
     );
 
     final menuText = selectedProperty == null
-        ? localized.selectProperty.capitalized
+        ? widget.localized.selectProperty.capitalized
         : propertyShortDetails(selectedProperty);
 
-    final userPropertyEntries = userProperties.map(
+    final userPropertyEntries = widget.userProperties.map(
       (property) {
         final String entryText = propertyShortDetails(property);
 
-        return MenuItemButton(
-          onPressed: () async {
+        return AvailablePropertiesListTile(
+          onTap: () async {
             await context
                 .read<UsersController>()
                 .selectProperty(property.propertyId);
+            setState(() {
+              isOpen = false;
+            });
           },
           child: Text(
             entryText,
@@ -51,78 +60,65 @@ class AvailableUserProperties extends StatelessWidget {
       },
     );
 
-    return MenuButtonTheme(
-      data: MenuButtonThemeData(
-        style: ButtonStyle(
-          shape: MaterialStatePropertyAll(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
-          ),
-          backgroundColor: MaterialStatePropertyAll(
-            Theme.of(context).colorScheme.primary,
-          ),
-          overlayColor: MaterialStatePropertyAll(
-              Theme.of(context).colorScheme.secondary.withAlpha(48)),
-          fixedSize: const MaterialStatePropertyAll(
-            Size(kMaxContainerWidthSmall * 2, 48),
-          ),
+    return ColumnWithSpacings(
+      spacing: 4,
+      children: [
+        AvailablePropertiesListTile(
+          onTap: () {
+            setState(() {
+              isOpen = !isOpen;
+            });
+          },
+          child: Text(menuText),
         ),
-      ),
-      child: ColumnWithSpacings(
-        spacing: 8,
-        children: [
-          FittedBox(
-            fit: BoxFit.scaleDown,
-            child: MenuBar(
-              children: [
-                SubmenuButton(
-                  menuStyle: const MenuStyle(
-                    maximumSize: MaterialStatePropertyAll(
-                      Size(
-                        double.infinity,
-                        256,
-                      ),
-                    ),
-                    surfaceTintColor:
-                        MaterialStatePropertyAll(Colors.transparent),
-                  ),
-                  menuChildren: [
-                    SizedBox(
-                      width: MediaQuery.sizeOf(context).width * 0.7 <
-                              kMaxContainerWidthSmall * 2
-                          ? MediaQuery.sizeOf(context).width * 0.7
-                          : null,
-                      child: FittedBox(
-                        fit: BoxFit.scaleDown,
-                        child: ColumnWithSpacings(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          spacing: 4,
-                          children: [
-                            const SizedBox.shrink(),
-                            ...userPropertyEntries,
-                            PropertySyncButton(
-                              parentContext: context,
-                              localized: localized,
-                            ),
-                          ],
-                        ),
-                      ),
-                    )
-                  ],
-                  child: Text(
-                    menuText,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-              ],
-            ),
+        if (isOpen) ...[
+          ...userPropertyEntries,
+          PropertySyncButton(
+            parentContext: context,
+            localized: widget.localized,
+            closeMenu: () {
+              setState(() {
+                isOpen = false;
+              });
+            },
           ),
-        ],
-      ),
+        ]
+      ],
     );
   }
 
   String propertyShortDetails(UserProperty property) =>
       "${property.address} - ${property.atak}"; //? ATAK is more relevant to the end user than the propertyId..
+}
+
+class AvailablePropertiesListTile extends StatelessWidget {
+  const AvailablePropertiesListTile({
+    super.key,
+    required this.onTap,
+    this.icon,
+    this.child,
+  });
+
+  final void Function() onTap;
+  final Widget? child;
+  final Icon? icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return FittedBox(
+      fit: BoxFit.scaleDown,
+      child: SizedBox(
+        width: kMaxContainerWidthSmall * 2,
+        height: 48,
+        child: ListTile(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          splashColor: Theme.of(context).colorScheme.secondary.withAlpha(128),
+          tileColor: Theme.of(context).colorScheme.primary.withAlpha(128),
+          title: FittedBox(fit: BoxFit.scaleDown, child: child),
+          onTap: onTap,
+          trailing: icon,
+        ),
+      ),
+    );
+  }
 }
