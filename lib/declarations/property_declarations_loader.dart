@@ -1,6 +1,5 @@
 import 'package:decla_time/core/connection/isar_helper.dart';
-import 'package:decla_time/core/extensions/capitalize.dart';
-import 'package:decla_time/declarations/synchronize_declarations/declaration_sync_range_picker_dialog.dart';
+import 'package:decla_time/declarations/components/declaration_actions.dart';
 import 'package:decla_time/users/users_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -28,24 +27,12 @@ class PropertyDeclarationsLoader extends StatelessWidget {
           .getAllDeclarationsFrom(propertyId: selectedPropertyId),
       builder: (_, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
-          return Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          return Column(
             children: [
-              Text(localized.noDeclarationsFound.capitalized),
-              TextButton(
-                onPressed: () async {
-                  showDialog(
-                    context: _,
-                    builder: (_) => DeclarationSyncRangePickerDialog(
-                      parentContext: context,
-                      localized: localized,
-                      propertyId: selectedPropertyId,
-                    ),
-                  );
-                },
-                child: Text(localized.syncDeclarations.capitalized),
-              )
+              DeclarationActions(
+                  localized: localized, selectedPropertyId: selectedPropertyId),
+              const SizedBox(
+                  height: 450, child: Center(child: Text("Declarations Below")))
             ],
           );
         } else {
