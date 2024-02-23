@@ -678,14 +678,12 @@ class _CustomDatePickerDialogState extends State<CustomDatePickerDialog>
       insetPadding:
           const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
       clipBehavior: Clip.antiAlias,
-      child: AnimatedContainer(
+      child: SizedBox(
           width: min(
               MediaQuery.sizeOf(context).width /
                   MediaQuery.sizeOf(context).aspectRatio,
               kMaxWidthSmall),
-          height: min(MediaQuery.sizeOf(context).height, kMaxWidthMedium),
-          duration: _dialogSizeAnimationDuration,
-          curve: Curves.easeIn,
+          height: min(MediaQuery.sizeOf(context).height * MediaQuery.sizeOf(context).aspectRatio + 128, kMaxWidthMedium),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.spaceAround,
