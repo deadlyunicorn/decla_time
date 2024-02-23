@@ -76,11 +76,6 @@ class _AvailableUserPropertiesState extends State<AvailableUserProperties> {
           PropertySyncButton(
             parentContext: context,
             localized: widget.localized,
-            closeMenu: () {
-              setState(() {
-                isOpen = false;
-              });
-            },
           ),
         ]
       ],
@@ -101,7 +96,7 @@ class AvailablePropertiesListTile extends StatelessWidget {
 
   final void Function() onTap;
   final Widget? child;
-  final Icon? icon;
+  final Widget? icon;
 
   @override
   Widget build(BuildContext context) {

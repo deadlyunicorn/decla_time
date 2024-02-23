@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 void showErrorSnackbar({
   required BuildContext context,
   required String message,
-  TextAlign? textAlign,
+  TextAlign? textAlign = TextAlign.center,
 }) {
   ScaffoldMessenger.of(context).removeCurrentSnackBar();
   ScaffoldMessenger.of(context).showSnackBar(
@@ -22,7 +22,7 @@ void showErrorSnackbar({
 void showNormalSnackbar({
   required BuildContext context,
   required String message,
-  TextAlign? textAlign,
+  TextAlign? textAlign = TextAlign.center,
 }) {
   ScaffoldMessenger.of(context).removeCurrentSnackBar();
   ScaffoldMessenger.of(context).showSnackBar(
