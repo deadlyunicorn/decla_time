@@ -3,7 +3,6 @@ import 'package:decla_time/core/extensions/capitalize.dart';
 import 'package:decla_time/core/widgets/column_with_spacings.dart';
 import 'package:decla_time/declarations/database/user/user_property.dart';
 import 'package:decla_time/declarations/properties/property_sync_button.dart';
-import 'package:decla_time/users/drawer/users/properties/properties_list.dart';
 import 'package:decla_time/users/users_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -44,12 +43,9 @@ class AvailableUserProperties extends StatelessWidget {
                 .read<UsersController>()
                 .selectProperty(property.propertyId);
           },
-          child: SizedBox(
-            width: kMaxContainerWidthSmall * 2 - 24,
-            child: Text(
-              entryText,
-              overflow: TextOverflow.ellipsis,
-            ),
+          child: Text(
+            entryText,
+            overflow: TextOverflow.ellipsis,
           ),
         );
       },
@@ -66,7 +62,8 @@ class AvailableUserProperties extends StatelessWidget {
           backgroundColor: MaterialStatePropertyAll(
             Theme.of(context).colorScheme.primary,
           ),
-          overlayColor: MaterialStatePropertyAll( Theme.of(context).colorScheme.secondary.withAlpha(48) ),
+          overlayColor: MaterialStatePropertyAll(
+              Theme.of(context).colorScheme.secondary.withAlpha(48)),
           fixedSize: const MaterialStatePropertyAll(
             Size(kMaxContainerWidthSmall * 2, 48),
           ),
@@ -75,11 +72,11 @@ class AvailableUserProperties extends StatelessWidget {
       child: ColumnWithSpacings(
         spacing: 8,
         children: [
-          MenuBar(
-            children: [
-              SizedBox(
-                width: kMaxContainerWidthSmall * 2,
-                child: SubmenuButton(
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: MenuBar(
+              children: [
+                SubmenuButton(
                   menuStyle: const MenuStyle(
                     maximumSize: MaterialStatePropertyAll(
                       Size(
@@ -91,33 +88,41 @@ class AvailableUserProperties extends StatelessWidget {
                         MaterialStatePropertyAll(Colors.transparent),
                   ),
                   menuChildren: [
-                    ColumnWithSpacings(
-                      spacing: 4,
-                      children: [
-                        const SizedBox.shrink(),
-                        ...userPropertyEntries,
-                        PropertySyncButton(
-                          parentContext: context,
-                          localized: localized,
+                    SizedBox(
+                      width: MediaQuery.sizeOf(context).width * 0.7 <
+                              kMaxContainerWidthSmall * 2
+                          ? MediaQuery.sizeOf(context).width * 0.7
+                          : null,
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: ColumnWithSpacings(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          spacing: 4,
+                          children: [
+                            const SizedBox.shrink(),
+                            ...userPropertyEntries,
+                            PropertySyncButton(
+                              parentContext: context,
+                              localized: localized,
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     )
                   ],
-                  child: SizedBox(
-                    width: kMaxContainerWidthSmall * 2 - 24,
-                    child: Text(
-                      menuText,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                  child: Text(
+                    menuText,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ],
       ),
     );
   }
+
   String propertyShortDetails(UserProperty property) =>
       "${property.address} - ${property.atak}"; //? ATAK is more relevant to the end user than the propertyId..
 }
