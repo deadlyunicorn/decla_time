@@ -1,3 +1,4 @@
+import 'package:decla_time/core/widgets/custom_date_picker.dart';
 import 'package:flutter/material.dart';
 
 Future<DateTime?> handleArrivalDatePicker({
@@ -7,7 +8,7 @@ Future<DateTime?> handleArrivalDatePicker({
 }) async {
   //earliest possible date;
   final lastDate = departureDate ?? DateTime(1999);
-  final arrivalDateTemp = await showDatePicker(
+  final arrivalDateTemp = await showCustomDatePicker(
     context: context,
     firstDate: DateTime(1999),
     lastDate: departureDate != null
@@ -31,7 +32,7 @@ Future<DateTime?> handleDepartureDatePicker({
   //earliest possible date;
   final firstDate = arrivalDate ?? DateTime(1999);
 
-  final departureDateTemp = await showDatePicker(
+  final departureDateTemp = await showCustomDatePicker(
     context: context,
     firstDate: firstDate.add(const Duration(days: 1)),
     lastDate: DateTime(DateTime.now().year + 100),

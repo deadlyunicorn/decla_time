@@ -1,5 +1,6 @@
 import 'package:decla_time/core/extensions/capitalize.dart';
 import 'package:decla_time/core/functions/night_or_nights.dart';
+import 'package:decla_time/core/widgets/custom_date_picker.dart';
 import 'package:decla_time/reservations/presentation/widgets/reservation_form/form_fields/date_fields/date_field_wrap.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -62,7 +63,7 @@ class DatePickersField extends StatelessWidget {
   Future<DateTime?> handleArrivalDateButton(BuildContext context) async {
     //earliest possible date;
     final lastDate = departureDate ?? DateTime(1999);
-    final arrivalDateTemp = await showDatePicker(
+    final arrivalDateTemp = await showCustomDatePicker(
       context: context,
       firstDate: DateTime(1999),
       lastDate: departureDate != null
@@ -85,7 +86,7 @@ class DatePickersField extends StatelessWidget {
     //earliest possible date;
     final firstDate = arrivalDate ?? DateTime(1999);
 
-    final departureDateTemp = await showDatePicker(
+    final departureDateTemp = await showCustomDatePicker(
       context: context,
       firstDate: firstDate.add(const Duration(days: 1)),
       lastDate: DateTime(DateTime.now().year + 100),
