@@ -88,6 +88,7 @@
     "loginForm": "login form",
     "select": "select",
     "noNewEntriesFound": "no new entries found",
+    "noNewPropertiesFound": "no new properties found",
     "synchronizing": "synchronizing",
     "syncProperties": "sync properties",
     "syncDeclarations": "sync declarations",
@@ -97,6 +98,7 @@
     "properties": "properties",
     "noDeclarationsFound": "no declarations found",
     "dateSelection":   "date selection",
+    "viewingDeclarationsOf":   "viewing declarations of",
     "unusedForNonTrailingComma________________________________":""
 
 

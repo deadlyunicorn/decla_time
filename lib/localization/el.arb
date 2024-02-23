@@ -88,6 +88,7 @@
     "loginForm": "φόρμα σύνδεσης",
     "select": "επιλογή",
     "noNewEntriesFound": "δεν βρέθηκαν νέες εγγραφές",
+    "noNewPropertiesFound": "δεν βρέθηκαν νέα ακίνητα",
     "synchronizing": "γίνεται συγχρονισμός",
     "syncProperties": "συγχρονισμός ακινήτων",
     "syncDeclarations": "συγχρονισμός δηλώσεων",
@@ -97,6 +98,7 @@
     "properties": "ακίνητα",
     "noDeclarationsFound": "δεν βρέθηκαν δηλώσεις",
     "dateSelection":   "επιλογή ημερομηνίων",
+    "viewingDeclarationsOf":   "προβολή των δηλώσεων του",
     "unusedForNonTrailingComma________________________________":""
 
 
