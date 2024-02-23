@@ -58,7 +58,7 @@ class PropertySyncButton extends StatelessWidget {
             if (!parentContext.mounted) return;
             showNormalSnackbar(
               context: parentContext,
-              message: localized.noNewEntriesFound.capitalized,
+              message: localized.noNewPropertiesFound.capitalized,
             );
           } on NotLoggedInException {
             if (!parentContext.mounted) return;

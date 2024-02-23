@@ -18,20 +18,16 @@ class SynchronizeDrawerButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomListTileOutline(
-      child: ListTile(
-        title: Center(
-          child: TextButton(
-            onPressed: () {
-              final usersController = context.read<UsersController>();
-              UsersDrawer.switchToDeclarationsPage(context);
-              usersController.selectUser(currentUser);
-              usersController.setRequestLogin(true);
-            },
-            child: Text(localized.sync.capitalized),
-          ),
+    return Center(
+        child: TextButton(
+          onPressed: () {
+            final usersController = context.read<UsersController>();
+            UsersDrawer.switchToDeclarationsPage(context);
+            usersController.selectUser(currentUser);
+            usersController.setRequestLogin(true);
+          },
+          child: Text(localized.sync.capitalized, maxLines: 1,),
         ),
-      ),
-    );
+      );
   }
 }

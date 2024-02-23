@@ -22,7 +22,7 @@ class DeclarationsPage extends StatelessWidget {
         child: SizedBox(
           width: kMaxWidthLargest,
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.symmetric( vertical: 16.0,horizontal: 32),
             child: (selectedUser.isNotEmpty && !requestLogin) || isLoggedIn
                 ? PropertySelector(
                     localized: localized,

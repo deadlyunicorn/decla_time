@@ -30,19 +30,35 @@ class PropertiesList extends StatelessWidget {
               onLongPress: () {
                 //TODO Prompt to give a friendly name.
               },
-              title: Text(
-                property.friendlyName ??
-                    propertyShortDetails(
-                      property,
-                    ),
-                style: Theme.of(context).textTheme.bodyMedium,
+              title: Center(
+                child: FittedBox(
+                  child: Column(
+                    children: [
+                      if (property.friendlyName != null)
+                        Text(
+                          property.friendlyName!,
+                          textAlign: TextAlign.center,
+                          maxLines: 1,
+                        )
+                      else ...[
+                        Text(
+                          property.address,
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                        Text(
+                          property.friendlyName ?? property.atak,
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                      ]
+                    ],
+                  ),
+                ),
               )),
         );
       },
       itemCount: properties.length,
     );
   }
-
-  static String propertyShortDetails(UserProperty property) =>
-      "${property.address} - ${property.atak}"; //? ATAK is more relevant to the end user than the propertyId..
 }

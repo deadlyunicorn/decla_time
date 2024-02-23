@@ -32,11 +32,11 @@ class AvailableUserProperties extends StatelessWidget {
 
     final menuText = selectedProperty == null
         ? localized.selectProperty.capitalized
-        : PropertiesList.propertyShortDetails(selectedProperty);
+        : propertyShortDetails(selectedProperty);
 
     final userPropertyEntries = userProperties.map(
       (property) {
-        final String entryText = PropertiesList.propertyShortDetails(property);
+        final String entryText = propertyShortDetails(property);
 
         return MenuItemButton(
           onPressed: () async {
@@ -118,4 +118,6 @@ class AvailableUserProperties extends StatelessWidget {
       ),
     );
   }
+  String propertyShortDetails(UserProperty property) =>
+      "${property.address} - ${property.atak}"; //? ATAK is more relevant to the end user than the propertyId..
 }
