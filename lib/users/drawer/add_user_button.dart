@@ -18,7 +18,13 @@ class AddUserButton extends StatelessWidget {
       child: ListTile(
         onTap: onTap,
         titleAlignment: ListTileTitleAlignment.center,
-        title: Center(child: Text(localized.add.capitalized)),
+        title: Center(
+          child: FittedBox(
+            child: Text(
+              localized.add.capitalized,
+            ),
+          ),
+        ),
       ),
     );
   }

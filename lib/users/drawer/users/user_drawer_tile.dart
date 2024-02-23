@@ -28,10 +28,16 @@ class UserDrawerTile extends StatelessWidget {
           trailing: isLoggedInUser
               ? const Icon(Icons.cloud_done_rounded)
               : const SizedBox.shrink(),
-          title: Text(
-            currentUser,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
+          title: Align(
+            alignment: Alignment.centerLeft,
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                currentUser,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
           ),
           onLongPress: () {
             //TODO Prompt to delete user. ( and the relevant database entries..)

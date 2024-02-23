@@ -19,7 +19,7 @@ class DrawerOutline extends StatelessWidget {
     return Drawer(
       surfaceTintColor: Colors.transparent,
       backgroundColor: Colors.transparent,
-      width: min(480, MediaQuery.sizeOf(context).width * 0.7),
+      width: min( 360, MediaQuery.sizeOf(context).width ),
       child: Stack(
         children: [
           Positioned(
