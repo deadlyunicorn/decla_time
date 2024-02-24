@@ -3,6 +3,7 @@ import 'package:decla_time/skeleton/floating_action_button/custom_floating_actio
 import 'package:decla_time/skeleton/select_page_to_display.dart';
 import 'package:decla_time/skeleton/access_users_drawer.dart';
 import 'package:decla_time/skeleton/selected_page_controller.dart';
+import 'package:decla_time/status_indicator/status_indicator.dart';
 import 'package:decla_time/users/drawer/users_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -20,7 +21,6 @@ class _SkeletonState extends State<Skeleton> {
 
   @override
   Widget build(BuildContext context) {
-
     final localized = AppLocalizations.of(context)!;
 
     return SafeArea(
@@ -46,6 +46,15 @@ class _SkeletonState extends State<Skeleton> {
                 Positioned.fill(
                   child: UsersDrawerAccess(
                     localized: localized,
+                  ),
+                ),
+                Positioned.fill(
+                  child: Stack(
+                    children: [
+                      StatusIndicator(
+                        localized: localized,
+                      ),
+                    ],
                   ),
                 ),
               ],
