@@ -4,7 +4,8 @@ import "package:flutter_gen/gen_l10n/app_localizations.dart";
 
 class UsersDrawerAccess extends StatelessWidget {
   const UsersDrawerAccess({
-    required this.localized, super.key,
+    required this.localized,
+    super.key,
   });
 
   final AppLocalizations localized;

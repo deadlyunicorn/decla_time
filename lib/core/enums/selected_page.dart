@@ -1,12 +1,11 @@
 enum SelectedPage {
   reservations,
   declarations,
-  analytics
+  analytics,
 }
 
-int convertSelectedPageToIndex( SelectedPage selectedPage ){
-  
-  switch( selectedPage ){
+int convertSelectedPageToIndex(SelectedPage selectedPage) {
+  switch (selectedPage) {
     case SelectedPage.reservations:
       return 0;
     case SelectedPage.declarations:
@@ -14,13 +13,10 @@ int convertSelectedPageToIndex( SelectedPage selectedPage ){
     case SelectedPage.analytics:
       return 2;
   }
-
 }
 
-SelectedPage convertIndexToSelectedPage( int index ){
-  
-
-  switch( index ){
+SelectedPage convertIndexToSelectedPage(int index) {
+  switch (index) {
     case 0:
       return SelectedPage.reservations;
     case 1:
@@ -30,5 +26,4 @@ SelectedPage convertIndexToSelectedPage( int index ){
     default:
       return SelectedPage.reservations;
   }
-
-} 
+}

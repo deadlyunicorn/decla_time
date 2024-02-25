@@ -18,7 +18,7 @@ void main() async {
 
   final DateTime departureDate = DateTime.now();
   final DateTime arrivalDate = DateFormat("dd/MM/y").parse("DAY/MONTH/YEAR");
-  //! MAKE SURE TO SELECT A VALID RANGE THAT HAS NO MORE THAN ~7 declarations.. 
+  //! MAKE SURE TO SELECT A VALID RANGE THAT HAS NO MORE THAN ~7 declarations..
   //! It will take a while..
 
   //* STEP 1:GETTING THE propertyId

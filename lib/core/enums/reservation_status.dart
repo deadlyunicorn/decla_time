@@ -1,5 +1,5 @@
-enum ReservationStatus{
+enum ReservationStatus {
   upcoming,
   completed,
-  cancelled
+  cancelled,
 }

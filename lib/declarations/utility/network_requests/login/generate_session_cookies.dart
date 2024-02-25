@@ -11,7 +11,10 @@ DeclarationsPageHeaders generateSessionCookies(
       getBetweenStrings(res5.headers.toString(), ",JSESSIONID=", ";");
   // ignore: non_constant_identifier_names
   final String wl_authCookie_jSessionId = getBetweenStrings(
-      res5.headers.toString(), "_WL_AUTHCOOKIE_JSESSIONID=", ";",);
+    res5.headers.toString(),
+    "_WL_AUTHCOOKIE_JSESSIONID=",
+    ";",
+  );
   final String gsisCookie = fifthPageHeaders.gsisCookie;
 
   //*refreshes*

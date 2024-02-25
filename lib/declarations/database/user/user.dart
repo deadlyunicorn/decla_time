@@ -5,7 +5,6 @@ part "user.g.dart";
 
 @collection
 class User {
-
   @Index(unique: true)
   String username;
   List<String> propertyIds;
@@ -13,6 +12,7 @@ class User {
   Id get isarId => fastHash(username);
 
   User({
-    required this.username, required this.propertyIds,
+    required this.username,
+    required this.propertyIds,
   });
 }

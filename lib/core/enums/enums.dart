@@ -1,4 +1,4 @@
 enum ProcedureResult {
   success,
-  failed
+  failed,
 }

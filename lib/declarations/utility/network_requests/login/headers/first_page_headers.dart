@@ -44,7 +44,10 @@ class FirstPageHeaders {
       oamAuthnHintCookie:
           getBetweenStrings(headers, "OAMAuthnHintCookie=", ";"),
       oamRequestContext: getBetweenStrings(
-          headers, "OAMRequestContext_www1.aade.gr:443_", ";",),
+        headers,
+        "OAMRequestContext_www1.aade.gr:443_",
+        ";",
+      ),
       nextUrl: Uri.parse(
         getBetweenStrings(headers, "location: ", ", date"),
       ),

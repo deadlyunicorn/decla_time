@@ -53,7 +53,7 @@ class ExtractingReservationsFromFileActions {
     );
   }
 
-  ///Handles the different scenarios and 
+  ///Handles the different scenarios and
   ///returns a List of Reservation if there is any.
   static Future<Iterable<Reservation>?> handleReservationAdditionFromFiles(
     List<File> files,
