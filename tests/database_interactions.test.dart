@@ -1,27 +1,21 @@
-import 'package:decla_time/core/connection/isar_helper.dart';
-import 'package:decla_time/reservations/reservation.dart';
-import 'package:decla_time/reservations/business/reservation_actions.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:isar/isar.dart';
+import "package:decla_time/core/connection/isar_helper.dart";
+import "package:decla_time/reservations/reservation.dart";
+import "package:decla_time/reservations/business/reservation_actions.dart";
+import "package:flutter_test/flutter_test.dart";
+import "package:isar/isar.dart";
 
-import 'setup_documents_directory.dart';
+import "setup_documents_directory.dart";
 
-
-void main() async{
-
-  await Isar.initializeIsarCore( download: true);
+void main() async {
+  await Isar.initializeIsarCore(download: true);
   setUpDocumentsDirectoryForTesting();
 
-  group( "Reservations Folder Manipulation", () {
-
-     
-
-    test('Adding to database and reading database entries', () async {
-
-      final newReservation = Reservation(
+  group("Reservations Folder Manipulation", () {
+    test("Adding to database and reading database entries", () async {
+      final Reservation newReservation = Reservation(
         arrivalDate: DateTime.now(),
         bookingPlatform: "Airbnb",
-        departureDate: DateTime( 2024 ),
+        departureDate: DateTime(2024),
         guestName: "John Doe",
         id: "AABBCC",
         listingName: "Lovely",
@@ -29,35 +23,40 @@ void main() async{
         reservationStatus: "ok",
       );
 
-      await IsarHelper().reservationActions.insertOrUpdateReservationEntry(newReservation);
-      final reservationInDb = await IsarHelper().reservationActions.getReservationEntry( newReservation.id );
-      expect( reservationInDb?.guestName, newReservation.guestName);
+      await IsarHelper()
+          .reservationActions
+          .insertOrUpdateReservationEntry(newReservation);
+      final Reservation? reservationInDb = await IsarHelper()
+          .reservationActions
+          .getReservationEntry(newReservation.id);
+      expect(reservationInDb?.guestName, newReservation.guestName);
     });
 
-    test('Inserting entries from a file', () async {
+    test("Inserting entries from a file", () async {
+      final Isar isar = await IsarHelper().isarFuture;
 
-      final isar = await IsarHelper().isarFuture;
-
-      await isar.writeTxn(()async { //deleting all entries
-        final dbEntries = (await isar.reservations.where().findAll()).map((reservation) => reservation.isarId).toList();
+      await isar.writeTxn(() async {
+        //deleting all entries
+        final List<Id> dbEntries = (await isar.reservations.where().findAll())
+            .map((Reservation reservation) => reservation.isarId)
+            .toList();
 
         await isar.reservations.deleteAll(dbEntries);
         // await isar.reservations.clear();
-
       });
 
-      expect( await isar.reservations.count(), 0);
+      expect(await isar.reservations.count(), 0);
 
-      final entries = await ReservationActions.generateReservationTableFromFile(
-      "booking_gr_3.csv"
+      final List<Reservation> entries =
+          await ReservationActions.generateReservationTableFromFile(
+        "booking_gr_3.csv",
       );
 
       await IsarHelper().reservationActions.insertMultipleEntriesToDb(
-        entries
-      );
+            entries,
+          );
 
-      
-      expect( await isar.reservations.count(), greaterThan( 1 ));
+      expect(await isar.reservations.count(), greaterThan(1));
     });
   });
 }

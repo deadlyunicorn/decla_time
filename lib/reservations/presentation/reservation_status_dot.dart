@@ -1,8 +1,8 @@
-import 'package:decla_time/core/enums/reservation_status.dart';
-import 'package:decla_time/core/extensions/capitalize.dart';
-import 'package:decla_time/core/functions/translate_reservation_status.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter/material.dart';
+import "package:decla_time/core/enums/reservation_status.dart";
+import "package:decla_time/core/extensions/capitalize.dart";
+import "package:decla_time/core/functions/translate_reservation_status.dart";
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
+import "package:flutter/material.dart";
 
 class ReservationStatusDot extends StatelessWidget {
   final String reservationStatusString;
@@ -10,10 +10,10 @@ class ReservationStatusDot extends StatelessWidget {
   final AppLocalizations localized;
 
   const ReservationStatusDot({
-    super.key,
     required this.reservationStatusString,
-    this.size = 16,
     required this.localized,
+    super.key,
+    this.size = 16,
   });
 
   @override

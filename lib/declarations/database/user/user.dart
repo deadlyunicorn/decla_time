@@ -1,7 +1,7 @@
-import 'package:decla_time/core/functions/fasthash.dart';
-import 'package:isar/isar.dart';
+import "package:decla_time/core/functions/fasthash.dart";
+import "package:isar/isar.dart";
 
-part 'user.g.dart';
+part "user.g.dart";
 
 @collection
 class User {

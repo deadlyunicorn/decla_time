@@ -1,13 +1,13 @@
-import 'package:decla_time/core/extensions/capitalize.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import "package:decla_time/core/extensions/capitalize.dart";
+import "package:flutter/material.dart";
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
 
 class RememberUsernameCheckbox extends StatelessWidget {
   const RememberUsernameCheckbox({
-    super.key,
     required this.rememberUsername,
     required this.setRememberUsername,
     required this.localized,
+    super.key,
   });
   final AppLocalizations localized;
   final bool rememberUsername;
@@ -18,7 +18,7 @@ class RememberUsernameCheckbox extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.start,
-      children: [
+      children: <Widget>[
         Checkbox(
           value: rememberUsername,
           onChanged: setRememberUsername,
@@ -30,7 +30,9 @@ class RememberUsernameCheckbox extends StatelessWidget {
           style: TextButton.styleFrom(
             foregroundColor: Theme.of(context).colorScheme.onBackground,
           ).copyWith(
-              overlayColor: const MaterialStatePropertyAll(Colors.transparent)),
+            overlayColor:
+                const MaterialStatePropertyAll<Color>(Colors.transparent),
+          ),
           child: Text(localized.rememberUsername.capitalized),
         ),
       ],

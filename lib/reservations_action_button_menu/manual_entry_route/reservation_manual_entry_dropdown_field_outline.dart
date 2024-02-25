@@ -1,20 +1,23 @@
-import 'package:decla_time/core/constants/constants.dart';
-import 'package:decla_time/core/extensions/capitalize.dart';
-import 'package:decla_time/reservations_action_button_menu/manual_entry_route/shared_prefs_list_string_addition_alert_dialog.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import "dart:async";
+
+import "package:decla_time/core/constants/constants.dart";
+import "package:decla_time/core/extensions/capitalize.dart";
+import "package:decla_time/reservations_action_button_menu/manual_entry_route/shared_prefs_list_string_addition_alert_dialog.dart";
+import "package:flutter/material.dart";
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
+import "package:shared_preferences/shared_preferences.dart";
 
 class ReservationManualEntryDropdownFieldOutline extends StatefulWidget {
-  //This is a stateful widget in order to refresh when we change the SharedPreferences entries.
+  //This is a stateful widget in order to refresh
+  //when we change the SharedPreferences entries.
 
   const ReservationManualEntryDropdownFieldOutline({
-    super.key,
     required this.localized,
     required this.textEditingController,
     required this.sharedPrefsListKey,
     required this.label,
     required this.isRequired,
+    super.key,
     this.helperText,
     this.defaultDropdownEntriesList,
   });
@@ -38,15 +41,18 @@ class _ReservationManualEntryDropdownFieldOutlineState
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16),
-      child: FutureBuilder(
+      child: FutureBuilder<List<DropdownMenuEntry<String>>>(
         future: dropDownMenuEntriesFuture(), //getBookingPlatforms(),
-        builder: (context, snapshot) {
+        builder: (
+          BuildContext context,
+          AsyncSnapshot<List<DropdownMenuEntry<String>>> snapshot,
+        ) {
           final List<DropdownMenuEntry<String>> snapshotData =
-              snapshot.data ?? [];
+              snapshot.data ?? <DropdownMenuEntry<String>>[];
 
           return FormField<String>(
             initialValue: widget.textEditingController.text,
-            builder: (field) {
+            builder: (FormFieldState<String> field) {
               return SizedBox(
                 child: DropdownMenu<String>(
                   errorText:
@@ -61,31 +67,35 @@ class _ReservationManualEntryDropdownFieldOutlineState
                   label: Text(widget.label.capitalized),
                   controller: widget.textEditingController,
                   helperText: widget.helperText,
-                  dropdownMenuEntries: [
-                    DropdownMenuEntry(
+                  dropdownMenuEntries: <DropdownMenuEntry<String>>[
+                    DropdownMenuEntry<String>(
                       value: "newEntry",
                       label: widget.localized.add.capitalized,
                     ),
                     ...snapshotData,
                   ],
-                  onSelected: (value) async {
+                  onSelected: (String? value) async {
                     if (value == "newEntry") {
                       final String? newEntry = (await showDialog(
                         context: context,
-                        builder: (context) {
+                        builder: (BuildContext context) {
                           return SharedPrefsListStringAdditionAlertDialog(
                             localized: widget.localized,
-                              title:
-                                  "${widget.localized.add.capitalized} ${widget.label}",
-                              listStringKey: widget.sharedPrefsListKey,
-                              hintText:
-                                  "${widget.localized.enter.capitalized} ${widget.label}",
-                              refreshParent: () {
-                                setState(() {});
-                              },
-                              dropdownMenuEntries: (snapshot.data ?? [])
-                                  .map((e) => e.value)
-                                  .toSet());
+                            title:
+                                // ignore: lines_longer_than_80_chars
+                                "${widget.localized.add.capitalized} ${widget.label}",
+                            listStringKey: widget.sharedPrefsListKey,
+                            hintText:
+                                // ignore: lines_longer_than_80_chars
+                                "${widget.localized.enter.capitalized} ${widget.label}",
+                            refreshParent: () {
+                              setState(() {});
+                            },
+                            dropdownMenuEntries: (snapshot.data ??
+                                    <DropdownMenuEntry<String>>[])
+                                .map((DropdownMenuEntry<String> e) => e.value)
+                                .toSet(),
+                          );
                         },
                       ));
 
@@ -93,8 +103,10 @@ class _ReservationManualEntryDropdownFieldOutlineState
                       widget.textEditingController.text = newEntry ?? "";
                     } else {
                       String finalValue = widget.defaultDropdownEntriesList
-                              ?.firstWhere((dropdownMenuEntry) =>
-                                  dropdownMenuEntry.value == value)
+                              ?.firstWhere(
+                                (DropdownMenuEntry<String> dropdownMenuEntry) =>
+                                    dropdownMenuEntry.value == value,
+                              )
                               .label ??
                           value ??
                           "";
@@ -106,8 +118,8 @@ class _ReservationManualEntryDropdownFieldOutlineState
                 ),
               );
             },
-            validator: (value) {
-              final stringValue = value ?? "";
+            validator: (String? value) {
+              final String stringValue = value ?? "";
 
               if (stringValue.isEmpty ||
                   widget.textEditingController.text.isEmpty) {
@@ -132,33 +144,41 @@ class _ReservationManualEntryDropdownFieldOutlineState
   }
 
   Future<List<DropdownMenuEntry<String>>> dropDownMenuEntriesFuture() async {
-    final prefs = await SharedPreferences.getInstance();
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
     final Map<String, String>? defaultValuesMap =
         widget.defaultDropdownEntriesList?.fold(
-            {},
-            (previousValue, element) => {
-                  ...?previousValue,
-                  ...{element.value: element.label}
-                });
+      <String, String>{},
+      (Map<String, String>? previousValue, DropdownMenuEntry<String> element) =>
+          <String, String>{
+        ...?previousValue,
+        ...<String, String>{element.value: element.label},
+      },
+    );
 
-    final dropdownMenuListStringEntries =
+    final List<String>? dropdownMenuListStringEntries =
         prefs.getStringList(widget.sharedPrefsListKey);
     if (dropdownMenuListStringEntries != null &&
         dropdownMenuListStringEntries.isNotEmpty) {
-      return dropdownMenuListStringEntries.map((stringValue) {
-        return DropdownMenuEntry(
-            value: stringValue,
-            label: defaultValuesMap?[stringValue] ?? stringValue);
+      return dropdownMenuListStringEntries.map((String stringValue) {
+        return DropdownMenuEntry<String>(
+          value: stringValue,
+          label: defaultValuesMap?[stringValue] ?? stringValue,
+        );
       }).toList();
     } else {
-      prefs.setStringList(
+      unawaited(
+        prefs.setStringList(
           widget.sharedPrefsListKey,
           widget.defaultDropdownEntriesList
                   ?.map(
-                      (dropdownMenuEntry) => dropdownMenuEntry.value.toString())
+                    (DropdownMenuEntry<String> dropdownMenuEntry) =>
+                        dropdownMenuEntry.value.toString(),
+                  )
                   .toList() ??
-              []);
-      return widget.defaultDropdownEntriesList ?? [];
+              <String>[],
+        ),
+      );
+      return widget.defaultDropdownEntriesList ?? <DropdownMenuEntry<String>>[];
     }
   }
 }

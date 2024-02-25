@@ -1,17 +1,17 @@
-import 'package:decla_time/core/extensions/capitalize.dart';
-import 'package:decla_time/core/functions/handle_range_date_pickers.dart';
-import 'package:decla_time/declarations/synchronize_declarations/date_buttons/date_buttons_outline.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:intl/intl.dart';
+import "package:decla_time/core/extensions/capitalize.dart";
+import "package:decla_time/core/functions/handle_range_date_pickers.dart";
+import "package:decla_time/declarations/synchronize_declarations/date_buttons/date_buttons_outline.dart";
+import "package:flutter/material.dart";
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
+import "package:intl/intl.dart";
 
 class SetArrivalDateButton extends StatelessWidget {
   const SetArrivalDateButton({
-    super.key,
     required this.arrivalDate,
     required this.departureDate,
     required this.localized,
     required this.setArrivalDate,
+    super.key,
   });
 
   final DateTime? arrivalDate;
@@ -22,21 +22,23 @@ class SetArrivalDateButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DateButtonsOutline(
-      children: [
+      children: <Widget>[
         Text("${localized.arrival.capitalized}: "),
         TextButton(
-            onPressed: () async {
-              final tempArrivalDate = await handleArrivalDatePicker(
-                  context: context,
-                  arrivalDate: arrivalDate,
-                  departureDate: departureDate);
-              setArrivalDate(tempArrivalDate);
-            },
-            child: Text(
-              arrivalDate != null
-                  ? DateFormat("dd/MM/y").format(arrivalDate!)
-                  : localized.setText.capitalized,
-            )),
+          onPressed: () async {
+            final DateTime? tempArrivalDate = await handleArrivalDatePicker(
+              context: context,
+              arrivalDate: arrivalDate,
+              departureDate: departureDate,
+            );
+            setArrivalDate(tempArrivalDate);
+          },
+          child: Text(
+            arrivalDate != null
+                ? DateFormat("dd/MM/y").format(arrivalDate!)
+                : localized.setText.capitalized,
+          ),
+        ),
       ],
     );
   }

@@ -1,12 +1,13 @@
-import 'package:flutter/material.dart';
+import "package:flutter/material.dart";
 
 class ColumnWithSpacings extends StatelessWidget {
   const ColumnWithSpacings({
-    super.key,
     required this.children,
     required this.spacing,
+    super.key,
     this.mainAxisSize = MainAxisSize.max,
-    this.mainAxisAlignment = MainAxisAlignment.start, this.crossAxisAlignment = CrossAxisAlignment.center,
+    this.mainAxisAlignment = MainAxisAlignment.start,
+    this.crossAxisAlignment = CrossAxisAlignment.center,
   });
 
   final List<Widget> children;
@@ -22,7 +23,7 @@ class ColumnWithSpacings extends StatelessWidget {
       crossAxisAlignment: crossAxisAlignment,
       children: children
           .map(
-            (child) => Padding(
+            (Widget child) => Padding(
               padding: EdgeInsets.only(bottom: spacing.toDouble()),
               child: child,
             ),

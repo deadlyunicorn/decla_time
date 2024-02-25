@@ -1,17 +1,17 @@
-import 'package:decla_time/core/constants/constants.dart';
-import 'package:decla_time/core/extensions/capitalize.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+import "package:decla_time/core/constants/constants.dart";
+import "package:decla_time/core/extensions/capitalize.dart";
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
+import "package:flutter/material.dart";
+import "package:url_launcher/url_launcher.dart";
 
 class PlatformFileInstructions extends StatelessWidget {
   const PlatformFileInstructions({
-    super.key,
     required this.platformName,
     required this.platformFilesURL,
     required this.imageAssetNames,
     required this.instructionsDescription,
     required this.localized,
+    super.key,
   });
 
   final String platformName;
@@ -22,7 +22,7 @@ class PlatformFileInstructions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final imageHeight = MediaQuery.sizeOf(context).height * 0.5;
+    final double imageHeight = MediaQuery.sizeOf(context).height * 0.5;
 
     return SizedBox(
       width: kMaxWidthLargest,
@@ -43,7 +43,7 @@ class PlatformFileInstructions extends StatelessWidget {
             platformName.capitalized,
             style: Theme.of(context).textTheme.headlineSmall,
           ),
-          children: [
+          children: <Widget>[
             instructionsDescription,
             SizedBox(
               height: kSmallScreenWidth,
@@ -52,7 +52,7 @@ class PlatformFileInstructions extends StatelessWidget {
                 shrinkWrap: true,
                 scrollDirection: Axis.horizontal,
                 itemCount: imageAssetNames.length,
-                itemBuilder: (context, index) {
+                itemBuilder: (BuildContext context, int index) {
                   return Padding(
                     padding:
                         const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
@@ -69,7 +69,7 @@ class PlatformFileInstructions extends StatelessWidget {
                 },
               ),
             ),
-            const Divider()
+            const Divider(),
           ],
         ),
       ),

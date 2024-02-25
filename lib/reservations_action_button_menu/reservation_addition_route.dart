@@ -1,19 +1,19 @@
-import 'dart:io';
-import 'package:decla_time/core/functions/is_landscape_mode.dart';
-import 'package:decla_time/core/widgets/route_outline.dart';
-import 'package:decla_time/reservations/business/extracting_from_file_actions.dart';
-import 'package:decla_time/reservations/reservation.dart';
-import 'package:decla_time/reservations_action_button_menu/add_reservations_manually_button.dart';
-import 'package:decla_time/reservations_action_button_menu/add_from_files_button.dart';
-import 'package:decla_time/reservations_action_button_menu/entries_found/reservations_found_list.dart';
-import 'package:desktop_drop/desktop_drop.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import "dart:io";
+import "package:decla_time/core/functions/is_landscape_mode.dart";
+import "package:decla_time/core/widgets/route_outline.dart";
+import "package:decla_time/reservations/business/extracting_from_file_actions.dart";
+import "package:decla_time/reservations/reservation.dart";
+import "package:decla_time/reservations_action_button_menu/add_reservations_manually_button.dart";
+import "package:decla_time/reservations_action_button_menu/add_from_files_button.dart";
+import "package:decla_time/reservations_action_button_menu/entries_found/reservations_found_list.dart";
+import "package:desktop_drop/desktop_drop.dart";
+import "package:flutter/material.dart";
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
 
 class ReservationAdditionRoute extends StatefulWidget {
   const ReservationAdditionRoute({
-    super.key,
     required this.localized,
+    super.key,
   });
   final AppLocalizations localized;
 
@@ -23,19 +23,26 @@ class ReservationAdditionRoute extends StatefulWidget {
 }
 
 class _ReservationAdditionRouteState extends State<ReservationAdditionRoute> {
-  List<Reservation> reservations = [];
+  List<Reservation> reservations = <Reservation>[];
 
   @override
   Widget build(BuildContext context) {
     return RouteOutline(
       title: widget.localized.addEntries,
       child: DropTarget(
-        onDragDone: (details) async {
-          final files = details.files.map((xFile) => File(xFile.path)).toList();
-          final newReservations = await ExtractingReservationsFromFileActions
-                  .handleReservationAdditionFromFiles(
-                      files, context, widget.localized, reservations) ??
-              [];
+        onDragDone: (DropDoneDetails details) async {
+          final List<File> files =
+              // ignore: always_specify_types
+              details.files.map((xFile) => File(xFile.path)).toList();
+          final Iterable<Reservation> newReservations =
+              await ExtractingReservationsFromFileActions
+                      .handleReservationAdditionFromFiles(
+                    files,
+                    context,
+                    widget.localized,
+                    reservations,
+                  ) ??
+                  <Reservation>[];
           if (newReservations.isNotEmpty) {
             setState(() {
               reservations.addAll(newReservations);
@@ -45,7 +52,7 @@ class _ReservationAdditionRouteState extends State<ReservationAdditionRoute> {
         child: Flex(
           direction: isLandscapeMode(context) ? Axis.horizontal : Axis.vertical,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
+          children: <Widget>[
             SizedBox(
               width: isLandscapeMode(context)
                   ? MediaQuery.sizeOf(context).width / 3
@@ -58,7 +65,7 @@ class _ReservationAdditionRouteState extends State<ReservationAdditionRoute> {
                     runAlignment: WrapAlignment.center,
                     spacing: 32,
                     runSpacing: 32,
-                    children: [
+                    children: <Widget>[
                       AddReservationsFromFileButton(
                         reservationsAlreadyImported: reservations,
                         addToReservationsFoundSoFar:
@@ -90,18 +97,21 @@ class _ReservationAdditionRouteState extends State<ReservationAdditionRoute> {
   }
 
   void addToReservationsFoundSoFar(
-      Iterable<Reservation> newReservationEntries) {
+    Iterable<Reservation> newReservationEntries,
+  ) {
     setState(() {
       reservations.addAll(newReservationEntries);
     });
   }
 
   void removeFromReservationsFoundSoFar(
-      Iterable<Reservation> iterableReservations) {
+    Iterable<Reservation> iterableReservations,
+  ) {
     setState(() {
       reservations.removeWhere(
-        (reservation) =>
-            iterableReservations.map((e) => e.id).contains(reservation.id),
+        (Reservation reservation) => iterableReservations
+            .map((Reservation e) => e.id)
+            .contains(reservation.id),
       );
     });
   }

@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
+import "package:flutter/material.dart";
 
 class CustomListTileOutline extends StatelessWidget {
   const CustomListTileOutline({
-    super.key,
     required this.child,
+    super.key,
     this.isSelected = false,
   });
 

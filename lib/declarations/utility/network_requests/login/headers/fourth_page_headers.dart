@@ -1,9 +1,9 @@
 // ignore_for_file: non_constant_identifier_names
 
-import 'package:decla_time/core/extensions/get_values_between_strings.dart';
-import 'package:decla_time/core/extensions/to_string_max_60.dart';
-import 'package:http/http.dart';
-import 'third_page_headers.dart';
+import "package:decla_time/core/extensions/get_values_between_strings.dart";
+import "package:decla_time/core/extensions/to_string_max_60.dart";
+import "package:http/http.dart";
+import "package:decla_time/declarations/utility/network_requests/login/headers/third_page_headers.dart";
 
 class FourthPageHeaders extends ThirdPageHeaders {
   @override
@@ -14,10 +14,10 @@ class FourthPageHeaders extends ThirdPageHeaders {
 
   @override
   // ignore: overridden_fields
-  final ecidContext = ""; //? It gets removed with this request.
+  final String ecidContext = ""; //? It gets removed with this request.
   @override
   // ignore: overridden_fields
-  final oam_req_0 = "";
+  final String oam_req_0 = "";
 
   @override
   void printProperties() {
@@ -47,7 +47,7 @@ class FourthPageHeaders extends ThirdPageHeaders {
     required StreamedResponse streamedResponse,
     required ThirdPageHeaders previousPageHeaders,
   }) {
-    final headers = streamedResponse.headers.toString();
+    final String headers = streamedResponse.headers.toString();
 
     return FourthPageHeaders(
       // gsisCookie: firstPageGsisCookie,

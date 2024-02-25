@@ -1,14 +1,14 @@
-import 'package:decla_time/core/constants/constants.dart';
-import 'package:decla_time/core/extensions/capitalize.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import "package:decla_time/core/constants/constants.dart";
+import "package:decla_time/core/extensions/capitalize.dart";
+import "package:flutter/material.dart";
+import "package:flutter/services.dart";
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
 
 class PayoutField extends StatelessWidget {
   const PayoutField({
-    super.key,
     required this.payoutController,
     required this.localized,
+    super.key,
   });
 
   final TextEditingController payoutController;
@@ -21,8 +21,8 @@ class PayoutField extends StatelessWidget {
       child: SizedBox(
         width: kMaxContainerWidthSmall * 1.2,
         child: TextFormField(
-          inputFormatters: [
-            FilteringTextInputFormatter.allow(RegExp("[0-9.]"))
+          inputFormatters: <TextInputFormatter>[
+            FilteringTextInputFormatter.allow(RegExp("[0-9.]")),
           ],
           controller: payoutController,
           decoration: InputDecoration(
@@ -37,7 +37,7 @@ class PayoutField extends StatelessWidget {
           ),
           textAlign: TextAlign.center,
           keyboardType: TextInputType.number,
-          validator: (value) {
+          validator: (String? value) {
             if (RegExp("^[0-9]+[.][0-9][0-9]\$").hasMatch(value ?? "")) {
               if (double.tryParse(value ?? "") != null) {
               } else {

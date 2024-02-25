@@ -1,8 +1,8 @@
-import 'package:decla_time/core/extensions/get_values_between_strings.dart';
-import 'package:decla_time/core/functions/fasthash.dart';
-import 'package:isar/isar.dart';
+import "package:decla_time/core/extensions/get_values_between_strings.dart";
+import "package:decla_time/core/functions/fasthash.dart";
+import "package:isar/isar.dart";
 
-part 'user_property.g.dart';
+part "user_property.g.dart";
 
 @collection
 class UserProperty {
@@ -28,30 +28,35 @@ class UserProperty {
   });
 
   static List<UserProperty> generateFromHtml(String body) {
-    final propertyIds = getAllBetweenStrings(body, "propertyId',value:'", "'}");
-    if (propertyIds.isEmpty) return [];
-    final atakNumbers = getAllBetweenStrings(
-        body, 'atakOutput" style="width:90px;">', "</span>");
-    final addressOfProperties =
+    final List<String> propertyIds =
+        getAllBetweenStrings(body, "propertyId',value:'", "'}");
+    if (propertyIds.isEmpty) return <UserProperty>[];
+    final List<String> atakNumbers = getAllBetweenStrings(
+      body,
+      'atakOutput" style="width:90px;">',
+      "</span>",
+    );
+    final List<String> addressOfProperties =
         getAllBetweenStrings(body, 'addressOutput">', "<")
-            .map((addressEntry) => addressEntry.trim())
+            .map((String addressEntry) => addressEntry.trim())
             .toList();
-    final registryNumbers =
-        getAllBetweenStrings(body, 'amaOutput" style="width:90px;">', '<');
+    final List<String> registryNumbers =
+        getAllBetweenStrings(body, 'amaOutput" style="width:90px;">', "<");
 
     if (propertyIds.length != atakNumbers.length &&
         atakNumbers.length != addressOfProperties.length &&
         addressOfProperties.length != registryNumbers.length) {
-      return [];
+      return <UserProperty>[];
     } else {
-      final List<UserProperty> properties = [];
+      final List<UserProperty> properties = <UserProperty>[];
       for (int i = 0; i < propertyIds.length; i++) {
         properties.add(
           UserProperty(
-              propertyId: propertyIds[i],
-              address: addressOfProperties[i],
-              atak: atakNumbers[i],
-              serialNumber: registryNumbers[i]),
+            propertyId: propertyIds[i],
+            address: addressOfProperties[i],
+            atak: atakNumbers[i],
+            serialNumber: registryNumbers[i],
+          ),
         );
       }
       return properties;

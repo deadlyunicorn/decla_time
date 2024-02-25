@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
+import "package:flutter/material.dart";
 
 class MinimalisticIconButton extends StatelessWidget {
   const MinimalisticIconButton({
-    super.key,
     required this.icon,
     required this.onPressed,
+    super.key,
   });
 
   final IconData icon;
@@ -15,7 +15,7 @@ class MinimalisticIconButton extends StatelessWidget {
     return IconButton(
       style: ButtonStyle(
         foregroundColor: MaterialStateColor.resolveWith(
-          (states) {
+          (Set<MaterialState> states) {
             if (states.contains(MaterialState.hovered) ||
                 states.contains(MaterialState.pressed)) {
               return Colors.white;
@@ -24,7 +24,7 @@ class MinimalisticIconButton extends StatelessWidget {
           },
         ),
         overlayColor: MaterialStateColor.resolveWith(
-          (states) {
+          (Set<MaterialState> states) {
             if (states.contains(MaterialState.pressed)) {
               return Colors.white.withAlpha(48);
             }

@@ -1,11 +1,11 @@
-import 'package:decla_time/core/extensions/capitalize.dart';
-import 'package:flutter/material.dart';
+import "package:decla_time/core/extensions/capitalize.dart";
+import "package:flutter/material.dart";
 
 class RouteOutline extends StatelessWidget {
   const RouteOutline({
-    super.key,
     required this.title,
     required this.child,
+    super.key,
   });
 
   final String title;
@@ -24,7 +24,7 @@ class RouteOutline extends StatelessWidget {
             icon: const Icon(Icons.arrow_back_rounded),
           ),
           centerTitle: true,
-          title: FittedBox(child: Text( title.capitalized )),
+          title: FittedBox(child: Text(title.capitalized)),
         ),
         body: Align(
           alignment: Alignment.topCenter,

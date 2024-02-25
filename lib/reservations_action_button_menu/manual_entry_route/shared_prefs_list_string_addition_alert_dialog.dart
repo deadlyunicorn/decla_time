@@ -1,18 +1,18 @@
-import 'package:decla_time/core/extensions/capitalize.dart';
-import 'package:decla_time/core/widgets/custom_alert_dialog.dart';
-import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import "package:decla_time/core/extensions/capitalize.dart";
+import "package:decla_time/core/widgets/custom_alert_dialog.dart";
+import "package:flutter/material.dart";
+import "package:shared_preferences/shared_preferences.dart";
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
 
 class SharedPrefsListStringAdditionAlertDialog extends StatefulWidget {
   const SharedPrefsListStringAdditionAlertDialog({
-    super.key,
     required this.refreshParent,
     required this.dropdownMenuEntries,
     required this.title,
     required this.listStringKey,
     required this.hintText,
     required this.localized,
+    super.key,
   });
 
   final void Function() refreshParent;
@@ -29,7 +29,7 @@ class SharedPrefsListStringAdditionAlertDialog extends StatefulWidget {
 
 class _SharedPrefsListStringAdditionAlertDialogState
     extends State<SharedPrefsListStringAdditionAlertDialog> {
-  final _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController textFieldController = TextEditingController();
 
   @override
@@ -41,9 +41,11 @@ class _SharedPrefsListStringAdditionAlertDialogState
         if (_formKey.currentState!.validate()) {
           Navigator.pop(context, textFieldController.text);
 
-          SharedPreferences.getInstance().then((prefs) {
-            prefs.setStringList(widget.listStringKey,
-                [...widget.dropdownMenuEntries, textFieldController.text]);
+          await SharedPreferences.getInstance().then((SharedPreferences prefs) {
+            prefs.setStringList(
+              widget.listStringKey,
+              <String>[...widget.dropdownMenuEntries, textFieldController.text],
+            );
             widget.refreshParent();
           });
         }
@@ -56,7 +58,7 @@ class _SharedPrefsListStringAdditionAlertDialogState
             errorMaxLines: 2,
           ),
           controller: textFieldController,
-          validator: (value) {
+          validator: (String? value) {
             if (value!.length < 6) {
               return widget.localized.enterMin6Chars.capitalized;
             } else if (widget.dropdownMenuEntries.contains(value)) {

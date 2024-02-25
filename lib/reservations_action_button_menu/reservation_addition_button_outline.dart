@@ -1,12 +1,12 @@
-import 'dart:math';
-import 'package:flutter/material.dart';
+import "dart:math";
+import "package:flutter/material.dart";
 
 class ReservationAdditionButtonOutline extends StatelessWidget {
   const ReservationAdditionButtonOutline({
-    super.key,
     required this.description,
     required this.icon,
     required this.onTap,
+    super.key,
     this.children,
   });
 
@@ -17,7 +17,7 @@ class ReservationAdditionButtonOutline extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dimension = min(
+    final double dimension = min(
       160,
       min(
         MediaQuery.sizeOf(context).width / 3,
@@ -38,12 +38,12 @@ class ReservationAdditionButtonOutline extends StatelessWidget {
           onTap: onTap,
           child: Stack(
             alignment: Alignment.center,
-            children: [
+            children: <Widget>[
               Positioned.fill(
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
-                    children: [
+                    children: <Widget>[
                       Align(
                         alignment: Alignment.topLeft,
                         child: FittedBox(
@@ -59,7 +59,7 @@ class ReservationAdditionButtonOutline extends StatelessWidget {
                           child: Align(
                             alignment: Alignment.center,
                             child: Text(
-                              description.replaceAll( " ", "\n"),
+                              description.replaceAll(" ", "\n"),
                               textAlign: TextAlign.center,
                               style: Theme.of(context).textTheme.bodyLarge,
                             ),
@@ -70,7 +70,7 @@ class ReservationAdditionButtonOutline extends StatelessWidget {
                   ),
                 ),
               ),
-              ...?children
+              ...?children,
             ],
           ),
         ),

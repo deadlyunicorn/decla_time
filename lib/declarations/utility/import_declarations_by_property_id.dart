@@ -1,22 +1,25 @@
-import 'package:decla_time/declarations/database/declaration.dart';
-import 'package:decla_time/declarations/utility/network_requests/get_declaration_details_from_searchPageData.dart';
-import 'package:decla_time/declarations/utility/network_requests/get_declaration_search_page.dart';
-import 'package:decla_time/declarations/utility/network_requests/headers/declarations_page_headers.dart';
-import 'package:decla_time/declarations/utility/search_page_data.dart';
-import 'package:decla_time/declarations/utility/search_page_declaration.dart';
+import "package:decla_time/declarations/database/declaration.dart";
+import "package:decla_time/declarations/utility/network_requests/get_declaration_details_from_search_page_data.dart";
+import "package:decla_time/declarations/utility/network_requests/get_declaration_search_page.dart";
+import "package:decla_time/declarations/utility/network_requests/headers/declarations_page_headers.dart";
+import "package:decla_time/declarations/utility/search_page_data.dart";
+import "package:decla_time/declarations/utility/search_page_declaration.dart";
 
-Future<void> importDeclarationsFromDateRangeFuture(
-    {required DateTime arrivalDate,
-    required DateTime departureDate,
-    required String propertyId,
-    required DeclarationsPageHeaders headers,
-    required Future<bool> Function(SearchPageDeclaration)
-        checkIfDeclarationExistsInDb,
-    required Future<void> Function(Declaration) storeDeclarationInDb,
-    void Function(int)? displayTotalFound,
-    void Function(
-            {required int index, required int total, required bool existsInDb})?
-        displayCurrentStatus}) async {
+Future<void> importDeclarationsFromDateRangeFuture({
+  required DateTime arrivalDate,
+  required DateTime departureDate,
+  required String propertyId,
+  required DeclarationsPageHeaders headers,
+  required Future<bool> Function(SearchPageDeclaration)
+      checkIfDeclarationExistsInDb,
+  required Future<void> Function(Declaration) storeDeclarationInDb,
+  void Function(int)? displayTotalFound,
+  void Function({
+    required int index,
+    required int total,
+    required bool existsInDb,
+  })? displayCurrentStatus,
+}) async {
   await setSearchPageDateRange(
     arrivalDate: arrivalDate,
     departureDate: departureDate,
@@ -29,7 +32,7 @@ Future<void> importDeclarationsFromDateRangeFuture(
     propertyId: propertyId,
   );
 
-  final rounds = (currentSearchPageData.total ~/ 50) + 1;
+  final int rounds = (currentSearchPageData.total ~/ 50) + 1;
 
   if (displayTotalFound != null) {
     displayTotalFound(currentSearchPageData.total);
@@ -59,7 +62,8 @@ Future<void> importDeclarationsFromDateRangeFuture(
           currentSearchPageData.declarations[i];
       // print("ROUND $j, DECLARATION No. $i");
 
-      final existsInDb = await checkIfDeclarationExistsInDb(currentDeclaration);
+      final bool existsInDb =
+          await checkIfDeclarationExistsInDb(currentDeclaration);
       if (displayCurrentStatus != null) {
         displayCurrentStatus(
           index: i,
@@ -70,14 +74,14 @@ Future<void> importDeclarationsFromDateRangeFuture(
 
       if (existsInDb) continue;
 
-      await Future.delayed(const Duration(milliseconds: 500));
+      await Future<void>.delayed(const Duration(milliseconds: 500));
       final SearchPageData searchPageData = await getDeclarationSearchPage(
         //?Used to get a new viewState for each propertyId
         headers: headers,
         propertyId: propertyId,
       );
 
-      final declaration = await getDeclarationFromSearchPageData(
+      final Declaration declaration = await getDeclarationFromSearchPageData(
         declarationIndex: i,
         headers: headers,
         parsedViewState: searchPageData.viewStateParsed,

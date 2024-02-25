@@ -1,15 +1,15 @@
-import 'package:decla_time/core/constants/constants.dart';
-import 'package:decla_time/core/extensions/capitalize.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:intl/intl.dart';
+import "package:decla_time/core/constants/constants.dart";
+import "package:decla_time/core/extensions/capitalize.dart";
+import "package:flutter/material.dart";
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
+import "package:intl/intl.dart";
 
 class DateFieldWrap extends StatefulWidget {
   const DateFieldWrap({
-    super.key,
     required this.handleDateSetButton,
     required this.localized,
     required this.label,
+    super.key,
     this.date,
   });
 
@@ -29,19 +29,19 @@ class _DateFieldWrapState extends State<DateFieldWrap> {
   Widget build(BuildContext context) {
     return FormField<DateTime>(
       initialValue: widget.date,
-      validator: (value) {
+      validator: (DateTime? value) {
         if (value == null) {
           return widget.localized.invalidDateError.capitalized;
         } else {
           return null;
         }
       },
-      builder: (field) {
-        final errorText = field.errorText;
+      builder: (FormFieldState<DateTime> field) {
+        final String? errorText = field.errorText;
         return SizedBox(
           width: kDatePickerWidth,
           child: Column(
-            children: [
+            children: <Widget>[
               Container(
                 height: kMenuHeight,
                 decoration: BoxDecoration(
@@ -58,7 +58,7 @@ class _DateFieldWrapState extends State<DateFieldWrap> {
                 child: Stack(
                   clipBehavior: Clip.none,
                   alignment: Alignment.center,
-                  children: [
+                  children: <Widget>[
                     Positioned(
                       //Label
                       top: -24,
@@ -68,13 +68,12 @@ class _DateFieldWrapState extends State<DateFieldWrap> {
                         color: Theme.of(context).colorScheme.background,
                         child: Text(
                           widget.label,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodySmall
-                              ?.copyWith(
-                                  color: errorText != null
-                                      ? Theme.of(context).colorScheme.error
-                                      : null),
+                          style:
+                              Theme.of(context).textTheme.bodySmall?.copyWith(
+                                    color: errorText != null
+                                        ? Theme.of(context).colorScheme.error
+                                        : null,
+                                  ),
                         ),
                       ),
                     ),
@@ -83,7 +82,7 @@ class _DateFieldWrapState extends State<DateFieldWrap> {
                       child: TextButton(
                         style: datePickerTextButtonStyle(context).copyWith(
                           overlayColor: MaterialStateColor.resolveWith(
-                            (states) => Theme.of(context)
+                            (Set<MaterialState> states) => Theme.of(context)
                                 .colorScheme
                                 .primary
                                 .withAlpha(24),
@@ -92,7 +91,7 @@ class _DateFieldWrapState extends State<DateFieldWrap> {
                         onPressed: () async {
                           await handleButtonPress(context, field);
                         },
-                        onHover: (value) {
+                        onHover: (bool value) {
                           handleButtonHover(value);
                         },
                         child: Text(
@@ -116,7 +115,7 @@ class _DateFieldWrapState extends State<DateFieldWrap> {
                         color: Theme.of(context).colorScheme.error,
                       ),
                 ),
-              )
+              ),
             ],
           ),
         );
@@ -131,8 +130,10 @@ class _DateFieldWrapState extends State<DateFieldWrap> {
   }
 
   Future<void> handleButtonPress(
-      BuildContext context, FormFieldState<DateTime> field) async {
-    final newDate = await widget.handleDateSetButton(context);
+    BuildContext context,
+    FormFieldState<DateTime> field,
+  ) async {
+    final DateTime? newDate = await widget.handleDateSetButton(context);
     if (newDate != null) {
       field.didChange(newDate);
       field.validate();
@@ -150,7 +151,7 @@ class _DateFieldWrapState extends State<DateFieldWrap> {
 
   String showDateOrSet(DateTime? date, bool isHovering) {
     return (!isHovering && date != null)
-        ? DateFormat('dd/MM/y').format(date)
+        ? DateFormat("dd/MM/y").format(date)
         : widget.localized.setText.capitalized;
   }
 }

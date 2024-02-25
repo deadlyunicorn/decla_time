@@ -1,22 +1,23 @@
-import 'dart:math';
+import "dart:math";
 
-import 'package:decla_time/core/connection/isar_helper.dart';
-import 'package:decla_time/core/constants/constants.dart';
-import 'package:decla_time/users/users_controller.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:provider/provider.dart';
-import 'package:decla_time/settings.dart';
-import 'package:decla_time/skeleton/skeleton.dart';
+import "package:decla_time/core/connection/isar_helper.dart";
+import "package:decla_time/core/constants/constants.dart";
+import "package:decla_time/users/users_controller.dart";
+import "package:flutter/material.dart";
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
+import "package:provider/provider.dart";
+import "package:decla_time/settings.dart";
+import "package:decla_time/skeleton/skeleton.dart";
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  final settingsController = SettingsController();
+  final SettingsController settingsController = SettingsController();
   await settingsController.loadSettings();
 
-  final isarHelper = IsarHelper();
-  final usersController = await UsersController.initialize(isarHelper);
+  final IsarHelper isarHelper = IsarHelper();
+  final UsersController usersController =
+      await UsersController.initialize(isarHelper);
 
   runApp(
     MyApp(
@@ -33,23 +34,33 @@ class MyApp extends StatelessWidget {
   final UsersController usersController;
 
   const MyApp({
-    super.key,
     required this.settingsController,
     required this.isarHelper,
     required this.usersController,
+    super.key,
   });
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
+      // ignore: always_specify_types
       providers: [
-        ChangeNotifierProvider(create: (context) => settingsController),
-        ChangeNotifierProvider(create: (context) => isarHelper),
-        ChangeNotifierProvider(create: (context) => usersController),
+        ChangeNotifierProvider<SettingsController>(
+          create: (BuildContext context) => settingsController,
+        ),
+        ChangeNotifierProvider<IsarHelper>(
+          create: (BuildContext context) => isarHelper,
+        ),
+        ChangeNotifierProvider<UsersController>(
+          create: (BuildContext context) => usersController,
+        ),
       ],
-      builder: (context, child) => Consumer<SettingsController>(
-        builder: (context, value, child) => MaterialApp(
-          title: 'DeclaTime',
+      builder: (BuildContext context, Widget? child) =>
+          Consumer<SettingsController>(
+        builder:
+            (BuildContext context, SettingsController value, Widget? child) =>
+                MaterialApp(
+          title: "DeclaTime",
           darkTheme: darkTheme(context),
           themeMode: ThemeMode.dark,
           home: const Skeleton(),
@@ -61,28 +72,29 @@ class MyApp extends StatelessWidget {
     );
   }
 
-  static const _white = Color.fromARGB(255, 218, 216, 248);
-  static const _primary = Color(0xFF3B197B);
-  static const _secondary = Color(0xFF2619B4);
-  static const _tetriary = Color.fromARGB(255, 13, 181, 97);
-  static const _background = Color(0xFF040412);
-  static const _error = Color.fromARGB(255, 199, 11, 68);
+  static const Color _white = Color.fromARGB(255, 218, 216, 248);
+  static const Color _primary = Color(0xFF3B197B);
+  static const Color _secondary = Color(0xFF2619B4);
+  static const Color _tetriary = Color.fromARGB(255, 13, 181, 97);
+  static const Color _background = Color(0xFF040412);
+  static const Color _error = Color.fromARGB(255, 199, 11, 68);
 
   ThemeData darkTheme(BuildContext context) {
     return ThemeData(
-      fontFamily: 'Ysabeau',
+      fontFamily: "Ysabeau",
       colorScheme: const ColorScheme(
-          brightness: Brightness.dark,
-          primary: _primary,
-          onPrimary: _white,
-          secondary: _secondary,
-          onSecondary: _white,
-          error: _error,
-          onError: _white,
-          background: _background,
-          onBackground: _white,
-          surface: _tetriary,
-          onSurface: _white),
+        brightness: Brightness.dark,
+        primary: _primary,
+        onPrimary: _white,
+        secondary: _secondary,
+        onSecondary: _white,
+        error: _error,
+        onError: _white,
+        background: _background,
+        onBackground: _white,
+        surface: _tetriary,
+        onSurface: _white,
+      ),
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
         backgroundColor: _tetriary,
         foregroundColor: _white,
@@ -104,9 +116,9 @@ class MyApp extends StatelessWidget {
       appBarTheme: const AppBarTheme(backgroundColor: _primary),
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-            foregroundColor: _tetriary),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+          foregroundColor: _tetriary,
+        ),
       ),
       snackBarTheme: SnackBarThemeData(
         behavior: SnackBarBehavior.floating,
@@ -121,11 +133,11 @@ class MyApp extends StatelessWidget {
         backgroundColor: _background,
         dividerColor: Colors.transparent,
         todayBorder: BorderSide(style: BorderStyle.none),
-        todayForegroundColor: MaterialStatePropertyAll(_tetriary),
+        todayForegroundColor: MaterialStatePropertyAll<Color>(_tetriary),
       ),
       dropdownMenuTheme: DropdownMenuThemeData(
         menuStyle: MenuStyle(
-          backgroundColor: MaterialStatePropertyAll(
+          backgroundColor: MaterialStatePropertyAll<Color>(
             _background.withOpacity(0.94),
           ),
         ),
@@ -141,17 +153,20 @@ class MyApp extends StatelessWidget {
           foregroundColor: _tetriary,
           backgroundColor: _secondary.withAlpha(64),
         ).copyWith(
-            overlayColor: MaterialStatePropertyAll(_secondary.withAlpha(64))),
+          overlayColor:
+              MaterialStatePropertyAll<Color>(_secondary.withAlpha(64)),
+        ),
       ),
       menuBarTheme: const MenuBarThemeData(
         style: MenuStyle(
-          backgroundColor: MaterialStatePropertyAll(_background),
-          padding: MaterialStatePropertyAll(EdgeInsets.zero),
+          backgroundColor: MaterialStatePropertyAll<Color>(_background),
+          padding:
+              MaterialStatePropertyAll<EdgeInsetsGeometry>(EdgeInsets.zero),
         ),
       ),
       menuTheme: const MenuThemeData(
         style: MenuStyle(
-          backgroundColor: MaterialStatePropertyAll(Colors.transparent),
+          backgroundColor: MaterialStatePropertyAll<Color>(Colors.transparent),
         ),
       ),
       useMaterial3: true,

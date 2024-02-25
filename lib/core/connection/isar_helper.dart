@@ -1,25 +1,28 @@
-import 'package:decla_time/core/connection/declaration_actions.dart';
-import 'package:decla_time/core/connection/reservation_actions.dart';
-import 'package:decla_time/core/connection/user_actions.dart';
-import 'package:decla_time/core/documents_io/documents_io.dart';
-import 'package:decla_time/declarations/database/declaration.dart';
-import 'package:decla_time/declarations/database/finalized_declaration_details.dart';
-import 'package:decla_time/declarations/database/user/user.dart';
-import 'package:decla_time/declarations/database/user/user_property.dart';
-import 'package:decla_time/reservations/reservation.dart';
-import 'package:flutter/foundation.dart';
-import 'package:isar/isar.dart';
+import "package:decla_time/core/connection/declaration_actions.dart";
+import "package:decla_time/core/connection/reservation_actions.dart";
+import "package:decla_time/core/connection/user_actions.dart";
+import "package:decla_time/core/documents_io/documents_io.dart";
+import "package:decla_time/declarations/database/declaration.dart";
+import "package:decla_time/declarations/database/finalized_declaration_details.dart";
+import "package:decla_time/declarations/database/user/user.dart";
+import "package:decla_time/declarations/database/user/user_property.dart";
+import "package:decla_time/reservations/reservation.dart";
+import "package:flutter/foundation.dart";
+import "package:isar/isar.dart";
 
 class IsarHelper extends ChangeNotifier {
   Future<Isar> get isarFuture async => Isar.instanceNames.isEmpty
-      ? await Isar.open([
-          ReservationSchema,
-          DeclarationSchema,
-          FinalizedDeclarationDetailsSchema,
-          UserPropertySchema,
-          UserSchema,
-        ], directory: (await DocumentsIO.appDirFuture).path)
-      : await Future.value(Isar.getInstance()!);
+      ? await Isar.open(
+          <CollectionSchema<Object>>[
+            ReservationSchema,
+            DeclarationSchema,
+            FinalizedDeclarationDetailsSchema,
+            UserPropertySchema,
+            UserSchema,
+          ],
+          directory: (await DocumentsIO.appDirFuture).path,
+        )
+      : await Future<Isar>.value(Isar.getInstance()!);
 
   ReservationActions? _reservationActions;
   DeclarationActions? _declarationActions;
@@ -36,23 +39,26 @@ class IsarHelper extends ChangeNotifier {
     final ReservationActions initializedReservationActions =
         _reservationActions ??
             ReservationActions(
-                isarFuture: isarFuture, notifyListeners: notifyListeners);
+              isarFuture: isarFuture,
+              notifyListeners: notifyListeners,
+            );
     _reservationActions ??= initializedReservationActions;
     return initializedReservationActions;
   }
 
   DeclarationActions get declarationActions {
-    final initializedDeclarationActions = _declarationActions ??
-        DeclarationActions(
-          isarFuture: isarFuture,
-          notifyListeners: notifyListeners,
-        );
+    final DeclarationActions initializedDeclarationActions =
+        _declarationActions ??
+            DeclarationActions(
+              isarFuture: isarFuture,
+              notifyListeners: notifyListeners,
+            );
     _declarationActions ??= initializedDeclarationActions;
     return initializedDeclarationActions;
   }
 
   UserActions get userActions {
-    final initializedUserActions = _userActions ??
+    final UserActions initializedUserActions = _userActions ??
         UserActions(
           isarFuture: isarFuture,
           notifyListeners: notifyListeners,

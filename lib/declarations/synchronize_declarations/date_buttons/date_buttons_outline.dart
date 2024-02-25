@@ -1,10 +1,10 @@
-import 'package:decla_time/core/constants/constants.dart';
-import 'package:flutter/material.dart';
+import "package:decla_time/core/constants/constants.dart";
+import "package:flutter/material.dart";
 
 class DateButtonsOutline extends StatelessWidget {
   const DateButtonsOutline({
-    super.key,
     required this.children,
+    super.key,
   });
 
   final List<Widget> children;

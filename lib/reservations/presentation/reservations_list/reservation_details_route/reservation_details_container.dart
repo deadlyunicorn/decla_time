@@ -1,18 +1,19 @@
-import 'package:decla_time/core/constants/constants.dart';
-import 'package:decla_time/core/extensions/capitalize.dart';
-import 'package:decla_time/reservations/reservation.dart';
-import 'package:decla_time/reservations/presentation/decleration_status_dot.dart';
-import 'package:decla_time/reservations/presentation/reservation_status_dot.dart';
-import 'package:decla_time/reservations/presentation/reservations_list/reservation_details_route/date_information_widget.dart';
-import 'package:decla_time/reservations/presentation/reservations_list/reservation_details_route/reservation_delete_button.dart';
-import 'package:decla_time/reservations/presentation/reservations_list/reservation_details_route/reservation_edit_button.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import "package:decla_time/core/constants/constants.dart";
+import "package:decla_time/core/extensions/capitalize.dart";
+import "package:decla_time/reservations/reservation.dart";
+import "package:decla_time/reservations/presentation/decleration_status_dot.dart";
+import "package:decla_time/reservations/presentation/reservation_status_dot.dart";
+import "package:decla_time/reservations/presentation/reservations_list/reservation_details_route/date_information_widget.dart";
+import "package:decla_time/reservations/presentation/reservations_list/reservation_details_route/reservation_delete_button.dart";
+import "package:decla_time/reservations/presentation/reservations_list/reservation_details_route/reservation_edit_button.dart";
+import "package:flutter/material.dart";
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
 
 class ReservationDetailsContainer extends StatelessWidget {
   const ReservationDetailsContainer({
+    required this.reservation,
+    required this.localized,
     super.key,
-    required this.reservation, required this.localized,
   });
 
   final Reservation reservation;
@@ -26,7 +27,7 @@ class ReservationDetailsContainer extends StatelessWidget {
     return DefaultTextStyle.merge(
       style: Theme.of(context).textTheme.bodyLarge,
       child: Stack(
-        children: [
+        children: <Widget>[
           Container(
             clipBehavior: Clip.antiAlias,
             width: kMaxWidthMedium,
@@ -40,23 +41,23 @@ class ReservationDetailsContainer extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
+                children: <Widget>[
                   OutlineContainer(
                     child: Column(
-                      children: [
+                      children: <Widget>[
                         Wrap(
                           //Platform and ID
                           spacing: 24,
                           alignment: WrapAlignment.spaceAround,
                           crossAxisAlignment: WrapCrossAlignment.center,
-                          children: [
+                          children: <Widget>[
                             RichText(
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               text: TextSpan(
                                 text: "${localized.platform.capitalized}: ",
                                 style: Theme.of(context).textTheme.bodyLarge,
-                                children: [
+                                children: <InlineSpan>[
                                   TextSpan(
                                     text: reservation.bookingPlatform,
                                     style: Theme.of(context)
@@ -69,12 +70,13 @@ class ReservationDetailsContainer extends StatelessWidget {
                             RichText(
                               text: TextSpan(
                                 text: "ID: ",
-                                children: [
+                                children: <InlineSpan>[
                                   TextSpan(
-                                      text: reservation.id,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headlineSmall),
+                                    text: reservation.id,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineSmall,
+                                  ),
                                 ],
                               ),
                             ),
@@ -85,7 +87,7 @@ class ReservationDetailsContainer extends StatelessWidget {
                           width: kMaxWidthSmall - 80,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
+                            children: <Widget>[
                               Text(
                                 "${localized.guestName.capitalized}: ",
                                 style: Theme.of(context).textTheme.bodyLarge,
@@ -98,7 +100,7 @@ class ReservationDetailsContainer extends StatelessWidget {
                                   alignment: Alignment.center,
                                   child: Text(reservation.guestName),
                                 ),
-                              )
+                              ),
                             ],
                           ),
                         ),
@@ -106,6 +108,7 @@ class ReservationDetailsContainer extends StatelessWidget {
                         (reservation.listingName != null &&
                                 reservation.listingName!.isNotEmpty)
                             ? Text(
+                                // ignore: lines_longer_than_80_chars
                                 "${localized.at.capitalized} '${reservation.listingName}'",
                                 textAlign: TextAlign.center,
                                 maxLines: 2,
@@ -117,14 +120,15 @@ class ReservationDetailsContainer extends StatelessWidget {
                   ),
                   OutlineContainer(
                     child: Column(
-                      children: [
+                      children: <Widget>[
                         Text(
                           "${reservation.payout.toStringAsFixed(2)} €",
                           style: Theme.of(context)
                               .textTheme
                               .headlineMedium
                               ?.copyWith(
-                                  color: Theme.of(context).colorScheme.surface),
+                                color: Theme.of(context).colorScheme.surface,
+                              ),
                           maxLines: 1,
                           textAlign: TextAlign.center,
                           overflow: TextOverflow.ellipsis,
@@ -195,15 +199,19 @@ class ReservationDetailsContainer extends StatelessWidget {
 }
 
 class OutlineContainer extends StatelessWidget {
-  const OutlineContainer({super.key, required this.child});
+  const OutlineContainer({
+    required this.child,
+    super.key,
+  });
   final Widget child;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color: Colors.white.withAlpha(20),
-          borderRadius: BorderRadius.circular(8)),
+        color: Colors.white.withAlpha(20),
+        borderRadius: BorderRadius.circular(8),
+      ),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: child,

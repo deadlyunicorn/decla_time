@@ -1,20 +1,20 @@
-import 'dart:math';
+import "dart:math";
 
-import 'package:decla_time/core/constants/constants.dart';
-import 'package:decla_time/core/extensions/capitalize.dart';
-import 'package:decla_time/reservations/reservation.dart';
-import 'package:decla_time/reservations/business/reservation_actions.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import "package:decla_time/core/constants/constants.dart";
+import "package:decla_time/core/extensions/capitalize.dart";
+import "package:decla_time/reservations/reservation.dart";
+import "package:decla_time/reservations/business/reservation_actions.dart";
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
 
-import 'package:decla_time/reservations/presentation/reservations_list/reservations_of_year_list.dart';
-import 'package:flutter/material.dart';
+import "package:decla_time/reservations/presentation/reservations_list/reservations_of_year_list.dart";
+import "package:flutter/material.dart";
 
 class ReservationsList extends StatelessWidget {
   const ReservationsList({
-    super.key,
     required this.reservations,
     required this.localized,
     required this.scrollController,
+    super.key,
   });
 
   final List<Reservation> reservations;
@@ -23,7 +23,7 @@ class ReservationsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final yearMonthMap =
+    final Map<int, Map<int, List<Reservation>>> yearMonthMap =
         ReservationActions.genereateYearMonthMap(reservations);
 
     if (reservations.isNotEmpty) {
@@ -31,13 +31,13 @@ class ReservationsList extends StatelessWidget {
         controller: scrollController,
         // A list where entries are separated by year.
         itemCount: yearMonthMap.entries.length,
-        itemBuilder: (context, index) {
+        itemBuilder: (BuildContext context, int index) {
           final int year = yearMonthMap.keys.toList()[index];
 
           return Column(
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
+            children: <Widget>[
               const SizedBox.square(dimension: 32),
               Text(
                 "$year",

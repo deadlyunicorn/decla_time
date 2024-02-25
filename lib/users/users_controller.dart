@@ -1,10 +1,13 @@
-import 'package:decla_time/core/connection/isar_helper.dart';
-import 'package:decla_time/core/constants/constants.dart';
-import 'package:decla_time/declarations/database/user/user.dart';
-import 'package:decla_time/declarations/utility/network_requests/headers/declarations_page_headers.dart';
-import 'package:decla_time/declarations/utility/user_credentials.dart';
-import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import "dart:async";
+
+import "package:decla_time/core/connection/isar_helper.dart";
+import "package:decla_time/core/constants/constants.dart";
+import "package:decla_time/declarations/database/user/user.dart";
+import "package:decla_time/declarations/database/user/user_property.dart";
+import "package:decla_time/declarations/utility/network_requests/headers/declarations_page_headers.dart";
+import "package:decla_time/declarations/utility/user_credentials.dart";
+import "package:flutter/material.dart";
+import "package:shared_preferences/shared_preferences.dart";
 
 class UsersController extends ChangeNotifier {
   String _selectedUser;
@@ -42,8 +45,8 @@ class UsersController extends ChangeNotifier {
   Future<void> selectProperty(String propertyId) async {
     if (propertyId == _selectedPropertyId) return;
 
-    final userThatOwnsPropert = _availableUsers
-        .where((user) => user.propertyIds.contains(propertyId))
+    final User? userThatOwnsPropert = _availableUsers
+        .where((User user) => user.propertyIds.contains(propertyId))
         .firstOrNull;
     if (userThatOwnsPropert == null) return;
     if (userThatOwnsPropert.username != selectedUser) {
@@ -52,8 +55,8 @@ class UsersController extends ChangeNotifier {
 
     _selectedPropertyId = propertyId;
 
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setString(kLastSelectedPropertyId, propertyId);
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    unawaited(prefs.setString(kLastSelectedPropertyId, propertyId));
 
     notifyListeners();
   }
@@ -62,22 +65,22 @@ class UsersController extends ChangeNotifier {
     if (username == _selectedUser) return;
     _selectedUser = username;
 
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setString(kLastSelectedUser, username);
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    unawaited(prefs.setString(kLastSelectedUser, username));
 
     await selectProperty("");
 
     notifyListeners();
   }
 
-  void sync() async {
+  Future<void> sync() async {
     _availableUsers = await _isarHelper.userActions.getAll();
     notifyListeners();
   }
 
   static Future<UsersController> initialize(IsarHelper isarHelper) async {
-    final prefs = await SharedPreferences.getInstance();
-    final rememberedUsername = prefs.getString(kGovUsername) ?? "";
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String rememberedUsername = prefs.getString(kGovUsername) ?? "";
 
     String lastSelectedUsername = rememberedUsername.isNotEmpty
         ? rememberedUsername
@@ -88,13 +91,16 @@ class UsersController extends ChangeNotifier {
 
     final List<User> users = await isarHelper.userActions.getAll();
     if (users
-        .where((user) => user.username.contains(lastSelectedUsername))
+        .where((User user) => user.username.contains(lastSelectedUsername))
         .isEmpty) {
       lastSelectedUsername = "";
       lastSelectedProperty = "";
     } else if ((await isarHelper.userActions
             .readProperties(username: lastSelectedUsername))
-        .where((property) => property.propertyId == lastSelectedProperty)
+        .where(
+          (UserProperty property) =>
+              property.propertyId == lastSelectedProperty,
+        )
         .isEmpty) {
       lastSelectedProperty = "";
     }
@@ -118,7 +124,8 @@ class UsersController extends ChangeNotifier {
 class LoggedUser {
   final void Function() _notifyListeners;
 
-  LoggedUser({required notifyListeners}) : _notifyListeners = notifyListeners;
+  LoggedUser({required void Function() notifyListeners})
+      : _notifyListeners = notifyListeners;
 
   UserCredentials? _userCredentials;
   DeclarationsPageHeaders? _headers;

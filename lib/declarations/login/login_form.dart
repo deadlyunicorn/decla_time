@@ -1,25 +1,27 @@
-import 'package:decla_time/core/connection/isar_helper.dart';
-import 'package:decla_time/core/constants/constants.dart';
-import 'package:decla_time/core/errors/exceptions.dart';
-import 'package:decla_time/core/extensions/capitalize.dart';
-import 'package:decla_time/core/widgets/column_with_spacings.dart';
-import 'package:decla_time/declarations/login/remember_username_checkbox.dart';
-import 'package:decla_time/declarations/utility/network_requests/headers/declarations_page_headers.dart';
-import 'package:decla_time/declarations/utility/network_requests/login/login_user.dart';
-import 'package:decla_time/declarations/utility/user_credentials.dart';
-import 'package:decla_time/reservations/presentation/widgets/reservation_form/form_fields/required_text_field.dart';
-import 'package:decla_time/users/users_controller.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter/material.dart';
-import 'package:http/http.dart';
-import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import "dart:async";
+
+import "package:decla_time/core/connection/isar_helper.dart";
+import "package:decla_time/core/constants/constants.dart";
+import "package:decla_time/core/errors/exceptions.dart";
+import "package:decla_time/core/extensions/capitalize.dart";
+import "package:decla_time/core/widgets/column_with_spacings.dart";
+import "package:decla_time/declarations/login/remember_username_checkbox.dart";
+import "package:decla_time/declarations/utility/network_requests/headers/declarations_page_headers.dart";
+import "package:decla_time/declarations/utility/network_requests/login/login_user.dart";
+import "package:decla_time/declarations/utility/user_credentials.dart";
+import "package:decla_time/reservations/presentation/widgets/reservation_form/form_fields/required_text_field.dart";
+import "package:decla_time/users/users_controller.dart";
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
+import "package:flutter/material.dart";
+import "package:http/http.dart";
+import "package:provider/provider.dart";
+import "package:shared_preferences/shared_preferences.dart";
 
 class LoginForm extends StatefulWidget {
   const LoginForm({
-    super.key,
     required this.localized,
     required this.initialUsername,
+    super.key,
   });
 
   final AppLocalizations localized;
@@ -30,9 +32,9 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
-  final usernameController = TextEditingController();
-  final passwordController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
+  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool rememberUsername = false;
   bool isLoading = false;
 
@@ -55,8 +57,8 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
-    final usersController = context.watch<UsersController>();
-    final isarHelper = context.watch<IsarHelper>();
+    final UsersController usersController = context.watch<UsersController>();
+    final IsarHelper isarHelper = context.watch<IsarHelper>();
 
     return isLoading
         ? SizedBox(
@@ -66,7 +68,7 @@ class _LoginFormState extends State<LoginForm> {
             ),
           )
         : Column(
-            children: [
+            children: <Widget>[
               SizedBox(
                 child: Text(
                   widget.localized.loginForm.capitalizedAll,
@@ -84,7 +86,7 @@ class _LoginFormState extends State<LoginForm> {
                   key: _formKey,
                   child: ColumnWithSpacings(
                     spacing: 16,
-                    children: [
+                    children: <Widget>[
                       RequiredTextField(
                         submitFormHandler: () {
                           submitLoginForm(isarHelper, usersController);
@@ -134,21 +136,27 @@ class _LoginFormState extends State<LoginForm> {
           );
   }
 
-  void submitLoginForm(
-      IsarHelper isarHelper, UsersController usersController) async {
+  Future<void> submitLoginForm(
+    IsarHelper isarHelper,
+    UsersController usersController,
+  ) async {
     if (_formKey.currentState!.validate()) {
       setLoadingStatus(true);
-      final credentials = UserCredentials(
+      final UserCredentials credentials = UserCredentials(
         username: usernameController.text,
         password: passwordController.text,
       );
 
-      SharedPreferences.getInstance().then((prefs) {
-        prefs.setString(
-          kGovUsername,
-          rememberUsername ? credentials.username : "",
-        );
-      });
+      unawaited(
+        SharedPreferences.getInstance().then(
+          (SharedPreferences prefs) {
+            prefs.setString(
+              kGovUsername,
+              rememberUsername ? credentials.username : "",
+            );
+          },
+        ),
+      );
 
       final DeclarationsPageHeaders? loginResult = await attemptLogin(
         credentials,
@@ -173,7 +181,8 @@ class _LoginFormState extends State<LoginForm> {
     UserCredentials credentials,
   ) async {
     try {
-      final headers = await loginUser(credentials: credentials);
+      final DeclarationsPageHeaders headers =
+          await loginUser(credentials: credentials);
       return headers;
     } on LoginFailedExcepetion {
       setErrorMessage(widget.localized.errorLoginFailed.capitalized);

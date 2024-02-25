@@ -1,14 +1,14 @@
-import 'package:decla_time/declarations/utility/declaration_body.dart';
-import 'package:decla_time/declarations/utility/network_requests/headers/declarations_page_headers.dart';
-import 'package:http/http.dart';
-import 'package:http/http.dart' as http;
+import "package:decla_time/declarations/utility/declaration_body.dart";
+import "package:decla_time/declarations/utility/network_requests/headers/declarations_page_headers.dart";
+import "package:http/http.dart";
+import "package:http/http.dart" as http;
 
 Future<Response> editDeclarationRequest({
   required DeclarationsPageHeaders headersObject,
   required DeclarationBody declarationBody,
   required String viewState,
 }) async {
-  declarationAttemptResponse() async => await http.post(
+  Future<Response> declarationAttemptResponse() async => await http.post(
         Uri.https(
           "www1.aade.gr",
           "taxisnet/short_term_letting/views/declaration.xhtml",
@@ -17,7 +17,7 @@ Future<Response> editDeclarationRequest({
         body: declarationBody.bodyStringPOST(viewState),
       );
 
-  final res = (await declarationAttemptResponse());
+  final Response res = (await declarationAttemptResponse());
   if (res.statusCode == 302) {
     print("our cookie timed out..");
 

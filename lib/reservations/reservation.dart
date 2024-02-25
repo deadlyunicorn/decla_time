@@ -1,8 +1,8 @@
-import 'package:decla_time/core/functions/fasthash.dart';
-import 'package:intl/intl.dart';
-import 'package:isar/isar.dart';
+import "package:decla_time/core/functions/fasthash.dart";
+import "package:intl/intl.dart";
+import "package:isar/isar.dart";
 
-part 'reservation.g.dart';
+part "reservation.g.dart";
 
 @collection
 class Reservation {

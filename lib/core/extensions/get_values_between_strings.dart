@@ -1,6 +1,9 @@
 List<String> getAllBetweenStrings(
-    String html, String startingString, String endingString) {
-  final values = <String>[];
+  String html,
+  String startingString,
+  String endingString,
+) {
+  final List<String> values = <String>[];
 
   for (int i = html.indexOf(startingString, 0);
       i > -1;
@@ -17,10 +20,13 @@ List<String> getAllBetweenStrings(
 }
 
 String getBetweenStrings(
-    String html, String startingString, String endingString) {
-  final indexOfKeyword = html.indexOf(startingString);
+  String html,
+  String startingString,
+  String endingString,
+) {
+  final int indexOfKeyword = html.indexOf(startingString);
   if (indexOfKeyword == -1) return "";
-  final targetStartingIndex = indexOfKeyword + startingString.length;
+  final int targetStartingIndex = indexOfKeyword + startingString.length;
 
   return html.substring(
     targetStartingIndex,

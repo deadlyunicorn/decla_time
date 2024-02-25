@@ -1,5 +1,5 @@
-import 'package:decla_time/core/enums/booking_platform.dart';
-import 'package:decla_time/core/enums/declaration_status.dart';
+import "package:decla_time/core/enums/booking_platform.dart";
+import "package:decla_time/core/enums/declaration_status.dart";
 
 class NoParams {}
 
@@ -31,7 +31,7 @@ class DeclarationParams extends ReservationParams{
     required super.totalValue,
     required super.hostPayout,
     required super.bookingPlatform,
-    required this.declarationStatus
+    required this.declarationStatus,
   });
 
 }

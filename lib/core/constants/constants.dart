@@ -1,47 +1,45 @@
-String kTemplate = 'template';
+String kTemplate = "template";
 
-String kApplicationName = 'decla_time';
+String kApplicationName = "decla_time";
 
-
-String kName = 'name';
-const kId = 'id';
+String kName = "name";
+const String kId = "id";
 //For api interactions
-const kGuestName = 'guest_name';
-const kArrivalDate = 'arrival_date';
-const kDepartureDate = 'departure_date';
-const kPayout = 'payout';
-const kBookingPlatform = 'booking_platform';
-const kLastSelectedUser = 'selected_user';
-const kLastSelectedPropertyId = 'selected_property';
+const String kGuestName = "guest_name";
+const String kArrivalDate = "arrival_date";
+const String kDepartureDate = "departure_date";
+const String kPayout = "payout";
+const String kBookingPlatform = "booking_platform";
+const String kLastSelectedUser = "selected_user";
+const String kLastSelectedPropertyId = "selected_property";
 
-const kSynced     = 'synced';
-const kStatus     = 'status'; 
-const kReservationStatus = "reservation_status"; //used to indicate if it was cancelled or not.
-const kReservationListing = "reservation_listing";
+const String kSynced = "synced";
+const String kStatus = "status";
 
+//used to indicate if it was cancelled or not.
+const String kReservationStatus = "reservation_status";
+const String kReservationListing = "reservation_listing";
 
-const kAirbnbListingNameColumn = 11;
-const kAirbnbIdColumn = 0;
-const kAirbnbGuestNameColumn = 2;
-const kAirbnbArrivalDateColumn = 7;
-const kAirbnbDepartureDateColumn = 8;
-const kAirbnbPayoutColumn = 12;
-const kAirbnbReservationStatusColumn = 1;
+const int kAirbnbListingNameColumn = 11;
+const int kAirbnbIdColumn = 0;
+const int kAirbnbGuestNameColumn = 2;
+const int kAirbnbArrivalDateColumn = 7;
+const int kAirbnbDepartureDateColumn = 8;
+const int kAirbnbPayoutColumn = 12;
+const int kAirbnbReservationStatusColumn = 1;
 
-const kBookingDotComArrivalDateColumn = 3;
-const kBookingDotComDepartureDateColumn = 4;
-const kBookingDotComGuestNameColumn = 1;
-const kBookingDotComIdColumn = 0;
-const kBookingDotComTotalPriceColumn = 12;
-const kBookingDotComFeeColumn = 14;
-const kBookingDotComReservationStatusColumn = 6;
+const int kBookingDotComArrivalDateColumn = 3;
+const int kBookingDotComDepartureDateColumn = 4;
+const int kBookingDotComGuestNameColumn = 1;
+const int kBookingDotComIdColumn = 0;
+const int kBookingDotComTotalPriceColumn = 12;
+const int kBookingDotComFeeColumn = 14;
+const int kBookingDotComReservationStatusColumn = 6;
 
-
-String kPath = 'path';
+String kPath = "path";
 
 ///360
 const double kSmallScreenWidth = 360;
-
 
 ///480
 const double kMaxWidthSmall = 480;
@@ -53,21 +51,20 @@ const double kMaxWidthMedium = 640;
 const double kMaxWidthLargest = 960;
 
 ///120
-const double kMaxContainerWidthSmall = 120; 
+const double kMaxContainerWidthSmall = 120;
 
 ///240
 const double kFormFieldWidth = 240;
 
-
-///160 
+///160
 const double kContainerWidthMedium = 160;
 
 ///64
-const double kMenuHeight = 64; 
+const double kMenuHeight = 64;
 
 ///WithErrorText
-const double kMenuHeightWithError = 96 + 32; 
-const double kMenuHeightWithoutError = kMenuHeightWithError - 48 ; 
+const double kMenuHeightWithError = 96 + 32;
+const double kMenuHeightWithoutError = kMenuHeightWithError - 48;
 
 ///32
 const double kDrawerHandleButtonsFromTop = 32;
@@ -78,16 +75,13 @@ const double kDatePickerWidth = kContainerWidthMedium;
 ///30
 const int kMonthInDays = 30;
 
-/// 30 * 12 
+/// 30 * 12
 const int kYearInDays = kMonthInDays * 12;
 
+const String kBookingPlatforms = "booking_platforms";
+const String kListings = "booking_listings";
 
-
-const kBookingPlatforms = 'booking_platforms';
-const kListings = 'booking_listings';
-
-
-const kCompleted = "completed";
-const kCancelled = "cancelled";
-const kUpcoming = "upcoming";
-const kGovUsername = "gov_username";
+const String kCompleted = "completed";
+const String kCancelled = "cancelled";
+const String kUpcoming = "upcoming";
+const String kGovUsername = "gov_username";

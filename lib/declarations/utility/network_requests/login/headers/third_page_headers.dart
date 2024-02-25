@@ -1,10 +1,10 @@
 // ignore_for_file: non_constant_identifier_names
 
-import 'package:decla_time/core/extensions/get_values_between_strings.dart';
-import 'package:decla_time/core/extensions/to_string_max_60.dart';
+import "package:decla_time/core/extensions/get_values_between_strings.dart";
+import "package:decla_time/core/extensions/to_string_max_60.dart";
 
-import 'package:http/http.dart';
-import 'second_page_headers.dart';
+import "package:http/http.dart";
+import "package:decla_time/declarations/utility/network_requests/login/headers/second_page_headers.dart";
 
 class ThirdPageHeaders extends SecondPageHeaders {
   @override
@@ -43,13 +43,14 @@ class ThirdPageHeaders extends SecondPageHeaders {
 
   @override
   String get cookies =>
+      // ignore: lines_longer_than_80_chars
       "${super.cookies} OAM_REQ_COUNT=$oam_req_count; OAM_JSESSIONID=$oam_JSESSIONID;";
 
   static ThirdPageHeaders getFromResponse({
     required StreamedResponse streamedResponse,
     required SecondPageHeaders previousPageHeaders,
   }) {
-    final headers = streamedResponse.headers.toString();
+    final String headers = streamedResponse.headers.toString();
 
     return ThirdPageHeaders(
       oam_JSESSIONID: getBetweenStrings(headers, "OAM_JSESSIONID=", ";"),

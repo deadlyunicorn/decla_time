@@ -1,18 +1,18 @@
-import 'package:decla_time/core/extensions/capitalize.dart';
-import 'package:decla_time/core/functions/night_or_nights.dart';
-import 'package:decla_time/core/widgets/custom_date_picker.dart';
-import 'package:decla_time/reservations/presentation/widgets/reservation_form/form_fields/date_fields/date_field_wrap.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import "package:decla_time/core/extensions/capitalize.dart";
+import "package:decla_time/core/functions/night_or_nights.dart";
+import "package:decla_time/core/widgets/custom_date_picker.dart";
+import "package:decla_time/reservations/presentation/widgets/reservation_form/form_fields/date_fields/date_field_wrap.dart";
+import "package:flutter/material.dart";
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
 
 class DatePickersField extends StatelessWidget {
   const DatePickersField({
-    super.key,
     required this.departureDate,
     required this.arrivalDate,
     required this.localized,
     required this.setArrivalDate,
     required this.setDepartureDate,
+    super.key,
   });
 
   final DateTime? departureDate;
@@ -28,11 +28,11 @@ class DatePickersField extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
-          children: [
+          children: <Widget>[
             Wrap(
               spacing: 16,
               runSpacing: 16,
-              children: [
+              children: <Widget>[
                 DateFieldWrap(
                   label: localized.arrival.capitalized,
                   handleDateSetButton: handleArrivalDateButton,
@@ -49,6 +49,7 @@ class DatePickersField extends StatelessWidget {
             ),
             Text(
               (departureDate != null && arrivalDate != null)
+                  // ignore: lines_longer_than_80_chars
                   ? "${localized.reservationLasted.capitalized} ${nightOrNights(localized, departureDate!.difference(arrivalDate!).inDays + 1)}"
                   : "",
               style: Theme.of(context).textTheme.bodySmall,
@@ -62,8 +63,8 @@ class DatePickersField extends StatelessWidget {
 
   Future<DateTime?> handleArrivalDateButton(BuildContext context) async {
     //earliest possible date;
-    final lastDate = departureDate ?? DateTime(1999);
-    final arrivalDateTemp = await showCustomDatePicker(
+    final DateTime lastDate = departureDate ?? DateTime(1999);
+    final DateTime? arrivalDateTemp = await showCustomDatePicker(
       context: context,
       firstDate: DateTime(1999),
       lastDate: departureDate != null
@@ -84,9 +85,9 @@ class DatePickersField extends StatelessWidget {
 
   Future<DateTime?> handleDepartureDateButton(BuildContext context) async {
     //earliest possible date;
-    final firstDate = arrivalDate ?? DateTime(1999);
+    final DateTime firstDate = arrivalDate ?? DateTime(1999);
 
-    final departureDateTemp = await showCustomDatePicker(
+    final DateTime? departureDateTemp = await showCustomDatePicker(
       context: context,
       firstDate: firstDate.add(const Duration(days: 1)),
       lastDate: DateTime(DateTime.now().year + 100),

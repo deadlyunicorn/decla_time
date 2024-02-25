@@ -1,9 +1,10 @@
-import 'package:decla_time/core/extensions/get_values_between_strings.dart';
-import 'package:decla_time/declarations/functions/check_if_logged_in.dart';
-import 'package:decla_time/declarations/utility/network_requests/headers/declarations_page_headers.dart';
-import 'package:http/http.dart' as http;
+import "package:decla_time/core/extensions/get_values_between_strings.dart";
+import "package:decla_time/declarations/functions/check_if_logged_in.dart";
+import "package:decla_time/declarations/utility/network_requests/headers/declarations_page_headers.dart";
+import "package:http/http.dart" as http;
 
-///? In our query parameters we can either specify a specific declarationDbId, or request a new declaration.
+///? In our query parameters we can either specify a specific declarationDbId,
+///?  or request a new declaration.
 Future<String> getDeclarationPageViewState({
   required Map<String, String> declarationQueryParameters,
   required DeclarationsPageHeaders testingHeaders,
@@ -18,8 +19,8 @@ Future<String> getDeclarationPageViewState({
     headers: testingHeaders.getHeadersForGET(),
   )
       .then(
-    (res) {
-      final body = res.body;
+    (http.Response res) {
+      final String body = res.body;
       checkIfLoggedIn(body);
       return getBetweenStrings(
         body,

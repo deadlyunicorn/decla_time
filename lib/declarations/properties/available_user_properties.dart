@@ -1,19 +1,19 @@
-import 'package:decla_time/core/constants/constants.dart';
-import 'package:decla_time/core/extensions/capitalize.dart';
-import 'package:decla_time/core/widgets/column_with_spacings.dart';
-import 'package:decla_time/declarations/database/user/user_property.dart';
-import 'package:decla_time/declarations/properties/property_sync_button.dart';
-import 'package:decla_time/users/users_controller.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:provider/provider.dart';
+import "package:decla_time/core/constants/constants.dart";
+import "package:decla_time/core/extensions/capitalize.dart";
+import "package:decla_time/core/widgets/column_with_spacings.dart";
+import "package:decla_time/declarations/database/user/user_property.dart";
+import "package:decla_time/declarations/properties/property_sync_button.dart";
+import "package:decla_time/users/users_controller.dart";
+import "package:flutter/material.dart";
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
+import "package:provider/provider.dart";
 
 class AvailableUserProperties extends StatefulWidget {
   const AvailableUserProperties({
-    super.key,
     required this.userProperties,
     required this.localized,
     required this.currentUser,
+    super.key,
   });
 
   @override
@@ -28,19 +28,23 @@ class _AvailableUserPropertiesState extends State<AvailableUserProperties> {
   bool isOpen = false;
   @override
   Widget build(BuildContext context) {
-    final selectedProperty = context.select<UsersController, UserProperty?>(
-      (controller) => widget.userProperties
+    final UserProperty? selectedProperty =
+        context.select<UsersController, UserProperty?>(
+      (UsersController controller) => widget.userProperties
           .where(
-              (property) => controller.selectedProperty == property.propertyId)
+            (UserProperty property) =>
+                controller.selectedProperty == property.propertyId,
+          )
           .firstOrNull,
     );
 
-    final menuText = selectedProperty == null
+    final String menuText = selectedProperty == null
         ? widget.localized.selectProperty.capitalized
         : propertyShortDetails(selectedProperty);
 
-    final userPropertyEntries = widget.userProperties.map(
-      (property) {
+    final Iterable<AvailablePropertiesListTile> userPropertyEntries =
+        widget.userProperties.map(
+      (UserProperty property) {
         final String entryText = propertyShortDetails(property);
 
         return AvailablePropertiesListTile(
@@ -62,7 +66,7 @@ class _AvailableUserPropertiesState extends State<AvailableUserProperties> {
 
     return ColumnWithSpacings(
       spacing: 4,
-      children: [
+      children: <Widget>[
         AvailablePropertiesListTile(
           onTap: () {
             setState(() {
@@ -71,25 +75,26 @@ class _AvailableUserPropertiesState extends State<AvailableUserProperties> {
           },
           child: Text(menuText),
         ),
-        if (isOpen) ...[
+        if (isOpen) ...<Widget>[
           ...userPropertyEntries,
           PropertySyncButton(
             parentContext: context,
             localized: widget.localized,
           ),
-        ]
+        ],
       ],
     );
   }
 
   String propertyShortDetails(UserProperty property) =>
-      "${property.address} - ${property.atak}"; //? ATAK is more relevant to the end user than the propertyId..
+      "${property.address} - ${property.atak}";
+  //? ATAK is more relevant to the end user than the propertyId..
 }
 
 class AvailablePropertiesListTile extends StatelessWidget {
   const AvailablePropertiesListTile({
-    super.key,
     required this.onTap,
+    super.key,
     this.icon,
     this.child,
   });

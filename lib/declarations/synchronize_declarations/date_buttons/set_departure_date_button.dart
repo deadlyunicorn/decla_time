@@ -1,17 +1,17 @@
-import 'package:decla_time/core/extensions/capitalize.dart';
-import 'package:decla_time/core/functions/handle_range_date_pickers.dart';
-import 'package:decla_time/declarations/synchronize_declarations/date_buttons/date_buttons_outline.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:intl/intl.dart';
+import "package:decla_time/core/extensions/capitalize.dart";
+import "package:decla_time/core/functions/handle_range_date_pickers.dart";
+import "package:decla_time/declarations/synchronize_declarations/date_buttons/date_buttons_outline.dart";
+import "package:flutter/material.dart";
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
+import "package:intl/intl.dart";
 
 class SetDepartureDateButton extends StatelessWidget {
   const SetDepartureDateButton({
-    super.key,
     required this.arrivalDate,
     required this.departureDate,
     required this.localized,
     required this.setDepartureDate,
+    super.key,
   });
 
   final DateTime? arrivalDate;
@@ -22,11 +22,11 @@ class SetDepartureDateButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DateButtonsOutline(
-      children: [
+      children: <Widget>[
         Text("${localized.departure.capitalized}: "),
         TextButton(
           onPressed: () async {
-            final tempDepartureDate = await handleDepartureDatePicker(
+            final DateTime? tempDepartureDate = await handleDepartureDatePicker(
               context: context,
               arrivalDate: arrivalDate,
               departureDate: departureDate,

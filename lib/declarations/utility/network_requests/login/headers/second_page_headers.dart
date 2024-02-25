@@ -1,10 +1,10 @@
 // ignore_for_file: non_constant_identifier_names
 
-import 'package:decla_time/core/extensions/get_values_between_strings.dart';
-import 'package:decla_time/core/extensions/to_string_max_60.dart';
+import "package:decla_time/core/extensions/get_values_between_strings.dart";
+import "package:decla_time/core/extensions/to_string_max_60.dart";
 
-import 'first_page_headers.dart';
-import 'package:http/http.dart';
+import "package:decla_time/declarations/utility/network_requests/login/headers/first_page_headers.dart";
+import "package:http/http.dart";
 
 class SecondPageHeaders extends FirstPageHeaders {
   @override
@@ -51,7 +51,7 @@ class SecondPageHeaders extends FirstPageHeaders {
     required StreamedResponse streamedResponse,
     required FirstPageHeaders previousPageHeaders,
   }) {
-    final headers = streamedResponse.headers.toString();
+    final String headers = streamedResponse.headers.toString();
 
     return SecondPageHeaders(
       oam_req_0: getBetweenStrings(headers, "OAM_REQ_0=", ";"),

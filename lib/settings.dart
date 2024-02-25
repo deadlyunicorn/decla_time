@@ -1,37 +1,35 @@
-import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import "dart:async";
 
-class SettingsController extends ChangeNotifier{
+import "package:flutter/material.dart";
+import "package:shared_preferences/shared_preferences.dart";
 
+class SettingsController extends ChangeNotifier {
   String get locale => _locale ?? "el";
 
   String? _locale;
 
+  Future<void> loadSettings() async {
+    final SharedPreferences sharedPreferences =
+        (await SharedPreferences.getInstance());
+    _locale = sharedPreferences.getString("locale") ?? "el";
+    unawaited(sharedPreferences.setString("locale", _locale!));
 
-  Future<void> loadSettings()async{
-
-    final sharedPreferences = (await SharedPreferences.getInstance());
-    _locale = sharedPreferences.getString("locale") ?? "el" ;
-    sharedPreferences.setString( "locale", _locale! );
-    
     notifyListeners();
   }
 
-  Future<void> toggleLocale ()async{
+  Future<void> toggleLocale() async {
+    final SharedPreferences sharedPreferences =
+        (await SharedPreferences.getInstance());
+    final String storedLocale = sharedPreferences.getString("locale") ?? "el";
 
-    final sharedPreferences = (await SharedPreferences.getInstance());
-    final storedLocale = sharedPreferences.getString("locale") ?? "el";
-
-    if ( storedLocale == "el" ){
+    if (storedLocale == "el") {
       _locale = "en";
-      sharedPreferences.setString( "locale", "en" );
-    } else{
+      unawaited(sharedPreferences.setString("locale", "en"));
+    } else {
       _locale = "el";
-      sharedPreferences.setString( "locale", "el" );
+      unawaited(sharedPreferences.setString("locale", "el"));
     }
 
     notifyListeners();
-
   }
-
 }

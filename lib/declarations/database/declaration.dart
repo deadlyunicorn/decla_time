@@ -1,10 +1,10 @@
-import 'package:decla_time/core/enums/booking_platform.dart';
-import 'package:decla_time/core/enums/declaration_status.dart';
-import 'package:decla_time/core/functions/fasthash.dart';
-import 'package:intl/intl.dart';
-import 'package:isar/isar.dart';
+import "package:decla_time/core/enums/booking_platform.dart";
+import "package:decla_time/core/enums/declaration_status.dart";
+import "package:decla_time/core/functions/fasthash.dart";
+import "package:intl/intl.dart";
+import "package:isar/isar.dart";
 
-part 'declaration.g.dart';
+part "declaration.g.dart";
 
 @collection
 class Declaration {
@@ -32,13 +32,13 @@ class Declaration {
   Declaration({
     required this.propertyId,
     required this.declarationDbId,
-    this.declarationStatus = DeclarationStatus.temporary,
-    this.cancellationDate,
-    this.cancellationAmount,
     required this.bookingPlatform,
     required this.arrivalDate,
     required this.departureDate,
     required this.payout,
+    this.declarationStatus = DeclarationStatus.temporary,
+    this.cancellationDate,
+    this.cancellationAmount,
     this.serialNumber,
   });
 

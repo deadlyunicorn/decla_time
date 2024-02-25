@@ -1,16 +1,16 @@
-import 'package:decla_time/core/constants/constants.dart';
-import 'package:decla_time/core/functions/fasthash.dart';
-import 'package:decla_time/reservations/presentation/widgets/reservation_form/form_fields/required_text_field.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import "package:decla_time/core/constants/constants.dart";
+import "package:decla_time/core/functions/fasthash.dart";
+import "package:decla_time/reservations/presentation/widgets/reservation_form/form_fields/required_text_field.dart";
+import "package:flutter/material.dart";
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
 
 class IdField extends StatelessWidget {
   const IdField({
-    super.key,
     required this.hasInitialId,
     required this.idController,
     required this.refresh,
     required this.localized,
+    super.key,
   });
 
   final bool hasInitialId;
@@ -25,14 +25,14 @@ class IdField extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
-        children: [
+        children: <Widget>[
           SizedBox(
             height: 64,
             child: Center(
               child: IconButton(
-                mouseCursor: hasInitialId 
-                ? SystemMouseCursors.forbidden
-                : SystemMouseCursors.click,
+                mouseCursor: hasInitialId
+                    ? SystemMouseCursors.forbidden
+                    : SystemMouseCursors.click,
                 onPressed: () {
                   if (!hasInitialId) {
                     idController.text = fastHash(DateTime.now().toString())
@@ -51,7 +51,7 @@ class IdField extends StatelessWidget {
           ),
           Flexible(
             child: RequiredTextField(
-              submitFormHandler: (){},
+              submitFormHandler: () {},
               isEditingExistingEntry: hasInitialId,
               controller: idController,
               label: "ID",

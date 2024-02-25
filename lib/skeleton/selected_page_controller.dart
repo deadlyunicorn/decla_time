@@ -1,12 +1,12 @@
-import 'package:decla_time/core/enums/selected_page.dart';
-import 'package:flutter/material.dart';
+import "package:decla_time/core/enums/selected_page.dart";
+import "package:flutter/material.dart";
 
 class SelectedPageController extends ChangeNotifier{
 
   SelectedPage _selectedPage = SelectedPage.reservations;
   final ScrollController _scrollController;
   SelectedPageController({
-   required ScrollController scrollController
+   required ScrollController scrollController,
   }
   ):_scrollController = scrollController;
 
@@ -14,7 +14,7 @@ class SelectedPageController extends ChangeNotifier{
   int get selectedPageIndex => convertSelectedPageToIndex(_selectedPage);
 
   void setSelectedPageByIndex( int newPageIndex) {
-    final newPage = convertIndexToSelectedPage(newPageIndex);
+    final SelectedPage newPage = convertIndexToSelectedPage(newPageIndex);
 
     if (_selectedPage != newPage) {
         _selectedPage = newPage;

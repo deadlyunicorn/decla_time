@@ -1,4 +1,4 @@
-import 'dart:math';
+import "dart:math";
 
 extension ToStringMax60 on Object {
   String get toStringMax60 => toString().substring(

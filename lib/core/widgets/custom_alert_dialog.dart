@@ -1,15 +1,15 @@
-import 'package:decla_time/core/constants/constants.dart';
-import 'package:decla_time/core/extensions/capitalize.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import "package:decla_time/core/constants/constants.dart";
+import "package:decla_time/core/extensions/capitalize.dart";
+import "package:flutter/material.dart";
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
 
 class CustomAlertDialog extends StatelessWidget {
   const CustomAlertDialog({
-    super.key,
     required this.confirmButtonAction,
     required this.title,
     required this.child,
     required this.localized,
+    super.key,
   });
 
   final void Function() confirmButtonAction;
@@ -19,7 +19,7 @@ class CustomAlertDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.sizeOf(context).height;
+    final double screenHeight = MediaQuery.sizeOf(context).height;
     return SingleChildScrollView(
       child: SizedBox(
         height: screenHeight > kMaxWidthSmall ? screenHeight : null,
@@ -32,11 +32,11 @@ class CustomAlertDialog extends StatelessWidget {
             width: kMaxWidthSmall,
             child: child,
           ),
-          actions: [
+          actions: <Widget>[
             FittedBox(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
-                children: [
+                children: <Widget>[
                   TextButton(
                     onPressed: () {
                       Navigator.pop(context);
@@ -48,10 +48,10 @@ class CustomAlertDialog extends StatelessWidget {
                       confirmButtonAction();
                     },
                     child: Text(localized.confirm.capitalized),
-                  )
+                  ),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),

@@ -1,27 +1,25 @@
-import 'dart:math';
+import "dart:math";
 
-import 'package:decla_time/core/constants/constants.dart';
-import 'package:decla_time/core/widgets/minimalistic_icon_button.dart';
-import 'package:flutter/material.dart';
+import "package:decla_time/core/constants/constants.dart";
+import "package:decla_time/core/widgets/minimalistic_icon_button.dart";
+import "package:flutter/material.dart";
 
 class DrawerOutline extends StatelessWidget {
   const DrawerOutline({
-    super.key,
     required this.child,
+    super.key,
   });
 
   final Widget child;
 
   @override
   Widget build(BuildContext context) {
-
-
     return Drawer(
       surfaceTintColor: Colors.transparent,
       backgroundColor: Colors.transparent,
-      width: min( 360, MediaQuery.sizeOf(context).width ),
+      width: min(360, MediaQuery.sizeOf(context).width),
       child: Stack(
-        children: [
+        children: <Widget>[
           Positioned(
             child: GestureDetector(
               onTap: () {
@@ -43,7 +41,9 @@ class DrawerOutline extends StatelessWidget {
                 child: SingleChildScrollView(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 16, vertical: kDrawerHandleButtonsFromTop),
+                      horizontal: 16,
+                      vertical: kDrawerHandleButtonsFromTop,
+                    ),
                     child: child,
                   ),
                 ),
@@ -59,7 +59,7 @@ class DrawerOutline extends StatelessWidget {
                 Scaffold.of(context).closeDrawer();
               },
             ),
-          )
+          ),
         ],
       ),
     );

@@ -1,12 +1,14 @@
-import 'package:decla_time/reservations/reservation.dart';
-import 'package:isar/isar.dart';
+import "package:decla_time/reservations/reservation.dart";
+import "package:isar/isar.dart";
 
 class ReservationActions {
   final Future<Isar> _isarFuture;
   final void Function() _notifyListeners;
 
-  ReservationActions({required isarFuture, required notifyListeners})
-      : _isarFuture = isarFuture,
+  ReservationActions({
+    required Future<Isar> isarFuture,
+    required void Function() notifyListeners,
+  })  : _isarFuture = isarFuture,
         _notifyListeners = notifyListeners;
 
   Future<List<Reservation>> getAllEntriesFromReservations() async {
@@ -18,7 +20,7 @@ class ReservationActions {
   }
 
   Future<void> removeFromDatabase(String reservationId) async {
-    final isar = await _isarFuture;
+    final Isar isar = await _isarFuture;
     await isar.writeTxn(() async {
       await isar.reservations.deleteById(reservationId);
     });
@@ -26,14 +28,18 @@ class ReservationActions {
   }
 
   Future<Iterable<Reservation>> filterRegistered(
-      Iterable<Reservation> reservations) async {
+    Iterable<Reservation> reservations,
+  ) async {
     final Iterable<Reservation> databaseResponse = await (await _isarFuture)
         .reservations
         .getAllById(
-          reservations.map((reservation) => reservation.id).toList(),
+          reservations
+              .map((Reservation reservation) => reservation.id)
+              .toList(),
         )
         .then(
-          (databaseReservations) => databaseReservations.nonNulls,
+          (List<Reservation?> databaseReservations) =>
+              databaseReservations.nonNulls,
         );
     return databaseResponse;
   }
@@ -47,7 +53,7 @@ class ReservationActions {
   }
 
   Future<void> insertOrUpdateReservationEntry(Reservation reservation) async {
-    final isar = await _isarFuture;
+    final Isar isar = await _isarFuture;
 
     await isar.writeTxn(() async {
       await isar.reservations.put(reservation);
@@ -56,7 +62,7 @@ class ReservationActions {
   }
 
   Future<Reservation?> getReservationEntry(String reservationId) async {
-    final isar = await _isarFuture;
+    final Isar isar = await _isarFuture;
     return await isar.reservations
         .filter()
         .idEqualTo(reservationId)
@@ -64,10 +70,10 @@ class ReservationActions {
   }
 
   Future<void> insertMultipleEntriesToDb(List<Reservation> reservations) async {
-    final isar = await _isarFuture;
+    final Isar isar = await _isarFuture;
 
     await isar.writeTxn(() async {
-      for (final reservation in reservations) {
+      for (final Reservation reservation in reservations) {
         await isar.reservations.put(reservation);
       }
     });

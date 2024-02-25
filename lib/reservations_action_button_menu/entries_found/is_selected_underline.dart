@@ -1,10 +1,10 @@
-import 'package:decla_time/core/constants/constants.dart';
-import 'package:flutter/material.dart';
+import "package:decla_time/core/constants/constants.dart";
+import "package:flutter/material.dart";
 
 class IsSelectedUnderline extends StatelessWidget {
   const IsSelectedUnderline({
-    super.key,
     required this.isSelected,
+    super.key,
   });
 
   final bool isSelected;

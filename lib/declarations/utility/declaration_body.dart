@@ -1,5 +1,5 @@
-import 'package:decla_time/core/enums/booking_platform.dart';
-import 'package:intl/intl.dart';
+import "package:decla_time/core/enums/booking_platform.dart";
+import "package:intl/intl.dart";
 
 class DeclarationBody {
   final String platform;
@@ -19,7 +19,7 @@ class DeclarationBody {
   });
 
   int get _translatedPlatform {
-    final platformName = platform.toLowerCase();
+    final String platformName = platform.toLowerCase();
 
     if (platformName.contains("airbnb")) {
       return 1;
@@ -62,15 +62,17 @@ class DeclarationBody {
       throw "Cancellation date missing";
     }
 
+    // ignore: lines_longer_than_80_chars
     return "appForm%3ArentalFrom_input=${translateDate(arrivalDate)}&appForm%3ArentalTo_input=${translateDate(departureDate)}&appForm%3AsumAmount_hinput=${payout ?? ""}&appForm%3Aplatform_input=$_translatedPlatform&appForm%3AcancelAmount_hinput=${cancellationAmount ?? ""}&appForm%3AcancelDate_input=${cancellationDate != null ? translateDate(cancellationDate!) : ""}&appForm%3ArenterAfm=000000000&appForm%3ApaymentType_focus=&appForm%3ApaymentType_input=4&appForm%3Aplatform_focus=&appForm%3Aj_idt93=&javax.faces.ViewState=$viewStateParsed&javax.faces.partial.ajax=true&javax.faces.source=appForm%3AsaveButton&javax.faces.partial.execute=%40all&javax.faces.partial.render=appForm&appForm%3AsaveButton=appForm%3AsaveButton&appForm=appForm";
   }
 
   static String get declarationCreationBody {
+    // ignore: lines_longer_than_80_chars
     return "javax.faces.partial.ajax=true&javax.faces.source=appForm%3AnewDeclarationButtonLower&javax.faces.partial.execute=%40all&appForm%3AnewDeclarationButtonLower=appForm%3AnewDeclarationButtonLower&appForm=appForm";
   }
 
   static BookingPlatform extractBookingPlatform(String text) {
-    final textToLowercase = text.toLowerCase();
+    final String textToLowercase = text.toLowerCase();
 
     if (textToLowercase.contains("airbnb")) {
       return BookingPlatform.airbnb;

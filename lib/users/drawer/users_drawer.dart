@@ -1,19 +1,19 @@
-import 'package:decla_time/core/enums/selected_page.dart';
-import 'package:decla_time/core/extensions/capitalize.dart';
-import 'package:decla_time/core/widgets/column_with_spacings.dart';
-import 'package:decla_time/skeleton/selected_page_controller.dart';
-import 'package:decla_time/users/drawer/add_user_button.dart';
-import 'package:decla_time/users/drawer/drawer_outline.dart';
-import 'package:decla_time/users/drawer/users/users_list.dart';
-import 'package:decla_time/users/users_controller.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:provider/provider.dart';
+import "package:decla_time/core/enums/selected_page.dart";
+import "package:decla_time/core/extensions/capitalize.dart";
+import "package:decla_time/core/widgets/column_with_spacings.dart";
+import "package:decla_time/skeleton/selected_page_controller.dart";
+import "package:decla_time/users/drawer/add_user_button.dart";
+import "package:decla_time/users/drawer/drawer_outline.dart";
+import "package:decla_time/users/drawer/users/users_list.dart";
+import "package:decla_time/users/users_controller.dart";
+import "package:flutter/material.dart";
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
+import "package:provider/provider.dart";
 
 class UsersDrawer extends StatelessWidget {
   const UsersDrawer({
-    super.key,
     required this.localized,
+    super.key,
   });
 
   final AppLocalizations localized;
@@ -23,7 +23,7 @@ class UsersDrawer extends StatelessWidget {
     return DrawerOutline(
       child: ColumnWithSpacings(
         spacing: 16,
-        children: [
+        children: <Widget>[
           Headline(localized: localized),
           const SizedBox.square(
             dimension: 16,
@@ -53,8 +53,8 @@ class UsersDrawer extends StatelessWidget {
 
 class Headline extends StatelessWidget {
   const Headline({
-    super.key,
     required this.localized,
+    super.key,
   });
 
   final AppLocalizations localized;

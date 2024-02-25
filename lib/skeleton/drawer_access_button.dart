@@ -1,7 +1,7 @@
-import 'dart:math';
+import "dart:math";
 
-import 'package:decla_time/core/constants/constants.dart';
-import 'package:flutter/material.dart';
+import "package:decla_time/core/constants/constants.dart";
+import "package:flutter/material.dart";
 
 class DrawerAccessButton extends StatefulWidget {
   const DrawerAccessButton({
@@ -17,16 +17,18 @@ class _DrawerAccessButtonState extends State<DrawerAccessButton> {
 
   @override
   Widget build(BuildContext context) {
-
     return Positioned(
       top: distanceFromTop,
       left: 0,
       child: GestureDetector(
-        onVerticalDragUpdate: (details) {
-          final newDistance = min(
-              max(kDrawerHandleButtonsFromTop,
-                  distanceFromTop + details.delta.dy),
-              MediaQuery.sizeOf(context).height - 128);
+        onVerticalDragUpdate: (DragUpdateDetails details) {
+          final double newDistance = min(
+            max(
+              kDrawerHandleButtonsFromTop,
+              distanceFromTop + details.delta.dy,
+            ),
+            MediaQuery.sizeOf(context).height - 128,
+          );
           setState(() {
             distanceFromTop = newDistance;
           });

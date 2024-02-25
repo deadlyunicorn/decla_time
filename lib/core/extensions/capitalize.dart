@@ -7,7 +7,7 @@ extension CapitalizeString on String {
 
   String get capitalizedAll => length > 1
       ? (() {
-          final tempString = [];
+          final List<String> tempString = <String>[];
           for (int i = 0; i < runes.length; i++) {
             if (i == 0) {
               tempString.add(this[i].toUpperCase());

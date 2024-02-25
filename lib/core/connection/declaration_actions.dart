@@ -1,16 +1,19 @@
-import 'package:decla_time/declarations/database/declaration.dart';
-import 'package:isar/isar.dart';
+import "package:decla_time/declarations/database/declaration.dart";
+import "package:isar/isar.dart";
 
 class DeclarationActions {
   final Future<Isar> _isarFuture;
   final void Function() _notifyListeners;
 
-  DeclarationActions({required isarFuture, required notifyListeners})
-      : _isarFuture = isarFuture,
+  DeclarationActions({
+    required Future<Isar> isarFuture,
+    required void Function() notifyListeners,
+  })  : _isarFuture = isarFuture,
         _notifyListeners = notifyListeners;
 
-  Future<List<Declaration>> getAllDeclarationsFrom(
-      {required String propertyId}) async {
+  Future<List<Declaration>> getAllDeclarationsFrom({
+    required String propertyId,
+  }) async {
     return (await _isarFuture)
         .declarations
         .filter()
@@ -27,7 +30,7 @@ class DeclarationActions {
   }
 
   Future<void> removeFromDatabase(int declarationDbId) async {
-    final isar = await _isarFuture;
+    final Isar isar = await _isarFuture;
     await isar.writeTxn(() async {
       await isar.declarations.deleteByDeclarationDbId(declarationDbId);
     });
@@ -56,7 +59,7 @@ class DeclarationActions {
   }
 
   Future<void> insertOrUpdateDeclarationEntry(Declaration declaration) async {
-    final isar = await _isarFuture;
+    final Isar isar = await _isarFuture;
 
     await isar.writeTxn(() async {
       await isar.declarations.put(declaration);
@@ -65,7 +68,7 @@ class DeclarationActions {
   }
 
   Future<Declaration?> getDeclarationEntry(int declarationDbId) async {
-    final isar = await _isarFuture;
+    final Isar isar = await _isarFuture;
     return await isar.declarations
         .filter()
         .declarationDbIdEqualTo(declarationDbId)
@@ -73,10 +76,10 @@ class DeclarationActions {
   }
 
   Future<void> insertMultipleEntriesToDb(List<Declaration> declarations) async {
-    final isar = await _isarFuture;
+    final Isar isar = await _isarFuture;
 
     await isar.writeTxn(() async {
-      for (final declaration in declarations) {
+      for (final Declaration declaration in declarations) {
         await isar.declarations.put(declaration);
       }
     });

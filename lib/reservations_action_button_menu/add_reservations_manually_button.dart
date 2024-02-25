@@ -1,16 +1,16 @@
-import 'package:decla_time/core/extensions/capitalize.dart';
-import 'package:decla_time/core/functions/night_or_nights.dart';
-import 'package:decla_time/reservations/reservation.dart';
-import 'package:decla_time/reservations_action_button_menu/reservation_addition_button_outline.dart';
-import 'package:decla_time/reservations_action_button_menu/manual_entry_route/manual_reservation_entry_route.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import "package:decla_time/core/extensions/capitalize.dart";
+import "package:decla_time/core/functions/night_or_nights.dart";
+import "package:decla_time/reservations/reservation.dart";
+import "package:decla_time/reservations_action_button_menu/reservation_addition_button_outline.dart";
+import "package:decla_time/reservations_action_button_menu/manual_entry_route/manual_reservation_entry_route.dart";
+import "package:flutter/material.dart";
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
 
 class AddReservationsManuallyButton extends StatelessWidget {
   const AddReservationsManuallyButton({
-    super.key,
     required this.localized,
     required this.addToReservationsFoundSoFar,
+    super.key,
   });
 
   final AppLocalizations localized;
@@ -22,10 +22,10 @@ class AddReservationsManuallyButton extends StatelessWidget {
       description: localized.manualAddition.capitalized,
       icon: Icons.edit,
       onTap: () async {
-        final reservation = await Navigator.push<Reservation?>(
+        final Reservation? reservation = await Navigator.push<Reservation?>(
           context,
-          MaterialPageRoute(
-            builder: (context) => ManualReservationEntryRoute(
+          MaterialPageRoute<Reservation?>(
+            builder: (BuildContext context) => ManualReservationEntryRoute(
               localized: localized,
               addToReservationsFoundSoFar: addToReservationsFoundSoFar,
             ),
@@ -39,6 +39,7 @@ class AddReservationsManuallyButton extends StatelessWidget {
               SnackBar(
                 content: Center(
                   child: Text(
+                    // ignore: lines_longer_than_80_chars
                     "${localized.addedAReservation.capitalized}.\n${localized.reservationLasted.capitalized} ${nightOrNights(localized, reservation.nights)}.\n${localized.thePayoutIs.capitalized} ${reservation.payout}€.",
                     textAlign: TextAlign.center,
                   ),

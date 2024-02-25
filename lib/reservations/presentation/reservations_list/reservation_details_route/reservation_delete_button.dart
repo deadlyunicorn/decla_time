@@ -1,16 +1,16 @@
-import 'package:decla_time/core/connection/isar_helper.dart';
-import 'package:decla_time/core/extensions/capitalize.dart';
-import 'package:decla_time/core/widgets/custom_alert_dialog.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:provider/provider.dart';
+import "package:decla_time/core/connection/isar_helper.dart";
+import "package:decla_time/core/extensions/capitalize.dart";
+import "package:decla_time/core/widgets/custom_alert_dialog.dart";
+import "package:flutter/material.dart";
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
+import "package:provider/provider.dart";
 
 class ReservationDeleteButton extends StatelessWidget {
   const ReservationDeleteButton({
-    super.key,
     required this.size,
     required this.localized,
     required this.reservationId,
+    super.key,
   });
 
   final double size;
@@ -28,11 +28,14 @@ class ReservationDeleteButton extends StatelessWidget {
           onTap: () {
             showDialog(
               context: context,
-              builder: (context) => CustomAlertDialog(
+              builder: (BuildContext context) => CustomAlertDialog(
                 localized: localized,
                 confirmButtonAction: () {
-                  context.read<IsarHelper>().reservationActions.removeFromDatabase(reservationId);
-                  Navigator.popUntil(context, (route) {
+                  context
+                      .read<IsarHelper>()
+                      .reservationActions
+                      .removeFromDatabase(reservationId);
+                  Navigator.popUntil(context, (Route<void> route) {
                     return route.isFirst;
                   });
                 },

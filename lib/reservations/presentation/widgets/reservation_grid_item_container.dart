@@ -1,13 +1,13 @@
-import 'package:decla_time/core/functions/night_or_nights.dart';
-import 'package:decla_time/reservations/reservation.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import "package:decla_time/core/functions/night_or_nights.dart";
+import "package:decla_time/reservations/reservation.dart";
+import "package:flutter/material.dart";
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
 
 class ReservationGridItemContainerItems extends StatelessWidget {
   const ReservationGridItemContainerItems({
-    super.key,
     required this.reservation,
     required this.localized,
+    super.key,
   });
 
   final Reservation reservation;
@@ -21,7 +21,7 @@ class ReservationGridItemContainerItems extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
+        children: <Widget>[
           Text(
             reservation.guestName,
             style: Theme.of(context).textTheme.bodyMedium,
@@ -34,7 +34,7 @@ class ReservationGridItemContainerItems extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
+                children: <Widget>[
                   Text(
                     "${reservation.payout.toStringAsFixed(2)} €",
                     style: Theme.of(context).textTheme.headlineSmall!,
@@ -50,7 +50,7 @@ class ReservationGridItemContainerItems extends StatelessWidget {
                 ],
               ),
             ),
-          )
+          ),
         ],
       ),
     );

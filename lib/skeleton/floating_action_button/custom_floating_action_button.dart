@@ -1,25 +1,25 @@
-import 'package:decla_time/core/enums/selected_page.dart';
-import 'package:decla_time/core/extensions/capitalize.dart';
-import 'package:decla_time/reservations_action_button_menu/reservation_addition_route.dart';
-import 'package:decla_time/skeleton/selected_page_controller.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import "package:decla_time/core/enums/selected_page.dart";
+import "package:decla_time/core/extensions/capitalize.dart";
+import "package:decla_time/reservations_action_button_menu/reservation_addition_route.dart";
+import "package:decla_time/skeleton/selected_page_controller.dart";
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
+import "package:flutter/material.dart";
+import "package:provider/provider.dart";
 
 class CustomFloatingActionButton extends StatelessWidget {
   const CustomFloatingActionButton({
-    super.key,
     required this.localized,
+    super.key,
   });
 
   final AppLocalizations localized;
 
   @override
   Widget build(BuildContext context) {
-    
-    final selectedPage = context.watch<SelectedPageController>().selectedPage;
-    
-    switch ( selectedPage ) {
+    final SelectedPage selectedPage =
+        context.watch<SelectedPageController>().selectedPage;
+
+    switch (selectedPage) {
       case SelectedPage.reservations:
       case SelectedPage.declarations:
         return AnimatedContainer(
@@ -35,8 +35,8 @@ class CustomFloatingActionButton extends StatelessWidget {
               if (selectedPage == SelectedPage.reservations) {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) {
+                  MaterialPageRoute<void>(
+                    builder: (BuildContext context) {
                       return ReservationAdditionRoute(
                         localized: localized,
                       );
