@@ -1,10 +1,10 @@
-import "package:decla_time/reservations/reservation.dart";
 import "package:decla_time/reservations/presentation/reservations_list/reservation_of_month_grid_view.dart";
+import "package:decla_time/reservations/reservation.dart";
 import "package:decla_time/settings.dart";
 import "package:flutter/material.dart";
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import "package:intl/intl.dart";
 import "package:provider/provider.dart";
-import "package:flutter_gen/gen_l10n/app_localizations.dart";
 
 class ReservationsOfYear extends StatelessWidget {
   const ReservationsOfYear({

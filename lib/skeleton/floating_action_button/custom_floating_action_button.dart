@@ -2,8 +2,8 @@ import "package:decla_time/core/enums/selected_page.dart";
 import "package:decla_time/core/extensions/capitalize.dart";
 import "package:decla_time/reservations_action_button_menu/reservation_addition_route.dart";
 import "package:decla_time/skeleton/selected_page_controller.dart";
-import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import "package:flutter/material.dart";
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import "package:provider/provider.dart";
 
 class CustomFloatingActionButton extends StatelessWidget {

@@ -3,8 +3,8 @@ import "package:decla_time/declarations/login/login_form.dart";
 import "package:decla_time/declarations/property_selector.dart";
 import "package:decla_time/users/users_controller.dart";
 import "package:flutter/material.dart";
-import "package:provider/provider.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
+import "package:provider/provider.dart";
 
 class DeclarationsPage extends StatelessWidget {
   const DeclarationsPage({

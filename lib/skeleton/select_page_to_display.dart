@@ -3,8 +3,8 @@ import "package:decla_time/core/enums/selected_page.dart";
 import "package:decla_time/declarations/declarations_page.dart";
 import "package:decla_time/reservations/reservations_page.dart";
 import "package:decla_time/skeleton/selected_page_controller.dart";
-import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import "package:flutter/material.dart";
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import "package:provider/provider.dart";
 
 class SelectPageToDisplay extends StatelessWidget {

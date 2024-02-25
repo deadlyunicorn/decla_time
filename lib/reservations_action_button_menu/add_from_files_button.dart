@@ -6,9 +6,8 @@ import "package:decla_time/reservations/reservation.dart";
 import "package:decla_time/reservations_action_button_menu/getting_reservation_files_instructions/getting_reservation_files_instructions_route.dart";
 import "package:decla_time/reservations_action_button_menu/reservation_addition_button_outline.dart";
 import "package:file_picker/file_picker.dart";
-import "package:flutter_gen/gen_l10n/app_localizations.dart";
-
 import "package:flutter/material.dart";
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
 
 class AddReservationsFromFileButton extends StatelessWidget {
   const AddReservationsFromFileButton({

@@ -2,8 +2,8 @@
 
 import "package:decla_time/core/extensions/get_values_between_strings.dart";
 import "package:decla_time/core/extensions/to_string_max_60.dart";
-import "package:http/http.dart";
 import "package:decla_time/declarations/utility/network_requests/login/headers/third_page_headers.dart";
+import "package:http/http.dart";
 
 class FourthPageHeaders extends ThirdPageHeaders {
   @override

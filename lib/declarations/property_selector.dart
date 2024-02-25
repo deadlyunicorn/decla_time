@@ -8,8 +8,8 @@ import "package:decla_time/declarations/database/user/user_property.dart";
 import "package:decla_time/declarations/properties/available_user_properties.dart";
 import "package:decla_time/declarations/property_declarations_loader.dart";
 import "package:decla_time/users/users_controller.dart";
-import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import "package:flutter/material.dart";
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import "package:provider/provider.dart";
 
 class PropertySelector extends StatelessWidget {

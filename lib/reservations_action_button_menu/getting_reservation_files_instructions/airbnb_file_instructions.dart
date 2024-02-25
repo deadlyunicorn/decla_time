@@ -1,8 +1,8 @@
 import "package:decla_time/core/extensions/capitalize.dart";
 import "package:decla_time/core/functions/list_of_string_to_list_of_widget.dart";
 import "package:decla_time/reservations_action_button_menu/getting_reservation_files_instructions/platform_file_instructions.dart";
-import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import "package:flutter/material.dart";
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
 
 class AirbnbFileInstructions extends StatelessWidget {
   const AirbnbFileInstructions({

@@ -1,8 +1,8 @@
 import "package:decla_time/core/connection/isar_helper.dart";
 import "package:decla_time/reservations/presentation/reservations_list/reservations_list.dart";
 import "package:decla_time/reservations/reservation.dart";
-import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import "package:flutter/material.dart";
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import "package:provider/provider.dart";
 
 class ReservationsPage extends StatelessWidget {

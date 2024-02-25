@@ -1,11 +1,11 @@
 import "package:decla_time/core/constants/constants.dart";
 import "package:decla_time/core/extensions/capitalize.dart";
-import "package:decla_time/reservations/reservation.dart";
 import "package:decla_time/reservations/presentation/decleration_status_dot.dart";
 import "package:decla_time/reservations/presentation/reservation_status_dot.dart";
 import "package:decla_time/reservations/presentation/reservations_list/reservation_details_route/date_information_widget.dart";
 import "package:decla_time/reservations/presentation/reservations_list/reservation_details_route/reservation_delete_button.dart";
 import "package:decla_time/reservations/presentation/reservations_list/reservation_details_route/reservation_edit_button.dart";
+import "package:decla_time/reservations/reservation.dart";
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 

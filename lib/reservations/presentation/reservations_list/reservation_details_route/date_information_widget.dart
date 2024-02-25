@@ -2,8 +2,8 @@ import "package:decla_time/core/constants/constants.dart";
 import "package:decla_time/core/extensions/capitalize.dart";
 import "package:decla_time/reservations/reservation.dart";
 import "package:flutter/material.dart";
-import "package:intl/intl.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
+import "package:intl/intl.dart";
 
 class DateInformationWidget extends StatelessWidget {
   const DateInformationWidget({

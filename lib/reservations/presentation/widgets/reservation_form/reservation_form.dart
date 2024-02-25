@@ -2,17 +2,17 @@ import "package:decla_time/core/connection/isar_helper.dart";
 import "package:decla_time/core/constants/constants.dart";
 import "package:decla_time/core/extensions/capitalize.dart";
 import "package:decla_time/core/functions/translate_reservation_status.dart";
-import "package:decla_time/reservations/reservation.dart";
-import "package:decla_time/reservations/presentation/widgets/reservation_form/form_fields/id_field.dart";
 import "package:decla_time/reservations/presentation/widgets/reservation_form/form_fields/date_fields/date_pickers_field.dart";
+import "package:decla_time/reservations/presentation/widgets/reservation_form/form_fields/id_field.dart";
 import "package:decla_time/reservations/presentation/widgets/reservation_form/form_fields/listing_name_field.dart";
 import "package:decla_time/reservations/presentation/widgets/reservation_form/form_fields/payout_field.dart";
 import "package:decla_time/reservations/presentation/widgets/reservation_form/form_fields/platform_field.dart";
 import "package:decla_time/reservations/presentation/widgets/reservation_form/form_fields/required_text_field.dart";
 import "package:decla_time/reservations/presentation/widgets/reservation_form/form_fields/status_field.dart";
 import "package:decla_time/reservations/presentation/widgets/reservation_form/form_fields/submit_button.dart";
-import "package:flutter_gen/gen_l10n/app_localizations.dart";
+import "package:decla_time/reservations/reservation.dart";
 import "package:flutter/material.dart";
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import "package:provider/provider.dart";
 
 class ReservationForm extends StatefulWidget {

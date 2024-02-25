@@ -1,8 +1,8 @@
 import "package:decla_time/core/connection/isar_helper.dart";
 import "package:decla_time/core/extensions/capitalize.dart";
 import "package:decla_time/core/widgets/route_outline.dart";
-import "package:decla_time/reservations/reservation.dart";
 import "package:decla_time/reservations/presentation/widgets/reservation_form/reservation_form.dart";
+import "package:decla_time/reservations/reservation.dart";
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import "package:provider/provider.dart";

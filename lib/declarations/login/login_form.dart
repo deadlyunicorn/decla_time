@@ -11,8 +11,8 @@ import "package:decla_time/declarations/utility/network_requests/login/login_use
 import "package:decla_time/declarations/utility/user_credentials.dart";
 import "package:decla_time/reservations/presentation/widgets/reservation_form/form_fields/required_text_field.dart";
 import "package:decla_time/users/users_controller.dart";
-import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import "package:flutter/material.dart";
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import "package:http/http.dart";
 import "package:provider/provider.dart";
 import "package:shared_preferences/shared_preferences.dart";

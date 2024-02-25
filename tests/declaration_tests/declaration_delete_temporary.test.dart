@@ -7,9 +7,9 @@ import "package:decla_time/declarations/utility/search_page_data.dart";
 import "package:decla_time/declarations/utility/search_page_declaration.dart";
 import "package:decla_time/declarations/utility/user_credentials.dart";
 import "package:flutter_test/flutter_test.dart";
+import "package:http/http.dart" as http;
 
 import "values.dart";
-import "package:http/http.dart" as http;
 
 void main() async {
   test("Test that deletes a temporary declaration", () async {

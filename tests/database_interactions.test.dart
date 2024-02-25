@@ -1,6 +1,6 @@
 import "package:decla_time/core/connection/isar_helper.dart";
-import "package:decla_time/reservations/reservation.dart";
 import "package:decla_time/reservations/business/reservation_actions.dart";
+import "package:decla_time/reservations/reservation.dart";
 import "package:flutter_test/flutter_test.dart";
 import "package:isar/isar.dart";
 
