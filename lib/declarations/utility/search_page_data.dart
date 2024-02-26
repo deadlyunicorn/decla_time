@@ -1,5 +1,6 @@
 import "package:decla_time/core/enums/declaration_status.dart";
 import "package:decla_time/core/extensions/get_values_between_strings.dart";
+import "package:decla_time/declarations/functions/check_if_logged_in.dart";
 import "package:decla_time/declarations/utility/search_page_declaration.dart";
 import "package:intl/intl.dart";
 
@@ -23,7 +24,7 @@ class SearchPageData {
       ? "${_viewState.split(":")[0]}%3A${_viewState.split(":")[1]}"
       : _viewState;
 
-  static SearchPageData getFromHtml(String body) {
+  static Future<SearchPageData> getFromHtml(String body) async {
     final List<DateTime> arrivalDates =
         getAllBetweenStrings(body, ':rentalFrom"', "</")
             .map(
@@ -79,7 +80,8 @@ class SearchPageData {
     );
 
     final String viewState =
-        getAllBetweenStrings(body, 'faces.ViewState" value="', '"')[0];
+        getBetweenStrings(body, 'faces.ViewState" value="', '"');
+    if (viewState.isEmpty) checkIfLoggedIn(body);
     return SearchPageData(
       total: total ?? 0,
       declarations: declarations,
