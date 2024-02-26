@@ -1,0 +1,102 @@
+import "package:flutter/material.dart";
+
+class AnimationTest2 extends StatefulWidget {
+  const AnimationTest2({
+    super.key,
+  });
+
+
+  @override
+  State<AnimationTest2> createState() => _AnimationTest2State();
+}
+
+class _AnimationTest2State extends State<AnimationTest2>
+    with TickerProviderStateMixin {
+  late final AnimationController animationController = AnimationController(
+    vsync: this,
+    duration: const Duration(seconds: 2),
+  );
+  late final Animation<double> _animation =
+      CurvedAnimation(parent: animationController, curve: Curves.linear);
+
+  @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    animationController.repeat();
+    return RotationTransition(
+      turns: _animation,
+      child: const Icon(
+        Icons.refresh,
+      ),
+    );
+  }
+}
+
+class AnimationTest1 extends StatelessWidget {
+  const AnimationTest1({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<double>(
+      stream: (() async* {
+        double i = 0;
+        while (true) {
+          yield i++;
+          await Future<void>.delayed(const Duration(milliseconds: 600));
+        }
+      })(),
+      builder: (BuildContext context, AsyncSnapshot<double> snapshot) =>
+          AnimatedRotation(
+        duration: const Duration(milliseconds: 600),
+        turns: 0.1 * (snapshot.data ?? 0),
+        child: const Icon(
+          Icons.read_more,
+        ),
+      ),
+    );
+  }
+}
+
+class AnimationTest3 extends StatelessWidget {
+  const AnimationTest3({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<double>(
+      stream: (() async* {
+        double i = 0;
+        while (true) {
+          print(i % 2);
+          yield i++;
+          await Future<void>.delayed(const Duration(milliseconds: 600));
+        }
+      })(),
+      builder: (BuildContext context, AsyncSnapshot<double> snapshot) =>
+          AnimatedCrossFade(
+        firstChild: AnimatedCrossFade(
+          crossFadeState: (snapshot.data ?? 0) % 3 == 0
+              ? CrossFadeState.showFirst
+              : CrossFadeState.showSecond,
+          duration: const Duration(milliseconds: 600),
+          firstChild: const Icon(Icons.wifi_1_bar),
+          // turns: 0.1 * (snapshot.data ?? 0),
+          secondChild: const Icon(Icons.wifi_2_bar),
+        ),
+        secondChild: const Icon(Icons.wifi),
+        crossFadeState: (snapshot.data ?? 3) % 3 == 2
+            ? CrossFadeState.showSecond
+            : CrossFadeState.showFirst,
+        duration: const Duration(milliseconds: 600),
+      ),
+    );
+  }
+}
