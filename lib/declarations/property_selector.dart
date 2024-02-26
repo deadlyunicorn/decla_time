@@ -5,8 +5,8 @@ import "package:decla_time/core/constants/constants.dart";
 import "package:decla_time/core/extensions/capitalize.dart";
 import "package:decla_time/core/widgets/column_with_spacings.dart";
 import "package:decla_time/declarations/database/user/user_property.dart";
+import "package:decla_time/declarations/declarations_view/property_declarations_loader.dart";
 import "package:decla_time/declarations/properties/available_user_properties.dart";
-import "package:decla_time/declarations/property_declarations_loader.dart";
 import "package:decla_time/users/users_controller.dart";
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
@@ -86,8 +86,6 @@ class Headline extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // print("Haha");
-
     return FittedBox(
       child: SizedBox(
         width: max(

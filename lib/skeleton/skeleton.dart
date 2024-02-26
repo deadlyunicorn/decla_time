@@ -1,9 +1,9 @@
+import "package:decla_time/declarations/status_indicator/status_indicator.dart";
 import "package:decla_time/skeleton/access_users_drawer.dart";
 import "package:decla_time/skeleton/custom_bottom_navigation_bar.dart";
 import "package:decla_time/skeleton/floating_action_button/custom_floating_action_button.dart";
 import "package:decla_time/skeleton/select_page_to_display.dart";
 import "package:decla_time/skeleton/selected_page_controller.dart";
-import "package:decla_time/status_indicator/status_indicator.dart";
 import "package:decla_time/users/drawer/users_drawer.dart";
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
