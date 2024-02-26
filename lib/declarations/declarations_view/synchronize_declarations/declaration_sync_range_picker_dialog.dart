@@ -8,9 +8,12 @@ import "package:decla_time/core/widgets/column_with_spacings.dart";
 import "package:decla_time/core/widgets/custom_alert_dialog.dart";
 import "package:decla_time/declarations/declarations_view/synchronize_declarations/date_buttons/set_arrival_date_button.dart";
 import "package:decla_time/declarations/declarations_view/synchronize_declarations/date_buttons/set_departure_date_button.dart";
+import "package:decla_time/declarations/status_indicator/declaration_sync_controller.dart";
 import "package:decla_time/declarations/utility/import_declarations_by_property_id.dart";
 import "package:decla_time/declarations/utility/network_requests/headers/declarations_page_headers.dart";
+import "package:decla_time/declarations/utility/network_requests/login/login_user.dart";
 import "package:decla_time/declarations/utility/search_page_data.dart";
+import "package:decla_time/declarations/utility/user_credentials.dart";
 import "package:decla_time/users/users_controller.dart";
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
@@ -36,7 +39,7 @@ class DeclarationSyncRangePickerDialog extends StatefulWidget {
 
 class _DeclarationSyncRangePickerDialogState
     extends State<DeclarationSyncRangePickerDialog> {
-  int totalDeclarationsFound = 0;
+  SearchPageData? currentSearchPageData;
   DateTime? arrivalDate;
   DateTime? departureDate;
   bool isSyncing = false;
@@ -52,13 +55,20 @@ class _DeclarationSyncRangePickerDialogState
               : null,
       localized: widget.localized,
       confirmButtonAction: () async {
+        final SearchPageData? tempCurrentSearchPageData = currentSearchPageData;
+        final DateTime? departureDateTemp = departureDate;
+        final DateTime? arrivalDateTemp = arrivalDate;
+
         if (isSyncing == true) {
           setHelperText(
             newText:
                 // ignore: lines_longer_than_80_chars
                 "${widget.localized.synchronizing.capitalized}...\n${widget.localized.pleaseWait.capitalized}",
           );
-        } else if (totalDeclarationsFound == 0) {
+        } else if (tempCurrentSearchPageData == null ||
+            tempCurrentSearchPageData.total == 0 ||
+            departureDateTemp == null ||
+            arrivalDateTemp == null) {
           setHelperText(
             newText:
                 // ignore: lines_longer_than_80_chars
@@ -69,6 +79,21 @@ class _DeclarationSyncRangePickerDialogState
           //? The only issue would be if the user went AFK
           //? and pressed confirm afterwards.
           //?( But then they might get a logged out session? )
+
+          unawaited(
+            context
+                .read<DeclarationSyncController>()
+                .startImportingDeclarations(
+                  declarationPageContext: widget.parentContext,
+                  arrivalDate: arrivalDateTemp,
+                  departureDate: departureDateTemp,
+                  propertyId: widget.propertyId,
+                  credentials: context
+                      .read<UsersController>()
+                      .loggedUser
+                      .userCredentials!,
+                ),
+          );
 
           Navigator.popUntil(context, (Route<void> route) {
             return route.isFirst;
@@ -148,7 +173,7 @@ class _DeclarationSyncRangePickerDialogState
 
     setState(() {
       arrivalDate = newArrivalDate;
-      totalDeclarationsFound = 0;
+      currentSearchPageData = null;
     });
 
     if (arrivalDate != null && departureDate != null) {
@@ -161,7 +186,7 @@ class _DeclarationSyncRangePickerDialogState
 
     setState(() {
       departureDate = newDepartureDate;
-      totalDeclarationsFound = 0;
+      currentSearchPageData = null;
     });
 
     if (arrivalDate != null && departureDate != null) {
@@ -212,33 +237,36 @@ class _DeclarationSyncRangePickerDialogState
       unawaited(
         Future<void>.delayed(const Duration(seconds: 45)).then(
           (_) {
-            setHelperText(
-              newText:
-                  // ignore: lines_longer_than_80_chars
-                  "${widget.localized.thisTakesLongerThanUsual.capitalized}\n${widget.localized.ifYouLostConnectionToTheInternetTryAgain.capitalized}",
-            );
+            if (helperText.toLowerCase().contains(
+                  widget.localized.synchronizing,
+                )) {
+              setHelperText(
+                newText:
+                    // ignore: lines_longer_than_80_chars
+                    "${widget.localized.thisTakesLongerThanUsual.capitalized}\n${widget.localized.ifYouLostConnectionToTheInternetTryAgain.capitalized}",
+              );
+            }
           },
         ),
       );
-      final int tempDeclarationsFound =
+      final SearchPageData searchPageData =
           await getSearchPageDetailsFromDateRangeFuture(
         arrivalDate: submitArrivalDate,
         departureDate: submitDepartureDate,
         propertyId: widget.propertyId,
         headers: headers,
-      ).then(
-        (SearchPageData searchPageDetails) => searchPageDetails.total,
       );
-
       setState(() {
-        totalDeclarationsFound = tempDeclarationsFound;
+        currentSearchPageData = searchPageData;
       });
 
-      if (totalDeclarationsFound > 0) {
+      final int totalFound = searchPageData.total;
+
+      if (totalFound > 0) {
         setHelperText(
           newText:
               // ignore: lines_longer_than_80_chars
-              "${widget.localized.found.capitalized}: $totalDeclarationsFound ${totalDeclarationsFound > 1 ? widget.localized.declarations : widget.localized.declaration}\n${widget.localized.pressConfirmToStartImporting.capitalized}",
+              "${widget.localized.found.capitalized}: $totalFound ${totalFound > 1 ? widget.localized.declarations : widget.localized.declaration}\n${widget.localized.pressConfirmToStartImporting.capitalized}",
         );
       } else {
         setHelperText(
@@ -261,6 +289,21 @@ class _DeclarationSyncRangePickerDialogState
       setHelperText(
         newText: widget.localized.errorNoConnection.capitalized,
       );
+    } on NotLoggedInException {
+      if (mounted) {
+        final LoggedUser loggedUser =
+            context.read<UsersController>().loggedUser;
+        final UserCredentials? userCredentials = loggedUser.userCredentials;
+        if (userCredentials == null) {
+          context.read<UsersController>().setRequestLogin(true);
+          Navigator.of(context).pop();
+          return;
+        }
+        loggedUser.setDeclarationsPageHeaders(
+          await loginUser(credentials: userCredentials),
+        );
+        await getTotalDeclarationsForRange();
+      }
     } catch (error) {
       if (mounted) {
         setHelperText(
@@ -273,33 +316,3 @@ class _DeclarationSyncRangePickerDialogState
     });
   }
 }
-
-//TODO FOR LATER USER
-/*
-  displayTotalFound: (int totalFound) {
-              setHelperText(
-                context: context,
-                newText: "Total found: $totalFound",
-              );
-            },
-            displayCurrentStatus: ({
-              required int index,
-              required int total,
-              required bool existsInDb,
-            }) {
-              setHelperText(
-                context: context,
-                newText: "Is new: ${!existsInDb}\n${index + 1} / $total",
-              );
-            },
-            checkIfDeclarationExistsInDb:
-                (SearchPageDeclaration searchPageDeclaration) async {
-              const bool exists = false;
-              if (!exists) totalNew++;
-              return exists;
-            },
-            storeDeclarationInDb: (Declaration declaration) async {
-              print("storing in db");
-            },
-
-*/
