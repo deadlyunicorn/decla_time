@@ -9,6 +9,7 @@ class CustomAlertDialog extends StatelessWidget {
     required this.title,
     required this.child,
     required this.localized,
+    this.mouseCursor,
     super.key,
   });
 
@@ -16,6 +17,7 @@ class CustomAlertDialog extends StatelessWidget {
   final String title;
   final Widget child;
   final AppLocalizations localized;
+  final MouseCursor? mouseCursor;
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +46,13 @@ class CustomAlertDialog extends StatelessWidget {
                     child: Text(localized.cancel.capitalized),
                   ),
                   TextButton(
+                    style: ButtonStyle(
+                      mouseCursor: mouseCursor != null
+                          ? MaterialStatePropertyAll<MouseCursor>(
+                              mouseCursor!,
+                            )
+                          : null,
+                    ),
                     onPressed: () {
                       confirmButtonAction();
                     },
