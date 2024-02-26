@@ -33,6 +33,7 @@
     "howToGetTheFiles": "πώς να αποκτήσετε τα αρχεία.",
     "addFromFile": "εισαγωγή αρχείου",
     "reservation": "κράτηση",
+    "declaration": "δήλωση",
     "found": "βρέθηκαν",
     "add": "προσθήκη",
     "cancel": "ακύρωση",
@@ -97,8 +98,17 @@
     "property": "ακίνητο",
     "properties": "ακίνητα",
     "noDeclarationsFound": "δεν βρέθηκαν δηλώσεις",
-    "dateSelection":   "επιλογή ημερομηνίων",
+    "trySelectingAnotherDateRange": "δοκιμάστε να ορίσετε άλλο εύρος ημερομηνιών",
+    "dateSelection":   "επιλογή ημερομηνιών",
     "viewingDeclarationsOf":   "προβολή των δηλώσεων του",
+    "notLoggedIn": "δεν έχετε συνδεθεί",
+    "noArrivalDateSet": "δεν έχει ορισθεί ημερομηνία άφιξης",
+    "noDepartureDateSet": "δεν έχει ορισθεί ημερομηνία αναχώρησης",
+    "synchronizeDeclarations": "συγχρονισμός δηλώσεων",
+    "pleaseWait":"παρακαλώ περιμένετε",
+    "pressConfirmToStartImporting":"πατήστε επιβεβαίωση για να ξεκινήσει η εισαγωγή",
+    "thisTakesLongerThanUsual": "αυτό παίρνει περισσότερο από'τι συνήθως",
+    "ifYouLostConnectionToTheInternetTryAgain": "αν χάσατε την σύνδεση με το διαδίκτυο, προσπαθήστε ξανά",
     "unusedForNonTrailingComma________________________________":""
 
 

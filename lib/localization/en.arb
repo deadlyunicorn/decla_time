@@ -33,6 +33,7 @@
     "howToGetTheFiles": "how to get the files.",
     "addFromFile": "import file",
     "reservation": "reservation",
+    "declaration": "declaration",
     "found": "found",
     "add": "add new",
     "cancel": "cancel",
@@ -97,8 +98,17 @@
     "property": "property",
     "properties": "properties",
     "noDeclarationsFound": "no declarations found",
+    "trySelectingAnotherDateRange": "try selecting another date range",
     "dateSelection":   "date selection",
     "viewingDeclarationsOf":   "viewing declarations of",
+    "notLoggedIn": "not logged in",
+    "noArrivalDateSet": "no arrival date set",
+    "noDepartureDateSet": "no departure date set",
+    "synchronizeDeclarations": "synchronize declarations",
+    "pleaseWait":"please wait",
+    "pressConfirmToStartImporting":"press confirm to start importing",
+    "thisTakesLongerThanUsual": "this takes longer than usual",
+    "ifYouLostConnectionToTheInternetTryAgain": "if you have lost connection to the internet try again",
     "unusedForNonTrailingComma________________________________":""
 
 
