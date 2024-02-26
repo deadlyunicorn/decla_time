@@ -2,6 +2,7 @@ import "dart:math";
 
 import "package:decla_time/core/connection/isar_helper.dart";
 import "package:decla_time/core/constants/constants.dart";
+import "package:decla_time/declarations/status_indicator/declaration_sync_controller.dart";
 import "package:decla_time/settings.dart";
 import "package:decla_time/skeleton/skeleton.dart";
 import "package:decla_time/users/users_controller.dart";
@@ -53,6 +54,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<UsersController>(
           create: (BuildContext context) => usersController,
+        ),
+        ChangeNotifierProvider<DeclarationSyncController>(
+          create: (BuildContext context) => DeclarationSyncController(),
         ),
       ],
       builder: (BuildContext context, Widget? child) =>
