@@ -1,5 +1,5 @@
 import "dart:math";
-import "package:decla_time/status_indicator/status_indicator.dart";
+import "package:decla_time/declarations/status_indicator/status_indicator.dart";
 import "package:flutter/material.dart";
 
 class CalculateIndicatorPosition extends StatefulWidget {
