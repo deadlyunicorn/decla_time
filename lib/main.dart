@@ -56,7 +56,8 @@ class MyApp extends StatelessWidget {
           create: (BuildContext context) => usersController,
         ),
         ChangeNotifierProvider<DeclarationSyncController>(
-          create: (BuildContext context) => DeclarationSyncController(),
+          create: (BuildContext context) =>
+              DeclarationSyncController(isarHelper: isarHelper),
         ),
       ],
       builder: (BuildContext context, Widget? child) =>

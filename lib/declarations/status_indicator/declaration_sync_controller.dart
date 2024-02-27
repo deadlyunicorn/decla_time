@@ -1,3 +1,4 @@
+import "package:decla_time/core/connection/isar_helper.dart";
 import "package:decla_time/declarations/database/declaration.dart";
 import "package:decla_time/declarations/status_indicator/declaration_status.dart";
 import "package:decla_time/declarations/utility/network_requests/get_declaration_details_from_search_page_data.dart";
@@ -17,6 +18,11 @@ class DeclarationSyncController extends ChangeNotifier {
     notifyListeners();
   }
 
+  final IsarHelper _isarHelper;
+  DeclarationSyncController({
+    required IsarHelper isarHelper,
+  }) : _isarHelper = isarHelper;
+
   int _total = 0;
   int _currentItemNumber = 0;
 
@@ -34,31 +40,31 @@ class DeclarationSyncController extends ChangeNotifier {
 
   bool get isImporting => _isImporting;
 
-  List<SearchPageDeclaration> _currentDeclarations = <SearchPageDeclaration>[];
-  void setCurrentDeclarations(
+  List<SearchPageDeclaration> _declarationToBeImported =
+      <SearchPageDeclaration>[];
+  void _setDeclarationsToBeImported(
     List<SearchPageDeclaration> searchPageDeclarations,
   ) {
-    _currentDeclarations = searchPageDeclarations;
+    _declarationToBeImported = searchPageDeclarations;
     notifyListeners();
   }
 
-  List<SearchPageDeclaration> get currentDeclarations => _currentDeclarations;
+  List<SearchPageDeclaration> get declarationsToBeImported =>
+      _declarationToBeImported;
 
-  List<DeclarationImportStatus> _totalImportedDeclarationStatus =
+  List<DeclarationImportStatus> _importedDeclarations =
       <DeclarationImportStatus>[];
-  void setTotalImportedDeclarations(
+  void setImportedDeclarations(
     List<DeclarationImportStatus> searchPageDeclarations,
   ) {
-    _totalImportedDeclarationStatus = searchPageDeclarations;
+    _importedDeclarations = searchPageDeclarations;
     notifyListeners();
   }
 
-  List<DeclarationImportStatus> get totalImportedDeclarations =>
-      _totalImportedDeclarationStatus;
+  List<DeclarationImportStatus> get importedDeclarations =>
+      _importedDeclarations;
 
   Future<void> startImportingDeclarations({
-    ///TODO HERE!!
-    required BuildContext declarationPageContext,
     required DateTime arrivalDate,
     required DateTime departureDate,
     required String propertyId,
@@ -67,7 +73,7 @@ class DeclarationSyncController extends ChangeNotifier {
     if (_isImporting) {
       _requestNewImportSession = true; //?Used to break the current import.
       while (true) {
-        print("waiting for current import to break");
+        print("requesting new session");
         await Future<void>.delayed(const Duration(seconds: 1));
         if (!_isImporting) {
           setIsImporting(true);
@@ -92,6 +98,7 @@ class DeclarationSyncController extends ChangeNotifier {
       headers: headers,
       propertyId: propertyId,
     );
+    _setDeclarationsToBeImported(currentSearchPageData.declarations);
     _setCurrentTotal(currentSearchPageData.total);
 
     final int rounds = (currentSearchPageData.total ~/ 50) + 1;
@@ -114,33 +121,50 @@ class DeclarationSyncController extends ChangeNotifier {
           propertyId: propertyId,
         );
         nextArrivalDate = currentSearchPageData.declarations.last.arrivalDate;
+        _setDeclarationsToBeImported(currentSearchPageData.declarations);
       }
 
-      for (int i = 0; i < currentSearchPageData.declarations.length; i++) {
-        if (_requestNewImportSession) break; //!!
-        _setCurrentItemNumber(currentItemNumber + 1);
+      await importCurrentSearchPageDeclarations(
+        currentSearchPageData,
+        propertyId,
+        headers,
+      );
+    }
 
-        final SearchPageDeclaration currentDeclaration =
-            currentSearchPageData.declarations[i];
+    setIsImporting(false);
+  }
 
+  Future<void> importCurrentSearchPageDeclarations(
+    SearchPageData currentSearchPageData,
+    String propertyId,
+    DeclarationsPageHeaders headers,
+  ) async {
+    for (int i = 0; i < currentSearchPageData.declarations.length; i++) {
+      print(currentSearchPageData.declarations.length);
+      print(i);
+      if (_requestNewImportSession) break; //!!
+      bool imported = false;
+
+      _setCurrentItemNumber(currentItemNumber + 1);
+
+      final SearchPageDeclaration currentDeclaration =
+          currentSearchPageData.declarations[i];
+
+      try {
+        int? declarationLocalId = await _isarHelper.declarationActions
+            .searchPageDeclarationAlreadyExists(
+          declaration: currentDeclaration,
+          propertyId: propertyId,
+        );
+        print("existing: $declarationLocalId");
+
+        print(currentDeclaration.departureDate);
+        print(propertyId);
         print(currentDeclaration.payout);
 
-        // final bool existsInDb =
-        // await checkIfDeclarationExistsInDb(currentDeclaration);
-
-        if (true) {
-          setTotalImportedDeclarations(
-            totalImportedDeclarations
-              ..add(
-                DeclarationImportStatus(
-                  imported: false,
-                  payout: double.tryParse(currentDeclaration.payout) ?? 0,
-                  arrivalDate: currentDeclaration.arrivalDate,
-                  departureDate: currentDeclaration.departureDate,
-                ),
-              ),
-          );
-        } else {
+        if (declarationLocalId == null) {
+          print("this is a new declaration");
+          imported = true;
           await Future<void>.delayed(const Duration(milliseconds: 500));
           final SearchPageData searchPageData = await getDeclarationSearchPage(
             //?Used to get a new viewState for each propertyId
@@ -155,17 +179,30 @@ class DeclarationSyncController extends ChangeNotifier {
             propertyId: propertyId,
           );
 
-          throw UnimplementedError();
-          // await storeDeclarationInDb(declaration);
+          declarationLocalId = (await _isarHelper.declarationActions
+                  .insertMultipleEntriesToDb(<Declaration>[declaration]))
+              .first;
         }
+        _setDeclarationsToBeImported(
+          List<SearchPageDeclaration>.from(declarationsToBeImported)
+            ..removeAt(i),
+        );
+        setImportedDeclarations(
+          List<DeclarationImportStatus>.from(importedDeclarations)
+            ..add(
+              DeclarationImportStatus(
+                imported: imported,
+                localDeclarationId: declarationLocalId,
+              ),
+            ),
+        );
+      } catch (error) {
+        print("is in here.");
+        print(error);
       }
     }
-
-    setIsImporting(false);
   }
 }
-
-
 
 //TODO FOR LATER USER
 /*
