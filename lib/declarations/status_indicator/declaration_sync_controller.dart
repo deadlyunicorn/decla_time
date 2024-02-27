@@ -71,6 +71,7 @@ class DeclarationSyncController extends ChangeNotifier {
         await Future<void>.delayed(const Duration(seconds: 1));
         if (!_isImporting) {
           setIsImporting(true);
+          _requestNewImportSession = false;
           break;
         }
       }
@@ -122,6 +123,8 @@ class DeclarationSyncController extends ChangeNotifier {
         final SearchPageDeclaration currentDeclaration =
             currentSearchPageData.declarations[i];
 
+        print(currentDeclaration.payout);
+
         // final bool existsInDb =
         // await checkIfDeclarationExistsInDb(currentDeclaration);
 
@@ -157,6 +160,8 @@ class DeclarationSyncController extends ChangeNotifier {
         }
       }
     }
+
+    setIsImporting(false);
   }
 }
 
