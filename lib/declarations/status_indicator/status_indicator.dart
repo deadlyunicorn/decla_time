@@ -2,6 +2,7 @@ import "package:decla_time/core/functions/snackbars.dart";
 import "package:decla_time/declarations/status_indicator/animations.dart";
 import "package:decla_time/declarations/status_indicator/calculate_indicator_position.dart";
 import "package:decla_time/declarations/status_indicator/declaration_import_route.dart";
+import "package:decla_time/declarations/status_indicator/declaration_status.dart";
 import "package:decla_time/declarations/status_indicator/declaration_sync_controller.dart";
 import "package:decla_time/declarations/utility/search_page_declaration.dart";
 import "package:flutter/material.dart";
@@ -31,7 +32,13 @@ class _StatusIndicatorState extends State<StatusIndicator> {
       (DeclarationSyncController controller) => controller.isImporting,
     );
 
-    return (isImporting)
+    final List<DeclarationImportStatus> currentDeclarations = context
+        .select<DeclarationSyncController, List<DeclarationImportStatus>>(
+      (DeclarationSyncController controller) =>
+          controller.totalImportedDeclarations,
+    );
+
+    return (isImporting || currentDeclarations.isNotEmpty)
         ? CalculateIndicatorPosition(
             child: TextButton(
               style: TextButton.styleFrom().copyWith(
@@ -51,8 +58,30 @@ class _StatusIndicatorState extends State<StatusIndicator> {
                 );
                 showErrorSnackbar(context: context, message: "hello");
               },
-              child:
-                  const AnimationTest2(), //AnimationTest2(animation: _animation), //TODO TO change.
+              child: isImporting
+                  ? const SyncingAnimatedIcon()
+                  : Stack(
+                      clipBehavior: Clip.none,
+                      children: <Widget>[
+                        Positioned(
+                          bottom: -4,
+                          right: -16,
+                          child: SizedBox(
+                            width: StatusIndicator.buttonSize,
+                            child: Align(
+                              alignment: Alignment.bottomRight,
+                              child: SizedBox(
+                                width: StatusIndicator.buttonSize / 2,
+                                child: Text(
+                                  "${currentDeclarations.length}",
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const Icon(Icons.done),
+                      ],
+                    ),
             ),
           )
         : const SizedBox.shrink();
