@@ -1,4 +1,6 @@
+import "package:decla_time/core/enums/declaration_status.dart";
 import "package:decla_time/declarations/database/declaration.dart";
+import "package:decla_time/declarations/utility/search_page_declaration.dart";
 import "package:isar/isar.dart";
 
 class DeclarationActions {
@@ -50,12 +52,36 @@ class DeclarationActions {
   //   return databaseResponse;
   // }
 
-  Future<bool> declarationAlreadyExists(int declarationDbId) async {
-    final Declaration? databaseResponse =
-        await (await _isarFuture).declarations.getByDeclarationDbId(
-              declarationDbId,
-            );
-    return databaseResponse != null;
+  Future<int?> searchPageDeclarationAlreadyExists({
+    required SearchPageDeclaration declaration,
+    required String propertyId,
+  }) async {
+    return await declarationAlreadyExists(
+      departureDate: declaration.departureDate,
+      payout: declaration.payout,
+      propertyId: propertyId,
+      status: declaration.status,
+    );
+  }
+
+  Future<int?> declarationAlreadyExists({
+    required DateTime departureDate,
+    required String propertyId,
+    required double payout,
+    required DeclarationStatus status,
+  }) async {
+    final Declaration? databaseResponse = await (await _isarFuture)
+        .declarations
+        .filter()
+        .propertyIdEqualTo(propertyId)
+        .payoutEqualTo(payout)
+        .departureDateEqualTo(departureDate)
+        // .declarationStatusEqualTo(status) //TODO CHECK IF it needs .name -- this one does not work.
+        .findFirst();
+
+    return databaseResponse?.isarId;
+    //? Issue: property has 2 reservations of the same payout and departureDate.
+    //? This should not be an issue for our target audience.. ( not hotels )
   }
 
   Future<void> insertOrUpdateDeclarationEntry(Declaration declaration) async {
@@ -67,7 +93,16 @@ class DeclarationActions {
     _notifyListeners();
   }
 
-  Future<Declaration?> getDeclarationEntry(int declarationDbId) async {
+  Future<Declaration?> getDeclarationEntryByIsarId(
+    int isarId,
+  ) async {
+    final Isar isar = await _isarFuture;
+    return await isar.declarations.filter().isarIdEqualTo(isarId).findFirst();
+  }
+
+  Future<Declaration?> getDeclarationEntryByDeclarationDbId(
+    int declarationDbId,
+  ) async {
     final Isar isar = await _isarFuture;
     return await isar.declarations
         .filter()
@@ -75,14 +110,18 @@ class DeclarationActions {
         .findFirst();
   }
 
-  Future<void> insertMultipleEntriesToDb(List<Declaration> declarations) async {
+  Future<List<int>> insertMultipleEntriesToDb(
+    List<Declaration> declarations,
+  ) async {
     final Isar isar = await _isarFuture;
+    List<int> idsOfInsertedItems = <int>[];
 
     await isar.writeTxn(() async {
       for (final Declaration declaration in declarations) {
-        await isar.declarations.put(declaration);
+        idsOfInsertedItems.add(await isar.declarations.put(declaration));
       }
     });
     _notifyListeners();
+    return idsOfInsertedItems;
   }
 }
