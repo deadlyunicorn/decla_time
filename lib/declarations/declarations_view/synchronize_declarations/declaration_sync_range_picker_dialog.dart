@@ -84,7 +84,6 @@ class _DeclarationSyncRangePickerDialogState
             context
                 .read<DeclarationSyncController>()
                 .startImportingDeclarations(
-                  declarationPageContext: widget.parentContext,
                   arrivalDate: arrivalDateTemp,
                   departureDate: departureDateTemp,
                   propertyId: widget.propertyId,
@@ -270,7 +269,8 @@ class _DeclarationSyncRangePickerDialogState
         );
       } else {
         setHelperText(
-          newText: "no new declarations found.",
+          newText:
+              widget.localized.declarationsNotFoundForDateRange.capitalized,
         );
       }
     } on NoArrivalDateExcepetion {

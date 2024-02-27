@@ -30,6 +30,7 @@
     "reservationsNotFoundLocally": "no reservations found stored locally.",
     "reservationsNotAdded": "no reservations added.",
     "newReservationsNotFound": "no new reservations found.",
+    "declarationsNotFoundForDateRange": "no declarations found for this date range",
     "howToGetTheFiles": "how to get the files.",
     "addFromFile": "import file",
     "reservation": "reservation",
@@ -40,7 +41,7 @@
     "confirm": "confirm",
     "enterMin6Chars": "Please enter atleast 6 characters.",
     "invalidDateError": "Please enter a valid date",
-    "entryAlreadyExists": "entry already exists.",
+    "entryAlreadyExists": "entry already exists",
     "addSelected" : "add selected",
     "selectAll": "select all",
     "clearSelection" : "clear selection",
@@ -109,6 +110,9 @@
     "pressConfirmToStartImporting":"press confirm to start importing",
     "thisTakesLongerThanUsual": "this takes longer than usual",
     "ifYouLostConnectionToTheInternetTryAgain": "if you have lost connection to the internet try again",
+    "added" : "added",
+    "noDeclarationsImportedForThisProperty": "no declarations imported for this property",
+    "tryAgainLater": "try again later",
     "unusedForNonTrailingComma________________________________":""
 
 

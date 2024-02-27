@@ -30,6 +30,7 @@
     "reservationsNotFoundLocally": "δεν βρέθηκαν τοπικές εγγραφές κρατήσεων.",
     "reservationsNotAdded": "δεν προστέθηκαν εγγραφές.",
     "newReservationsNotFound": "δεν βρέθηκαν νέες εγγραφές.",
+    "declarationsNotFoundForDateRange": "δεν βρέθηκαν δηλώσεις για αυτό το πεδίο ημερομηνιών",
     "howToGetTheFiles": "πώς να αποκτήσετε τα αρχεία.",
     "addFromFile": "εισαγωγή αρχείου",
     "reservation": "κράτηση",
@@ -40,7 +41,7 @@
     "confirm": "επιβεβαίωση",
     "enterMin6Chars": "εισάγετε τουλάχιστον 6 χαρακτήρες",
     "invalidDateError": "εισάγετε μια έγκυρη ημερομηνία",
-    "entryAlreadyExists": "η εγγραφή ήδη υπάρχει.",
+    "entryAlreadyExists": "η εγγραφή ήδη υπάρχει",
     "addSelected" : "προσθήκη επιλεγμένων",
     "selectAll": "επιλογή όλων",
     "clearSelection" : "καθαρισμός επιλογής",
@@ -109,6 +110,9 @@
     "pressConfirmToStartImporting":"πατήστε επιβεβαίωση για να ξεκινήσει η εισαγωγή",
     "thisTakesLongerThanUsual": "αυτό παίρνει περισσότερο από'τι συνήθως",
     "ifYouLostConnectionToTheInternetTryAgain": "αν χάσατε την σύνδεση με το διαδίκτυο, προσπαθήστε ξανά",
+    "added" : "προστέθηκε",
+    "noDeclarationsImportedForThisProperty": "δεν έχουν εισαχθεί δηλώσεις για αυτό το κατάλυμα",
+    "tryAgainLater": "προσπαθήστε πάλι αργότερα",
     "unusedForNonTrailingComma________________________________":""
 
 
