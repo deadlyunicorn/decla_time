@@ -1,23 +1,26 @@
+import "package:decla_time/declarations/status_indicator/custom_animation_controller.dart";
 import "package:flutter/material.dart";
 
-class AnimationTest2 extends StatefulWidget {
-  const AnimationTest2({
+class SyncingAnimatedIcon extends StatefulWidget {
+  const SyncingAnimatedIcon({
     super.key,
   });
 
-
   @override
-  State<AnimationTest2> createState() => _AnimationTest2State();
+  State<SyncingAnimatedIcon> createState() => _SyncingAnimatedIconState();
 }
 
-class _AnimationTest2State extends State<AnimationTest2>
+class _SyncingAnimatedIconState extends State<SyncingAnimatedIcon>
     with TickerProviderStateMixin {
-  late final AnimationController animationController = AnimationController(
+  late final CustomAnimationController animationController =
+      CustomAnimationController(
     vsync: this,
     duration: const Duration(seconds: 2),
   );
-  late final Animation<double> _animation =
-      CurvedAnimation(parent: animationController, curve: Curves.linear);
+  late final Animation<double> _animation = CurvedAnimation(
+    parent: animationController,
+    curve: Curves.linear,
+  );
 
   @override
   void dispose() {
@@ -27,11 +30,12 @@ class _AnimationTest2State extends State<AnimationTest2>
 
   @override
   Widget build(BuildContext context) {
-    animationController.repeat();
+    animationController.repeat(reverse: true);
+
     return RotationTransition(
       turns: _animation,
       child: const Icon(
-        Icons.refresh,
+        Icons.sync,
       ),
     );
   }
