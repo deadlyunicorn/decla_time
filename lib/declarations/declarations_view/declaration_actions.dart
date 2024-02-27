@@ -12,11 +12,13 @@ class DeclarationActions extends StatelessWidget {
   const DeclarationActions({
     required this.localized,
     required this.selectedPropertyId,
+    required this.totalDeclarations,
     super.key,
   });
 
   final AppLocalizations localized;
   final String selectedPropertyId;
+  final int totalDeclarations;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +29,14 @@ class DeclarationActions extends StatelessWidget {
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        FittedBox(child: Text(localized.noDeclarationsFound.capitalized)),
+        totalDeclarations > 0
+            ? FittedBox(
+                child: Text(
+                  // ignore: lines_longer_than_80_chars
+                  "${localized.found.capitalized}: $totalDeclarations ${totalDeclarations > 1 ? localized.declarations : localized.declaration}",
+                ),
+              )
+            : FittedBox(child: Text(localized.noDeclarationsFound.capitalized)),
         const SizedBox.square(dimension: 8),
         FittedBox(
           child: TextButton(
