@@ -1,13 +1,10 @@
 class DeclarationImportStatus {
+  ///? Was it imported or did it already exist?
   final bool imported;
-  final double payout;
-  final DateTime arrivalDate;
-  final DateTime departureDate;
+  final int localDeclarationId;
 
   DeclarationImportStatus({
+    required this.localDeclarationId,
     required this.imported,
-    required this.payout,
-    required this.arrivalDate,
-    required this.departureDate,
   });
 }
