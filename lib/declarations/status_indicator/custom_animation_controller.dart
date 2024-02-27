@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+// ignore_for_file: lines_longer_than_80_chars
+
 import "dart:ui" as ui show lerpDouble;
 
 import "package:flutter/foundation.dart";
@@ -246,6 +248,7 @@ class CustomAnimationController extends Animation<double>
   ///   be changed by calling [resync]. See [TickerProvider] for advice on
   ///   obtaining a ticker provider.
   CustomAnimationController({
+    required TickerProvider vsync,
     double? value,
     this.duration,
     this.reverseDuration,
@@ -253,7 +256,6 @@ class CustomAnimationController extends Animation<double>
     this.lowerBound = 0.0,
     this.upperBound = 1.0,
     this.animationBehavior = AnimationBehavior.normal,
-    required TickerProvider vsync,
   })  : assert(upperBound >= lowerBound),
         _direction = _AnimationDirection.forward {
     if (kFlutterMemoryAllocationsEnabled) {
@@ -281,11 +283,11 @@ class CustomAnimationController extends Animation<double>
   /// physics simulation, especially when the physics simulation has no
   /// pre-determined bounds.
   CustomAnimationController.unbounded({
+    required TickerProvider vsync,
     double value = 0.0,
     this.duration,
     this.reverseDuration,
     this.debugLabel,
-    required TickerProvider vsync,
     this.animationBehavior = AnimationBehavior.preserve,
   })  : lowerBound = double.negativeInfinity,
         upperBound = double.infinity,
@@ -420,8 +422,10 @@ class CustomAnimationController extends Animation<double>
     if (!isAnimating) {
       return 0.0;
     }
-    return _simulation!.dx(lastElapsedDuration!.inMicroseconds.toDouble() /
-        Duration.microsecondsPerSecond);
+    return _simulation!.dx(
+      lastElapsedDuration!.inMicroseconds.toDouble() /
+          Duration.microsecondsPerSecond,
+    );
   }
 
   void _internalSetValue(double newValue) {
@@ -542,8 +546,11 @@ class CustomAnimationController extends Animation<double>
   /// If the `target` argument is the same as the current [value] of the
   /// animation, then this won't animate, and the returned [TickerFuture] will
   /// be already complete.
-  TickerFuture animateTo(double target,
-      {Duration? duration, Curve curve = Curves.linear}) {
+  TickerFuture animateTo(
+    double target, {
+    Duration? duration,
+    Curve curve = Curves.linear,
+  }) {
     assert(() {
       if (this.duration == null && duration == null) {
         throw FlutterError(
@@ -576,8 +583,11 @@ class CustomAnimationController extends Animation<double>
   /// regardless of whether `target` < [value] or not. At the end of the
   /// animation, when `target` is reached, [status] is reported as
   /// [AnimationStatus.dismissed].
-  TickerFuture animateBack(double target,
-      {Duration? duration, Curve curve = Curves.linear}) {
+  TickerFuture animateBack(
+    double target, {
+    Duration? duration,
+    Curve curve = Curves.linear,
+  }) {
     assert(() {
       if (this.duration == null &&
           reverseDuration == null &&
@@ -600,8 +610,11 @@ class CustomAnimationController extends Animation<double>
     return _animateToInternal(target, duration: duration, curve: curve);
   }
 
-  TickerFuture _animateToInternal(double target,
-      {Duration? duration, Curve curve = Curves.linear}) {
+  TickerFuture _animateToInternal(
+    double target, {
+    Duration? duration,
+    Curve curve = Curves.linear,
+  }) {
     double scale = 1.0;
     if (SemanticsBinding.instance.disableAnimations) {
       switch (animationBehavior) {
@@ -618,11 +631,14 @@ class CustomAnimationController extends Animation<double>
     }
     Duration? simulationDuration = duration;
     if (simulationDuration == null) {
-      assert(!(this.duration == null &&
-          _direction == _AnimationDirection.forward));
-      assert(!(this.duration == null &&
-          _direction == _AnimationDirection.reverse &&
-          reverseDuration == null));
+      assert(
+        !(this.duration == null && _direction == _AnimationDirection.forward),
+      );
+      assert(
+        !(this.duration == null &&
+            _direction == _AnimationDirection.reverse &&
+            reverseDuration == null),
+      );
       final double range = upperBound - lowerBound;
       final double remainingFraction =
           range.isFinite ? (target - _value).abs() / range : 1.0;
@@ -649,8 +665,15 @@ class CustomAnimationController extends Animation<double>
     }
     assert(simulationDuration > Duration.zero);
     assert(!isAnimating);
-    return _startSimulation(_InterpolationSimulation(
-        _value, target, simulationDuration, curve, scale));
+    return _startSimulation(
+      _InterpolationSimulation(
+        _value,
+        target,
+        simulationDuration,
+        curve,
+        scale,
+      ),
+    );
   }
 
   /// Starts running this animation in the forward direction, and
@@ -674,8 +697,12 @@ class CustomAnimationController extends Animation<double>
   /// The most recently returned [TickerFuture], if any, is marked as having been
   /// canceled, meaning the future never completes and its [TickerFuture.orCancel]
   /// derivative future completes with a [TickerCanceled] error.
-  TickerFuture repeat(
-      {double? min, double? max, bool reverse = false, Duration? period}) {
+  TickerFuture repeat({
+    double? min,
+    double? max,
+    bool reverse = false,
+    Duration? period,
+  }) {
     min ??= lowerBound;
     max ??= upperBound;
     period ??= duration;
@@ -693,8 +720,16 @@ class CustomAnimationController extends Animation<double>
     assert(max >= min);
     assert(max <= upperBound && min >= lowerBound);
     stop();
-    return _startSimulation(_RepeatingSimulation(
-        _value, min, max, reverse, period!, _directionSetter));
+    return _startSimulation(
+      _RepeatingSimulation(
+        _value,
+        min,
+        max,
+        reverse,
+        period!,
+        _directionSetter,
+      ),
+    );
   }
 
   void _directionSetter(_AnimationDirection direction) {
@@ -727,10 +762,11 @@ class CustomAnimationController extends Animation<double>
   /// The most recently returned [TickerFuture], if any, is marked as having been
   /// canceled, meaning the future never completes and its [TickerFuture.orCancel]
   /// derivative future completes with a [TickerCanceled] error.
-  TickerFuture fling(
-      {double velocity = 1.0,
-      SpringDescription? springDescription,
-      AnimationBehavior? animationBehavior}) {
+  TickerFuture fling({
+    double velocity = 1.0,
+    SpringDescription? springDescription,
+    AnimationBehavior? animationBehavior,
+  }) {
     springDescription ??= _kFlingSpringDescription;
     _direction = velocity < 0.0
         ? _AnimationDirection.reverse
@@ -843,7 +879,8 @@ class CustomAnimationController extends Animation<double>
         throw FlutterError.fromParts(<DiagnosticsNode>[
           ErrorSummary("AnimationController.dispose() called more than once."),
           ErrorDescription(
-              "A given $runtimeType cannot be disposed more than once.\n"),
+            "A given $runtimeType cannot be disposed more than once.\n",
+          ),
           DiagnosticsProperty<CustomAnimationController>(
             "The following $runtimeType object was disposed multiple times",
             this,
@@ -903,14 +940,19 @@ class CustomAnimationController extends Animation<double>
     }());
     final String more =
         "${super.toStringDetails()} ${value.toStringAsFixed(3)}";
+    // ignore: prefer_double_quotes
     return '$more$paused$ticker$label';
   }
 }
 
 class _InterpolationSimulation extends Simulation {
   _InterpolationSimulation(
-      this._begin, this._end, Duration duration, this._curve, double scale)
-      : assert(duration.inMicroseconds > 0),
+    this._begin,
+    this._end,
+    Duration duration,
+    this._curve,
+    double scale,
+  )   : assert(duration.inMicroseconds > 0),
         _durationInSeconds =
             (duration.inMicroseconds * scale) / Duration.microsecondsPerSecond;
 
@@ -945,9 +987,14 @@ class _InterpolationSimulation extends Simulation {
 typedef _DirectionSetter = void Function(_AnimationDirection direction);
 
 class _RepeatingSimulation extends Simulation {
-  _RepeatingSimulation(double initialValue, this.min, this.max, this.reverse,
-      Duration period, this.directionSetter)
-      : _periodInSeconds =
+  _RepeatingSimulation(
+    double initialValue,
+    this.min,
+    this.max,
+    this.reverse,
+    Duration period,
+    this.directionSetter,
+  )   : _periodInSeconds =
             period.inMicroseconds / Duration.microsecondsPerSecond,
         _initialT = (max == min)
             ? 0.0

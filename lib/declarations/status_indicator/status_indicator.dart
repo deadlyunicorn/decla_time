@@ -35,7 +35,7 @@ class _StatusIndicatorState extends State<StatusIndicator> {
     final List<DeclarationImportStatus> currentDeclarations = context
         .select<DeclarationSyncController, List<DeclarationImportStatus>>(
       (DeclarationSyncController controller) =>
-          controller.totalImportedDeclarations,
+          controller.importedDeclarations,
     );
 
     return (isImporting || currentDeclarations.isNotEmpty)
@@ -53,7 +53,9 @@ class _StatusIndicatorState extends State<StatusIndicator> {
                 Navigator.push(
                   context,
                   MaterialPageRoute<void>(
-                    builder: (BuildContext context) => DeclarationImportRoute(),
+                    builder: (BuildContext context) => DeclarationImportRoute(
+                      localized: widget.localized,
+                    ),
                   ),
                 );
                 showErrorSnackbar(context: context, message: "hello");

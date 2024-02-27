@@ -59,14 +59,6 @@ Future<Declaration> getDeclarationFromSearchPageData({
     ),
   );
 
-  print(
-    getBetweenStrings(
-      getBetweenStrings(res.body, 'id="appForm:platform_input"', "</select>"),
-      'selected="selected">',
-      "</option>",
-    ),
-  );
-
   final double? payout = double.tryParse(
     getBetweenStrings(
       getBetweenStrings(res.body, "{id:'appForm:sumAmount',", "',"),

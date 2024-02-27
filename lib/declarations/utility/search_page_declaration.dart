@@ -9,7 +9,7 @@ class SearchPageDeclaration {
 
   DateTime get arrivalDate => _arrivalDate;
   DateTime get departureDate => _departureDate;
-  String get payout => _payout;
+  double get payout => double.parse(_payout.replaceAll(",", "."));
   DeclarationStatus get status => _status;
   int get declarationIndex => _declarationIndex;
 
