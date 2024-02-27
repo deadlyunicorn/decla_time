@@ -186,6 +186,8 @@ class _LoginFormState extends State<LoginForm> {
       return headers;
     } on LoginFailedExcepetion {
       setErrorMessage(widget.localized.errorLoginFailed.capitalized);
+    } on TryAgainLaterException {
+      setErrorMessage(widget.localized.tryAgainLater.capitalized);
     } on ClientException {
       setErrorMessage(widget.localized.errorNoConnection.capitalized);
     } catch (any) {

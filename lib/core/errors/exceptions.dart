@@ -6,6 +6,8 @@ class LoginFailedExcepetion implements Exception {}
 
 class NotLoggedInException implements Exception {}
 
+class TryAgainLaterException implements Exception {}
+
 class EntryAlreadyExistsException implements Exception {}
 
 class NoArrivalDateExcepetion implements Exception {}
