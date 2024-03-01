@@ -6,10 +6,12 @@ class RouteOutline extends StatelessWidget {
     required this.title,
     required this.child,
     super.key,
-  });
+    void Function()? onExit,
+  }) : _onExit = onExit;
 
   final String title;
   final Widget child;
+  final void Function()? _onExit;
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +22,7 @@ class RouteOutline extends StatelessWidget {
             onPressed: () {
               ScaffoldMessenger.of(context).removeCurrentSnackBar();
               Navigator.pop(context);
+              if (_onExit != null) _onExit();
             },
             icon: const Icon(Icons.arrow_back_rounded),
           ),
