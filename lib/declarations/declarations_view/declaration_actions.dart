@@ -2,6 +2,7 @@ import "dart:async";
 
 import "package:decla_time/core/constants/constants.dart";
 import "package:decla_time/core/extensions/capitalize.dart";
+import "package:decla_time/core/functions/snackbars.dart";
 import "package:decla_time/declarations/declarations_view/synchronize_declarations/declaration_sync_range_picker_dialog.dart";
 import "package:decla_time/users/users_controller.dart";
 import "package:flutter/material.dart";
@@ -44,16 +45,23 @@ class DeclarationActions extends StatelessWidget {
               final UsersController userActions =
                   context.read<UsersController>();
               if (userActions.isLoggedIn) {
-                unawaited(
-                  showDialog(
-                    context: context,
-                    builder: (_) => DeclarationSyncRangePickerDialog(
-                      parentContext: context,
-                      localized: localized,
-                      propertyId: selectedPropertyId,
+                if (selectedPropertyId.isNotEmpty) {
+                  unawaited(
+                    showDialog(
+                      context: context,
+                      builder: (_) => DeclarationSyncRangePickerDialog(
+                        parentContext: context,
+                        localized: localized,
+                        propertyId: selectedPropertyId,
+                      ),
                     ),
-                  ),
-                );
+                  );
+                } else {
+                  showNormalSnackbar(
+                    context: context,
+                    message: localized.noPropertySelected.capitalized,
+                  );
+                }
               } else {
                 userActions.setRequestLogin(true);
               }
