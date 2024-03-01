@@ -1,16 +1,21 @@
 import "package:decla_time/core/enums/booking_platform.dart";
+import "package:decla_time/core/enums/declaration_status.dart";
+import "package:decla_time/core/enums/declaration_type.dart";
 import "package:decla_time/core/extensions/get_values_between_strings.dart";
 import "package:decla_time/declarations/database/declaration.dart";
+import "package:decla_time/declarations/database/finalized_declaration_details.dart";
 import "package:decla_time/declarations/utility/declaration_body.dart";
 import "package:decla_time/declarations/utility/network_requests/headers/declarations_page_headers.dart";
 import "package:http/http.dart" as http;
 import "package:intl/intl.dart";
 
 ///? This is actually a POST request -
-Future<Declaration> getDeclarationFromSearchPageData({
+Future<DetailedDeclaration> getDeclarationFromSearchPageData({
   required String propertyId,
   required String parsedViewState,
   required int declarationIndex,
+  required DeclarationStatus status,
+  required DeclarationType declarationType,
   required DeclarationsPageHeaders headers,
 }) async {
   final String declarationDbId = await http
@@ -44,6 +49,62 @@ Future<Declaration> getDeclarationFromSearchPageData({
       '"',
     ),
   );
+
+  final int? serialNumber;
+
+  final FinalizedDeclarationDetails? finalizedDeclarationDetails;
+  if (status == DeclarationStatus.finalized) {
+    final String declarationDetailsHtml = getBetweenStrings(
+      res.body,
+      '<fieldset id="appForm:j_idt35"',
+      "</fieldset>",
+    );
+
+    serialNumber = int.parse(
+      getBetweenStrings(
+        declarationDetailsHtml,
+        "S/N Declaration</td>\n<td> ",
+        "</td>",
+      ).trim(),
+    );
+
+    final DateTime declarationDate = DateFormat("dd/MM/y").parse(
+      getBetweenStrings(
+        declarationDetailsHtml,
+        "Submission Date: </td>\n<td>",
+        "</td>",
+      ),
+    );
+
+    int? serialNumberOfAmendingDeclaration;
+
+    if (declarationType == DeclarationType.amending) {
+      final String amendmentDetailsHtml = getBetweenStrings(
+        res.body,
+        '<fieldset id="appForm:j_idt44"',
+        "</fieldset>",
+      );
+      serialNumberOfAmendingDeclaration = int.parse(
+        getBetweenStrings(
+          amendmentDetailsHtml,
+          "S/N Declaration</td>\n<td>",
+          "</td>",
+        ).trim(),
+      );
+    }
+
+    finalizedDeclarationDetails = FinalizedDeclarationDetails(
+      declarationDbId: int.parse(declarationDbId),
+      declarationDate: declarationDate,
+      declarationType: declarationType,
+      serialNumber: serialNumber,
+      serialNumberOfAmendingDeclaration: serialNumberOfAmendingDeclaration,
+    );
+  } else {
+    serialNumber = null;
+    finalizedDeclarationDetails = null;
+  }
+
   final DateTime departureDate = DateFormat("dd/MM/y").parse(
     getBetweenStrings(
       res.body,
@@ -67,39 +128,60 @@ Future<Declaration> getDeclarationFromSearchPageData({
     ),
   );
 
-  if (payout != null && payout > 0) {
-    return Declaration(
-      propertyId: propertyId,
-      declarationDbId: int.tryParse(declarationDbId) ?? 0,
-      bookingPlatform: platform,
-      arrivalDate: arrivalDate,
-      departureDate: departureDate,
-      payout: payout,
-    );
-  } else {
-    final DateTime cancellationDate = DateFormat("dd/MM/y").parse(
-      getBetweenStrings(
-        res.body,
-        'appForm:cancelDate_input" type="text" value="',
-        '"',
-      ),
-    );
-    final double? cancellationAmount = double.tryParse(
-      getBetweenStrings(
-        getBetweenStrings(res.body, "{id:'appForm:cancelAmount',", "',"),
-        "valueToRender:'",
-        "0000",
-      ),
-    );
-    return Declaration(
-      propertyId: propertyId,
-      declarationDbId: int.tryParse(declarationDbId) ?? 0,
-      bookingPlatform: platform,
-      arrivalDate: arrivalDate,
-      departureDate: departureDate,
-      payout: 0,
-      cancellationAmount: cancellationAmount,
-      cancellationDate: cancellationDate,
-    );
-  }
+  final Declaration declaration = payout != null && payout > 0
+      ? Declaration(
+          serialNumber: serialNumber,
+          propertyId: propertyId,
+          declarationStatus: status,
+          declarationDbId: int.tryParse(declarationDbId) ?? 0,
+          bookingPlatform: platform,
+          arrivalDate: arrivalDate,
+          departureDate: departureDate,
+          payout: payout,
+        )
+      : (() {
+          final DateTime cancellationDate = DateFormat("dd/MM/y").parse(
+            getBetweenStrings(
+              res.body,
+              'appForm:cancelDate_input" type="text" value="',
+              '"',
+            ),
+          );
+          final double? cancellationAmount = double.tryParse(
+            getBetweenStrings(
+              getBetweenStrings(res.body, "{id:'appForm:cancelAmount',", "',"),
+              "valueToRender:'",
+              "0000",
+            ),
+          );
+
+          return Declaration(
+            //? Declaration with cancellation
+            serialNumber: serialNumber,
+            declarationStatus: status,
+            propertyId: propertyId,
+            declarationDbId: int.tryParse(declarationDbId) ?? 0,
+            bookingPlatform: platform,
+            arrivalDate: arrivalDate,
+            departureDate: departureDate,
+            payout: 0,
+            cancellationAmount: cancellationAmount,
+            cancellationDate: cancellationDate,
+          );
+        })();
+
+  return DetailedDeclaration(
+    baseDeclaration: declaration,
+    finalizedDeclarationDetails: finalizedDeclarationDetails,
+  );
+}
+
+class DetailedDeclaration {
+  final Declaration baseDeclaration;
+  final FinalizedDeclarationDetails? finalizedDeclarationDetails;
+
+  DetailedDeclaration({
+    required this.baseDeclaration,
+    required this.finalizedDeclarationDetails,
+  });
 }
