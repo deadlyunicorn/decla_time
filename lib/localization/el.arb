@@ -97,6 +97,7 @@
     "users": "χρήστες",
     "selectProperty": "επιλογή ακινήτου",
     "property": "ακίνητο",
+    "noPropertySelected": "δεν έχει επιλεχθεί κάποιο ακίνητο",
     "properties": "ακίνητα",
     "noDeclarationsFound": "δεν βρέθηκαν δηλώσεις",
     "trySelectingAnotherDateRange": "δοκιμάστε να ορίσετε άλλο εύρος ημερομηνιών",
@@ -109,10 +110,19 @@
     "pleaseWait":"παρακαλώ περιμένετε",
     "pressConfirmToStartImporting":"πατήστε επιβεβαίωση για να ξεκινήσει η εισαγωγή",
     "thisTakesLongerThanUsual": "αυτό παίρνει περισσότερο από'τι συνήθως",
-    "ifYouLostConnectionToTheInternetTryAgain": "αν χάσατε την σύνδεση με το διαδίκτυο, προσπαθήστε ξανά",
+    "ifYouLostConnectionToTheInternetTryAgain": "αν χάσατε την σύνδεση με το διαδίκτυο,\nπροσπαθήστε ξανά",
     "added" : "προστέθηκε",
     "noDeclarationsImportedForThisProperty": "δεν έχουν εισαχθεί δηλώσεις για αυτό το κατάλυμα",
     "tryAgainLater": "προσπαθήστε πάλι αργότερα",
+    "failed": "απέτυχε",
+    "importFailed": "Η εισαγωγή απέτυχε",
+    "importTakingTooLong": "η εισαγωγή αργεί περισσότερο από ότι συνήθως.\nΕλέγξτε την σύνδεση σας και μετά\nΠροσπαθήστε ξάνα, επιλέγοντας τις ημερομηνιές εκ νέου",
+    "loading": "φορτώνει",
+    "importing": "εισάγεται",
+    "noPendingImports": "δεν αναμένονται εισαγωγές",
+    "declarationStatusFinalized": "ολοκληρωμένη",
+    "declarationStatusTemporary": "προσωρινή",
+    "declarationStatusUndeclared": "αδήλωτη",
     "unusedForNonTrailingComma________________________________":""
 
 

@@ -97,6 +97,7 @@
     "users": "users",
     "selectProperty": "select property",
     "property": "property",
+    "noPropertySelected": "no property was selected",
     "properties": "properties",
     "noDeclarationsFound": "no declarations found",
     "trySelectingAnotherDateRange": "try selecting another date range",
@@ -109,10 +110,19 @@
     "pleaseWait":"please wait",
     "pressConfirmToStartImporting":"press confirm to start importing",
     "thisTakesLongerThanUsual": "this takes longer than usual",
-    "ifYouLostConnectionToTheInternetTryAgain": "if you have lost connection to the internet try again",
+    "ifYouLostConnectionToTheInternetTryAgain": "if you have lost connection to the internet\ntry again",
     "added" : "added",
     "noDeclarationsImportedForThisProperty": "no declarations imported for this property",
     "tryAgainLater": "try again later",
+    "failed": "failed",
+    "importFailed": "import failed",
+    "importTakingTooLong": "this is taking too long.\nCheck your internet connection and\nRetry again by specifying again the date range.",
+    "loading": "loading",
+    "importing": "importing",
+    "noPendingImports": "no pending imports",
+    "declarationStatusFinalized": "finalized",
+    "declarationStatusTemporary": "temporary",
+    "declarationStatusUndeclared": "undeclared",
     "unusedForNonTrailingComma________________________________":""
 
 
