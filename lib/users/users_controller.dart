@@ -43,6 +43,7 @@ class UsersController extends ChangeNotifier {
   }
 
   Future<void> selectProperty(String propertyId) async {
+
     if (propertyId == _selectedPropertyId) return;
 
     final User? userThatOwnsPropert = _availableUsers

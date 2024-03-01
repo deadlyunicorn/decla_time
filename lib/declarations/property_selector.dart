@@ -26,10 +26,7 @@ class PropertySelector extends StatelessWidget {
       (UsersController controller) => controller.selectedUser,
     );
 
-    //TODO!!! display declarations even if the user is not logged in
-    //!( if they are synced. ?)
-
-    //* After we sync the properties we need to SYNC the existing declarations
+    //TODO!!!
 
     //* When submitting declarations:
     //* + We have a 'queue' where we can add from our reservation list

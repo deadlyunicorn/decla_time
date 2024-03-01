@@ -76,11 +76,18 @@ void main() async {
     );
 
     final String declarationDbId = await getDeclarationFromSearchPageData(
+      status: declarationsSearchPageData
+          .declarations[selectedDeclarationIndex].status,
+      declarationType: declarationsSearchPageData
+          .declarations[selectedDeclarationIndex].type,
       propertyId: propertyId,
       declarationIndex: selectedDeclarationIndex,
       headers: testingHeaders,
       parsedViewState: declarationsSearchPageData.viewStateParsed,
-    ).then((Declaration declaration) => declaration.declarationDbId.toString());
+    ).then(
+      (DetailedDeclaration declaration) =>
+          declaration.baseDeclaration.declarationDbId.toString(),
+    );
 
     print("Your selected declaration has an id of: $declarationDbId");
 
