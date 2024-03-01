@@ -1,18 +1,23 @@
 import "package:decla_time/core/enums/declaration_status.dart";
+import "package:decla_time/core/enums/declaration_type.dart";
 import "package:intl/intl.dart";
 
 class SearchPageDeclaration {
   final int _declarationIndex;
+  final int? _serialNumber;
   final DateTime _arrivalDate;
   final DateTime _departureDate;
   final String _payout;
   final DeclarationStatus _status;
+  final DeclarationType _type;
 
   DateTime get arrivalDate => _arrivalDate;
   DateTime get departureDate => _departureDate;
   double get payout => double.parse(_payout.replaceAll(",", "."));
   DeclarationStatus get status => _status;
+  DeclarationType get type => _type;
   int get declarationIndex => _declarationIndex;
+  int? get serialNumber => _serialNumber;
 
   int get nights => departureDate.difference(arrivalDate).inDays + 1;
 
@@ -25,11 +30,15 @@ class SearchPageDeclaration {
     required String payouts,
     required DeclarationStatus status,
     required int declarationIndex,
+    required DeclarationType type,
+    required int? serialNumber,
   })  : _arrivalDate = arrivalDates,
         _departureDate = departureDates,
         _declarationIndex = declarationIndex,
         _status = status,
-        _payout = payouts;
+        _payout = payouts,
+        _type = type,
+        _serialNumber = serialNumber;
 
   String deleteRequestBody(String viewState) =>
       // ignore: lines_longer_than_80_chars
