@@ -17,10 +17,10 @@ class FinalizedDeclarationDetails {
   @Index(unique: true)
   final int declarationDbId;
 
-  DateTime? amendmentDate;
+  final int? serialNumberOfAmendingDeclaration;
   //! We basically check which declarations have not been amended.
   //! Don't display a reservation that has been amandeded.
-  final List<int> relatedDeclarationsSerialNumbers = <int>[];
+  // List<int> relatedDeclarationsSerialNumbers = <int>[];
   //! We have a "history" button for the declaration.
   //! We can check our ammendments. -
   //! Only a finalized declaration can have a SerialNumber.
@@ -30,7 +30,7 @@ class FinalizedDeclarationDetails {
     required this.declarationDate,
     required this.declarationType,
     required this.serialNumber,
-    this.amendmentDate,
+    required this.serialNumberOfAmendingDeclaration,
   });
 
   Id get isarId => fastHash("$serialNumber");
@@ -40,6 +40,7 @@ class FinalizedDeclarationDetails {
         finalizedDeclarationDetails.declarationType == declarationType &&
         finalizedDeclarationDetails.serialNumber == serialNumber &&
         finalizedDeclarationDetails.declarationDbId == declarationDbId &&
-        finalizedDeclarationDetails.amendmentDate == amendmentDate;
+        finalizedDeclarationDetails.serialNumberOfAmendingDeclaration ==
+            serialNumberOfAmendingDeclaration;
   }
 }
