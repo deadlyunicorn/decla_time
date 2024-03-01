@@ -6,9 +6,7 @@ import "package:decla_time/declarations/database/declaration.dart";
 import "package:decla_time/declarations/status_indicator/declaration_status.dart";
 import "package:decla_time/declarations/status_indicator/declaration_sync_controller.dart";
 import "package:decla_time/declarations/utility/search_page_declaration.dart";
-import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
-import "package:flutter/widgets.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import "package:provider/provider.dart";
 
@@ -30,11 +28,12 @@ class DeclarationImportRoute extends StatelessWidget {
           declarationSyncController.currentItemNumber;
       Future<void>.delayed(const Duration(minutes: 2, seconds: 30)).then((_) {
         if (currentDeclaration == declarationSyncController.currentItemNumber &&
-            context.mounted) {
+            context.mounted &&
+            declarationSyncController.isImporting) {
           showErrorSnackbar(
-              context: context,
-              message:
-                  "localized.this is taking too long.. check your internet connection and retry again by specifying again the date range.."); //TODO LOCALIZE
+            context: context,
+            message: localized.importTakingTooLong.capitalized,
+          );
         }
       });
     }
@@ -46,9 +45,9 @@ class DeclarationImportRoute extends StatelessWidget {
       },
       title: declarationSyncController.isImporting
           ? declarationSyncController.total > 0
-              ? "Importing: ${declarationSyncController.currentItemNumber} / ${declarationSyncController.total}"
-              : "Loading.."
-          : "No pending imports", //TODO Localize
+              ? "${localized.importing.capitalized}: ${declarationSyncController.currentItemNumber} / ${declarationSyncController.total}"
+              : "${localized.loading.capitalized}.."
+          : localized.noPendingImports.capitalized,
       child: SingleChildScrollView(
         //TODO Scrollbar doesnt work (like scrolling with the mouse wheel)
         child: Column(
@@ -59,6 +58,7 @@ class DeclarationImportRoute extends StatelessWidget {
                 localized: localized),
             if (declarationSyncController.declarationsToBeImported.isNotEmpty)
               DeclarationsToBeImported(
+                  localized: localized,
                   declarationSyncController: declarationSyncController),
           ],
         ),
@@ -69,9 +69,9 @@ class DeclarationImportRoute extends StatelessWidget {
 
 class ImportedDeclarations extends StatelessWidget {
   const ImportedDeclarations({
-    super.key,
     required this.declarationSyncController,
     required this.localized,
+    super.key,
   });
 
   final DeclarationSyncController declarationSyncController;
@@ -96,9 +96,11 @@ class ImportedDeclarations extends StatelessWidget {
             BuildContext context,
             AsyncSnapshot<Declaration?> snapshot,
           ) {
-            final String label = importedDeclaration.imported
-                ? localized.added.capitalized
-                : localized.entryAlreadyExists.capitalized;
+            final String label = importedDeclaration.localDeclarationId == 1
+                ? localized.failed.capitalized
+                : importedDeclaration.imported
+                    ? localized.added.capitalized
+                    : localized.entryAlreadyExists.capitalized;
             final Declaration? declaration = snapshot.data;
             return Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -110,31 +112,47 @@ class ImportedDeclarations extends StatelessWidget {
                             child: Text(
                               declaration.cancellationDate != null
                                   ? "${declaration.cancellationDateString}"
+                                  // ignore: lines_longer_than_80_chars
                                   : "${declaration.arrivalDateString} - ${declaration.departureDateString}",
                             ),
                           ),
                           FittedBox(
                             child: Text(
+                              // ignore: lines_longer_than_80_chars
                               "${declaration.cancellationAmount != null ? declaration.cancellationAmount!.toStringAsFixed(2) : declaration.payout.toStringAsFixed(2)}EUR - ${declaration.bookingPlatform.name.capitalized}",
                             ),
                           ),
                           FittedBox(
-                            child: Text("declarationStatusTranslated"),
-                          )
+                            child: Text(
+                              Declaration.getLocalizedDeclarationStatus(
+                                localized: localized,
+                                declarationStatus:
+                                    declaration.declarationStatus,
+                              ).capitalized,
+                            ),
+                          ),
                         ],
                       )
-                    : Text("Import error"),
+                    : FittedBox(
+                        child: Text(localized.importFailed.capitalized),
+                      ),
                 trailing: Tooltip(
                   message: label,
-                  child: importedDeclaration.imported
+                  child: importedDeclaration.localDeclarationId == 1
                       ? Icon(
-                          Icons.add_circle_outline,
+                          Icons.error,
+                          color: Theme.of(context).colorScheme.error,
                           semanticLabel: label,
                         )
-                      : Icon(
-                          semanticLabel: label,
-                          Icons.phonelink_sharp,
-                        ),
+                      : importedDeclaration.imported
+                          ? Icon(
+                              Icons.add_circle_outline,
+                              semanticLabel: label,
+                            )
+                          : Icon(
+                              semanticLabel: label,
+                              Icons.phonelink_sharp,
+                            ),
                 ),
 
                 //TODO display currentItem/Total
@@ -152,10 +170,12 @@ class ImportedDeclarations extends StatelessWidget {
 
 class DeclarationsToBeImported extends StatelessWidget {
   const DeclarationsToBeImported({
-    super.key,
     required this.declarationSyncController,
+    required this.localized,
+    super.key,
   });
 
+  final AppLocalizations localized;
   final DeclarationSyncController declarationSyncController;
 
   @override
@@ -171,7 +191,7 @@ class DeclarationsToBeImported extends StatelessWidget {
           child: ListTile(
             trailing: const CircularProgressIndicator(),
             title: Column(
-              children: [
+              children: <Widget>[
                 FittedBox(
                   child: Text(
                     "${declarationToBeImported.arrivalDateString} - ${declarationToBeImported.departureDateString}",
@@ -183,8 +203,13 @@ class DeclarationsToBeImported extends StatelessWidget {
                   ),
                 ),
                 FittedBox(
-                  child: Text("declarationStatusTranslated"),
-                )
+                  child: Text(
+                    Declaration.getLocalizedDeclarationStatus(
+                      localized: localized,
+                      declarationStatus: declarationToBeImported.status,
+                    ).capitalized,
+                  ),
+                ),
               ],
             ),
           ),
