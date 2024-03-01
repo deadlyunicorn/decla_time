@@ -151,13 +151,13 @@ class DeclarationSyncController extends ChangeNotifier {
 
       _setCurrentItemNumber(currentItemNumber + 1);
 
-      final SearchPageDeclaration currentDeclaration =
+      final SearchPageDeclaration searchPageDeclaration =
           currentSearchPageData.declarations[i];
 
       try {
         int? declarationLocalId = await _isarHelper.declarationActions
             .searchPageDeclarationAlreadyExists(
-          declaration: currentDeclaration,
+          declaration: searchPageDeclaration,
           propertyId: propertyId,
         );
 
@@ -174,17 +174,26 @@ class DeclarationSyncController extends ChangeNotifier {
           ]);
 
           if (searchPageData == null) throw TimedOutException();
-          final Declaration declaration =
+          final DetailedDeclaration detailedDeclaration =
               await getDeclarationFromSearchPageData(
             declarationIndex: i,
             headers: headers,
+            status: searchPageDeclaration.status,
+            declarationType: searchPageDeclaration.type,
             parsedViewState: searchPageData.viewStateParsed,
             propertyId: propertyId,
           );
 
-          declarationLocalId = (await _isarHelper.declarationActions
-                  .insertMultipleEntriesToDb(<Declaration>[declaration]))
-              .first;
+          declarationLocalId =
+              (await _isarHelper.declarationActions.insertMultipleEntriesToDb(
+            <Declaration>[detailedDeclaration.baseDeclaration],
+          ))
+                  .first;
+          if (detailedDeclaration.finalizedDeclarationDetails != null) {
+            print("got in here:)");
+            //TODO Add to details.
+            throw UnimplementedError();
+          }
         }
         _setDeclarationsToBeImported(
           List<SearchPageDeclaration>.from(declarationsToBeImported)
@@ -200,6 +209,19 @@ class DeclarationSyncController extends ChangeNotifier {
             ),
         );
       } catch (error) {
+        _setDeclarationsToBeImported(
+          List<SearchPageDeclaration>.from(declarationsToBeImported)
+            ..removeAt(0),
+        );
+        setImportedDeclarations(
+          List<DeclarationImportStatus>.from(importedDeclarations)
+            ..add(
+              DeclarationImportStatus(
+                imported: false,
+                localDeclarationId: 1,
+              ),
+            ),
+        );
         print(error);
       }
     }
