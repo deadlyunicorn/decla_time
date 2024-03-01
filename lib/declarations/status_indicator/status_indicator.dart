@@ -1,4 +1,3 @@
-import "package:decla_time/core/functions/snackbars.dart";
 import "package:decla_time/declarations/status_indicator/animations.dart";
 import "package:decla_time/declarations/status_indicator/calculate_indicator_position.dart";
 import "package:decla_time/declarations/status_indicator/declaration_import_route.dart";
@@ -34,8 +33,7 @@ class _StatusIndicatorState extends State<StatusIndicator> {
 
     final List<DeclarationImportStatus> currentDeclarations = context
         .select<DeclarationSyncController, List<DeclarationImportStatus>>(
-      (DeclarationSyncController controller) =>
-          controller.importedDeclarations,
+      (DeclarationSyncController controller) => controller.importedDeclarations,
     );
 
     return (isImporting || currentDeclarations.isNotEmpty)
@@ -47,9 +45,6 @@ class _StatusIndicatorState extends State<StatusIndicator> {
                 ),
               ),
               onPressed: () {
-                //TODO remove snackabars.
-                showErrorSnackbar(context: context, message: "hello");
-
                 Navigator.push(
                   context,
                   MaterialPageRoute<void>(
@@ -58,7 +53,6 @@ class _StatusIndicatorState extends State<StatusIndicator> {
                     ),
                   ),
                 );
-                showErrorSnackbar(context: context, message: "hello");
               },
               child: isImporting
                   ? const SyncingAnimatedIcon()

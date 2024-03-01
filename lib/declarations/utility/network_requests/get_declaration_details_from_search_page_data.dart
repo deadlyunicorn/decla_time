@@ -100,6 +100,7 @@ Future<DetailedDeclaration> getDeclarationFromSearchPageData({
       serialNumber: serialNumber,
       serialNumberOfAmendingDeclaration: serialNumberOfAmendingDeclaration,
     );
+
   } else {
     serialNumber = null;
     finalizedDeclarationDetails = null;

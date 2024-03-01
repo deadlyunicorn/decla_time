@@ -54,12 +54,14 @@ class DeclarationImportRoute extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             ImportedDeclarations(
-                declarationSyncController: declarationSyncController,
-                localized: localized),
+              declarationSyncController: declarationSyncController,
+              localized: localized,
+            ),
             if (declarationSyncController.declarationsToBeImported.isNotEmpty)
               DeclarationsToBeImported(
-                  localized: localized,
-                  declarationSyncController: declarationSyncController),
+                localized: localized,
+                declarationSyncController: declarationSyncController,
+              ),
           ],
         ),
       ),
@@ -154,10 +156,6 @@ class ImportedDeclarations extends StatelessWidget {
                               Icons.phonelink_sharp,
                             ),
                 ),
-
-                //TODO display currentItem/Total
-                //TODO display the status of the declarations found so far.
-                //TODO Display a ProgressIndicator if still importing.
               ),
             );
           },

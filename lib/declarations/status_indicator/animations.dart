@@ -79,7 +79,6 @@ class AnimationTest3 extends StatelessWidget {
       stream: (() async* {
         double i = 0;
         while (true) {
-          print(i % 2);
           yield i++;
           await Future<void>.delayed(const Duration(milliseconds: 600));
         }
