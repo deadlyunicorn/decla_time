@@ -80,16 +80,38 @@ class _DeclarationSyncRangePickerDialogState
           //? and pressed confirm afterwards.
           //?( But then they might get a logged out session? )
 
-          unawaited(
-            context
-                .read<DeclarationSyncController>()
-                .startImportingDeclarations(
-                  headers: context.read<UsersController>().loggedUser.headers!,
-                  arrivalDate: arrivalDateTemp,
-                  departureDate: departureDateTemp,
-                  propertyId: widget.propertyId,
-                ),
-          );
+          final DeclarationsPageHeaders initialHeaders =
+              context.read<UsersController>().loggedUser.headers!;
+          final UserCredentials? credentials =
+              context.read<UsersController>().loggedUser.userCredentials;
+
+          void updateHeaders(DeclarationsPageHeaders newHeaders) => context
+              .read<UsersController>()
+              .loggedUser
+              .setDeclarationsPageHeaders(newHeaders);
+
+          Future<void> startImporting(DeclarationsPageHeaders headers) =>
+              context
+                  .read<DeclarationSyncController>()
+                  .startImportingDeclarations(
+                    arrivalDate: arrivalDateTemp,
+                    departureDate: departureDateTemp,
+                    propertyId: widget.propertyId,
+                    headers: headers,
+                  );
+
+          try {
+            unawaited(startImporting(initialHeaders));
+          } on NotLoggedInException { //* UNTESTED CODE.
+            unawaited(
+              loginUser(credentials: credentials!).then(
+                (DeclarationsPageHeaders newHeaders) {
+                  updateHeaders(newHeaders);
+                  startImporting(newHeaders);
+                },
+              ),
+            );
+          }
 
           Navigator.popUntil(context, (Route<void> route) {
             return route.isFirst;
@@ -149,6 +171,8 @@ class _DeclarationSyncRangePickerDialogState
                   Text(
                     helperText,
                     textAlign: TextAlign.center,
+                    maxLines: 4,
+                    overflow: TextOverflow.ellipsis,
                   ),
                   if (isSyncing)
                     const Positioned(
@@ -245,6 +269,7 @@ class _DeclarationSyncRangePickerDialogState
           },
         ),
       );
+
       final SearchPageData searchPageData =
           await getSearchPageDetailsFromDateRangeFuture(
         arrivalDate: submitArrivalDate,
@@ -301,6 +326,10 @@ class _DeclarationSyncRangePickerDialogState
         );
         await getTotalDeclarationsForRange();
       }
+    } on TryAgainLaterException {
+      setHelperText(
+        newText: widget.localized.tryAgainLater.capitalized,
+      );
     } catch (error) {
       if (mounted) {
         setHelperText(
