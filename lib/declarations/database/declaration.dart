@@ -26,9 +26,6 @@ class Declaration {
   @Index(unique: true)
   final int declarationDbId;
 
-  @Index(unique: true)
-  int? serialNumber; //used for getting finalized declaration details.
-
   Declaration({
     required this.propertyId,
     required this.declarationDbId,
@@ -39,10 +36,12 @@ class Declaration {
     this.declarationStatus = DeclarationStatus.temporary,
     this.cancellationDate,
     this.cancellationAmount,
-    this.serialNumber,
   });
 
   int get nights => departureDate.difference(arrivalDate).inDays + 1;
+  String? get cancellationDateString => cancellationDate != null
+      ? DateFormat("dd/MM/y").format(cancellationDate!)
+      : null;
   String get arrivalDateString => DateFormat("dd/MM/y").format(arrivalDate);
   String get departureDateString => DateFormat("dd/MM/y").format(departureDate);
   Id get isarId => fastHash("$declarationDbId");
@@ -56,7 +55,6 @@ class Declaration {
         declaration.bookingPlatform == bookingPlatform &&
         declaration.arrivalDate == arrivalDate &&
         declaration.departureDate == departureDate &&
-        declaration.payout == payout &&
-        declaration.serialNumber == serialNumber;
+        declaration.payout == payout;
   }
 }
