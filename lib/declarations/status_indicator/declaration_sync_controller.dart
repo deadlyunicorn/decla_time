@@ -3,14 +3,13 @@ import "dart:async";
 import "package:decla_time/core/connection/isar_helper.dart";
 import "package:decla_time/core/errors/exceptions.dart";
 import "package:decla_time/declarations/database/declaration.dart";
+import "package:decla_time/declarations/database/finalized_declaration_details.dart";
 import "package:decla_time/declarations/status_indicator/declaration_status.dart";
 import "package:decla_time/declarations/utility/network_requests/get_declaration_details_from_search_page_data.dart";
 import "package:decla_time/declarations/utility/network_requests/get_declaration_search_page.dart";
 import "package:decla_time/declarations/utility/network_requests/headers/declarations_page_headers.dart";
-import "package:decla_time/declarations/utility/network_requests/login/login_user.dart";
 import "package:decla_time/declarations/utility/search_page_data.dart";
 import "package:decla_time/declarations/utility/search_page_declaration.dart";
-import "package:decla_time/declarations/utility/user_credentials.dart";
 import "package:flutter/material.dart";
 
 class DeclarationSyncController extends ChangeNotifier {
@@ -76,7 +75,6 @@ class DeclarationSyncController extends ChangeNotifier {
     if (_isImporting) {
       _requestNewImportSession = true; //?Used to break the current import.
       while (true) {
-        print("requesting new session");
         await Future<void>.delayed(const Duration(seconds: 1));
         if (!_isImporting) {
           setIsImporting(true);
@@ -123,10 +121,6 @@ class DeclarationSyncController extends ChangeNotifier {
         nextArrivalDate = currentSearchPageData.declarations.last.arrivalDate;
         _setDeclarationsToBeImported(currentSearchPageData.declarations);
       }
-
-      //TODO look if it's a final declaration.
-      //TODO think of storing it in a variable 'isFinal'.
-      //TODO or just connect declartion with finalizedDeclartionDetails them with propertyDbId.
 
       await importCurrentSearchPageDeclarations(
         currentSearchPageData,
@@ -184,16 +178,20 @@ class DeclarationSyncController extends ChangeNotifier {
             propertyId: propertyId,
           );
 
+          if (detailedDeclaration.finalizedDeclarationDetails != null) {
+            (await _isarHelper.declarationActions
+                .insertMultipleFinalizedDeclarationsToDb(
+              <FinalizedDeclarationDetails>[
+                detailedDeclaration.finalizedDeclarationDetails!,
+              ],
+            ));
+          }
+
           declarationLocalId =
               (await _isarHelper.declarationActions.insertMultipleEntriesToDb(
             <Declaration>[detailedDeclaration.baseDeclaration],
           ))
                   .first;
-          if (detailedDeclaration.finalizedDeclarationDetails != null) {
-            print("got in here:)");
-            //TODO Add to details.
-            throw UnimplementedError();
-          }
         }
         _setDeclarationsToBeImported(
           List<SearchPageDeclaration>.from(declarationsToBeImported)
@@ -222,6 +220,7 @@ class DeclarationSyncController extends ChangeNotifier {
               ),
             ),
         );
+        // ignore: avoid_print
         print(error);
       }
     }
