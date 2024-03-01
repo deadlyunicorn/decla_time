@@ -1,4 +1,5 @@
 import "package:decla_time/core/enums/declaration_status.dart";
+import "package:decla_time/core/enums/declaration_type.dart";
 import "package:decla_time/core/extensions/get_values_between_strings.dart";
 import "package:decla_time/declarations/functions/check_if_logged_in.dart";
 import "package:decla_time/declarations/utility/search_page_declaration.dart";
@@ -25,6 +26,22 @@ class SearchPageData {
       : _viewState;
 
   static Future<SearchPageData> getFromHtml(String body) async {
+    final List<int?> serialNumbers =
+        getAllBetweenStrings(body, ':aaDilwsis">', "</")
+            .map(
+              (String text) => int.tryParse(text),
+            )
+            .toList();
+
+    final List<DeclarationType> types =
+        getAllBetweenStrings(body, ':declarationTypeDescr"', "</")
+            .map(
+              (String text) => text.contains("modifiedOutput")
+                  ? DeclarationType.amending
+                  : DeclarationType.initial,
+            )
+            .toList();
+
     final List<DateTime> arrivalDates =
         getAllBetweenStrings(body, ':rentalFrom"', "</")
             .map(
@@ -71,6 +88,8 @@ class SearchPageData {
         List<SearchPageDeclaration>.generate(
       arrivalDates.length,
       (int index) => SearchPageDeclaration(
+        serialNumber: serialNumbers[index],
+        type: types[index],
         arrivalDates: arrivalDates[index],
         declarationIndex: index,
         departureDates: departureDates[index],
