@@ -84,13 +84,10 @@ class _DeclarationSyncRangePickerDialogState
             context
                 .read<DeclarationSyncController>()
                 .startImportingDeclarations(
+                  headers: context.read<UsersController>().loggedUser.headers!,
                   arrivalDate: arrivalDateTemp,
                   departureDate: departureDateTemp,
                   propertyId: widget.propertyId,
-                  credentials: context
-                      .read<UsersController>()
-                      .loggedUser
-                      .userCredentials!,
                 ),
           );
 

@@ -1,4 +1,7 @@
+import "dart:async";
+
 import "package:decla_time/core/connection/isar_helper.dart";
+import "package:decla_time/core/errors/exceptions.dart";
 import "package:decla_time/declarations/database/declaration.dart";
 import "package:decla_time/declarations/status_indicator/declaration_status.dart";
 import "package:decla_time/declarations/utility/network_requests/get_declaration_details_from_search_page_data.dart";
@@ -68,7 +71,7 @@ class DeclarationSyncController extends ChangeNotifier {
     required DateTime arrivalDate,
     required DateTime departureDate,
     required String propertyId,
-    required UserCredentials credentials,
+    required DeclarationsPageHeaders headers,
   }) async {
     if (_isImporting) {
       _requestNewImportSession = true; //?Used to break the current import.
@@ -84,9 +87,6 @@ class DeclarationSyncController extends ChangeNotifier {
     } else {
       setIsImporting(true); //?Notify listeners as well
     }
-    final DeclarationsPageHeaders headers =
-        await loginUser(credentials: credentials);
-
     await setSearchPageDateRange(
       arrivalDate: arrivalDate,
       departureDate: departureDate,
@@ -124,6 +124,10 @@ class DeclarationSyncController extends ChangeNotifier {
         _setDeclarationsToBeImported(currentSearchPageData.declarations);
       }
 
+      //TODO look if it's a final declaration.
+      //TODO think of storing it in a variable 'isFinal'.
+      //TODO or just connect declartion with finalizedDeclartionDetails them with propertyDbId.
+
       await importCurrentSearchPageDeclarations(
         currentSearchPageData,
         propertyId,
@@ -132,6 +136,8 @@ class DeclarationSyncController extends ChangeNotifier {
     }
 
     setIsImporting(false);
+    _setCurrentTotal(0);
+    _setCurrentItemNumber(0);
   }
 
   Future<void> importCurrentSearchPageDeclarations(
@@ -140,8 +146,6 @@ class DeclarationSyncController extends ChangeNotifier {
     DeclarationsPageHeaders headers,
   ) async {
     for (int i = 0; i < currentSearchPageData.declarations.length; i++) {
-      print(currentSearchPageData.declarations.length);
-      print(i);
       if (_requestNewImportSession) break; //!!
       bool imported = false;
 
@@ -156,21 +160,20 @@ class DeclarationSyncController extends ChangeNotifier {
           declaration: currentDeclaration,
           propertyId: propertyId,
         );
-        print("existing: $declarationLocalId");
-
-        print(currentDeclaration.departureDate);
-        print(propertyId);
-        print(currentDeclaration.payout);
 
         if (declarationLocalId == null) {
-          print("this is a new declaration");
           imported = true;
-          await Future<void>.delayed(const Duration(milliseconds: 500));
-          final SearchPageData searchPageData = await getDeclarationSearchPage(
-            //?Used to get a new viewState for each propertyId
-            headers: headers,
-            propertyId: propertyId,
-          );
+          final SearchPageData? searchPageData =
+              await Future.any(<Future<SearchPageData?>>[
+            getDeclarationSearchPage(
+              //?Used to get a new viewState for each propertyId
+              headers: headers,
+              propertyId: propertyId,
+            ),
+            Future<void>.delayed(const Duration(minutes: 2)).then((_) => null),
+          ]);
+
+          if (searchPageData == null) throw TimedOutException();
           final Declaration declaration =
               await getDeclarationFromSearchPageData(
             declarationIndex: i,
@@ -185,7 +188,7 @@ class DeclarationSyncController extends ChangeNotifier {
         }
         _setDeclarationsToBeImported(
           List<SearchPageDeclaration>.from(declarationsToBeImported)
-            ..removeAt(i),
+            ..removeAt(0),
         );
         setImportedDeclarations(
           List<DeclarationImportStatus>.from(importedDeclarations)
@@ -197,39 +200,8 @@ class DeclarationSyncController extends ChangeNotifier {
             ),
         );
       } catch (error) {
-        print("is in here.");
         print(error);
       }
     }
   }
 }
-
-//TODO FOR LATER USER
-/*
-  displayTotalFound: (int totalFound) {
-              setHelperText(
-                context: context,
-                newText: "Total found: $totalFound",
-              );
-            },
-            displayCurrentStatus: ({
-              required int index,
-              required int total,
-              required bool existsInDb,
-            }) {
-              setHelperText(
-                context: context,
-                newText: "Is new: ${!existsInDb}\n${index + 1} / $total",
-              );
-            },
-            checkIfDeclarationExistsInDb:
-                (SearchPageDeclaration searchPageDeclaration) async {
-              const bool exists = false;
-              if (!exists) totalNew++;
-              return exists;
-            },
-            storeDeclarationInDb: (Declaration declaration) async {
-              print("storing in db");
-            },
-
-*/
