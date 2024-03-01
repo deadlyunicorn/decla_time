@@ -1,6 +1,7 @@
 import "package:decla_time/core/enums/declaration_status.dart";
 import "package:decla_time/core/enums/declaration_type.dart";
 import "package:decla_time/declarations/database/declaration.dart";
+import "package:decla_time/declarations/database/finalized_declaration_details.dart";
 import "package:decla_time/declarations/utility/search_page_declaration.dart";
 import "package:isar/isar.dart";
 
@@ -132,5 +133,34 @@ class DeclarationActions {
     });
     _notifyListeners();
     return idsOfInsertedItems;
+  }
+
+  Future<List<int>> insertMultipleFinalizedDeclarationsToDb(
+    List<FinalizedDeclarationDetails> listOfDetails,
+  ) async {
+    final Isar isar = await _isarFuture;
+    List<int> idsOfInsertedItems = <int>[];
+
+    await isar.writeTxn(() async {
+      for (final FinalizedDeclarationDetails declarationDetails
+          in listOfDetails) {
+        idsOfInsertedItems.add(
+          await isar.finalizedDeclarationDetails.put(declarationDetails),
+        );
+      }
+    });
+    _notifyListeners();
+    return idsOfInsertedItems;
+  }
+
+  Future<FinalizedDeclarationDetails?>
+      getFinalizedDeclarationDetailsByDeclarationDbId(
+    int declarationDbId,
+  ) async {
+    final Isar isar = await _isarFuture;
+    return await isar.finalizedDeclarationDetails
+        .filter()
+        .declarationDbIdEqualTo(declarationDbId)
+        .findFirst();
   }
 }
