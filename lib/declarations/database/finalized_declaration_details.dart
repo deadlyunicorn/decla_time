@@ -14,6 +14,9 @@ class FinalizedDeclarationDetails {
   @Index(unique: true)
   final int serialNumber;
 
+  @Index(unique: true)
+  final int declarationDbId;
+
   DateTime? amendmentDate;
   //! We basically check which declarations have not been amended.
   //! Don't display a reservation that has been amandeded.
@@ -23,6 +26,7 @@ class FinalizedDeclarationDetails {
   //! Only a finalized declaration can have a SerialNumber.
 
   FinalizedDeclarationDetails({
+    required this.declarationDbId,
     required this.declarationDate,
     required this.declarationType,
     required this.serialNumber,
@@ -35,6 +39,7 @@ class FinalizedDeclarationDetails {
     return finalizedDeclarationDetails.declarationDate == declarationDate &&
         finalizedDeclarationDetails.declarationType == declarationType &&
         finalizedDeclarationDetails.serialNumber == serialNumber &&
+        finalizedDeclarationDetails.declarationDbId == declarationDbId &&
         finalizedDeclarationDetails.amendmentDate == amendmentDate;
   }
 }
