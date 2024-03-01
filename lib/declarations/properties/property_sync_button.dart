@@ -125,6 +125,11 @@ class _PropertySyncButtonState extends State<PropertySyncButton> {
         );
         await syncProperties(); //TODO Untested.
       }
+    } on TryAgainLaterException {
+      showErrorSnackbar(
+        context: widget.parentContext,
+        message: widget.localized.tryAgainLater.capitalized,
+      );
     } on ClientException {
       if (!widget.parentContext.mounted) return;
       showErrorSnackbar(
