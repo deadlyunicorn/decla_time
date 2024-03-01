@@ -1,4 +1,5 @@
 import "package:decla_time/core/enums/declaration_status.dart";
+import "package:decla_time/core/enums/declaration_type.dart";
 import "package:decla_time/declarations/database/declaration.dart";
 import "package:decla_time/declarations/utility/search_page_declaration.dart";
 import "package:isar/isar.dart";
@@ -57,26 +58,34 @@ class DeclarationActions {
     required String propertyId,
   }) async {
     return await declarationAlreadyExists(
+      arrivalDate: declaration.arrivalDate,
       departureDate: declaration.departureDate,
       payout: declaration.payout,
       propertyId: propertyId,
       status: declaration.status,
+      type: declaration.type,
+      serialNumber: declaration.serialNumber,
     );
   }
 
   Future<int?> declarationAlreadyExists({
+    required DateTime arrivalDate, //?Might have mistaken it - ammending
     required DateTime departureDate,
     required String propertyId,
     required double payout,
     required DeclarationStatus status,
+    required DeclarationType type,
+    required int? serialNumber,
   }) async {
     final Declaration? databaseResponse = await (await _isarFuture)
         .declarations
         .filter()
         .propertyIdEqualTo(propertyId)
+        .declarationStatusEqualTo(status)
+        .serialNumberEqualTo(serialNumber)
         .payoutEqualTo(payout)
+        .arrivalDateEqualTo(arrivalDate)
         .departureDateEqualTo(departureDate)
-        // .declarationStatusEqualTo(status) //TODO CHECK IF it needs .name -- this one does not work.
         .findFirst();
 
     return databaseResponse?.isarId;
