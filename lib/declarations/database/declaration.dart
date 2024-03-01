@@ -1,6 +1,7 @@
 import "package:decla_time/core/enums/booking_platform.dart";
 import "package:decla_time/core/enums/declaration_status.dart";
 import "package:decla_time/core/functions/fasthash.dart";
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import "package:intl/intl.dart";
 import "package:isar/isar.dart";
 
@@ -26,14 +27,17 @@ class Declaration {
   @Index(unique: true)
   final int declarationDbId;
 
-  Declaration({
+  final int? serialNumber;
+
+  Declaration( {
     required this.propertyId,
     required this.declarationDbId,
     required this.bookingPlatform,
     required this.arrivalDate,
     required this.departureDate,
     required this.payout,
-    this.declarationStatus = DeclarationStatus.temporary,
+    required this.declarationStatus,
+    required this.serialNumber,
     this.cancellationDate,
     this.cancellationAmount,
   });
@@ -45,6 +49,22 @@ class Declaration {
   String get arrivalDateString => DateFormat("dd/MM/y").format(arrivalDate);
   String get departureDateString => DateFormat("dd/MM/y").format(departureDate);
   Id get isarId => fastHash("$declarationDbId");
+
+  static String getLocalizedDeclarationStatus({
+    required AppLocalizations localized,
+    required DeclarationStatus declarationStatus,
+  }) {
+    switch (declarationStatus) {
+      case (DeclarationStatus.finalized):
+        return localized.declarationStatusFinalized;
+
+      case (DeclarationStatus.temporary):
+        return localized.declarationStatusTemporary;
+
+      default:
+        return localized.declarationStatusUndeclared;
+    }
+  }
 
   bool isEqualTo(Declaration declaration) {
     return declaration.propertyId == propertyId &&
