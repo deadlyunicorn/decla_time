@@ -1,4 +1,5 @@
 import "package:decla_time/core/enums/declaration_status.dart";
+import "package:intl/intl.dart";
 
 class SearchPageDeclaration {
   final int _declarationIndex;
@@ -12,6 +13,11 @@ class SearchPageDeclaration {
   double get payout => double.parse(_payout.replaceAll(",", "."));
   DeclarationStatus get status => _status;
   int get declarationIndex => _declarationIndex;
+
+  int get nights => departureDate.difference(arrivalDate).inDays + 1;
+
+  String get arrivalDateString => DateFormat("dd/MM/y").format(arrivalDate);
+  String get departureDateString => DateFormat("dd/MM/y").format(departureDate);
 
   SearchPageDeclaration({
     required DateTime arrivalDates,
