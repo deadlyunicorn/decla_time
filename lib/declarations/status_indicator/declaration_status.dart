@@ -5,7 +5,7 @@ class DeclarationImportStatus {
   final bool imported;
   final Declaration declaration;
 
-  DeclarationImportStatus({
+  const DeclarationImportStatus({
     required this.declaration,
     required this.imported,
   });

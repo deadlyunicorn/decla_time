@@ -1,6 +1,8 @@
 import "dart:async";
 
 import "package:decla_time/core/connection/isar_helper.dart";
+import "package:decla_time/core/enums/booking_platform.dart";
+import "package:decla_time/core/enums/declaration_status.dart";
 import "package:decla_time/core/errors/exceptions.dart";
 import "package:decla_time/declarations/database/declaration.dart";
 import "package:decla_time/declarations/database/finalized_declaration_details.dart";
@@ -71,6 +73,9 @@ class DeclarationSyncController extends ChangeNotifier {
     required DateTime departureDate,
     required String propertyId,
     required DeclarationsPageHeaders headers,
+    //? Don't import searchPageData -
+    //? you might get a bit faster for longer durations
+    //? But if anything ever goes wrong it will be harder to debug.
   }) async {
     if (_isImporting) {
       _requestNewImportSession = true; //?Used to break the current import.
@@ -86,6 +91,7 @@ class DeclarationSyncController extends ChangeNotifier {
       setIsImporting(true); //?Notify listeners as well
     }
     await setSearchPageDateRange(
+      //?Don't import the initial search page data -
       arrivalDate: arrivalDate,
       departureDate: departureDate,
       propertyId: propertyId,
@@ -193,19 +199,25 @@ class DeclarationSyncController extends ChangeNotifier {
           ))
                   .first;
         }
+        final Declaration? declaration =
+            await _isarHelper.declarationActions.getDeclarationEntryByIsarId(
+          declarationLocalId,
+        );
         _setDeclarationsToBeImported(
           List<SearchPageDeclaration>.from(declarationsToBeImported)
             ..removeAt(0),
         );
-        setImportedDeclarations(
-          List<DeclarationImportStatus>.from(importedDeclarations)
-            ..add(
-              DeclarationImportStatus(
-                imported: imported,
-                localDeclarationId: declarationLocalId,
+        if (declaration != null) {
+          setImportedDeclarations(
+            List<DeclarationImportStatus>.from(importedDeclarations)
+              ..add(
+                DeclarationImportStatus(
+                  declaration: declaration,
+                  imported: imported,
+                ),
               ),
-            ),
-        );
+          );
+        }
       } catch (error) {
         _setDeclarationsToBeImported(
           List<SearchPageDeclaration>.from(declarationsToBeImported)
@@ -215,8 +227,17 @@ class DeclarationSyncController extends ChangeNotifier {
           List<DeclarationImportStatus>.from(importedDeclarations)
             ..add(
               DeclarationImportStatus(
+                declaration: Declaration(
+                  propertyId: propertyId,
+                  declarationDbId: 1,
+                  bookingPlatform: BookingPlatform.other,
+                  arrivalDate: DateTime(2018),
+                  departureDate: DateTime(2018),
+                  payout: 0,
+                  declarationStatus: DeclarationStatus.undeclared,
+                  serialNumber: 0,
+                ),
                 imported: false,
-                localDeclarationId: 1,
               ),
             ),
         );
