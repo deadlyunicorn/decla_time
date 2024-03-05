@@ -1,13 +1,11 @@
 import "dart:async";
 
-import "package:decla_time/core/constants/constants.dart";
 import "package:decla_time/core/errors/exceptions.dart";
 import "package:decla_time/core/extensions/capitalize.dart";
 import "package:decla_time/core/functions/snackbars.dart";
-import "package:decla_time/core/widgets/column_with_spacings.dart";
 import "package:decla_time/core/widgets/custom_alert_dialog.dart";
-import "package:decla_time/declarations/declarations_view/synchronize_declarations/date_buttons/set_arrival_date_button.dart";
-import "package:decla_time/declarations/declarations_view/synchronize_declarations/date_buttons/set_departure_date_button.dart";
+import "package:decla_time/declarations/declarations_view/synchronize_declarations/helper_text_display.dart";
+import "package:decla_time/declarations/declarations_view/synchronize_declarations/range_picker_declaration_sync_dialog.dart";
 import "package:decla_time/declarations/status_indicator/declarations_import_route/declaration_sync_controller.dart";
 import "package:decla_time/declarations/utility/import_declarations_by_property_id.dart";
 import "package:decla_time/declarations/utility/network_requests/headers/declarations_page_headers.dart";
@@ -54,134 +52,21 @@ class _DeclarationSyncRangePickerDialogState
               ? SystemMouseCursors.forbidden
               : null,
       localized: widget.localized,
-      confirmButtonAction: () async {
-        final SearchPageData? tempCurrentSearchPageData = currentSearchPageData;
-        final DateTime? departureDateTemp = departureDate;
-        final DateTime? arrivalDateTemp = arrivalDate;
-
-        if (isSyncing == true) {
-          setHelperText(
-            newText:
-                // ignore: lines_longer_than_80_chars
-                "${widget.localized.synchronizing.capitalized}...\n${widget.localized.pleaseWait.capitalized}",
-          );
-        } else if (tempCurrentSearchPageData == null ||
-            tempCurrentSearchPageData.total == 0 ||
-            departureDateTemp == null ||
-            arrivalDateTemp == null) {
-          setHelperText(
-            newText:
-                // ignore: lines_longer_than_80_chars
-                "${widget.localized.noDeclarationsFound.capitalized}\n${widget.localized.trySelectingAnotherDateRange}",
-          );
-        } else {
-          //? Search Page date range is already -
-          //? The only issue would be if the user went AFK
-          //? and pressed confirm afterwards.
-          //?( But then they might get a logged out session? )
-
-          final DeclarationsPageHeaders initialHeaders =
-              context.read<UsersController>().loggedUser.headers!;
-          final UserCredentials? credentials =
-              context.read<UsersController>().loggedUser.userCredentials;
-
-          void updateHeaders(DeclarationsPageHeaders newHeaders) => context
-              .read<UsersController>()
-              .loggedUser
-              .setDeclarationsPageHeaders(newHeaders);
-
-          Future<void> startImporting(DeclarationsPageHeaders headers) =>
-              context
-                  .read<DeclarationSyncController>()
-                  .startImportingDeclarations(
-                    arrivalDate: arrivalDateTemp,
-                    departureDate: departureDateTemp,
-                    propertyId: widget.propertyId,
-                    headers: headers,
-                  );
-
-          try {
-            unawaited(startImporting(initialHeaders));
-          } on NotLoggedInException { //* UNTESTED CODE.
-            unawaited(
-              loginUser(credentials: credentials!).then(
-                (DeclarationsPageHeaders newHeaders) {
-                  updateHeaders(newHeaders);
-                  startImporting(newHeaders);
-                },
-              ),
-            );
-          }
-
-          Navigator.popUntil(context, (Route<void> route) {
-            return route.isFirst;
-          });
-        }
-      },
+      confirmButtonAction: confirmActionButton,
       title: widget.localized.synchronizeDeclarations.capitalized,
       child: Stack(
         clipBehavior: Clip.none,
         children: <Widget>[
-          ColumnWithSpacings(
-            spacing: 16,
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              Center(
-                child: FittedBox(
-                  child: Text(
-                    widget.localized.dateSelection.capitalized,
-                    style: Theme.of(context).textTheme.headlineSmall,
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ),
-              Flex(
-                direction:
-                    MediaQuery.sizeOf(context).width < kMaxWidthSmall - 128
-                        ? Axis.vertical
-                        : Axis.horizontal,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                mainAxisSize: MainAxisSize.max,
-                children: <Widget>[
-                  SetArrivalDateButton(
-                    arrivalDate: arrivalDate,
-                    setArrivalDate: setArrivalDate,
-                    departureDate: departureDate,
-                    localized: widget.localized,
-                  ),
-                  SetDepartureDateButton(
-                    arrivalDate: arrivalDate,
-                    setDepartureDate: setDepartureDate,
-                    departureDate: departureDate,
-                    localized: widget.localized,
-                  ),
-                ],
-              ),
-            ],
+          RangePickerDeclarationSyncDialog(
+            localized: widget.localized,
+            arrivalDate: arrivalDate,
+            departureDate: departureDate,
+            setArrivalDate: setArrivalDate,
+            setDepartureDate: setDepartureDate,
           ),
-          Positioned.fill(
-            bottom: -128 - 64,
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: Stack(
-                clipBehavior: Clip.none,
-                alignment: Alignment.bottomCenter,
-                children: <Widget>[
-                  Text(
-                    helperText,
-                    textAlign: TextAlign.center,
-                    maxLines: 4,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  if (isSyncing)
-                    const Positioned(
-                      bottom: -64,
-                      child: CircularProgressIndicator(),
-                    ),
-                ],
-              ),
-            ),
+          HelperTextDisplay(
+            helperText: helperText,
+            isSyncing: isSyncing,
           ),
         ],
       ),
@@ -340,5 +225,69 @@ class _DeclarationSyncRangePickerDialogState
     setState(() {
       isSyncing = false;
     });
+  }
+
+  Future<void> confirmActionButton() async {
+    final SearchPageData? tempCurrentSearchPageData = currentSearchPageData;
+    final DateTime? departureDateTemp = departureDate;
+    final DateTime? arrivalDateTemp = arrivalDate;
+
+    if (isSyncing == true) {
+      setHelperText(
+        newText:
+            // ignore: lines_longer_than_80_chars
+            "${widget.localized.synchronizing.capitalized}...\n${widget.localized.pleaseWait.capitalized}",
+      );
+    } else if (tempCurrentSearchPageData == null ||
+        tempCurrentSearchPageData.total == 0 ||
+        departureDateTemp == null ||
+        arrivalDateTemp == null) {
+      setHelperText(
+        newText:
+            // ignore: lines_longer_than_80_chars
+            "${widget.localized.noDeclarationsFound.capitalized}\n${widget.localized.trySelectingAnotherDateRange}",
+      );
+    } else {
+      //? Search Page date range is already -
+      //? The only issue would be if the user went AFK
+      //? and pressed confirm afterwards.
+      //?( But then they might get a logged out session? )
+
+      final DeclarationsPageHeaders initialHeaders =
+          context.read<UsersController>().loggedUser.headers!;
+      final UserCredentials? credentials =
+          context.read<UsersController>().loggedUser.userCredentials;
+
+      void updateHeaders(DeclarationsPageHeaders newHeaders) => context
+          .read<UsersController>()
+          .loggedUser
+          .setDeclarationsPageHeaders(newHeaders);
+
+      Future<void> startImporting(DeclarationsPageHeaders headers) =>
+          context.read<DeclarationSyncController>().startImportingDeclarations(
+                arrivalDate: arrivalDateTemp,
+                departureDate: departureDateTemp,
+                propertyId: widget.propertyId,
+                headers: headers,
+              );
+
+      try {
+        unawaited(startImporting(initialHeaders));
+      } on NotLoggedInException {
+        //* UNTESTED CODE.
+        unawaited(
+          loginUser(credentials: credentials!).then(
+            (DeclarationsPageHeaders newHeaders) {
+              updateHeaders(newHeaders);
+              startImporting(newHeaders);
+            },
+          ),
+        );
+      }
+
+      Navigator.popUntil(context, (Route<void> route) {
+        return route.isFirst;
+      });
+    }
   }
 }
