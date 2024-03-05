@@ -120,7 +120,7 @@
     "loading": "loading",
     "importing": "importing",
     "noPendingImports": "no pending imports",
-    "declarationStatusFinalized": "finalized",
+    "declarationStatusFinalized": "declared",
     "declarationStatusTemporary": "temporary",
     "declarationStatusUndeclared": "undeclared",
     "unusedForNonTrailingComma________________________________":""

@@ -120,7 +120,7 @@
     "loading": "φορτώνει",
     "importing": "εισάγεται",
     "noPendingImports": "δεν αναμένονται εισαγωγές",
-    "declarationStatusFinalized": "ολοκληρωμένη",
+    "declarationStatusFinalized": "δηλωμένη",
     "declarationStatusTemporary": "προσωρινή",
     "declarationStatusUndeclared": "αδήλωτη",
     "unusedForNonTrailingComma________________________________":""

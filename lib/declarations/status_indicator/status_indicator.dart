@@ -1,8 +1,8 @@
 import "package:decla_time/declarations/status_indicator/animations.dart";
 import "package:decla_time/declarations/status_indicator/calculate_indicator_position.dart";
-import "package:decla_time/declarations/status_indicator/declaration_import_route.dart";
 import "package:decla_time/declarations/status_indicator/declaration_status.dart";
-import "package:decla_time/declarations/status_indicator/declaration_sync_controller.dart";
+import "package:decla_time/declarations/status_indicator/declarations_import_route/declaration_import_route.dart";
+import "package:decla_time/declarations/status_indicator/declarations_import_route/declaration_sync_controller.dart";
 import "package:decla_time/declarations/utility/search_page_declaration.dart";
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
@@ -37,9 +37,9 @@ class _StatusIndicatorState extends State<StatusIndicator> {
     );
 
     return (isImporting || currentDeclarations.isNotEmpty)
-        ? CalculateIndicatorPosition(
-            child: TextButton(
-              style: TextButton.styleFrom().copyWith(
+        ? CalculateIndicatorPosition( //TODO on Android it doesn't move as smooth as on PC.
+            child: TextButton( //TODO - pressing "Back key' on Android doesn't discard the imported things
+              style: TextButton.styleFrom().copyWith( 
                 shape: const MaterialStatePropertyAll<OutlinedBorder>(
                   CircleBorder(),
                 ),

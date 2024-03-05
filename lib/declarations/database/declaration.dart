@@ -29,7 +29,7 @@ class Declaration {
 
   final int? serialNumber;
 
-  Declaration( {
+  const Declaration( {
     required this.propertyId,
     required this.declarationDbId,
     required this.bookingPlatform,

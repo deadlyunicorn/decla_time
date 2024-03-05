@@ -8,7 +8,7 @@ import "package:decla_time/core/widgets/column_with_spacings.dart";
 import "package:decla_time/core/widgets/custom_alert_dialog.dart";
 import "package:decla_time/declarations/declarations_view/synchronize_declarations/date_buttons/set_arrival_date_button.dart";
 import "package:decla_time/declarations/declarations_view/synchronize_declarations/date_buttons/set_departure_date_button.dart";
-import "package:decla_time/declarations/status_indicator/declaration_sync_controller.dart";
+import "package:decla_time/declarations/status_indicator/declarations_import_route/declaration_sync_controller.dart";
 import "package:decla_time/declarations/utility/import_declarations_by_property_id.dart";
 import "package:decla_time/declarations/utility/network_requests/headers/declarations_page_headers.dart";
 import "package:decla_time/declarations/utility/network_requests/login/login_user.dart";
