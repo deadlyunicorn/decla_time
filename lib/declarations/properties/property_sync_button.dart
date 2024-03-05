@@ -94,6 +94,8 @@ class _PropertySyncButtonState extends State<PropertySyncButton> {
         username: userController.selectedUser,
         propertyIterable: userProperties,
       );
+      //? Sync after the properties have been added to the owing user 
+      await userController.sync();
 
       final int propertiesCount = userProperties.length;
 
