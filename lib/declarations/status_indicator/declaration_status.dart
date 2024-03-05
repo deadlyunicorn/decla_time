@@ -1,10 +1,12 @@
+import "package:decla_time/declarations/database/declaration.dart";
+
 class DeclarationImportStatus {
   ///? Was it imported or did it already exist?
   final bool imported;
-  final int localDeclarationId;
+  final Declaration declaration;
 
   DeclarationImportStatus({
-    required this.localDeclarationId,
+    required this.declaration,
     required this.imported,
   });
 }
