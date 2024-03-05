@@ -21,14 +21,14 @@ class ColumnWithSpacings extends StatelessWidget {
       mainAxisSize: mainAxisSize,
       mainAxisAlignment: mainAxisAlignment,
       crossAxisAlignment: crossAxisAlignment,
-      children: children
-          .map(
-            (Widget child) => Padding(
-              padding: EdgeInsets.only(bottom: spacing.toDouble()),
-              child: child,
-            ),
-          )
-          .toList(),
+      children: List<Widget>.generate(
+        children.length * 2 - 1,
+        (int index) => index % 2 == 0
+            ? children[index ~/ 2]
+            : SizedBox.square(
+                dimension: spacing.toDouble(),
+              ),
+      ),
     );
   }
 }
