@@ -1,19 +1,19 @@
 import "dart:math";
-
-import "package:decla_time/reservations/presentation/reservations_list/reservation_grid_item.dart";
-import "package:decla_time/reservations/reservation.dart";
+import "package:decla_time/core/widgets/generic_calendar_grid_view/year/month/item/item_material_outline.dart";
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 
-class ReservationOfMonthGridView extends StatelessWidget {
-  const ReservationOfMonthGridView({
-    required this.reservationsOfMonth,
+class ItemsOfMonth<T> extends StatelessWidget {
+  const ItemsOfMonth({
+    required this.itemsOfMonth,
     required this.localized,
+    required this.child,
     super.key,
   });
 
-  final List<Reservation> reservationsOfMonth;
+  final List<T> itemsOfMonth;
   final AppLocalizations localized;
+  final Widget Function(T) child;
 
   @override
   Widget build(BuildContext context) {
@@ -29,13 +29,14 @@ class ReservationOfMonthGridView extends StatelessWidget {
         crossAxisSpacing: horizontalPadding,
         mainAxisSpacing: 16,
       ),
-      itemCount: reservationsOfMonth.length,
+      itemCount: itemsOfMonth.length,
       itemBuilder: (BuildContext context, int index) {
         return Padding(
           padding: const EdgeInsets.all(8.0),
-          child: ReservationGridItem(
-            reservation: reservationsOfMonth[index],
+          child: ItemMaterialOutline<T>(
+            item: itemsOfMonth[index],
             localized: localized,
+            child: child,
           ),
         );
       },

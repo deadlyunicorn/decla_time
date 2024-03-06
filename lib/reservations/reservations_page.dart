@@ -1,5 +1,6 @@
 import "package:decla_time/core/connection/isar_helper.dart";
-import "package:decla_time/reservations/presentation/reservations_list/reservations_list.dart";
+import "package:decla_time/core/widgets/generic_calendar_grid_view/generic_calendar_grid_view.dart";
+import "package:decla_time/reservations/presentation/reservations_list/reservation_grid_item.dart";
 import "package:decla_time/reservations/reservation.dart";
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
@@ -21,11 +22,20 @@ class ReservationsPage extends StatelessWidget {
       builder:
           (BuildContext context, AsyncSnapshot<List<Reservation>> snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
-          return ReservationsList(
-            reservations: snapshot.data ?? <Reservation>[],
-            scrollController: scrollController,
+          return GenericCalendarGridView<Reservation>(
+            items: snapshot.data ?? <Reservation>[],
             localized: localized,
+            scrollController: scrollController,
+            child: (Reservation reservation) => ReservationContainer(
+              localized: localized,
+              reservation: reservation,
+            ),
           );
+          //  ReservationsList(
+          //   reservations: snapshot.data ?? <Reservation>[],
+          //   scrollController: scrollController,
+          //   localized: localized,
+          // );
         } else {
           return const Center(child: CircularProgressIndicator());
         }
