@@ -24,7 +24,7 @@ class DeclarationActions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Flex(
-      direction: MediaQuery.sizeOf(context).width < kMaxWidthSmall
+      direction: MediaQuery.sizeOf(context).width < kSmallScreenWidth
           ? Axis.vertical
           : Axis.horizontal,
       mainAxisSize: MainAxisSize.max,
