@@ -1,6 +1,9 @@
 import "package:decla_time/core/connection/isar_helper.dart";
+import "package:decla_time/core/widgets/column_with_spacings.dart";
+import "package:decla_time/core/widgets/generic_calendar_grid_view/generic_calendar_grid_view.dart";
 import "package:decla_time/declarations/database/declaration.dart";
 import "package:decla_time/declarations/declarations_view/declaration_actions.dart";
+import "package:decla_time/declarations/declarations_view/declaration_container/declaration_container.dart";
 import "package:decla_time/users/users_controller.dart";
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
@@ -30,18 +33,20 @@ class PropertyDeclarationsLoader extends StatelessWidget {
           final List<Declaration> declarations =
               snapshot.data ?? <Declaration>[];
 
-          return Column(
+          return ColumnWithSpacings(
+            spacing: 16,
             children: <Widget>[
               DeclarationActions(
                 localized: localized,
                 selectedPropertyId: selectedPropertyId,
                 totalDeclarations: declarations.length,
               ),
-              ListView.builder(
-                shrinkWrap: true,
-                itemCount: declarations.length,
-                itemBuilder: (BuildContext context, int index) => Text(
-                  declarations[index].declarationStatus.name,
+              GenericCalendarGridView<Declaration>(
+                items: declarations,
+                localized: localized,
+                child: (Declaration declaration) => DeclarationContainer(
+                  localized: localized,
+                  declaration: declaration,
                 ),
               ),
             ],
