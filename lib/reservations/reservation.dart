@@ -1,11 +1,12 @@
 import "package:decla_time/core/functions/fasthash.dart";
+import "package:decla_time/core/widgets/generic_calendar_grid_view/generic_calendar_grid_view.dart";
 import "package:intl/intl.dart";
 import "package:isar/isar.dart";
 
 part "reservation.g.dart";
 
 @collection
-class Reservation {
+class Reservation implements ItemWithDates{
   final String bookingPlatform;
   final String? listingName;
 
@@ -15,7 +16,9 @@ class Reservation {
   @Index(unique: true)
   final String id;
   final String guestName;
+  @override
   final DateTime arrivalDate;
+  @override
   final DateTime departureDate;
   final double payout;
   final String reservationStatus;

@@ -1,6 +1,7 @@
 import "package:decla_time/core/enums/booking_platform.dart";
 import "package:decla_time/core/enums/declaration_status.dart";
 import "package:decla_time/core/functions/fasthash.dart";
+import "package:decla_time/core/widgets/generic_calendar_grid_view/generic_calendar_grid_view.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import "package:intl/intl.dart";
 import "package:isar/isar.dart";
@@ -8,7 +9,7 @@ import "package:isar/isar.dart";
 part "declaration.g.dart";
 
 @collection
-class Declaration {
+class Declaration implements ItemWithDates {
   @Enumerated(EnumType.name)
   final BookingPlatform bookingPlatform;
 
@@ -17,7 +18,9 @@ class Declaration {
   @Enumerated(EnumType.name)
   final DeclarationStatus declarationStatus;
 
+  @override
   final DateTime arrivalDate;
+  @override
   final DateTime departureDate;
   final double payout;
 
@@ -29,7 +32,7 @@ class Declaration {
 
   final int? serialNumber;
 
-  const Declaration( {
+  const Declaration({
     required this.propertyId,
     required this.declarationDbId,
     required this.bookingPlatform,
