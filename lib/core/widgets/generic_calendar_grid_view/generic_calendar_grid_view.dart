@@ -1,6 +1,7 @@
 import "dart:math";
 
 import "package:decla_time/core/constants/constants.dart";
+import "package:decla_time/core/extensions/capitalize.dart";
 import "package:decla_time/core/widgets/generic_calendar_grid_view/year/items_of_year.dart";
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
@@ -19,14 +20,12 @@ class GenericCalendarGridView<T extends ItemWithDates> extends StatelessWidget {
   const GenericCalendarGridView({
     required this.items,
     required this.localized,
-    required this.scrollController,
     required this.child,
     super.key,
   });
 
   final List<T> items;
   final AppLocalizations localized;
-  final ScrollController scrollController;
   final Widget Function(T) child;
 
   @override
@@ -36,7 +35,8 @@ class GenericCalendarGridView<T extends ItemWithDates> extends StatelessWidget {
 
     if (items.isNotEmpty) {
       return ListView.builder(
-        controller: scrollController,
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
         // A list where entries are separated by year.
         itemCount: yearMonthMap.entries.length,
         itemBuilder: (BuildContext context, int index) {
@@ -64,12 +64,15 @@ class GenericCalendarGridView<T extends ItemWithDates> extends StatelessWidget {
         },
       );
     } else {
-      return Center(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            "localized.itemsNotFoundLocally.capitalized".toString(), //TODO: FIX
-            textAlign: TextAlign.center,
+      return Padding(
+        padding: EdgeInsets.only(top: MediaQuery.sizeOf(context).height / 4),
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              localized.itemsNotFoundLocally.capitalized,
+              textAlign: TextAlign.center,
+            ),
           ),
         ),
       );

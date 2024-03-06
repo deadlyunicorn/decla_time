@@ -29,6 +29,7 @@ class SelectPageToDisplay extends StatelessWidget {
         );
       case SelectedPage.declarations:
         return DeclarationsPage(
+          scrollController: scrollController,
           localized: localized,
         );
       case SelectedPage.analytics:

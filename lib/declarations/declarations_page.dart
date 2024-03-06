@@ -9,10 +9,13 @@ import "package:provider/provider.dart";
 class DeclarationsPage extends StatelessWidget {
   const DeclarationsPage({
     required this.localized,
+    required this.scrollController,
     super.key,
   });
 
   final AppLocalizations localized;
+  final ScrollController scrollController;
+
   @override
   Widget build(BuildContext context) {
     final UsersController usersController = context.watch<UsersController>();
@@ -21,6 +24,7 @@ class DeclarationsPage extends StatelessWidget {
     final bool requestLogin = usersController.requestLogin;
 
     return SingleChildScrollView(
+      controller: scrollController,
       child: Center(
         child: SizedBox(
           width: kMaxWidthLargest,
