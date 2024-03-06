@@ -1,4 +1,5 @@
 import "package:decla_time/core/constants/constants.dart";
+import "package:decla_time/core/enums/declaration_status.dart";
 import "package:decla_time/core/extensions/capitalize.dart";
 import "package:decla_time/reservations/presentation/decleration_status_dot.dart";
 import "package:decla_time/reservations/presentation/reservation_status_dot.dart";
@@ -162,7 +163,9 @@ class ReservationDetailsContainer extends StatelessWidget {
             child: DeclarationStatusDot(
               localized: localized,
               size: 24,
-              isDeclared: reservation.isDeclared,
+              declarationStatus: reservation.isDeclared
+                  ? DeclarationStatus.finalized
+                  : DeclarationStatus.undeclared,
             ),
           ),
           Positioned(
