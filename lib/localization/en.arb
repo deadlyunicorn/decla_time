@@ -123,6 +123,7 @@
     "declarationStatusFinalized": "declared",
     "declarationStatusTemporary": "temporary",
     "declarationStatusUndeclared": "undeclared",
+    "itemsNotFoundLocally": "no local entries found",
     "unusedForNonTrailingComma________________________________":""
 
 
