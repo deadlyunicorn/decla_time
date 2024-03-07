@@ -39,17 +39,6 @@ class DeclarationContainer extends StatelessWidget {
           ),
         ),
         Positioned(
-          //TODO - The tooltip won't work as it is outside the Stack.
-          //TODO - Make some circle background for it
-          bottom: -24,
-          right: -4,
-          child: DeclarationStatusDot(
-            size: 24,
-            localized: localized,
-            declarationStatus: declaration.declarationStatus,
-          ),
-        ),
-        Positioned(
           top: -16,
           left: 0,
           child: Text(

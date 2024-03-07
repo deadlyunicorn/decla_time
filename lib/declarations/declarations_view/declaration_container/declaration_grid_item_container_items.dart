@@ -1,5 +1,7 @@
+import "package:decla_time/core/extensions/capitalize.dart";
 import "package:decla_time/core/functions/night_or_nights.dart";
 import "package:decla_time/declarations/database/declaration.dart";
+import "package:decla_time/reservations/presentation/decleration_status_dot.dart";
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 
@@ -26,13 +28,14 @@ class DeclarationGridItemContainerItems extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Text(
-            "${declaration.serialNumber ?? ""}", //TODO Check also add 'localized.sr :'
-            style: Theme.of(context).textTheme.bodyMedium,
-            maxLines: 1,
-            textAlign: TextAlign.center,
-            overflow: TextOverflow.ellipsis,
-          ),
+          if (declaration.serialNumber != null)
+            Text(
+              "${localized.serialNumberShort}: ${declaration.serialNumber ?? ""}",
+              style: Theme.of(context).textTheme.bodyMedium,
+              maxLines: 1,
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
+            ),
           Flexible(
             child: FittedBox(
               child: Column(
@@ -48,6 +51,13 @@ class DeclarationGridItemContainerItems extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     softWrap: true,
                   ),
+                  if (isCancelled)
+                    Text(
+                      "(${localized.cancelled.capitalized})",
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
                   Text(
                     nightOrNights(localized, declaration.nights),
                     style: Theme.of(context).textTheme.bodyMedium,
@@ -55,6 +65,11 @@ class DeclarationGridItemContainerItems extends StatelessWidget {
                 ],
               ),
             ),
+          ),
+          DeclarationStatusDot(
+            size: 24,
+            localized: localized,
+            declarationStatus: declaration.declarationStatus,
           ),
         ],
       ),
