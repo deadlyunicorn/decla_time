@@ -25,6 +25,17 @@ class DeclarationActions {
         .findAll();
   }
 
+  Future<List<Declaration>> getAllDeclarationsByPropertyIdSorted({
+    required String propertyId,
+  }) async {
+    return (await _isarFuture)
+        .declarations
+        .filter()
+        .propertyIdEqualTo(propertyId)
+        .sortByDepartureDateDesc()
+        .findAll();
+  }
+
   Future<List<Declaration>> getAllEntriesFromDeclarations() async {
     return (await _isarFuture)
         .declarations

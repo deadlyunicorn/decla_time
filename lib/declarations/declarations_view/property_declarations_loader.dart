@@ -27,7 +27,7 @@ class PropertyDeclarationsLoader extends StatelessWidget {
       future: context
           .watch<IsarHelper>()
           .declarationActions
-          .getAllDeclarationsFrom(propertyId: selectedPropertyId),
+          .getAllDeclarationsByPropertyIdSorted(propertyId: selectedPropertyId),
       builder: (_, AsyncSnapshot<List<Declaration>> snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           final List<Declaration> declarations =
