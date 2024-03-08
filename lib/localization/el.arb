@@ -126,6 +126,7 @@
     "itemsNotFoundLocally": "δεν βρέθηκαν τοπικές εγγραφές",
     "serialNumber": "αριθμός αναγνώρισης",
     "serialNumberShort": "Α/Α",
+    "declarationDate": "ημερομηνία δήλωσης",
     "unusedForNonTrailingComma________________________________":""
 
 
