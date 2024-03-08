@@ -1,7 +1,6 @@
 import "package:decla_time/declarations/database/declaration.dart";
 import "package:decla_time/declarations/declarations_view/declaration_container/declaration_details_route.dart";
 import "package:decla_time/declarations/declarations_view/declaration_container/declaration_grid_item_container_items.dart";
-import "package:decla_time/reservations/presentation/decleration_status_dot.dart";
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import "package:intl/intl.dart";
@@ -29,7 +28,9 @@ class DeclarationContainer extends StatelessWidget {
               context,
               MaterialPageRoute<void>(
                 builder: (BuildContext context) => DeclarationDetailsRoute(
-                    localized: localized, declaration: declaration),
+                  localized: localized,
+                  declaration: declaration,
+                ),
               ),
             );
           },

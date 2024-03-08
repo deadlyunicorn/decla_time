@@ -1,4 +1,3 @@
-import "package:decla_time/core/widgets/generic_calendar_grid_view/generic_calendar_grid_view.dart";
 import "package:decla_time/core/widgets/generic_calendar_grid_view/year/month/items_of_month.dart";
 import "package:decla_time/settings.dart";
 import "package:flutter/material.dart";

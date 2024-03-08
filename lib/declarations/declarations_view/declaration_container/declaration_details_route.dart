@@ -33,11 +33,13 @@ class DeclarationDetailsRoute extends StatelessWidget {
       ) {
         final FinalizedDeclarationDetails? declarationDetails = snapshot.data;
 
-        return declarationDetails == null
-            ? const Center(child: CircularProgressIndicator())
-            : RouteOutline(
-                title: localized.details.capitalized,
-                child: SingleChildScrollView(
+        //TODO Something makes the Future re run when resizing.. Check context - mediaquery, Theme of..
+
+        return RouteOutline(
+          title: localized.details.capitalized,
+          child: snapshot.connectionState != ConnectionState.done
+              ? const Center(child: CircularProgressIndicator())
+              : SingleChildScrollView(
                   child: SizedBox(
                     width: MediaQuery.sizeOf(context).width,
                     child: Padding(
@@ -45,8 +47,9 @@ class DeclarationDetailsRoute extends StatelessWidget {
                       child: Column(
                         children: <Widget>[
                           DeclarationDetailsContainer(
+                            declaration: declaration,
                             declarationDetails: declarationDetails,
-                            localized: localized 
+                            localized: localized,
                           ),
                           const SizedBox.square(dimension: 32),
                           // Text( TODO CHECK
@@ -61,7 +64,7 @@ class DeclarationDetailsRoute extends StatelessWidget {
                     ),
                   ),
                 ),
-              );
+        );
       },
     );
   }
