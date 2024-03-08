@@ -147,9 +147,9 @@ class ReservationDetailsContainer extends StatelessWidget {
                     ),
                   ),
                   OutlineContainer(
-                    child: DateInformationWidget(
+                    child: DateInformationWidget<Reservation>(
                       localized: localized,
-                      reservation: reservation,
+                      item: reservation,
                       nights: nights,
                     ),
                   ),

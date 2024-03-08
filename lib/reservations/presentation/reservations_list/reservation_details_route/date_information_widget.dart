@@ -1,19 +1,20 @@
 import "package:decla_time/core/constants/constants.dart";
 import "package:decla_time/core/extensions/capitalize.dart";
-import "package:decla_time/reservations/reservation.dart";
+import "package:decla_time/core/widgets/generic_calendar_grid_view/generic_calendar_grid_view.dart";
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import "package:intl/intl.dart";
 
-class DateInformationWidget extends StatelessWidget {
+class DateInformationWidget<T extends ItemWithDates> extends StatelessWidget {
+  
   const DateInformationWidget({
-    required this.reservation,
+    required this.item,
     required this.nights,
     required this.localized,
     super.key,
   });
 
-  final Reservation reservation;
+  final T item;
   final int nights;
   final AppLocalizations localized;
 
@@ -54,7 +55,7 @@ class DateInformationWidget extends StatelessWidget {
             children: <Widget>[
               Expanded(
                 child: Text(
-                  dateFormat(reservation.arrivalDate),
+                  dateFormat(item.arrivalDate),
                   textAlign: TextAlign.center,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -62,7 +63,7 @@ class DateInformationWidget extends StatelessWidget {
               ),
               Expanded(
                 child: Text(
-                  dateFormat(reservation.departureDate),
+                  dateFormat(item.departureDate),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.center,
@@ -80,7 +81,7 @@ class DateInformationWidget extends StatelessWidget {
     );
   }
 
-  String dateFormat(DateTime date) {
+  static String dateFormat(DateTime date) {
     return DateFormat("dd/MM/y").format(date);
   }
 }
