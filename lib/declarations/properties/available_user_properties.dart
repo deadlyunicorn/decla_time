@@ -33,7 +33,7 @@ class _AvailableUserPropertiesState extends State<AvailableUserProperties> {
       (UsersController controller) => widget.userProperties
           .where(
             (UserProperty property) =>
-                controller.selectedProperty == property.propertyId,
+                controller.selectedProperty?.propertyId == property.propertyId,
           )
           .firstOrNull,
     );
@@ -87,7 +87,9 @@ class _AvailableUserPropertiesState extends State<AvailableUserProperties> {
   }
 
   String propertyShortDetails(UserProperty property) =>
-      "${property.address} - ${property.atak}";
+      property.friendlyName != null
+          ? property.friendlyName!
+          : "${property.address} - ${property.atak}";
   //? ATAK is more relevant to the end user than the propertyId..
 }
 
