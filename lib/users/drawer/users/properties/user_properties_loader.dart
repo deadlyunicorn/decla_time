@@ -29,7 +29,10 @@ class UserPropertiesLoader extends StatelessWidget {
 
           return Padding(
             padding: const EdgeInsets.only(left: 32.0),
-            child: PropertiesList(properties: properties.toList()),
+            child: PropertiesList(
+              properties: properties.toList(),
+              localized: localized,
+            ),
           );
         } else {
           return const Padding(

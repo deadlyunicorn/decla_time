@@ -135,6 +135,9 @@
     "deleteDeclarationDialogHeadline": "διαγραφή δήλωσης",
     "declarationDelataionDialogBody": "Αυτή η ενέργεια θα διαγράψει την δήλωση ΜΟΝΟ από την τοπική βάση της εφαρμογής",
     "missingPropertyDetails": "λείπουν στοιχεία ακινήτου",
+    "setFriendlyNameTitle": "ορίστε ένα φιλικό όνομα",
+    "setFriendlyNameBody": "δώστε στο ακίνητο ένα φιλικό όνομα ώστε να το ξεχωρίζετε πιο εύκολα το ακίνητο",
+    "friendlyName":"φιλικό όνομα",
     "unusedForNonTrailingComma________________________________":""
 
 

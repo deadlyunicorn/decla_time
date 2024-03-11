@@ -87,9 +87,10 @@ class UsersController extends ChangeNotifier {
         ? rememberedUsername
         : prefs.getString(kLastSelectedUser) ?? "";
 
-    UserProperty? lastSelectedProperty = await isarHelper.userActions
-        .getProperty(
-            propertyId: prefs.getString(kLastSelectedPropertyId) ?? "");
+    UserProperty? lastSelectedProperty =
+        await isarHelper.userActions.getProperty(
+      propertyId: prefs.getString(kLastSelectedPropertyId) ?? "",
+    );
 
     final List<User> users = await isarHelper.userActions.getAll();
     if (users

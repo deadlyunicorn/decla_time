@@ -1,0 +1,62 @@
+import "package:decla_time/core/connection/isar_helper.dart";
+import "package:decla_time/core/extensions/capitalize.dart";
+import "package:decla_time/core/widgets/column_with_spacings.dart";
+import "package:decla_time/core/widgets/custom_alert_dialog.dart";
+import "package:decla_time/declarations/database/user/user_property.dart";
+import "package:flutter/material.dart";
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
+import "package:provider/provider.dart";
+
+class FriendlyNameDialog extends StatefulWidget {
+  const FriendlyNameDialog({
+    required this.property,
+    required this.localized,
+    super.key,
+  });
+
+  final AppLocalizations localized;
+  final UserProperty property;
+
+  @override
+  State<FriendlyNameDialog> createState() => _FriendlyNameDialogState();
+}
+
+class _FriendlyNameDialogState extends State<FriendlyNameDialog> {
+  final TextEditingController friendlyNameController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomAlertDialog(
+      confirmButtonAction: () async {
+        if (friendlyNameController.text.isNotEmpty) {
+          await context.read<IsarHelper>().userActions.setPropertyFriendlyName(
+                propertyId: widget.property.propertyId,
+                friendlyName: friendlyNameController.text,
+              );
+          if (context.mounted) Navigator.pop(context);
+        }
+      },
+      title: widget.localized.setFriendlyNameTitle.capitalized,
+      localized: widget.localized,
+      child: ColumnWithSpacings(
+        mainAxisSize: MainAxisSize.min,
+        spacing: 16,
+        children: <Widget>[
+          //TODO add a remove friendly name button
+          Text(
+            // ignore: lines_longer_than_80_chars
+            "${widget.localized.setFriendlyNameBody.capitalized}: ${widget.property.address}\n( ATAK: ${widget.property.atak} )",
+            textAlign: TextAlign.center,
+          ),
+          TextField(
+            maxLength: 32,
+            controller: friendlyNameController,
+            decoration: InputDecoration(
+              labelText: widget.localized.friendlyName.capitalized,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

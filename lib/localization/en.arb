@@ -135,6 +135,9 @@
     "deleteDeclarationDialogHeadline": "declaration deletion",
     "declarationDelataionDialogBody": "This action will delete the declaration ONLY from the app local database",
     "missingPropertyDetails": "missing property details",
+    "setFriendlyNameTitle": "set a friendly name",
+    "setFriendlyNameBody": "give a friendly name so that you can identify it more easily to the property",
+    "friendlyName":"friendly name",
     "unusedForNonTrailingComma________________________________":""
 
 
