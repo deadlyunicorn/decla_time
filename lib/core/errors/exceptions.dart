@@ -15,3 +15,5 @@ class NoArrivalDateExcepetion implements Exception {}
 class NoDepartureDateExcepetion implements Exception {}
 
 class TimedOutException implements Exception {}
+
+class UserPropertyNotFoundException implements Exception {}

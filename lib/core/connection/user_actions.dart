@@ -17,7 +17,7 @@ class UserActions {
     return (await _isarFuture).users.where().findAll();
   }
 
-  Future<void> addNew({
+  Future<void> addNewUser({
     required String username,
   }) async {
     final Isar isar = await _isarFuture;
@@ -49,13 +49,17 @@ class UserActions {
     }
 
     await isar.writeTxn(() async {
-      await isar.users.put(
-        User(
-          username: username,
-          propertyIds: newPropertyIdsSet.toList(),
-        ),
+      await Future.wait(
+        <Future<void>>[
+          isar.users.put(
+            User(
+              username: username,
+              propertyIds: newPropertyIdsSet.toList(),
+            ),
+          ),
+          isar.userPropertys.putAll(propertyIterable.toList()),
+        ],
       );
-      await isar.userPropertys.putAll(propertyIterable.toList());
     });
     _notifyListeners();
   }
@@ -71,5 +75,30 @@ class UserActions {
     return await isar.userPropertys
         .getAllByPropertyId(propertyIds.toList())
         .then((List<UserProperty?> properties) => properties.nonNulls.toSet());
+  }
+
+  Future<UserProperty?> getProperty({required String propertyId}) async {
+    final Isar isar = await _isarFuture;
+    return await isar.userPropertys.getByPropertyId(propertyId);
+  }
+
+  Future<void> setPropertyFriendlyName({
+    required String propertyId,
+    required String friendlyName,
+  }) async {
+    final Isar isar = await _isarFuture;
+    final UserProperty? property =
+        await isar.userPropertys.getByPropertyId(propertyId);
+    if (property == null) {
+      throw UserPropertyNotFoundException();
+    } else {
+      if (property.friendlyName == friendlyName) return;
+      await isar.writeTxn(() async {
+        await isar.userPropertys.put(
+          property..friendlyName = friendlyName,
+        );
+      });
+      _notifyListeners();
+    }
   }
 }
