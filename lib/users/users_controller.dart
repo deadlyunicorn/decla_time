@@ -11,7 +11,7 @@ import "package:shared_preferences/shared_preferences.dart";
 
 class UsersController extends ChangeNotifier {
   String _selectedUser;
-  String _selectedPropertyId;
+  UserProperty? _selectedProperty;
   List<User> _availableUsers;
   final IsarHelper _isarHelper;
 
@@ -24,16 +24,16 @@ class UsersController extends ChangeNotifier {
   bool get requestLogin => _requestLogin;
   bool get isLoggedIn => (loggedUser.userCredentials != null &&
       loggedUser.userCredentials?.username == selectedUser);
-  String get selectedProperty => _selectedPropertyId;
+  UserProperty? get selectedProperty => _selectedProperty;
 
   UsersController({
     required List<User> availableUsers,
     required String selectedUser,
     required IsarHelper isarHelper,
-    String? propertyId,
+    required UserProperty? property,
   })  : _availableUsers = availableUsers,
         _selectedUser = selectedUser,
-        _selectedPropertyId = propertyId ?? "",
+        _selectedProperty = property,
         _isarHelper = isarHelper;
 
   void setRequestLogin(bool newValue) {
@@ -43,8 +43,7 @@ class UsersController extends ChangeNotifier {
   }
 
   Future<void> selectProperty(String propertyId) async {
-
-    if (propertyId == _selectedPropertyId) return;
+    if (propertyId == _selectedProperty?.propertyId) return;
 
     final User? userThatOwnsPropert = _availableUsers
         .where((User user) => user.propertyIds.contains(propertyId))
@@ -54,7 +53,8 @@ class UsersController extends ChangeNotifier {
       await selectUser(userThatOwnsPropert.username);
     }
 
-    _selectedPropertyId = propertyId;
+    _selectedProperty =
+        await _isarHelper.userActions.getProperty(propertyId: propertyId);
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     unawaited(prefs.setString(kLastSelectedPropertyId, propertyId));
@@ -87,29 +87,30 @@ class UsersController extends ChangeNotifier {
         ? rememberedUsername
         : prefs.getString(kLastSelectedUser) ?? "";
 
-    String lastSelectedProperty =
-        prefs.getString(kLastSelectedPropertyId) ?? "";
+    UserProperty? lastSelectedProperty = await isarHelper.userActions
+        .getProperty(
+            propertyId: prefs.getString(kLastSelectedPropertyId) ?? "");
 
     final List<User> users = await isarHelper.userActions.getAll();
     if (users
         .where((User user) => user.username.contains(lastSelectedUsername))
         .isEmpty) {
       lastSelectedUsername = "";
-      lastSelectedProperty = "";
+      lastSelectedProperty = null;
     } else if ((await isarHelper.userActions
             .readProperties(username: lastSelectedUsername))
         .where(
           (UserProperty property) =>
-              property.propertyId == lastSelectedProperty,
+              property.propertyId == lastSelectedProperty?.propertyId,
         )
         .isEmpty) {
-      lastSelectedProperty = "";
+      lastSelectedProperty = null;
     }
 
     return UsersController(
       availableUsers: users,
       selectedUser: lastSelectedUsername,
-      propertyId: lastSelectedProperty,
+      property: lastSelectedProperty,
       isarHelper: isarHelper,
     );
   }

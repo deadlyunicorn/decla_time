@@ -1,9 +1,12 @@
 import "package:decla_time/core/constants/constants.dart";
 import "package:decla_time/core/extensions/capitalize.dart";
 import "package:decla_time/declarations/database/declaration.dart";
+import "package:decla_time/declarations/database/user/user_property.dart";
 import "package:decla_time/reservations/presentation/reservations_list/reservation_details_route/reservation_details_container.dart";
+import "package:decla_time/users/users_controller.dart";
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
+import "package:provider/provider.dart";
 
 class BasicDetails extends StatelessWidget {
   const BasicDetails({
@@ -17,6 +20,16 @@ class BasicDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final UserProperty? selectedProperty =
+        context.select<UsersController, UserProperty?>(
+      (UsersController usersController) => usersController.selectedProperty,
+    );
+
+    final String? propertyName = selectedProperty != null
+        ? selectedProperty.friendlyName ??
+            "${selectedProperty.address}\nATAK: ${selectedProperty.atak}"
+        : null;
+
     return OutlineContainer(
       child: Column(
         children: <Widget>[
@@ -82,13 +95,10 @@ class BasicDetails extends StatelessWidget {
             ),
           ),
           const SizedBox.square(dimension: 8),
-          (
-                  //TODO Friendly Name.
-                  declaration.propertyId != null &&
-                      declaration.propertyId!.isNotEmpty)
+          (propertyName != null && propertyName.isNotEmpty)
               ? Text(
                   // ignore: lines_longer_than_80_chars
-                  "${localized.at.capitalized} '${declaration.propertyId}'",
+                  "${localized.at.capitalized} $propertyName",
                   textAlign: TextAlign.center,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,

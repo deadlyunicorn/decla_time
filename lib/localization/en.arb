@@ -134,6 +134,7 @@
     "deleteDeclarationFromLocal": "delete declaration from local database",
     "deleteDeclarationDialogHeadline": "declaration deletion",
     "declarationDelataionDialogBody": "This action will delete the declaration ONLY from the app local database",
+    "missingPropertyDetails": "missing property details",
     "unusedForNonTrailingComma________________________________":""
 
 

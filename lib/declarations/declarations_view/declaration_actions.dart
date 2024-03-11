@@ -3,6 +3,7 @@ import "dart:async";
 import "package:decla_time/core/constants/constants.dart";
 import "package:decla_time/core/extensions/capitalize.dart";
 import "package:decla_time/core/functions/snackbars.dart";
+import "package:decla_time/declarations/database/user/user_property.dart";
 import "package:decla_time/declarations/declarations_view/synchronize_declarations/declaration_sync_range_picker_dialog.dart";
 import "package:decla_time/users/users_controller.dart";
 import "package:flutter/material.dart";
@@ -12,13 +13,13 @@ import "package:provider/provider.dart";
 class DeclarationActions extends StatelessWidget {
   const DeclarationActions({
     required this.localized,
-    required this.selectedPropertyId,
+    required this.selectedProperty,
     required this.totalDeclarations,
     super.key,
   });
 
   final AppLocalizations localized;
-  final String selectedPropertyId;
+  final UserProperty? selectedProperty;
   final int totalDeclarations;
 
   @override
@@ -30,7 +31,7 @@ class DeclarationActions extends StatelessWidget {
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        totalDeclarations > 0
+        (selectedProperty != null && totalDeclarations > 0)
             ? FittedBox(
                 child: Text(
                   // ignore: lines_longer_than_80_chars
@@ -44,15 +45,15 @@ class DeclarationActions extends StatelessWidget {
             onPressed: () async {
               final UsersController userActions =
                   context.read<UsersController>();
-              if (userActions.isLoggedIn) {
-                if (selectedPropertyId.isNotEmpty) {
+              if (userActions.isLoggedIn && selectedProperty != null) {
+                if (selectedProperty!.propertyId.isNotEmpty) {
                   unawaited(
                     showDialog(
                       context: context,
                       builder: (_) => DeclarationSyncRangePickerDialog(
                         parentContext: context,
                         localized: localized,
-                        propertyId: selectedPropertyId,
+                        propertyId: selectedProperty!.propertyId,
                       ),
                     ),
                   );

@@ -2,6 +2,7 @@ import "package:decla_time/core/connection/isar_helper.dart";
 import "package:decla_time/core/widgets/column_with_spacings.dart";
 import "package:decla_time/core/widgets/generic_calendar_grid_view/generic_calendar_grid_view.dart";
 import "package:decla_time/declarations/database/declaration.dart";
+import "package:decla_time/declarations/database/user/user_property.dart";
 import "package:decla_time/declarations/declarations_view/declaration_actions.dart";
 import "package:decla_time/declarations/declarations_view/declaration_container/declaration_container.dart";
 import "package:decla_time/users/users_controller.dart";
@@ -19,7 +20,8 @@ class PropertyDeclarationsLoader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String selectedPropertyId = context.select<UsersController, String>(
+    final UserProperty? selectedProperty =
+        context.select<UsersController, UserProperty?>(
       (UsersController controller) => controller.selectedProperty,
     );
 
@@ -27,7 +29,9 @@ class PropertyDeclarationsLoader extends StatelessWidget {
       future: context
           .watch<IsarHelper>()
           .declarationActions
-          .getAllDeclarationsByPropertyIdSorted(propertyId: selectedPropertyId),
+          .getAllDeclarationsByPropertyIdSorted(
+            propertyId: selectedProperty?.propertyId ?? "",
+          ),
       builder: (_, AsyncSnapshot<List<Declaration>> snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           final List<Declaration> declarations =
@@ -38,7 +42,7 @@ class PropertyDeclarationsLoader extends StatelessWidget {
             children: <Widget>[
               DeclarationActions(
                 localized: localized,
-                selectedPropertyId: selectedPropertyId,
+                selectedProperty: selectedProperty,
                 totalDeclarations: declarations.length,
               ),
               GenericCalendarGridView<Declaration>(
