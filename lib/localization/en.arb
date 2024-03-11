@@ -127,6 +127,13 @@
     "serialNumber": "serial number",
     "serialNumberShort": "S/R",
     "declarationDate": "declaration date",
+    "declarationType": "declaration type",
+    "declarationType_amending": "amending",
+    "declarationType_initial": "initial",
+    "amendingFor": "amending for",
+    "deleteDeclarationFromLocal": "delete declaration from local database",
+    "deleteDeclarationDialogHeadline": "declaration deletion",
+    "declarationDelataionDialogBody": "This action will delete the declaration ONLY from the app local database",
     "unusedForNonTrailingComma________________________________":""
 
 

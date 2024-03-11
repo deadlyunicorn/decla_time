@@ -127,6 +127,13 @@
     "serialNumber": "αριθμός αναγνώρισης",
     "serialNumberShort": "Α/Α",
     "declarationDate": "ημερομηνία δήλωσης",
+    "declarationType": "είδος δήλωσης",
+    "declarationType_amending": "τροποποιητική",
+    "declarationType_initial": "αρχική",
+    "amendingFor": "τροποποιητική για",
+    "deleteDeclarationFromLocal": "διαγραφή της δήλωσης από την τοπική βάση",
+    "deleteDeclarationDialogHeadline": "διαγραφή δήλωσης",
+    "declarationDelataionDialogBody": "Αυτή η ενέργεια θα διαγράψει την δήλωση ΜΟΝΟ από την τοπική βάση της εφαρμογής",
     "unusedForNonTrailingComma________________________________":""
 
 
