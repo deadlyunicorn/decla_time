@@ -1,4 +1,3 @@
-import "package:decla_time/core/extensions/capitalize.dart";
 import "package:decla_time/core/functions/night_or_nights.dart";
 import "package:decla_time/declarations/database/declaration.dart";
 import "package:decla_time/reservations/presentation/decleration_status_dot.dart";
@@ -18,8 +17,6 @@ class DeclarationGridItemContainerItems extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final double? cancellationAmount = declaration.cancellationAmount;
-    bool isCancelled = cancellationAmount !=
-        null; //TODO add some indicator if it is cancelled.
 
     return Padding(
       padding: const EdgeInsets.all(4.0),
@@ -30,6 +27,7 @@ class DeclarationGridItemContainerItems extends StatelessWidget {
         children: <Widget>[
           if (declaration.serialNumber != null)
             Text(
+              // ignore: lines_longer_than_80_chars
               "${localized.serialNumberShort}: ${declaration.serialNumber ?? ""}",
               style: Theme.of(context).textTheme.bodyMedium,
               maxLines: 1,
@@ -51,13 +49,6 @@ class DeclarationGridItemContainerItems extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     softWrap: true,
                   ),
-                  if (isCancelled)
-                    Text(
-                      "(${localized.cancelled.capitalized})",
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
                   Text(
                     nightOrNights(localized, declaration.nights),
                     style: Theme.of(context).textTheme.bodyMedium,
