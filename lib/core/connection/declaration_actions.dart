@@ -33,6 +33,7 @@ class DeclarationActions {
         .filter()
         .propertyIdEqualTo(propertyId)
         .sortByDepartureDateDesc()
+        .thenBySerialNumberDesc()
         .findAll();
   }
 
@@ -172,6 +173,16 @@ class DeclarationActions {
     return await isar.finalizedDeclarationDetails
         .filter()
         .declarationDbIdEqualTo(declarationDbId)
+        .findFirst();
+  }
+
+  Future<Declaration?> getDeclarationBySerialNumber(
+    int declarationSerialNumber,
+  ) async {
+    final Isar isar = await _isarFuture;
+    return await isar.declarations
+        .filter()
+        .serialNumberEqualTo(declarationSerialNumber)
         .findFirst();
   }
 }
