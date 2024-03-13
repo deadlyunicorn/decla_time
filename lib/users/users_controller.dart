@@ -76,6 +76,11 @@ class UsersController extends ChangeNotifier {
 
   Future<void> sync() async {
     _availableUsers = await _isarHelper.userActions.getAll();
+    if (_selectedProperty != null) {
+      _selectedProperty = await _isarHelper.userActions
+          .getProperty(propertyId: _selectedProperty!.propertyId);
+    }
+
     notifyListeners();
   }
 

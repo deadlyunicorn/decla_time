@@ -3,6 +3,7 @@ import "package:decla_time/core/extensions/capitalize.dart";
 import "package:decla_time/core/widgets/column_with_spacings.dart";
 import "package:decla_time/core/widgets/custom_alert_dialog.dart";
 import "package:decla_time/declarations/database/user/user_property.dart";
+import "package:decla_time/users/users_controller.dart";
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import "package:provider/provider.dart";
@@ -33,6 +34,7 @@ class _FriendlyNameDialogState extends State<FriendlyNameDialog> {
                 propertyId: widget.property.propertyId,
                 friendlyName: friendlyNameController.text,
               );
+          if (context.mounted) await context.read<UsersController>().sync();
           if (context.mounted) Navigator.pop(context);
         }
       },
