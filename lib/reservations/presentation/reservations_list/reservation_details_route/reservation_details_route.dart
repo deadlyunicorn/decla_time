@@ -28,8 +28,14 @@ class ReservationDetailsRoute extends StatelessWidget {
       builder: (BuildContext context, AsyncSnapshot<Reservation?> snapshot) {
         final Reservation? reservation = snapshot.data;
 
-        return reservation == null
-            ? const Center(child: CircularProgressIndicator())
+        return (reservation == null)
+            ? snapshot.connectionState == ConnectionState.waiting
+                ? const Center(child: CircularProgressIndicator())
+                : Center(
+                    child: Text(
+                      localized.itemNotFoundLocally.capitalized,
+                    ),
+                  )
             : RouteOutline(
                 title: localized.details.capitalized,
                 child: SingleChildScrollView(

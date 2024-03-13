@@ -20,52 +20,49 @@ class DeclarationDetailsRoute extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<FinalizedDeclarationDetails?>(
-      future: context
-          .watch<IsarHelper>()
-          .declarationActions
-          .getFinalizedDeclarationDetailsByDeclarationDbId(
-            declaration.declarationDbId,
-          ),
-      builder: (
-        BuildContext context,
-        AsyncSnapshot<FinalizedDeclarationDetails?> snapshot,
-      ) {
-        final FinalizedDeclarationDetails? declarationDetails = snapshot.data;
+    return RouteOutline(
+        title: localized.details.capitalized,
+        child: FutureBuilder<FinalizedDeclarationDetails?>(
+          future: context
+              .watch<IsarHelper>()
+              .declarationActions
+              .getFinalizedDeclarationDetailsByDeclarationDbId(
+                declaration.declarationDbId,
+              ),
+          builder: (
+            BuildContext context,
+            AsyncSnapshot<FinalizedDeclarationDetails?> snapshot,
+          ) {
+            final FinalizedDeclarationDetails? declarationDetails =
+                snapshot.data;
 
-        //TODO Something makes the Future re run when resizing.. Check context - mediaquery, Theme of..
-
-        return RouteOutline(
-          title: localized.details.capitalized,
-          child: snapshot.connectionState != ConnectionState.done
-              ? const Center(child: CircularProgressIndicator())
-              : SingleChildScrollView(
-                  child: SizedBox(
-                    width: MediaQuery.sizeOf(context).width,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 32),
-                      child: Column(
-                        children: <Widget>[
-                          DeclarationDetailsContainer(
-                            declaration: declaration,
-                            declarationDetails: declarationDetails,
-                            localized: localized,
-                          ),
-                          const SizedBox.square(dimension: 32),
-                          // Text( TODO CHECK
-                          //   formatLastEdit(
-                          //     declarationDetails.lastEdit,
-                          //     localized: localized,
-                          //   ),
-                          //   textAlign: TextAlign.center,
-                          // ),
-                        ],
+            return declarationDetails == null
+                ? snapshot.connectionState == ConnectionState.waiting
+                    ? const Center(child: CircularProgressIndicator())
+                    : Center(
+                        child: Text(
+                          localized.itemNotFoundLocally.capitalized,
+                        ),
+                      )
+                : SingleChildScrollView(
+                    child: SizedBox(
+                      // width: MediaQuery.sizeOf(context).width,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 32),
+                        child: Column(
+                          children: <Widget>[
+                            DeclarationDetailsContainer(
+                              declaration: declaration,
+                              declarationDetails: declarationDetails,
+                              localized: localized,
+                            ),
+                            const SizedBox.square(dimension: 32),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ),
-        );
-      },
-    );
+                  );
+          },
+        ));
   }
 }
