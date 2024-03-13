@@ -50,6 +50,8 @@ class ItemsOfYear<T> extends StatelessWidget {
                       ).format(
                         DateTime(0, month),
                       ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.headlineMedium,
                     ),
                   ),
