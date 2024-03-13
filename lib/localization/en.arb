@@ -124,6 +124,7 @@
     "declarationStatusTemporary": "temporary",
     "declarationStatusUndeclared": "undeclared",
     "itemsNotFoundLocally": "no local entries found",
+    "itemNotFoundLocally": "no local entry found",
     "serialNumber": "serial number",
     "serialNumberShort": "S/R",
     "declarationDate": "declaration date",

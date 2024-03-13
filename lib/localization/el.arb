@@ -124,6 +124,7 @@
     "declarationStatusTemporary": "προσωρινή",
     "declarationStatusUndeclared": "αδήλωτη",
     "itemsNotFoundLocally": "δεν βρέθηκαν τοπικές εγγραφές",
+    "itemNotFoundLocally": "δεν βρέθηκε η εγγραφή τοπικά",
     "serialNumber": "αριθμός αναγνώρισης",
     "serialNumberShort": "Α/Α",
     "declarationDate": "ημερομηνία δήλωσης",
