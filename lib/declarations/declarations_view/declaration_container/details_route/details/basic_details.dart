@@ -25,7 +25,10 @@ class BasicDetails extends StatelessWidget {
       (UsersController usersController) => usersController.selectedProperty,
     );
 
-    final String? propertyName = selectedProperty != null
+    //! In case we have a "Show all declarations" option
+    //! This won't work correctly.
+
+    final String? propertyName = selectedProperty != null 
         ? selectedProperty.friendlyName ??
             "${selectedProperty.address}\nATAK: ${selectedProperty.atak}"
         : null;
@@ -96,13 +99,17 @@ class BasicDetails extends StatelessWidget {
           ),
           const SizedBox.square(dimension: 8),
           (propertyName != null && propertyName.isNotEmpty)
-              ? Text(
-                  // ignore: lines_longer_than_80_chars
-                  "${localized.at.capitalized} $propertyName",
-                  textAlign: TextAlign.center,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                )
+              ? Tooltip(
+                message: selectedProperty?.formattedPropertyDetails, 
+                textAlign: TextAlign.center,
+                child: Text(
+                    // ignore: lines_longer_than_80_chars
+                    "${localized.at.capitalized} $propertyName",
+                    textAlign: TextAlign.center,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+              )
               : const SizedBox.shrink(),
         ],
       ),

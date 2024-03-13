@@ -27,6 +27,8 @@ class UserProperty {
     this.friendlyName,
   });
 
+  String get formattedPropertyDetails => "$address\nATAK: $atak";
+
   static List<UserProperty> generateFromHtml(String body) {
     final List<String> propertyIds =
         getAllBetweenStrings(body, "propertyId',value:'", "'}");
