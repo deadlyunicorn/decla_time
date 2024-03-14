@@ -24,6 +24,7 @@ class FriendlyNameDialog extends StatefulWidget {
 
 class _FriendlyNameDialogState extends State<FriendlyNameDialog> {
   final TextEditingController friendlyNameController = TextEditingController();
+  String? errorText;
 
   @override
   Widget build(BuildContext context) {
@@ -50,13 +51,50 @@ class _FriendlyNameDialogState extends State<FriendlyNameDialog> {
             "${widget.localized.setFriendlyNameBody.capitalized}: ${widget.property.address}\n( ATAK: ${widget.property.atak} )",
             textAlign: TextAlign.center,
           ),
-          TextField(
-            maxLength: 32,
-            controller: friendlyNameController,
-            decoration: InputDecoration(
-              labelText: widget.localized.friendlyName.capitalized,
-            ),
+          RowWithSpacings(
+            spacing: 16,
+            children: <Widget>[
+              IconButton(
+                onPressed: () async {
+                  if (widget.property.friendlyName != null) {
+                    await context
+                        .read<IsarHelper>()
+                        .userActions
+                        .setPropertyFriendlyName(
+                          propertyId: widget.property.propertyId,
+                          friendlyName: null,
+                        );
+                    if (context.mounted) {
+                      await context.read<UsersController>().sync();
+                    }
+                    if (context.mounted) Navigator.pop(context);
+                  } else {
+                    setState(() {
+                      errorText =
+                          widget.localized.noFriendlyNameToDelete.capitalized;
+                    });
+                  }
+                },
+                icon: const Icon(Icons.delete),
+                color: Theme.of(context).colorScheme.error,
+                tooltip: widget.localized.removeFriendlyName.capitalized,
+              ),
+              Expanded(
+                child: TextField(
+                  maxLength: 32,
+                  controller: friendlyNameController,
+                  decoration: InputDecoration(
+                    labelText: widget.localized.friendlyName.capitalized,
+                  ),
+                ),
+              ),
+            ],
           ),
+          if (errorText != null)
+            Text(
+              errorText!,
+              style: TextStyle(color: Theme.of(context).colorScheme.error),
+            ),
         ],
       ),
     );

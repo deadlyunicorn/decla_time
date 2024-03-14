@@ -139,6 +139,8 @@
     "setFriendlyNameTitle": "set a friendly name",
     "setFriendlyNameBody": "give a friendly name so that you can identify it more easily to the property",
     "friendlyName":"friendly name",
+    "removeFriendlyName": "remove friendly name",
+    "noFriendlyNameToDelete": "no friendly name to delete",
     "unusedForNonTrailingComma________________________________":""
 
 

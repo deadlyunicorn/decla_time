@@ -139,6 +139,8 @@
     "setFriendlyNameTitle": "ορίστε ένα φιλικό όνομα",
     "setFriendlyNameBody": "δώστε στο ακίνητο ένα φιλικό όνομα ώστε να το ξεχωρίζετε πιο εύκολα το ακίνητο",
     "friendlyName":"φιλικό όνομα",
+    "removeFriendlyName": "αφαίρεση φιλικού ονόματος",
+    "noFriendlyNameToDelete": "δεν υπάρχει φιλικό όνομα για διαγραφή",
     "unusedForNonTrailingComma________________________________":""
 
 

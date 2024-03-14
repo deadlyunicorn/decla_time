@@ -84,7 +84,7 @@ class UserActions {
 
   Future<void> setPropertyFriendlyName({
     required String propertyId,
-    required String friendlyName,
+    required String? friendlyName,
   }) async {
     final Isar isar = await _isarFuture;
     final UserProperty? property =
