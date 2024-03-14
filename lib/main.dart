@@ -174,6 +174,11 @@ class MyApp extends StatelessWidget {
           backgroundColor: MaterialStatePropertyAll<Color>(Colors.transparent),
         ),
       ),
+      iconButtonTheme: IconButtonThemeData(
+        style: TextButton.styleFrom(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+        ),
+      ),
       useMaterial3: true,
     );
   }
