@@ -21,10 +21,12 @@ class UsersController extends ChangeNotifier {
 
   List<User> get users => _availableUsers;
   String get selectedUser => _selectedUser;
+  UserProperty? get selectedProperty => _selectedProperty;
+
+
   bool get requestLogin => _requestLogin;
   bool get isLoggedIn => (loggedUser.userCredentials != null &&
       loggedUser.userCredentials?.username == selectedUser);
-  UserProperty? get selectedProperty => _selectedProperty;
 
   UsersController({
     required List<User> availableUsers,
