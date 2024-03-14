@@ -1,7 +1,11 @@
 import "package:decla_time/core/enums/selected_page.dart";
 import "package:decla_time/core/extensions/capitalize.dart";
+import "package:decla_time/core/functions/snackbars.dart";
+import "package:decla_time/declarations/database/user/user_property.dart";
+import "package:decla_time/declarations_action_button_menu/declaration_submit_route.dart";
 import "package:decla_time/reservations_action_button_menu/reservation_addition_route.dart";
 import "package:decla_time/skeleton/selected_page_controller.dart";
+import "package:decla_time/users/users_controller.dart";
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import "package:provider/provider.dart";
@@ -43,9 +47,32 @@ class CustomFloatingActionButton extends StatelessWidget {
                     },
                   ),
                 );
+              } else if (selectedPage == SelectedPage.declarations) {
+                final UserProperty? selectedProperty =
+                    context.read<UsersController>().selectedProperty;
+                if (selectedProperty != null) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (BuildContext context) {
+                        return DeclarationSubmitRoute(
+                          localized: localized,
+                          selectedProperty: selectedProperty,
+                        );
+                      },
+                    ),
+                  );
+                } else {
+                  showErrorSnackbar(
+                    context: context,
+                    message: localized.noPropertySelected.capitalized,
+                  );
+                }
               } else {
-                throw UnimplementedError();
-                //Create a new declaration to the external .gov
+                showErrorSnackbar(
+                  context: context,
+                  message: "Not implemented. Report to dev.",
+                );
               }
             },
             tooltip: selectedPage == SelectedPage.reservations
