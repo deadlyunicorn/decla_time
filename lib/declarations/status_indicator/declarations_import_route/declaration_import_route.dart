@@ -23,7 +23,7 @@ class DeclarationImportRoute extends StatelessWidget {
     final DeclarationSyncController declarationSyncController =
         context.watch<DeclarationSyncController>();
 
-    if (declarationSyncController.isImporting) {
+    if (declarationSyncController.isProcessing) {
       final int currentDeclaration =
           declarationSyncController.currentItemNumber;
 
@@ -32,7 +32,7 @@ class DeclarationImportRoute extends StatelessWidget {
           if (currentDeclaration ==
                   declarationSyncController.currentItemNumber &&
               context.mounted &&
-              declarationSyncController.isImporting) {
+              declarationSyncController.isProcessing) {
             showErrorSnackbar(
               context: context,
               message: localized.importTakingTooLong.capitalized,
@@ -47,7 +47,7 @@ class DeclarationImportRoute extends StatelessWidget {
         declarationSyncController
             .setImportedDeclarations(<DeclarationImportStatus>[]);
       },
-      title: declarationSyncController.isImporting
+      title: declarationSyncController.isProcessing
           ? declarationSyncController.total > 0
               ? "${localized.importing.capitalized}: ${declarationSyncController.currentItemNumber} / ${declarationSyncController.total}"
               : "${localized.loading.capitalized}.."
