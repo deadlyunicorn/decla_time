@@ -27,9 +27,8 @@ class _StatusIndicatorState extends State<StatusIndicator> {
 
   @override
   Widget build(BuildContext context) {
-    final bool isProcessing =
-        context.select<DeclarationSyncController, bool>(
-      (DeclarationSyncController controller) => controller.isProcessing,
+    final bool isImporting = context.select<DeclarationSyncController, bool>(
+      (DeclarationSyncController controller) => controller.isImporting,
     );
 
     final List<DeclarationImportStatus> currentDeclarations = context
@@ -37,12 +36,10 @@ class _StatusIndicatorState extends State<StatusIndicator> {
       (DeclarationSyncController controller) => controller.importedDeclarations,
     );
 
-    return (isProcessing || currentDeclarations.isNotEmpty)
-        ? CalculateIndicatorPosition(
-            //TODO on Android it doesn't move as smooth as on PC.
-            child: TextButton(
-              //TODO - pressing "Back key' on Android doesn't discard the imported things
-              style: TextButton.styleFrom().copyWith(
+    return (isImporting || currentDeclarations.isNotEmpty)
+        ? CalculateIndicatorPosition( //TODO on Android it doesn't move as smooth as on PC.
+            child: TextButton( //TODO - pressing "Back key' on Android doesn't discard the imported things
+              style: TextButton.styleFrom().copyWith( 
                 shape: const MaterialStatePropertyAll<OutlinedBorder>(
                   CircleBorder(),
                 ),
@@ -57,7 +54,7 @@ class _StatusIndicatorState extends State<StatusIndicator> {
                   ),
                 );
               },
-              child: isProcessing
+              child: isImporting
                   ? const SyncingAnimatedIcon()
                   : Stack(
                       clipBehavior: Clip.none,

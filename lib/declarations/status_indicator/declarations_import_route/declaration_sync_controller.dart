@@ -16,9 +16,9 @@ import "package:flutter/material.dart";
 
 class DeclarationSyncController extends ChangeNotifier {
   bool _requestNewImportSession = false;
-  bool _isProcessing = false;
+  bool _isImporting = false;
   void setIsImporting(bool newState) {
-    _isProcessing = newState;
+    _isImporting = newState;
     notifyListeners();
   }
 
@@ -42,7 +42,7 @@ class DeclarationSyncController extends ChangeNotifier {
     notifyListeners();
   }
 
-  bool get isProcessing => _isProcessing;
+  bool get isImporting => _isImporting;
 
   List<SearchPageDeclaration> _declarationToBeImported =
       <SearchPageDeclaration>[];
@@ -77,11 +77,11 @@ class DeclarationSyncController extends ChangeNotifier {
     //? you might get a bit faster for longer durations
     //? But if anything ever goes wrong it will be harder to debug.
   }) async {
-    if (_isProcessing) {
+    if (_isImporting) {
       _requestNewImportSession = true; //?Used to break the current import.
       while (true) {
         await Future<void>.delayed(const Duration(seconds: 1));
-        if (!_isProcessing) {
+        if (!_isImporting) {
           setIsImporting(true);
           _requestNewImportSession = false;
           break;
