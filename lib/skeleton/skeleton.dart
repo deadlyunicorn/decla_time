@@ -1,3 +1,4 @@
+import "package:decla_time/declarations/status_indicator_declare/status_indicator.dart";
 import "package:decla_time/declarations/status_indicator_import/status_indicator.dart";
 import "package:decla_time/skeleton/access_users_drawer.dart";
 import "package:decla_time/skeleton/custom_bottom_navigation_bar.dart";
@@ -52,6 +53,15 @@ class _SkeletonState extends State<Skeleton> {
                 child: Stack(
                   children: <Widget>[
                     StatusIndicatorImport(
+                      localized: localized,
+                    ),
+                  ],
+                ),
+              ),
+              Positioned.fill(
+                child: Stack(
+                  children: <Widget>[
+                    StatusIndicatorSubmit(
                       localized: localized,
                     ),
                   ],
