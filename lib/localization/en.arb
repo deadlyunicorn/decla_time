@@ -141,6 +141,7 @@
     "friendlyName":"friendly name",
     "removeFriendlyName": "remove friendly name",
     "noFriendlyNameToDelete": "no friendly name to delete",
+    "anotherOperationIsProcessing": "another operation is currently processing",
     "unusedForNonTrailingComma________________________________":""
 
 

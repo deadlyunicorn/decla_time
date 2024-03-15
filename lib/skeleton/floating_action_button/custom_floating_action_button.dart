@@ -2,6 +2,7 @@ import "package:decla_time/core/enums/selected_page.dart";
 import "package:decla_time/core/extensions/capitalize.dart";
 import "package:decla_time/core/functions/snackbars.dart";
 import "package:decla_time/declarations/database/user/user_property.dart";
+import "package:decla_time/declarations/status_indicator/declarations_import_route/declaration_sync_controller.dart";
 import "package:decla_time/declarations_action_button_menu/declaration_submit_route.dart";
 import "package:decla_time/reservations_action_button_menu/reservation_addition_route.dart";
 import "package:decla_time/skeleton/selected_page_controller.dart";
@@ -50,18 +51,28 @@ class CustomFloatingActionButton extends StatelessWidget {
               } else if (selectedPage == SelectedPage.declarations) {
                 final UserProperty? selectedProperty =
                     context.read<UsersController>().selectedProperty;
+                final bool isProcessing =
+                    context.read<DeclarationSyncController>().isProcessing;
                 if (selectedProperty != null) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute<void>(
-                      builder: (BuildContext context) {
-                        return DeclarationSubmitRoute(
-                          localized: localized,
-                          selectedProperty: selectedProperty,
-                        );
-                      },
-                    ),
-                  );
+                  if (isProcessing) {
+                    showErrorSnackbar(
+                      context: context,
+                      message:
+                          localized.anotherOperationIsProcessing.capitalized,
+                    );
+                  } else {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute<void>(
+                        builder: (BuildContext context) {
+                          return DeclarationSubmitRoute(
+                            localized: localized,
+                            selectedProperty: selectedProperty,
+                          );
+                        },
+                      ),
+                    );
+                  }
                 } else {
                   showErrorSnackbar(
                     context: context,
