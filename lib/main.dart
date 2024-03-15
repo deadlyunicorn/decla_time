@@ -2,7 +2,7 @@ import "dart:math";
 
 import "package:decla_time/core/connection/isar_helper.dart";
 import "package:decla_time/core/constants/constants.dart";
-import "package:decla_time/declarations/status_indicator_import/declarations_import_route/declaration_sync_controller.dart";
+import "package:decla_time/declarations/status_indicator_import/declarations_import_route/declaration_import_controller.dart";
 import "package:decla_time/settings.dart";
 import "package:decla_time/skeleton/skeleton.dart";
 import "package:decla_time/users/users_controller.dart";
@@ -55,9 +55,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<UsersController>(
           create: (BuildContext context) => usersController,
         ),
-        ChangeNotifierProvider<DeclarationSyncController>(
+        ChangeNotifierProvider<DeclarationImportController>(
           create: (BuildContext context) =>
-              DeclarationSyncController(isarHelper: isarHelper),
+              DeclarationImportController(isarHelper: isarHelper),
         ),
       ],
       builder: (BuildContext context, Widget? child) =>

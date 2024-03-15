@@ -2,7 +2,7 @@ import "package:decla_time/declarations/status_indicator_import/animations.dart"
 import "package:decla_time/declarations/status_indicator_import/calculate_indicator_position.dart";
 import "package:decla_time/declarations/status_indicator_import/declaration_status.dart";
 import "package:decla_time/declarations/status_indicator_import/declarations_import_route/declaration_import_route.dart";
-import "package:decla_time/declarations/status_indicator_import/declarations_import_route/declaration_sync_controller.dart";
+import "package:decla_time/declarations/status_indicator_import/declarations_import_route/declaration_import_controller.dart";
 import "package:decla_time/declarations/utility/search_page_declaration.dart";
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
@@ -27,13 +27,13 @@ class _StatusIndicatorImportState extends State<StatusIndicatorImport> {
 
   @override
   Widget build(BuildContext context) {
-    final bool isImporting = context.select<DeclarationSyncController, bool>(
-      (DeclarationSyncController controller) => controller.isImporting,
+    final bool isImporting = context.select<DeclarationImportController, bool>(
+      (DeclarationImportController controller) => controller.isImporting,
     );
 
     final List<DeclarationImportStatus> currentDeclarations = context
-        .select<DeclarationSyncController, List<DeclarationImportStatus>>(
-      (DeclarationSyncController controller) => controller.importedDeclarations,
+        .select<DeclarationImportController, List<DeclarationImportStatus>>(
+      (DeclarationImportController controller) => controller.importedDeclarations,
     );
 
     return (isImporting || currentDeclarations.isNotEmpty)

@@ -3,7 +3,7 @@ import "package:decla_time/core/extensions/capitalize.dart";
 import "package:decla_time/core/functions/snackbars.dart";
 import "package:decla_time/core/widgets/route_outline.dart";
 import "package:decla_time/declarations/status_indicator_import/declaration_status.dart";
-import "package:decla_time/declarations/status_indicator_import/declarations_import_route/declaration_sync_controller.dart";
+import "package:decla_time/declarations/status_indicator_import/declarations_import_route/declaration_import_controller.dart";
 import "package:decla_time/declarations/status_indicator_import/declarations_import_route/lists/declarations_to_be_imported.dart";
 import "package:decla_time/declarations/status_indicator_import/declarations_import_route/lists/imported_declarations.dart";
 import "package:flutter/material.dart";
@@ -20,8 +20,8 @@ class DeclarationImportRoute extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final DeclarationSyncController declarationSyncController =
-        context.watch<DeclarationSyncController>();
+    final DeclarationImportController declarationSyncController =
+        context.watch<DeclarationImportController>();
 
     if (declarationSyncController.isImporting) {
       final int currentDeclaration =

@@ -14,7 +14,7 @@ import "package:decla_time/declarations/utility/search_page_data.dart";
 import "package:decla_time/declarations/utility/search_page_declaration.dart";
 import "package:flutter/material.dart";
 
-class DeclarationSyncController extends ChangeNotifier {
+class DeclarationImportController extends ChangeNotifier {
   bool _requestNewImportSession = false;
   bool _isImporting = false;
   void setIsImporting(bool newState) {
@@ -23,7 +23,7 @@ class DeclarationSyncController extends ChangeNotifier {
   }
 
   final IsarHelper _isarHelper;
-  DeclarationSyncController({
+  DeclarationImportController({
     required IsarHelper isarHelper,
   }) : _isarHelper = isarHelper;
 
