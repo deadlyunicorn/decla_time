@@ -41,6 +41,35 @@ class _SyncingAnimatedIconState extends State<SyncingAnimatedIcon>
   }
 }
 
+class UploadAnimation extends StatelessWidget {
+  const UploadAnimation({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<double>(
+      stream: (() async* {
+        double i = 0;
+        while (i<360) {
+          yield i++;
+          await Future<void>.delayed(const Duration(milliseconds: 1200));
+        }
+      })(),
+      builder: (BuildContext context, AsyncSnapshot<double> snapshot) =>
+          AnimatedCrossFade(
+        crossFadeState: (snapshot.data ?? 0) % 2 == 0
+            ? CrossFadeState.showFirst
+            : CrossFadeState.showSecond,
+        duration: const Duration(milliseconds: 1200),
+        firstChild: const Icon(Icons.cloud),
+        // turns: 0.1 * (snapshot.data ?? 0),
+        secondChild: const Icon(Icons.cloud_upload_rounded),
+      ),
+    );
+  }
+}
+
 class AnimationTest1 extends StatelessWidget {
   const AnimationTest1({
     super.key,
