@@ -6,7 +6,7 @@ import "package:decla_time/core/functions/snackbars.dart";
 import "package:decla_time/core/widgets/custom_alert_dialog.dart";
 import "package:decla_time/declarations/declarations_view/synchronize_declarations/helper_text_display.dart";
 import "package:decla_time/declarations/declarations_view/synchronize_declarations/range_picker_declaration_sync_dialog.dart";
-import "package:decla_time/declarations/status_indicator/declarations_import_route/declaration_sync_controller.dart";
+import "package:decla_time/declarations/status_indicator_import/declarations_import_route/declaration_sync_controller.dart";
 import "package:decla_time/declarations/utility/import_declarations_by_property_id.dart";
 import "package:decla_time/declarations/utility/network_requests/headers/declarations_page_headers.dart";
 import "package:decla_time/declarations/utility/network_requests/login/login_user.dart";

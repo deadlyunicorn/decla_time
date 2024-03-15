@@ -1,8 +1,8 @@
 import "package:decla_time/core/constants/constants.dart";
 import "package:decla_time/core/extensions/capitalize.dart";
 import "package:decla_time/declarations/database/declaration.dart";
-import "package:decla_time/declarations/status_indicator/declaration_status.dart";
-import "package:decla_time/declarations/status_indicator/declarations_import_route/declaration_import_route.dart";
+import "package:decla_time/declarations/status_indicator_import/declaration_status.dart";
+import "package:decla_time/declarations/status_indicator_import/declarations_import_route/declaration_import_route.dart";
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 

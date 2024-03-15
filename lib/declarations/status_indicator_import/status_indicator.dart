@@ -1,15 +1,15 @@
-import "package:decla_time/declarations/status_indicator/animations.dart";
-import "package:decla_time/declarations/status_indicator/calculate_indicator_position.dart";
-import "package:decla_time/declarations/status_indicator/declaration_status.dart";
-import "package:decla_time/declarations/status_indicator/declarations_import_route/declaration_import_route.dart";
-import "package:decla_time/declarations/status_indicator/declarations_import_route/declaration_sync_controller.dart";
+import "package:decla_time/declarations/status_indicator_import/animations.dart";
+import "package:decla_time/declarations/status_indicator_import/calculate_indicator_position.dart";
+import "package:decla_time/declarations/status_indicator_import/declaration_status.dart";
+import "package:decla_time/declarations/status_indicator_import/declarations_import_route/declaration_import_route.dart";
+import "package:decla_time/declarations/status_indicator_import/declarations_import_route/declaration_sync_controller.dart";
 import "package:decla_time/declarations/utility/search_page_declaration.dart";
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import "package:provider/provider.dart";
 
-class StatusIndicator extends StatefulWidget {
-  const StatusIndicator({
+class StatusIndicatorImport extends StatefulWidget {
+  const StatusIndicatorImport({
     required this.localized,
     super.key,
   });
@@ -18,10 +18,10 @@ class StatusIndicator extends StatefulWidget {
   static const double buttonSize = 48;
 
   @override
-  State<StatusIndicator> createState() => _StatusIndicatorState();
+  State<StatusIndicatorImport> createState() => _StatusIndicatorImportState();
 }
 
-class _StatusIndicatorState extends State<StatusIndicator> {
+class _StatusIndicatorImportState extends State<StatusIndicatorImport> {
   List<SearchPageDeclaration> importedDeclarations = <SearchPageDeclaration>[];
   List<SearchPageDeclaration> currentDeclarations = <SearchPageDeclaration>[];
 
@@ -37,7 +37,7 @@ class _StatusIndicatorState extends State<StatusIndicator> {
     );
 
     return (isImporting || currentDeclarations.isNotEmpty)
-        ? CalculateIndicatorPosition( //TODO on Android it doesn't move as smooth as on PC.
+        ? CalculateIndicatorPosition(
             child: TextButton( //TODO - pressing "Back key' on Android doesn't discard the imported things
               style: TextButton.styleFrom().copyWith( 
                 shape: const MaterialStatePropertyAll<OutlinedBorder>(
@@ -63,11 +63,11 @@ class _StatusIndicatorState extends State<StatusIndicator> {
                           bottom: -4,
                           right: -16,
                           child: SizedBox(
-                            width: StatusIndicator.buttonSize,
+                            width: StatusIndicatorImport.buttonSize,
                             child: Align(
                               alignment: Alignment.bottomRight,
                               child: SizedBox(
-                                width: StatusIndicator.buttonSize / 2,
+                                width: StatusIndicatorImport.buttonSize / 2,
                                 child: Text(
                                   "${currentDeclarations.length}",
                                 ),

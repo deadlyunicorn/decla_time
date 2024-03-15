@@ -1,4 +1,4 @@
-import "package:decla_time/declarations/status_indicator/custom_animation_controller.dart";
+import "package:decla_time/declarations/status_indicator_import/custom_animation_controller.dart";
 import "package:flutter/material.dart";
 
 class SyncingAnimatedIcon extends StatefulWidget {
