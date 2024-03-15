@@ -71,7 +71,7 @@ class DeclarationToBeImportedDetails extends StatelessWidget {
           children: <Widget>[
             FittedBox(
               child: Text(
-                "${declarationToBeImported.payout} EUR", 
+                "${declarationToBeImported.payout.toStringAsFixed(2)} EUR", 
               ),
             ),
             if (isBigScreen) const Text(" - "),
