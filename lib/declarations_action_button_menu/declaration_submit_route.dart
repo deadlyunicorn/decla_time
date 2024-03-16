@@ -1,10 +1,14 @@
 import "package:decla_time/core/connection/isar_helper.dart";
 import "package:decla_time/core/constants/constants.dart";
+import "package:decla_time/core/extensions/capitalize.dart";
+import "package:decla_time/core/widgets/column_with_spacings.dart";
 import "package:decla_time/core/widgets/item_select/generic_item_select_grid.dart";
 import "package:decla_time/core/widgets/route_outline.dart";
 import "package:decla_time/declarations/database/user/user_property.dart";
+import "package:decla_time/declarations_action_button_menu/confirm_dialog/start_declaring_dialog.dart";
 import "package:decla_time/declarations_action_button_menu/filtering_reservations/reservation_place_selector.dart";
 import "package:decla_time/reservations/reservation.dart";
+import "package:decla_time/reservations_action_button_menu/entries_found/selectable_reservation_container.dart";
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import "package:provider/provider.dart";
@@ -30,17 +34,28 @@ class _DeclarationSubmitRouteState extends State<DeclarationSubmitRoute> {
   @override
   Widget build(BuildContext context) {
     return RouteOutline(
-      title: "SUBMIT DECLARATIONS LOCALIZED", //TODO
+      title: widget.localized.submitTemporaryDeclarations.capitalized,
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 16.0),
+        padding: const EdgeInsets.all(16.0),
         child: SizedBox(
           width: kMaxWidthLargest,
-          child: Column(
+          child: ColumnWithSpacings(
+            spacing: 16,
             children: <Widget>[
               FittedBox(
                 fit: BoxFit.scaleDown,
                 child: Text(
-                  "Select reservations to declare for ${widget.selectedProperty.friendlyName ?? ""}\n${widget.selectedProperty.formattedPropertyDetails}",
+                  // ignore: lines_longer_than_80_chars
+                  "${widget.localized.declaringFor.capitalized}: ${widget.selectedProperty.friendlyName != null ? "${widget.selectedProperty.friendlyName}\n" : ""}${widget.selectedProperty.formattedPropertyDetails}",
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+              ),
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  widget.localized.selectReservationToSubmitDeclarationsFor
+                      .capitalized,
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
@@ -48,6 +63,7 @@ class _DeclarationSubmitRouteState extends State<DeclarationSubmitRoute> {
               ReservationPlaceSelector(
                 selectedReservationPlace: selectedReservationPlace,
                 setSelectedReservationPlace: setSelectedReservationPlace,
+                localized: widget.localized,
               ),
               FutureBuilder<List<Reservation>>(
                 future: selectedReservationPlace.isEmpty
@@ -58,27 +74,65 @@ class _DeclarationSubmitRouteState extends State<DeclarationSubmitRoute> {
                     : context
                         .watch<IsarHelper>()
                         .reservationActions
-                        .getReservationsByPlace(selectedReservationPlace),
-                builder: (context, snapshot) {
+                        .getReservationsByPlace(
+                          selectedReservationPlace,
+                        ),
+                builder: (
+                  BuildContext context,
+                  AsyncSnapshot<List<Reservation>> snapshot,
+                ) {
+                  final List<Reservation> reservations =
+                      snapshot.data ?? <Reservation>[];
+
                   return Expanded(
                     child: ItemsFoundList<Reservation>(
-                      items: snapshot.data ?? [],
-                      removeFromItemsFoundSoFar: (p0) {},
+                      mainAxisSpacing: 36,
+                      items: reservations,
                       localized: widget.localized,
-                      positionedChildren:
-                          ({required item, required localized}) => [],
-                      selectedItemsHandler: (
-                          {required setOfIndicesOfSelectedItems}) {
-                        return Text("hello");
+                      positionedChildren: ({
+                        required Reservation item,
+                        required AppLocalizations localized,
+                      }) =>
+                          <Widget>[
+                        Positioned(
+                          top: -16,
+                          child: Text(item.departureDateString),
+                        ),
+                      ],
+                      selectedItemsHandler: ({
+                        required Set<int> setOfIndicesOfSelectedItems,
+                      }) {
+                        return TextButton(
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) =>
+                                  StartDeclaringDialog(
+                                propertyId: widget.selectedProperty.propertyId,
+                                localized: widget.localized,
+                                reservationToBeSubmitted:
+                                    setOfIndicesOfSelectedItems
+                                        .map((int index) => reservations[index])
+                                        .toList(),
+                              ),
+                            );
+                          },
+                          child:
+                              Text(widget.localized.submitSelected.capitalized),
+                        );
                       },
-                      child: (
-                              {required isSelected,
-                              required item,
-                              required localized}) =>
-                          Text("hello"),
+                      child: ({
+                        required bool isSelected,
+                        required Reservation item,
+                        required AppLocalizations localized,
+                      }) =>
+                          SelectableReservationContainer(
+                        localized: localized,
+                        reservation: item,
+                        isSelected: isSelected,
+                      ),
                     ),
                   );
-                  ;
                 },
               ),
             ],
