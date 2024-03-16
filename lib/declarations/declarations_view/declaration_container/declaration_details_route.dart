@@ -21,48 +21,40 @@ class DeclarationDetailsRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RouteOutline(
-        title: localized.details.capitalized,
-        child: FutureBuilder<FinalizedDeclarationDetails?>(
-          future: context
-              .watch<IsarHelper>()
-              .declarationActions
-              .getFinalizedDeclarationDetailsByDeclarationDbId(
-                declaration.declarationDbId,
-              ),
-          builder: (
-            BuildContext context,
-            AsyncSnapshot<FinalizedDeclarationDetails?> snapshot,
-          ) {
-            final FinalizedDeclarationDetails? declarationDetails =
-                snapshot.data;
+      title: localized.details.capitalized,
+      child: FutureBuilder<FinalizedDeclarationDetails?>(
+        future: context
+            .watch<IsarHelper>()
+            .declarationActions
+            .getFinalizedDeclarationDetailsByDeclarationDbId(
+              declaration.declarationDbId,
+            ),
+        builder: (
+          BuildContext context,
+          AsyncSnapshot<FinalizedDeclarationDetails?> snapshot,
+        ) {
+          final FinalizedDeclarationDetails? declarationDetails = snapshot.data;
 
-            return declarationDetails == null
-                ? snapshot.connectionState == ConnectionState.waiting
-                    ? const Center(child: CircularProgressIndicator())
-                    : Center(
-                        child: Text(
-                          localized.itemNotFoundLocally.capitalized,
-                        ),
-                      )
-                : SingleChildScrollView(
-                    child: SizedBox(
-                      // width: MediaQuery.sizeOf(context).width,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 32),
-                        child: Column(
-                          children: <Widget>[
-                            DeclarationDetailsContainer(
-                              declaration: declaration,
-                              declarationDetails: declarationDetails,
-                              localized: localized,
-                            ),
-                            const SizedBox.square(dimension: 32),
-                          ],
-                        ),
-                      ),
+          return SingleChildScrollView(
+            child: SizedBox(
+              // width: MediaQuery.sizeOf(context).width,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 32),
+                child: Column(
+                  children: <Widget>[
+                    DeclarationDetailsContainer(
+                      declaration: declaration,
+                      declarationDetails: declarationDetails,
+                      localized: localized,
                     ),
-                  );
-          },
-        ));
+                    const SizedBox.square(dimension: 32),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
   }
 }
