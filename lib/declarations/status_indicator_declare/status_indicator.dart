@@ -1,4 +1,5 @@
 import "package:decla_time/declarations/status_indicator_declare/declaration_submit_controller.dart";
+import "package:decla_time/declarations/status_indicator_declare/submitting_route/declaration_uploading_route.dart";
 import "package:decla_time/declarations/status_indicator_import/animations.dart";
 import "package:decla_time/declarations/status_indicator_import/calculate_indicator_position.dart";
 import "package:flutter/material.dart";
@@ -29,12 +30,12 @@ class _StatusIndicatorSubmitState extends State<StatusIndicatorSubmit> {
 
   @override
   Widget build(BuildContext context) {
-    final bool isSubmitting = context.select<DeclarationSubmitController, bool>(
-      (DeclarationSubmitController controller) => controller.isSubmitting,
-    );
+    final DeclarationSubmitController declarationSubmitController =
+        context.watch<DeclarationSubmitController>();
+    final bool isSubmitting = declarationSubmitController.isSubmitting;
 
-    return (!isSubmitting //|| currentDeclarations.isNotEmpty
-        )
+    return (isSubmitting ||
+            declarationSubmitController.reservationsSubmitted.isNotEmpty) //TODO Clear reservations submitted when exiting
         ? CalculateIndicatorPosition(
             child: TextButton(
               //TODO - pressing "Back key' on Android doesn't discard the imported things
@@ -47,8 +48,9 @@ class _StatusIndicatorSubmitState extends State<StatusIndicatorSubmit> {
                 Navigator.push(
                   context,
                   MaterialPageRoute<void>(
-                    builder: (BuildContext context) => //TODO Add a delete button on temporary declarations ( on the declarations page. )
-                        const DeclarationSubmittingRoute(),
+                    builder: (BuildContext
+                            context) => //TODO Add a delete button on temporary declarations ( on the declarations page. )
+                        DeclarationUploadingRoute(localized: widget.localized),
                   ),
                 );
               },
@@ -66,10 +68,9 @@ class _StatusIndicatorSubmitState extends State<StatusIndicatorSubmit> {
                               alignment: Alignment.bottomRight,
                               child: SizedBox(
                                 width: StatusIndicatorSubmit.buttonSize / 2,
-                                child: Text(
-                                  "999"
-                                  //TODO Later. "${currentDeclarations.length}",
-                                ),
+                                child: Text("999"
+                                    //TODO Later. "${currentDeclarations.length}",
+                                    ),
                               ),
                             ),
                           ),
@@ -80,16 +81,5 @@ class _StatusIndicatorSubmitState extends State<StatusIndicatorSubmit> {
             ),
           )
         : const SizedBox.shrink();
-  }
-}
-
-class DeclarationSubmittingRoute extends StatelessWidget {
-  const DeclarationSubmittingRoute({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return const Text("ahiy");
   }
 }

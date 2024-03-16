@@ -263,13 +263,14 @@ class _DeclarationSyncRangePickerDialogState
           .loggedUser
           .setDeclarationsPageHeaders(newHeaders);
 
-      Future<void> startImporting(DeclarationsPageHeaders headers) =>
-          context.read<DeclarationImportController>().startImportingDeclarations(
-                arrivalDate: arrivalDateTemp,
-                departureDate: departureDateTemp,
-                propertyId: widget.propertyId,
-                headers: headers,
-              );
+      Future<void> startImporting(DeclarationsPageHeaders headers) => context
+          .read<DeclarationImportController>()
+          .startImportingDeclarations(
+            arrivalDate: arrivalDateTemp,
+            departureDate: departureDateTemp,
+            propertyId: widget.propertyId,
+            headers: headers,
+          );
 
       try {
         unawaited(startImporting(initialHeaders));
