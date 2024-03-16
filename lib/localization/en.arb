@@ -141,6 +141,19 @@
     "friendlyName":"friendly name",
     "removeFriendlyName": "remove friendly name",
     "noFriendlyNameToDelete": "no friendly name to delete",
+    "submitTemporaryDeclarations": "submit temporary declarations",
+    "selectReservationToSubmitDeclarationsFor": "select reservations to submit declarations for",
+    "declaringFor": "declaring for",
+    "submitSelected": "submit selected",
+    "alreadySubmittingDeclarations": "already submitting declarations",
+    "confirmDeclarationSubmit": "confirm declaration submit",
+    "youAreAboutToStartSubmitting": "You are about to start submitting declarations.\nThey will be declared as temporary.\nTo finalize declarations you can go to the declarations section.\nThere is a finalize button when viewing a temporary declaration.",
+    "youHaveSelected": "you have selected",
+    "displayAll": "display all",
+    "sessionErrorTryAgainOrRestartTheApp" : "Session Error. Try again and if unsuccessful, restart the app.",
+    "wasSuccessful" : "was successful",
+    "importSubmissions": "import submissions",
+    "declarationSubmit": "declaration submit",
     "unusedForNonTrailingComma________________________________":""
 
 

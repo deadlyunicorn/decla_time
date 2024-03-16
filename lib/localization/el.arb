@@ -141,6 +141,19 @@
     "friendlyName":"φιλικό όνομα",
     "removeFriendlyName": "αφαίρεση φιλικού ονόματος",
     "noFriendlyNameToDelete": "δεν υπάρχει φιλικό όνομα για διαγραφή",
+    "submitTemporaryDeclarations": "υποβολή προσωρινών δηλώσεων",
+    "selectReservationToSubmitDeclarationsFor": "επιλέξτε κρατήσεις για να τις δηλώσετε",
+    "declaringFor": "δηλώσεις για",
+    "submitSelected": "υποβολή επιλεγμένων",
+    "alreadySubmittingDeclarations": "γίνεται ήδη υποβολή δηλώσεων",
+    "confirmDeclarationSubmit": "επιβεβαίωση υποβολής δηλώσεων",
+    "youAreAboutToStartSubmitting": "Πρόκειται να ξεκινήσετε την υποβολή δηλώσεων.\nΟι δηλώσεις θα ορισθούν ως προσωρινές.\nΓια να οριστικοποιήσετε τις δηλώσεις σας, πηγαίνετε στο μενού 'Δηλώσεις'.\nΌταν προβάλετε μια προσωρινή δήλωση, υπάρχει κουμπί οριστικοποίησης.",
+    "youHaveSelected": "έχετε επιλέξει",
+    "displayAll": "εμφάνιση όλων",
+    "sessionErrorTryAgainOrRestartTheApp" : "Σφάλμα σύνδεσης. Δοκιμάστε ξανά και αν αποτύχει, επανεκκινήστε την εφαρμογή.",
+    "wasSuccessful" : "ήταν επιτυχής",
+    "importSubmissions": "εισαγωγή δηλώσεων",
+    "declarationSubmit": "υποβολή δηλώσεων",
     "unusedForNonTrailingComma________________________________":""
 
 
