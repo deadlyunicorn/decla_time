@@ -48,25 +48,28 @@ class CustomFloatingActionButton extends StatelessWidget {
                   ),
                 );
               } else if (selectedPage == SelectedPage.declarations) {
-                final UserProperty? selectedProperty =
-                    context.read<UsersController>().selectedProperty;
-                if (selectedProperty != null) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute<void>(
-                      builder: (BuildContext context) {
-                        return DeclarationSubmitRoute(
-                          localized: localized,
-                          selectedProperty: selectedProperty,
-                        );
-                      },
-                    ),
-                  );
-                } else {
-                  showErrorSnackbar(
-                    context: context,
-                    message: localized.noPropertySelected.capitalized,
-                  );
+                context.read<UsersController>().setRequestLogin(true);
+                if (context.read<UsersController>().isLoggedIn) {
+                  final UserProperty? selectedProperty =
+                      context.read<UsersController>().selectedProperty;
+                  if (selectedProperty != null) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute<void>(
+                        builder: (BuildContext context) {
+                          return DeclarationSubmitRoute(
+                            localized: localized,
+                            selectedProperty: selectedProperty,
+                          );
+                        },
+                      ),
+                    );
+                  } else {
+                    showErrorSnackbar(
+                      context: context,
+                      message: localized.noPropertySelected.capitalized,
+                    );
+                  }
                 }
               } else {
                 showErrorSnackbar(

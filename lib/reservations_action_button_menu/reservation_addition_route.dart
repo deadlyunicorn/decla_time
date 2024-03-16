@@ -90,7 +90,6 @@ class _ReservationAdditionRouteState extends State<ReservationAdditionRoute> {
             Expanded(
               child: ItemsFoundList<Reservation>(
                 items: reservations,
-                removeFromItemsFoundSoFar: removeFromReservationsFoundSoFar,
                 localized: widget.localized,
                 child: ({
                   required bool isSelected,

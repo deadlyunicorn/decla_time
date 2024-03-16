@@ -94,6 +94,7 @@ class ReservationActions {
         .reservations
         .filter()
         .listingNameEqualTo(listingName)
+        .sortByDepartureDateDesc()
         .findAll();
   }
 }

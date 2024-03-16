@@ -9,16 +9,16 @@ import "package:flutter_gen/gen_l10n/app_localizations.dart";
 class ItemsFoundList<T> extends StatefulWidget {
   const ItemsFoundList({
     required this.items,
-    required this.removeFromItemsFoundSoFar,
     required this.localized,
     required this.positionedChildren,
     required this.selectedItemsHandler,
     required this.child,
-    super.key,
+    this.mainAxisSpacing = 8,
+    super.key, 
   });
 
+  final double mainAxisSpacing;
   final List<T> items;
-  final void Function(Iterable<T>) removeFromItemsFoundSoFar;
   final AppLocalizations localized;
   final List<Widget> Function({
     required T item,
@@ -105,11 +105,11 @@ class _ItemsFoundListState<T> extends State<ItemsFoundList<T>> {
                 child: GridView.builder(
                   shrinkWrap: true,
                   padding: const EdgeInsets.all(16),
-                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                  gridDelegate:  SliverGridDelegateWithMaxCrossAxisExtent(
                     maxCrossAxisExtent:
                         kMaxContainerWidthSmall, //? Consider changing?
                     crossAxisSpacing: 8,
-                    mainAxisSpacing: 8,
+                    mainAxisSpacing: widget.mainAxisSpacing,
                   ),
                   itemCount: widget.items.length,
                   itemBuilder:

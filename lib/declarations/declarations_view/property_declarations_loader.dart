@@ -37,7 +37,7 @@ class PropertyDeclarationsLoader extends StatelessWidget {
           final List<Declaration> declarations =
               snapshot.data ?? <Declaration>[];
 
-          return ColumnWithSpacings(
+          return ColumnWithSpacings( //TODO group them by temporary and finalized
             spacing: 16,
             children: <Widget>[
               DeclarationActions(

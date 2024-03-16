@@ -1,18 +1,22 @@
 import "package:decla_time/core/connection/isar_helper.dart";
+import "package:decla_time/core/extensions/capitalize.dart";
 import "package:decla_time/core/widgets/column_with_spacings.dart";
 import "package:decla_time/declarations/properties/available_user_properties.dart";
 import "package:flutter/material.dart";
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import "package:provider/provider.dart";
 
 class ReservationPlaceSelector extends StatefulWidget {
   const ReservationPlaceSelector({
     required this.setSelectedReservationPlace,
     required this.selectedReservationPlace,
+    required this.localized,
     super.key,
   });
 
   final void Function(String) setSelectedReservationPlace;
   final String selectedReservationPlace;
+  final AppLocalizations localized;
 
   @override
   State<ReservationPlaceSelector> createState() =>
@@ -25,7 +29,7 @@ class _ReservationPlaceSelectorState extends State<ReservationPlaceSelector> {
   @override
   Widget build(BuildContext context) {
     final String menuText = widget.selectedReservationPlace.isEmpty
-        ? "Localized.ALL"
+        ? widget.localized.displayAll.capitalized
         : widget.selectedReservationPlace;
 
     return FutureBuilder<Set<String>>(
@@ -62,7 +66,7 @@ class _ReservationPlaceSelectorState extends State<ReservationPlaceSelector> {
                   );
                 },
               ),
-              AvailablePropertiesListTile( //TODO LOCALIZE.
+              AvailablePropertiesListTile(
                 onTap: () async {
                   widget.setSelectedReservationPlace("");
                   setState(() {
@@ -70,7 +74,7 @@ class _ReservationPlaceSelectorState extends State<ReservationPlaceSelector> {
                   });
                 },
                 child: Text(
-                  "LOCALIZED.ALL",
+                  widget.localized.displayAll.capitalized,
                   overflow: TextOverflow.ellipsis,
                 ),
               ),

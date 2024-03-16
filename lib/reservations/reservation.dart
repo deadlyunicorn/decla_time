@@ -7,6 +7,9 @@ part "reservation.g.dart";
 
 @collection
 class Reservation implements ItemWithDates{
+
+  //TODO Cancellation amounts/dates etc.
+
   final String bookingPlatform;
   final String? listingName;
 
