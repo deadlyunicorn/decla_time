@@ -7,6 +7,7 @@ import "package:decla_time/core/errors/exceptions.dart";
 import "package:decla_time/declarations/database/declaration.dart";
 import "package:decla_time/declarations/database/finalized_declaration_details.dart";
 import "package:decla_time/declarations/status_indicator_import/declaration_status.dart";
+import "package:decla_time/declarations/utility/network_requests/get_declaration_by_dbid.dart";
 import "package:decla_time/declarations/utility/network_requests/get_declaration_details_from_search_page_data.dart";
 import "package:decla_time/declarations/utility/network_requests/get_declaration_search_page.dart";
 import "package:decla_time/declarations/utility/network_requests/headers/declarations_page_headers.dart";

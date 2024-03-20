@@ -2,6 +2,7 @@
 
 import "package:decla_time/declarations/utility/declaration_body.dart";
 import "package:decla_time/declarations/utility/network_requests/edit_declaration_request.dart";
+import "package:decla_time/declarations/utility/network_requests/get_declaration_by_dbid.dart";
 import "package:decla_time/declarations/utility/network_requests/get_declaration_details_from_search_page_data.dart";
 import "package:decla_time/declarations/utility/network_requests/get_declaration_page_view_state.dart";
 import "package:decla_time/declarations/utility/network_requests/get_declaration_search_page.dart";
