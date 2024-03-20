@@ -20,3 +20,6 @@ class UserPropertyNotFoundException implements Exception {}
 
 class AlreadySubmittingDeclarations implements Exception {}
 
+class UnknownErrorException implements Exception {}
+
+
