@@ -38,7 +38,7 @@ class MainContainer extends StatelessWidget {
               color: Theme.of(context).colorScheme.secondary,
             ),
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 64),
               child: ColumnWithSpacings(
                 spacing: 32,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -79,7 +79,7 @@ class MainContainer extends StatelessWidget {
             left: 4,
             top: 4,
             child: Row(
-              children: [
+              children: <Widget>[
                 DeleteButton(
                   localized: localized,
                   size: 24,

@@ -73,28 +73,26 @@ class BasicDetails extends StatelessWidget {
           const SizedBox.square(dimension: 8),
           SizedBox(
             width: kMaxWidthSmall - 80,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  "${localized.declaration_status.capitalized}: ",
-                  style: Theme.of(context).textTheme.bodyLarge,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                  textAlign: TextAlign.center,
-                ),
-                Flexible(
-                  child: FittedBox(
-                    alignment: Alignment.center,
-                    child: Text(
-                      Declaration.getLocalizedDeclarationStatus(
-                        localized: localized,
-                        declarationStatus: declaration.declarationStatus,
-                      ).capitalized,
-                    ),
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    "${localized.declaration_status.capitalized}: ",
+                    style: Theme.of(context).textTheme.bodyLarge,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    textAlign: TextAlign.center,
                   ),
-                ),
-              ],
+                  Text(
+                    Declaration.getLocalizedDeclarationStatus(
+                      localized: localized,
+                      declarationStatus: declaration.declarationStatus,
+                    ).capitalized,
+                  ),
+                ],
+              ),
             ),
           ),
           const SizedBox.square(dimension: 8),
