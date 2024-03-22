@@ -22,4 +22,9 @@ class AlreadySubmittingDeclarations implements Exception {}
 
 class UnknownErrorException implements Exception {}
 
+class InvalidDeclarationException implements Exception {}
+
+class DeclarationWasUpdatedException implements Exception {}
+
+
 
