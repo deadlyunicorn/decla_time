@@ -21,7 +21,11 @@ class DeclarationDetailsContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        MainContainer(localized: localized, declaration: declaration),
+        MainContainer(
+          localized: localized,
+          declaration: declaration,
+          declarationDetails: declarationDetails,
+        ),
         if (declarationDetails != null)
           FinalizedDeclarationDetailsSection(
             declarationDetails: declarationDetails!,

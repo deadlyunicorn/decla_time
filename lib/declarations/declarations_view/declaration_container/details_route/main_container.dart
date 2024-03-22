@@ -5,6 +5,8 @@ import "package:decla_time/core/extensions/capitalize.dart";
 import "package:decla_time/core/widgets/column_with_spacings.dart";
 import "package:decla_time/core/widgets/details_route/delete_button.dart";
 import "package:decla_time/declarations/database/declaration.dart";
+import "package:decla_time/declarations/database/finalized_declaration_details.dart";
+import "package:decla_time/declarations/declarations_view/declaration_container/details_route/declaration_action_buttons/resync_declaration_button.dart";
 import "package:decla_time/declarations/declarations_view/declaration_container/details_route/details/basic_details.dart";
 import "package:decla_time/declarations/declarations_view/declaration_container/details_route/details/payout.dart";
 import "package:decla_time/declarations/declarations_view/declaration_container/details_route/details/trip_length.dart";
@@ -18,11 +20,13 @@ class MainContainer extends StatelessWidget {
   const MainContainer({
     required this.localized,
     required this.declaration,
+    required this.declarationDetails,
     super.key,
   });
 
   final AppLocalizations localized;
   final Declaration declaration;
+  final FinalizedDeclarationDetails? declarationDetails;
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +87,8 @@ class MainContainer extends StatelessWidget {
                 DeleteButton(
                   localized: localized,
                   size: 24,
-                  tooltipMessage: localized.deleteDeclarationFromLocal.capitalized,
+                  tooltipMessage:
+                      localized.deleteDeclarationFromLocal.capitalized,
                   dialogBody: localized.declarationDelataionDialogBody,
                   dialogHeadline:
                       localized.deleteDeclarationDialogHeadline.capitalized,
@@ -94,12 +99,11 @@ class MainContainer extends StatelessWidget {
                         .removeFromDatabase(declaration.declarationDbId);
                   },
                 ),
-                Tooltip(
-                  message: "Describe",
-                  child: IconButton(onPressed: (){
-                    print("todo: refresh individual declaration by declarationDbId");
-                  }, icon: Icon(Icons.refresh)),
-                )
+                ResyncDeclarationButton(
+                  localized: localized,
+                  declaration: declaration,
+                  declarationDetails: declarationDetails,
+                ),
               ],
             ),
           ),
