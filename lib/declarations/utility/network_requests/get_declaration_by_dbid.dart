@@ -10,7 +10,7 @@ import "package:decla_time/declarations/utility/network_requests/headers/declara
 import "package:http/http.dart" as http;
 import "package:intl/intl.dart";
 
-///Can throw `UnknownErrorException`.
+///Can throw `InvalidDeclarationException`.
 Future<DetailedDeclaration> getDeclarationByDbId({
   required DeclarationsPageHeaders headers,
   required String propertyId,
@@ -23,32 +23,38 @@ Future<DetailedDeclaration> getDeclarationByDbId({
     headers: headers.getHeadersForGET(),
   );
 
-  final FinalizedDeclarationDetails? finalizedDeclarationDetails =
-      extractFinalizedDeclarationFromDeclarationPage(
-    html: res.body,
-    declarationDbId: declarationDbId,
-  );
+  try {
+    final FinalizedDeclarationDetails? finalizedDeclarationDetails =
+        extractFinalizedDeclarationFromDeclarationPage(
+      html: res.body,
+      declarationDbId: declarationDbId,
+    );
 
-  final DeclarationStatus declarationStatus;
+    final DeclarationStatus declarationStatus;
 
-  if (finalizedDeclarationDetails == null) {
-    declarationStatus = DeclarationStatus.temporary;
-  } else {
-    declarationStatus = DeclarationStatus.finalized;
+    if (finalizedDeclarationDetails == null) {
+      declarationStatus = DeclarationStatus.temporary;
+    } else {
+      declarationStatus = DeclarationStatus.finalized;
+    }
+
+    final Declaration declaration = extractDeclarationFromDeclarationPage(
+      html: res.body,
+      serialNumber: finalizedDeclarationDetails?.serialNumber,
+      status: declarationStatus,
+      propertyId: propertyId,
+      declarationDbId: declarationDbId,
+    );
+
+    return DetailedDeclaration(
+      baseDeclaration: declaration,
+      finalizedDeclarationDetails: finalizedDeclarationDetails,
+    );
+  } on FormatException {
+    throw InvalidDeclarationException();
+  } on UnknownErrorException {
+    throw InvalidDeclarationException();
   }
-
-  final Declaration declaration = extractDeclarationFromDeclarationPage(
-    html: res.body,
-    serialNumber: finalizedDeclarationDetails?.serialNumber,
-    status: declarationStatus,
-    propertyId: propertyId,
-    declarationDbId: declarationDbId,
-  );
-
-  return DetailedDeclaration(
-    baseDeclaration: declaration,
-    finalizedDeclarationDetails: finalizedDeclarationDetails,
-  );
 }
 
 class DetailedDeclaration {
