@@ -154,6 +154,10 @@
     "wasSuccessful" : "ήταν επιτυχής",
     "importSubmissions": "εισαγωγή δηλώσεων",
     "declarationSubmit": "υποβολή δηλώσεων",
+    "deleteTemporaryDeclaration": "διαγραφή προσωρινής δήλωσης",
+    "deleting": "γίνεται διαγραφή",
+    "view": "προβολή",
+    "noValidDeclarationFound": "δεν βρέθηκε κάποια έγκυρη δήλωση ( ίσως έχει διαγραφεί )",
     "unusedForNonTrailingComma________________________________":""
 
 

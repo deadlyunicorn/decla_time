@@ -154,6 +154,10 @@
     "wasSuccessful" : "was successful",
     "importSubmissions": "import submissions",
     "declarationSubmit": "declaration submit",
+    "deleteTemporaryDeclaration": "delete temporary declaration",
+    "deleting": "deleting",
+    "view": "view",
+    "noValidDeclarationFound": "no valid declaration was found ( propably was deleted )",
     "unusedForNonTrailingComma________________________________":""
 
 
