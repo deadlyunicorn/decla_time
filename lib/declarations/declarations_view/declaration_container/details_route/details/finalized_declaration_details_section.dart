@@ -88,7 +88,6 @@ class FinalizedDeclarationDetailsSection extends StatelessWidget {
                   ),
                 ],
               ),
-            Text(declarationDetails.declarationDbId.toString()),
           ],
         ),
       ),

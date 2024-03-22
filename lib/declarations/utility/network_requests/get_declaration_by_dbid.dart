@@ -14,7 +14,7 @@ import "package:intl/intl.dart";
 Future<DetailedDeclaration> getDeclarationByDbId({
   required DeclarationsPageHeaders headers,
   required String propertyId,
-  required String declarationDbId,
+  required int declarationDbId,
 }) async {
   final http.Response res = await http.get(
     Uri.parse(
@@ -26,7 +26,7 @@ Future<DetailedDeclaration> getDeclarationByDbId({
   final FinalizedDeclarationDetails? finalizedDeclarationDetails =
       extractFinalizedDeclarationFromDeclarationPage(
     html: res.body,
-    declarationDbId: int.parse(declarationDbId),
+    declarationDbId: declarationDbId,
   );
 
   final DeclarationStatus declarationStatus;
@@ -66,7 +66,7 @@ Declaration extractDeclarationFromDeclarationPage({
   required int? serialNumber,
   required DeclarationStatus status,
   required String propertyId,
-  required String declarationDbId,
+  required int declarationDbId,
 }) {
   final DateTime arrivalDate = DateFormat("dd/MM/y").parse(
     getBetweenStrings(
@@ -104,7 +104,7 @@ Declaration extractDeclarationFromDeclarationPage({
       serialNumber: serialNumber,
       propertyId: propertyId,
       declarationStatus: status,
-      declarationDbId: int.tryParse(declarationDbId) ?? 0,
+      declarationDbId: declarationDbId,
       bookingPlatform: platform,
       arrivalDate: arrivalDate,
       departureDate: departureDate,
@@ -131,7 +131,7 @@ Declaration extractDeclarationFromDeclarationPage({
       serialNumber: serialNumber,
       declarationStatus: status,
       propertyId: propertyId,
-      declarationDbId: int.tryParse(declarationDbId) ?? 0,
+      declarationDbId: declarationDbId,
       bookingPlatform: platform,
       arrivalDate: arrivalDate,
       departureDate: departureDate,

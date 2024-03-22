@@ -34,6 +34,6 @@ Future<DetailedDeclaration> getDeclarationFromSearchPageData({
   return await getDeclarationByDbId(
     headers: headers,
     propertyId: propertyId,
-    declarationDbId: declarationDbId,
+    declarationDbId: int.parse(declarationDbId),
   );
 }
