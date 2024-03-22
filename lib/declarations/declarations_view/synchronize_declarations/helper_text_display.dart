@@ -25,6 +25,15 @@ class HelperTextDisplay extends StatelessWidget {
               textAlign: TextAlign.center,
               maxLines: 4,
               overflow: TextOverflow.ellipsis,
+              style: const TextStyle(
+                shadows: <Shadow>[
+                  BoxShadow(
+                    blurRadius: 2,
+                    color: Colors.black,
+                    spreadRadius: 2,
+                  ),
+                ],
+              ),
             ),
             if (isSyncing)
               const Positioned(

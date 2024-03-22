@@ -1,5 +1,6 @@
 import "package:decla_time/core/connection/isar_helper.dart";
 import "package:decla_time/core/extensions/capitalize.dart";
+import "package:decla_time/core/functions/check_if_logged_in.dart";
 import "package:decla_time/core/functions/snackbars.dart";
 import "package:decla_time/declarations/database/declaration.dart";
 import "package:decla_time/declarations/database/finalized_declaration_details.dart";
@@ -38,17 +39,11 @@ class ResyncDeclarationButton extends StatelessWidget {
     final UsersController usersController = context.read<UsersController>();
     final IsarHelper isarHelper = context.read<IsarHelper>();
 
-    if (usersController.loggedUser.headers == null) {
-      usersController.setRequestLogin(true);
-      Navigator.popUntil(
-        context,
-        (Route<void> route) => route.isFirst,
-      );
-      showErrorSnackbar(
+    try {
+      navigatorLoginIfNeeded(
         context: context,
-        message: localized.notLoggedIn.capitalized,
-      );
-    } else {
+        localized: localized,
+      ); //* Throws error if not logged in
       showNormalSnackbar(
         context: context,
         message: localized.synchronizing.capitalized,
@@ -87,6 +82,13 @@ class ResyncDeclarationButton extends StatelessWidget {
             ],
           );
         }
+      }
+    } on FormatException {
+      if (context.mounted) {
+        showErrorSnackbar(
+          context: context,
+          message: localized.noValidDeclarationFound.capitalized,
+        );
       }
     }
   }
