@@ -7,14 +7,15 @@ import "package:decla_time/core/widgets/details_route/delete_button.dart";
 import "package:decla_time/declarations/database/declaration.dart";
 import "package:decla_time/declarations/database/finalized_declaration_details.dart";
 import "package:decla_time/declarations/declarations_view/declaration_container/details_route/declaration_action_buttons/resync_declaration_button.dart";
+import "package:decla_time/declarations/declarations_view/declaration_container/details_route/declaration_action_buttons/temporary_declaration_manipulation_buttons.dart";
 import "package:decla_time/declarations/declarations_view/declaration_container/details_route/details/basic_details.dart";
 import "package:decla_time/declarations/declarations_view/declaration_container/details_route/details/payout.dart";
 import "package:decla_time/declarations/declarations_view/declaration_container/details_route/details/trip_length.dart";
-import "package:decla_time/declarations/declarations_view/declaration_container/details_route/temporary_declaration_manipulation_buttons.dart";
 import "package:decla_time/reservations/presentation/decleration_status_dot.dart";
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import "package:provider/provider.dart";
+import "package:url_launcher/url_launcher.dart";
 
 class MainContainer extends StatelessWidget {
   const MainContainer({
@@ -103,6 +104,19 @@ class MainContainer extends StatelessWidget {
                   localized: localized,
                   declaration: declaration,
                   declarationDetails: declarationDetails,
+                ),
+                Tooltip(
+                  message: localized.view.capitalized,
+                  child: IconButton(
+                    onPressed: () async {
+                      await launchUrl(
+                        Uri.parse(
+                          "https://www1.aade.gr/taxisnet/short_term_letting/views/declaration.xhtml?propertyId=${declaration.propertyId}&declarationDbId=${declaration.declarationDbId}",
+                        ),
+                      );
+                    },
+                    icon: const Icon(Icons.open_in_new_rounded),
+                  ),
                 ),
               ],
             ),
