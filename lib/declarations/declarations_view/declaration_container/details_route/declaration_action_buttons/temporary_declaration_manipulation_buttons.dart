@@ -3,8 +3,12 @@ import "package:decla_time/core/errors/exceptions.dart";
 import "package:decla_time/core/extensions/capitalize.dart";
 import "package:decla_time/core/functions/check_if_logged_in.dart";
 import "package:decla_time/core/functions/snackbars.dart";
+import "package:decla_time/core/widgets/custom_alert_dialog.dart";
 import "package:decla_time/declarations/database/declaration.dart";
+import "package:decla_time/declarations/database/finalized_declaration_details.dart";
+import "package:decla_time/declarations/functions/resync_declaration.dart";
 import "package:decla_time/declarations/utility/network_requests/delete_temporary_declaration_by_db_id.dart";
+import "package:decla_time/declarations/utility/network_requests/get_declaration_by_dbid.dart";
 import "package:decla_time/declarations/utility/network_requests/headers/declarations_page_headers.dart";
 import "package:decla_time/users/users_controller.dart";
 import "package:flutter/material.dart";
@@ -15,11 +19,13 @@ class TemporaryDeclarationManipulationButtons extends StatelessWidget {
   const TemporaryDeclarationManipulationButtons({
     required this.localized,
     required this.declaration,
+    required this.finalizedDeclarationDetails,
     super.key,
   });
 
   final AppLocalizations localized;
   final Declaration declaration;
+  final FinalizedDeclarationDetails? finalizedDeclarationDetails;
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +74,35 @@ class TemporaryDeclarationManipulationButtons extends StatelessWidget {
         Tooltip(
           message: "finalize",
           child: IconButton(
-            onPressed: () {
+            onPressed: () async {
+              navigatorLoginIfNeeded(context: context, localized: localized);
+              try {
+                await resyncDeclaration(
+                  context: context,
+                  detailedDeclaration: DetailedDeclaration(
+                    baseDeclaration: declaration,
+                    finalizedDeclarationDetails: finalizedDeclarationDetails,
+                  ),
+                  localized: localized,
+                ); //? May throw `DeclarationWasUpdatedException`
+
+                if (context.mounted) {
+                  await showDialog(
+                    context: context,
+                    builder: (BuildContext context) => CustomAlertDialog(
+                      confirmButtonAction: () {
+                        print("sure?");
+                      },
+                      title: "Finalize declaration",
+                      child: Text("no way normal fucking norwell"),
+                      localized: localized,
+                    ),
+                  );
+                }
+              } on DeclarationWasUpdatedException {
+                ///? Intended behaviour here.
+              }
+
               //TODO Basically get a viewState and copy the same body with the differences and finialize.
 //               fetch("https://www1.aade.gr/taxisnet/short_term_letting/views/declaration.xhtml", {
 //   "headers": {
