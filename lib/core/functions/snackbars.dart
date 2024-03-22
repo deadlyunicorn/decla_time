@@ -23,10 +23,13 @@ void showNormalSnackbar({
   required BuildContext context,
   required String message,
   TextAlign? textAlign = TextAlign.center,
+  Duration duration = const Duration(milliseconds: 4000),
+  
 }) {
   ScaffoldMessenger.of(context).removeCurrentSnackBar();
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
+      duration: duration,
       content: Center(
         child: Text(
           message,
