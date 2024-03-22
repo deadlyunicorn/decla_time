@@ -158,6 +158,7 @@
     "deleting": "deleting",
     "view": "view",
     "noValidDeclarationFound": "no valid declaration was found ( propably was deleted )",
+    "declarationWasUpdated": "declaration has been updated",
     "unusedForNonTrailingComma________________________________":""
 
 

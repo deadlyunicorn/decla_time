@@ -158,6 +158,7 @@
     "deleting": "γίνεται διαγραφή",
     "view": "προβολή",
     "noValidDeclarationFound": "δεν βρέθηκε κάποια έγκυρη δήλωση ( ίσως έχει διαγραφεί )",
+    "declarationWasUpdated": "η δήλωση έχει ενημερωθεί",
     "unusedForNonTrailingComma________________________________":""
 
 
