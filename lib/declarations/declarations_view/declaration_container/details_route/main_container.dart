@@ -21,13 +21,13 @@ class MainContainer extends StatelessWidget {
   const MainContainer({
     required this.localized,
     required this.declaration,
-    required this.declarationDetails,
+    required this.finalizedDeclarationDetails,
     super.key,
   });
 
   final AppLocalizations localized;
   final Declaration declaration;
-  final FinalizedDeclarationDetails? declarationDetails;
+  final FinalizedDeclarationDetails? finalizedDeclarationDetails;
 
   @override
   Widget build(BuildContext context) {
@@ -76,6 +76,7 @@ class MainContainer extends StatelessWidget {
               right: 4,
               top: 4,
               child: TemporaryDeclarationManipulationButtons(
+                finalizedDeclarationDetails: finalizedDeclarationDetails,
                 declaration: declaration,
                 localized: localized,
               ),
@@ -103,7 +104,7 @@ class MainContainer extends StatelessWidget {
                 ResyncDeclarationButton(
                   localized: localized,
                   declaration: declaration,
-                  declarationDetails: declarationDetails,
+                  finalizedDeclarationDetails: finalizedDeclarationDetails,
                 ),
                 Tooltip(
                   message: localized.view.capitalized,

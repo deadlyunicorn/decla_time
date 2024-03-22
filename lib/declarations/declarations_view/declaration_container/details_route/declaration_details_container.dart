@@ -24,7 +24,7 @@ class DeclarationDetailsContainer extends StatelessWidget {
         MainContainer(
           localized: localized,
           declaration: declaration,
-          declarationDetails: declarationDetails,
+          finalizedDeclarationDetails: declarationDetails,
         ),
         if (declarationDetails != null)
           FinalizedDeclarationDetailsSection(
