@@ -3,17 +3,18 @@ import "package:decla_time/declarations/declarations_view/declaration_container/
 import "package:decla_time/declarations/declarations_view/declaration_container/declaration_grid_item_container_items.dart";
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
-import "package:intl/intl.dart";
 
 class DeclarationContainer extends StatelessWidget {
   const DeclarationContainer({
     required this.declaration,
     required this.localized,
+    required this.positionedChildren,
     super.key,
   });
 
   final Declaration declaration;
   final AppLocalizations localized;
+  final List<Widget> positionedChildren;
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +24,7 @@ class DeclarationContainer extends StatelessWidget {
       fit: StackFit.expand,
       children: <Widget>[
         InkWell(
+          borderRadius: BorderRadius.circular(8),
           onTap: () {
             Navigator.push(
               context,
@@ -39,18 +41,7 @@ class DeclarationContainer extends StatelessWidget {
             declaration: declaration,
           ),
         ),
-        Positioned(
-          top: -16,
-          left: 0,
-          child: Text(
-            DateFormat("dd").format(declaration.departureDate),
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  color:
-                      Theme.of(context).colorScheme.onPrimary.withOpacity(0.7),
-                  fontSize: 16,
-                ),
-          ),
-        ),
+        ...positionedChildren,
       ],
     );
   }
