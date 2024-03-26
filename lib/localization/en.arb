@@ -159,6 +159,8 @@
     "view": "view",
     "noValidDeclarationFound": "no valid declaration was found ( propably was deleted )",
     "declarationWasUpdated": "declaration has been updated",
+    "noChangesDetected": "no changes detected",
+    "temporaryDeclarations": "temporary declarations",
     "unusedForNonTrailingComma________________________________":""
 
 

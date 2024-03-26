@@ -159,6 +159,8 @@
     "view": "προβολή",
     "noValidDeclarationFound": "δεν βρέθηκε κάποια έγκυρη δήλωση ( ίσως έχει διαγραφεί )",
     "declarationWasUpdated": "η δήλωση έχει ενημερωθεί",
+    "noChangesDetected": "δεν βρέθηκαν αλλαγές",
+    "temporaryDeclarations": "προσωρινές δηλώσεις",
     "unusedForNonTrailingComma________________________________":""
 
 
