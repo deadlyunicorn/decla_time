@@ -71,7 +71,17 @@ Future<void> resyncDeclaration({
         );
         throw DeclarationWasUpdatedException();
       }
+    } else {
+      if (context.mounted) {
+        showNormalSnackbar(
+          context: context,
+          message: localized.noChangesDetected.capitalized,
+        );
+      }
     }
+  } on NotLoggedInException {
+    //?Can throw.
+    //?The navigatorLoginIfNeeded automatically prompts to login.
   } on InvalidDeclarationException {
     if (context.mounted) {
       showErrorSnackbar(
