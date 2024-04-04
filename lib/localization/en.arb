@@ -161,6 +161,10 @@
     "declarationWasUpdated": "declaration has been updated",
     "noChangesDetected": "no changes detected",
     "temporaryDeclarations": "temporary declarations",
+    "finalizeDeclaration": "finalize declaration",
+    "finalizeDisclaimer": "You are about to finalize the current temporary declaration. Use this function at your own risk. The software developer bears no responsibility for any errors or losses",
+    "clear" : "clear",
+    "noPendingOperations" :"no pending operations",
     "unusedForNonTrailingComma________________________________":""
 
 
