@@ -1,4 +1,4 @@
-import "package:decla_time/core/constants/constants.dart";
+import "package:decla_time/declarations/status_indicator_declare/submitting_route/lists/declaring_reservation_route_item.dart";
 import "package:decla_time/declarations/status_indicator_import/declarations_import_route/declaration_import_route.dart";
 import "package:decla_time/reservations/reservation.dart";
 import "package:flutter/material.dart";
@@ -26,8 +26,8 @@ class PendingReservations extends StatelessWidget {
           return ImportListTileOutline(
             child: ListTile(
               trailing: const CircularProgressIndicator(),
-              title: DeclarationToBeImportedDetails(
-                pendingReservation: pendingReservation,
+              title: DeclaringReservationRouteItem(
+                reservation: pendingReservation,
                 localized: localized,
               ),
             ),
@@ -35,51 +35,6 @@ class PendingReservations extends StatelessWidget {
         },
         itemCount: pendingReservations.length,
       ),
-    );
-  }
-}
-
-class DeclarationToBeImportedDetails extends StatelessWidget {
-  const DeclarationToBeImportedDetails({
-    required this.pendingReservation,
-    required this.localized,
-    super.key,
-  });
-
-  final Reservation pendingReservation;
-  final AppLocalizations localized;
-
-  @override
-  Widget build(BuildContext context) {
-    bool isBigScreen = MediaQuery.sizeOf(context).width > kMaxWidthSmall;
-
-    return Column(
-      children: <Widget>[
-        FittedBox(
-          child: Text(
-            // ignore: lines_longer_than_80_chars
-            "${pendingReservation.arrivalDateString} - ${pendingReservation.departureDateString}",
-          ),
-        ),
-        Flex(
-          direction: isBigScreen ? Axis.horizontal : Axis.vertical,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            FittedBox(
-              child: Text(
-                "${pendingReservation.payout.toStringAsFixed(2)} EUR",
-              ),
-            ),
-            if (isBigScreen) const Text(" - "),
-            FittedBox(
-              child: Text(
-                "hlelo"
-                //TODO Improvise
-              ),
-            ),
-          ],
-        ),
-      ],
     );
   }
 }
