@@ -48,7 +48,7 @@ class _ReservationPlaceSelectorState extends State<ReservationPlaceSelector> {
               child: Text(menuText),
             ),
             if (isOpen) ...<Widget>[
-              ...?snapshot.data?.map(
+              ...?snapshot.data?.where((String place) => place.isNotEmpty).map(
                 (String reservationPlace) {
                   final String entryText = reservationPlace;
 

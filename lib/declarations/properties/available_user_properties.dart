@@ -68,6 +68,8 @@ class _AvailableUserPropertiesState extends State<AvailableUserProperties> {
       spacing: 4,
       children: <Widget>[
         AvailablePropertiesListTile(
+          //TODO Doesn't work right now
+
           onTap: () {
             setState(() {
               isOpen = !isOpen;
@@ -107,19 +109,20 @@ class AvailablePropertiesListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FittedBox(
-      fit: BoxFit.scaleDown,
-      child: SizedBox(
-        width: kMaxContainerWidthSmall * 2,
-        height: 48,
-        child: ListTile(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-          splashColor: Theme.of(context).colorScheme.secondary.withAlpha(128),
-          tileColor: Theme.of(context).colorScheme.primary.withAlpha(128),
-          title: FittedBox(fit: BoxFit.scaleDown, child: child),
-          onTap: onTap,
-          trailing: icon,
+    return SizedBox(
+      width: kMaxContainerWidthSmall * 2,
+      height: 48,
+      child: ListTile(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        splashColor: Theme.of(context).colorScheme.secondary.withAlpha(128),
+        tileColor: Theme.of(context).colorScheme.primary.withAlpha(128),
+        title: FittedBox(
+          fit: BoxFit.scaleDown,
+          child:
+              child, //! Be careful when the child is Text('') (empty string.)
         ),
+        onTap: onTap,
+        trailing: icon,
       ),
     );
   }
