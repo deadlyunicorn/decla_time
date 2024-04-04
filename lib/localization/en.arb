@@ -165,6 +165,7 @@
     "finalizeDisclaimer": "You are about to finalize the current temporary declaration. Use this function at your own risk. The software developer bears no responsibility for any errors or losses",
     "clear" : "clear",
     "noPendingOperations" :"no pending operations",
+    "cancellingFinalization" : "cancelling finalization",
     "unusedForNonTrailingComma________________________________":""
 
 
