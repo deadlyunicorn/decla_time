@@ -24,7 +24,7 @@ class ReservationsPage extends StatelessWidget {
       child: ColumnWithSpacings(
         spacing: 8,
         children: <Widget>[
-          //TODO HERE.
+          //TODO HERE. -> Make it so that we add reservations to propertyIds - Link properties with local properties.
           FutureBuilder<List<Reservation>>(
             builder: (
               BuildContext context,
@@ -39,11 +39,6 @@ class ReservationsPage extends StatelessWidget {
                     reservation: reservation,
                   ),
                 );
-                //  ReservationsList(
-                //   reservations: snapshot.data ?? <Reservation>[],
-                //   scrollController: scrollController,
-                //   localized: localized,
-                // );
               } else {
                 return const Center(child: CircularProgressIndicator());
               }

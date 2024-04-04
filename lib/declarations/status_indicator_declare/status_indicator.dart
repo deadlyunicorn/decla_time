@@ -20,13 +20,6 @@ class StatusIndicatorSubmit extends StatefulWidget {
 }
 
 class _StatusIndicatorSubmitState extends State<StatusIndicatorSubmit> {
-  // List<SearchPageDeclaration> importedDeclarations = <SearchPageDeclaration>[];
-  // List<SearchPageDeclaration> currentDeclarations = <SearchPageDeclaration>[];
-
-  // final List<DeclarationImportStatus> currentDeclarations = context
-  //     .select<DeclarationImportController, List<DeclarationImportStatus>>(
-  //   (DeclarationImportController controller) => controller.importedDeclarations,
-  // );
 
   @override
   Widget build(BuildContext context) {
