@@ -45,7 +45,6 @@ class _FriendlyNameDialogState extends State<FriendlyNameDialog> {
         mainAxisSize: MainAxisSize.min,
         spacing: 16,
         children: <Widget>[
-          //TODO add a remove friendly name button
           Text(
             // ignore: lines_longer_than_80_chars
             "${widget.localized.setFriendlyNameBody.capitalized}: ${widget.property.address}\n( ATAK: ${widget.property.atak} )",

@@ -26,17 +26,6 @@ class PropertySelector extends StatelessWidget {
       (UsersController controller) => controller.selectedUser,
     );
 
-    //TODO!!!
-
-    //* When submitting declarations:
-    //* + We have a 'queue' where we can add from our reservation list
-    //* + We can press "SYNC NOW" to start syncing one by one. ( rate limit )
-
-    //* Handle 302 - Log out etc.
-
-    //* + After we submit our declaration we can read the response body
-    //* or headers( location->url ) to check the declarationDbId.
-
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 32.0),
       child: ColumnWithSpacings(
