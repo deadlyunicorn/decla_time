@@ -6,30 +6,6 @@ import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import "package:intl/intl.dart";
 
-// class ReservationGridItem extends StatelessWidget {
-//   const ReservationGridItem({
-//     required this.reservation,
-//     required this.localized,
-//     super.key,
-//   });
-
-//   final Reservation reservation;
-//   final AppLocalizations localized;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Material(
-//       shape: RoundedRectangleBorder(
-//         borderRadius: BorderRadius.circular(8),
-//       ),
-//       clipBehavior: Clip.none,
-//       color: Theme.of(context).colorScheme.secondary,
-//       child:
-//           ReservationContainer(localized: localized, reservation: reservation),
-//     );
-//   }
-// }
-
 class ReservationContainer extends StatelessWidget {
   const ReservationContainer({
     required this.localized,

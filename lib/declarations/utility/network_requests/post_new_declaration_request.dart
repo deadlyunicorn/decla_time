@@ -21,14 +21,16 @@ Future<Response> postNewDeclarationRequest({
   //? This renter name is set automatically when we 'change' the afm field.
   //? In most cases you'll set a 000 000 000 afm.
 
-  return http.post(
-    Uri.https(
-      "www1.aade.gr",
-      "taxisnet/short_term_letting/views/declaration.xhtml",
-    ),
-    headers: headersObject.getHeadersForPOST(),
-    body: newDeclarationBody.bodyStringPOST(viewStateParsed),
-  );
+  return http
+      .post(
+        Uri.https(
+          "www1.aade.gr",
+          "taxisnet/short_term_letting/views/declaration.xhtml",
+        ),
+        headers: headersObject.getHeadersForPOST(),
+        body: newDeclarationBody.bodyStringPOST(viewStateParsed),
+      )
+      .timeout(const Duration(seconds: 20));
 }
 
 Future<void> setRenterName({

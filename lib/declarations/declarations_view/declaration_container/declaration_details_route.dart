@@ -37,7 +37,9 @@ class DeclarationDetailsRoute extends StatelessWidget {
 
           return SingleChildScrollView(
             child: SizedBox(
-              // width: MediaQuery.sizeOf(context).width,
+              width: MediaQuery.sizeOf(context).width,
+              //!If  you remove this it will keep the scrollbar
+              //!  on the details box
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 32),
                 child: Column(

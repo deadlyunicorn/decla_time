@@ -35,10 +35,9 @@ class _StatusIndicatorSubmitState extends State<StatusIndicatorSubmit> {
     final bool isSubmitting = declarationSubmitController.isSubmitting;
 
     return (isSubmitting ||
-            declarationSubmitController.reservationsSubmitted.isNotEmpty) //TODO Clear reservations submitted when exiting
+            declarationSubmitController.reservationsSubmitted.isNotEmpty)
         ? CalculateIndicatorPosition(
             child: TextButton(
-              //TODO - pressing "Back key' on Android doesn't discard the imported things
               style: TextButton.styleFrom().copyWith(
                 shape: const MaterialStatePropertyAll<OutlinedBorder>(
                   CircleBorder(),
@@ -48,15 +47,14 @@ class _StatusIndicatorSubmitState extends State<StatusIndicatorSubmit> {
                 Navigator.push(
                   context,
                   MaterialPageRoute<void>(
-                    builder: (BuildContext
-                            context) => //TODO Add a delete button on temporary declarations ( on the declarations page. )
+                    builder: (BuildContext context) =>
                         DeclarationUploadingRoute(localized: widget.localized),
                   ),
                 );
               },
-              child: !isSubmitting
+              child: isSubmitting
                   ? const UploadAnimation()
-                  : const Stack(
+                  : Stack(
                       clipBehavior: Clip.none,
                       children: <Widget>[
                         Positioned(
@@ -68,14 +66,16 @@ class _StatusIndicatorSubmitState extends State<StatusIndicatorSubmit> {
                               alignment: Alignment.bottomRight,
                               child: SizedBox(
                                 width: StatusIndicatorSubmit.buttonSize / 2,
-                                child: Text("999"
-                                    //TODO Later. "${currentDeclarations.length}",
-                                    ),
+                                child: Text(
+                                  declarationSubmitController
+                                      .reservationsSubmitted.length
+                                      .toString(),
+                                ),
                               ),
                             ),
                           ),
                         ),
-                        Icon(Icons.cloud_done_rounded),
+                        const Icon(Icons.cloud_done_rounded),
                       ],
                     ),
             ),
