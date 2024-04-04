@@ -6,6 +6,8 @@ import "package:decla_time/core/functions/snackbars.dart";
 import "package:decla_time/declarations/database/declaration.dart";
 import "package:decla_time/declarations/database/finalized_declaration_details.dart";
 import "package:decla_time/declarations/utility/network_requests/get_declaration_by_dbid.dart";
+import "package:decla_time/declarations/utility/network_requests/headers/declarations_page_headers.dart";
+import "package:decla_time/declarations/utility/network_requests/login/login_user.dart";
 import "package:decla_time/users/users_controller.dart";
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
@@ -80,8 +82,15 @@ Future<void> resyncDeclaration({
       }
     }
   } on NotLoggedInException {
-    //?Can throw.
-    //?The navigatorLoginIfNeeded automatically prompts to login.
+    await loginUser(credentials: usersController.loggedUser.userCredentials!)
+        .then((DeclarationsPageHeaders headers) {
+      usersController.loggedUser.setDeclarationsPageHeaders(headers);
+      resyncDeclaration(
+        context: context,
+        detailedDeclaration: detailedDeclaration,
+        localized: localized,
+      );
+    });
   } on InvalidDeclarationException {
     if (context.mounted) {
       showErrorSnackbar(
