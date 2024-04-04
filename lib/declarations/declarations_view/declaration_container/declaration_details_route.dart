@@ -35,22 +35,34 @@ class DeclarationDetailsRoute extends StatelessWidget {
         ) {
           final FinalizedDeclarationDetails? declarationDetails = snapshot.data;
 
-          return SingleChildScrollView(
-            child: SizedBox(
-              width: MediaQuery.sizeOf(context).width,
-              //!If  you remove this it will keep the scrollbar
-              //!  on the details box
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 32),
-                child: Column(
-                  children: <Widget>[
-                    DeclarationDetailsContainer(
-                      declaration: declaration,
-                      declarationDetails: declarationDetails,
-                      localized: localized,
-                    ),
-                    const SizedBox.square(dimension: 32),
-                  ],
+          return FutureBuilder<Declaration?>(
+            future: context
+                .watch<IsarHelper>()
+                .declarationActions
+                .getDeclarationEntryByDeclarationDbId(
+                  declaration.declarationDbId,
+                ),
+            builder: (
+              BuildContext context,
+              AsyncSnapshot<Declaration?> declarationSnapshot,
+            ) =>
+                SingleChildScrollView(
+              child: SizedBox(
+                width: MediaQuery.sizeOf(context).width,
+                //!If  you remove this it will keep the scrollbar
+                //!  on the details box
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 32),
+                  child: Column(
+                    children: <Widget>[
+                      DeclarationDetailsContainer(
+                        declaration: declarationSnapshot.data ?? declaration,
+                        declarationDetails: declarationDetails,
+                        localized: localized,
+                      ),
+                      const SizedBox.square(dimension: 32),
+                    ],
+                  ),
                 ),
               ),
             ),
