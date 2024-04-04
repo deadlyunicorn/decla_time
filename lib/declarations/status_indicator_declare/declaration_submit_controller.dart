@@ -5,7 +5,7 @@ import "package:decla_time/declarations/utility/network_requests/headers/declara
 import "package:decla_time/declarations/utility/network_requests/post_new_declaration_request.dart";
 import "package:decla_time/reservations/reservation.dart";
 import "package:flutter/material.dart";
-import "package:http/http.dart";
+import "package:http/http.dart" as http;
 
 class DeclarationSubmitController extends ChangeNotifier {
   List<Reservation> _reservationsPendingSubmission = <Reservation>[];
@@ -33,6 +33,14 @@ class DeclarationSubmitController extends ChangeNotifier {
   }
   //? Submit Operations *//
 
+  String? _lastSubmittingPropertyId;
+  String? get lastSubmittingPropertyId => _lastSubmittingPropertyId;
+
+  void clearSubmitted() {
+    _reservationsSubmitted.clear();
+    notifyListeners();
+  }
+
   Future<void> startSubmitting({
     required List<Reservation> reservations,
     required DeclarationsPageHeaders headers,
@@ -41,6 +49,7 @@ class DeclarationSubmitController extends ChangeNotifier {
     //? you might get a bit faster for longer durations
     //? But if anything ever goes wrong it will be harder to debug.
   }) async {
+    _lastSubmittingPropertyId = propertyId;
     setReservationsPendingSubmission(reservations);
     setSubmitStatus(true);
 
@@ -55,8 +64,8 @@ class DeclarationSubmitController extends ChangeNotifier {
           platform: currentReservation.bookingPlatform,
         );
 
-        final Response declarationResponse = await Future.any(
-          <Future<Response>>[
+        final http.Response declarationResponse = await Future.any(
+          <Future<http.Response>>[
             postNewDeclarationRequest(
               headersObject: headers,
               newDeclarationBody: declarationBody,
@@ -80,9 +89,6 @@ class DeclarationSubmitController extends ChangeNotifier {
           wasSuccessful = true;
         }
 
-  //TODO if was successful, add locally the isDeclaredStatus and show an indicator when selecting for declaring. 
-
-
         _reservationsPendingSubmission.removeAt(0);
         _reservationsSubmitted.add(
           ReservationSubmitResult(
@@ -90,6 +96,12 @@ class DeclarationSubmitController extends ChangeNotifier {
             wasSuccessful: wasSuccessful,
           ),
         );
+
+        if (wasSuccessful) {
+          //TODO if was successful, add locally the isDeclaredStatus and show an indicator when selecting for declaring.
+
+          //TODO make sure to make the statusIndicatorMenu remove completedDeclarations after being viewed [#01]
+        }
       } catch (error) {
         _reservationsPendingSubmission.removeAt(0);
         _reservationsSubmitted.add(
