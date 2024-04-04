@@ -125,7 +125,7 @@ class _PropertySyncButtonState extends State<PropertySyncButton> {
         loggedUser.setDeclarationsPageHeaders(
           await loginUser(credentials: userCredentials),
         );
-        await syncProperties(); //TODO Untested.
+        await syncProperties(); //Untested.
       }
     } on TryAgainLaterException {
       showErrorSnackbar(

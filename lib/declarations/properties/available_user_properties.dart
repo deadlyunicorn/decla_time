@@ -68,8 +68,6 @@ class _AvailableUserPropertiesState extends State<AvailableUserProperties> {
       spacing: 4,
       children: <Widget>[
         AvailablePropertiesListTile(
-          //TODO Doesn't work right now
-
           onTap: () {
             setState(() {
               isOpen = !isOpen;

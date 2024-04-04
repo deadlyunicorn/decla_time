@@ -14,7 +14,6 @@ import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import "package:provider/provider.dart";
 
 class DeclarationSubmitRoute extends StatefulWidget {
-  //TODO HERE I AM RIGHT NOW, be sure to test those.
   const DeclarationSubmitRoute({
     required this.localized,
     required this.selectedProperty,
