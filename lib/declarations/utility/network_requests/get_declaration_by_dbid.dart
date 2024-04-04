@@ -5,6 +5,7 @@ import "package:decla_time/core/errors/exceptions.dart";
 import "package:decla_time/core/extensions/get_values_between_strings.dart";
 import "package:decla_time/declarations/database/declaration.dart";
 import "package:decla_time/declarations/database/finalized_declaration_details.dart";
+import "package:decla_time/declarations/functions/check_if_logged_in.dart";
 import "package:decla_time/declarations/utility/declaration_body.dart";
 import "package:decla_time/declarations/utility/network_requests/headers/declarations_page_headers.dart";
 import "package:http/http.dart" as http;
@@ -24,6 +25,8 @@ Future<DetailedDeclaration> getDeclarationByDbId({
   );
 
   try {
+    checkIfLoggedIn(res.body);
+
     final FinalizedDeclarationDetails? finalizedDeclarationDetails =
         extractFinalizedDeclarationFromDeclarationPage(
       html: res.body,
