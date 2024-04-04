@@ -45,9 +45,11 @@ class DeclarationSubmitController extends ChangeNotifier {
     required List<Reservation> reservations,
     required DeclarationsPageHeaders headers,
     required String propertyId,
+    required void Function(List<Reservation>) putReservationToDb
     //? Don't import searchPageData -
     //? you might get a bit faster for longer durations
     //? But if anything ever goes wrong it will be harder to debug.
+    ,
   }) async {
     _lastSubmittingPropertyId = propertyId;
     setReservationsPendingSubmission(reservations);
@@ -98,9 +100,9 @@ class DeclarationSubmitController extends ChangeNotifier {
         );
 
         if (wasSuccessful) {
-          //TODO if was successful, add locally the isDeclaredStatus and show an indicator when selecting for declaring.
-
-          //TODO make sure to make the statusIndicatorMenu remove completedDeclarations after being viewed [#01]
+          putReservationToDb(
+            <Reservation>[currentReservation..isDeclared = true],
+          );
         }
       } catch (error) {
         _reservationsPendingSubmission.removeAt(0);

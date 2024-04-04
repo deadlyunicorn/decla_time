@@ -1,5 +1,6 @@
 import "dart:async";
 
+import "package:decla_time/core/connection/isar_helper.dart";
 import "package:decla_time/core/errors/exceptions.dart";
 import "package:decla_time/core/extensions/capitalize.dart";
 import "package:decla_time/core/widgets/column_with_spacings.dart";
@@ -38,6 +39,8 @@ class _StartDeclaringDialogState extends State<StartDeclaringDialog> {
   Widget build(BuildContext context) {
     return CustomAlertDialog(
       confirmButtonAction: () async {
+        final IsarHelper isarHelper = context.read<IsarHelper>();
+
         try {
           if (context.read<DeclarationSubmitController>().isSubmitting) {
             throw AlreadySubmittingDeclarations();
@@ -66,6 +69,8 @@ class _StartDeclaringDialogState extends State<StartDeclaringDialog> {
                       reservations: widget.reservationToBeSubmitted,
                       headers: headers,
                       propertyId: widget.propertyId,
+                      putReservationToDb: isarHelper
+                          .reservationActions.insertMultipleEntriesToDb,
                     ),
               );
             },
