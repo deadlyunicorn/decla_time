@@ -14,6 +14,7 @@ import "package:decla_time/declarations/utility/search_page_data.dart";
 import "package:decla_time/declarations/utility/user_credentials.dart";
 import "package:decla_time/users/users_controller.dart";
 import "package:flutter/material.dart";
+import "package:flutter/widgets.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import "package:http/http.dart";
 import "package:provider/provider.dart";
@@ -252,43 +253,55 @@ class _DeclarationSyncRangePickerDialogState
       //? The only issue would be if the user went AFK
       //? and pressed confirm afterwards.
       //?( But then they might get a logged out session? )
+      startImportingDeclarations(
+        context: context,
+        arrivalDate: arrivalDateTemp,
+        departureDateDate: departureDateTemp,
+        propertyId: widget.propertyId,
+      );
+    }
+  }
+}
 
-      final DeclarationsPageHeaders initialHeaders =
-          context.read<UsersController>().loggedUser.headers!;
-      final UserCredentials? credentials =
-          context.read<UsersController>().loggedUser.userCredentials;
+void startImportingDeclarations({
+  required BuildContext context,
+  required DateTime arrivalDate,
+  required DateTime departureDateDate,
+  required String propertyId,
+}) {
+  final DeclarationsPageHeaders initialHeaders =
+      context.read<UsersController>().loggedUser.headers!;
+  final UserCredentials? credentials =
+      context.read<UsersController>().loggedUser.userCredentials;
 
-      void updateHeaders(DeclarationsPageHeaders newHeaders) => context
-          .read<UsersController>()
-          .loggedUser
-          .setDeclarationsPageHeaders(newHeaders);
+  void updateHeaders(DeclarationsPageHeaders newHeaders) => context
+      .read<UsersController>()
+      .loggedUser
+      .setDeclarationsPageHeaders(newHeaders);
 
-      Future<void> startImporting(DeclarationsPageHeaders headers) => context
-          .read<DeclarationImportController>()
-          .startImportingDeclarations(
-            arrivalDate: arrivalDateTemp,
-            departureDate: departureDateTemp,
-            propertyId: widget.propertyId,
+  Future<void> startImporting(DeclarationsPageHeaders headers) =>
+      context.read<DeclarationImportController>().startImportingDeclarations(
+            arrivalDate: arrivalDate,
+            departureDate: departureDateDate,
+            propertyId: propertyId,
             headers: headers,
           );
 
-      try {
-        unawaited(startImporting(initialHeaders));
-      } on NotLoggedInException {
-        //* UNTESTED CODE.
-        unawaited(
-          loginUser(credentials: credentials!).then(
-            (DeclarationsPageHeaders newHeaders) {
-              updateHeaders(newHeaders);
-              startImporting(newHeaders);
-            },
-          ),
-        );
-      }
-
-      Navigator.popUntil(context, (Route<void> route) {
-        return route.isFirst;
-      });
-    }
+  try {
+    unawaited(startImporting(initialHeaders));
+  } on NotLoggedInException {
+    //* UNTESTED CODE.
+    unawaited(
+      loginUser(credentials: credentials!).then(
+        (DeclarationsPageHeaders newHeaders) {
+          updateHeaders(newHeaders);
+          startImporting(newHeaders);
+        },
+      ),
+    );
   }
+
+  Navigator.popUntil(context, (Route<void> route) {
+    return route.isFirst;
+  });
 }
