@@ -166,6 +166,9 @@
     "clear": "εκκαθάριση", 
     "noPendingOperations" :"δεν αναμένονται διαδικασίες",
     "cancellingFinalization" : "ακύρωση οριστικοποίησης",
+    "somethingWentWrong": "κάτι πήγε στραβά, ξαναδοκιμάστε",
+    "finalizing": "γίνεται οριστικοποίηση",
+    "finalizedSuccessfully": "επιτυχής οριστικοποίηση",
     "unusedForNonTrailingComma________________________________":""
 
 

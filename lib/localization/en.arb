@@ -166,6 +166,9 @@
     "clear" : "clear",
     "noPendingOperations" :"no pending operations",
     "cancellingFinalization" : "cancelling finalization",
+    "somethingWentWrong": "something went wrong, try again",
+    "finalizing": "finalizing",
+    "finalizedSuccessfully": "finalization was successful",
     "unusedForNonTrailingComma________________________________":""
 
 
