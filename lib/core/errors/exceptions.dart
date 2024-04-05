@@ -26,5 +26,7 @@ class InvalidDeclarationException implements Exception {}
 
 class DeclarationWasUpdatedException implements Exception {}
 
+class SuccessfullyFinalizedDeclarationException implements Exception {}
+
 
 
