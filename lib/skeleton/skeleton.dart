@@ -11,8 +11,12 @@ import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import "package:provider/provider.dart";
 
 class Skeleton extends StatefulWidget {
-  const Skeleton({super.key});
+  const Skeleton({
+    required this.localized,
+    super.key,
+  });
 
+  final AppLocalizations localized;
   @override
   State<Skeleton> createState() => _SkeletonState();
 }
@@ -22,8 +26,6 @@ class _SkeletonState extends State<Skeleton> {
 
   @override
   Widget build(BuildContext context) {
-    final AppLocalizations localized = AppLocalizations.of(context)!;
-
     return SafeArea(
       child: ChangeNotifierProvider<SelectedPageController>(
         create: (_) =>
@@ -34,26 +36,26 @@ class _SkeletonState extends State<Skeleton> {
               Positioned.fill(
                 child: SelectPageToDisplay(
                   scrollController: scrollController,
-                  localized: localized,
+                  localized: widget.localized,
                 ),
               ),
               Positioned(
                 bottom: 32,
                 right: 16,
                 child: CustomFloatingActionButton(
-                  localized: localized,
+                  localized: widget.localized,
                 ),
               ),
               Positioned.fill(
                 child: UsersDrawerAccess(
-                  localized: localized,
+                  localized: widget.localized,
                 ),
               ),
               Positioned.fill(
                 child: Stack(
                   children: <Widget>[
                     StatusIndicatorImport(
-                      localized: localized,
+                      localized: widget.localized,
                     ),
                   ],
                 ),
@@ -62,7 +64,7 @@ class _SkeletonState extends State<Skeleton> {
                 child: Stack(
                   children: <Widget>[
                     StatusIndicatorSubmit(
-                      localized: localized,
+                      localized: widget.localized,
                     ),
                   ],
                 ),
@@ -71,10 +73,10 @@ class _SkeletonState extends State<Skeleton> {
             ],
           ),
           drawer: UsersDrawer(
-            localized: localized,
+            localized: widget.localized,
           ),
           bottomNavigationBar: CustomBottomNavigationBar(
-            localized: localized,
+            localized: widget.localized,
           ),
         ),
       ),
