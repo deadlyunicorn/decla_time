@@ -169,6 +169,9 @@
     "somethingWentWrong": "κάτι πήγε στραβά, ξαναδοκιμάστε",
     "finalizing": "γίνεται οριστικοποίηση",
     "finalizedSuccessfully": "επιτυχής οριστικοποίηση",
+    "clearAllData" :"εκκαθάριση όλων των δεδομένων",
+    "selectLanguage":"επιλογή γλώσσας",
+    "appSettings" : "ρυθμίσεις εφαρμογής",
     "unusedForNonTrailingComma________________________________":""
 
 

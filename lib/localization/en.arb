@@ -169,6 +169,9 @@
     "somethingWentWrong": "something went wrong, try again",
     "finalizing": "finalizing",
     "finalizedSuccessfully": "finalization was successful",
+    "clearAllData" :"clear all data",
+    "selectLanguage":"select language",
+    "appSettings" : "app settings",
     "unusedForNonTrailingComma________________________________":""
 
 
