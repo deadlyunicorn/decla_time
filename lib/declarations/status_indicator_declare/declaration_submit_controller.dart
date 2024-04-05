@@ -60,6 +60,8 @@ class DeclarationSubmitController extends ChangeNotifier {
           reservationsPendingSubmission.first;
       try {
         final DeclarationBody declarationBody = DeclarationBody(
+          cancellationDate: currentReservation.cancellationDate,
+          cancellationAmount: currentReservation.cancellationAmount,
           arrivalDate: currentReservation.arrivalDate,
           departureDate: currentReservation.departureDate,
           payout: currentReservation.payout,

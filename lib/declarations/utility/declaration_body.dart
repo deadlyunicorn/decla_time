@@ -14,8 +14,8 @@ class DeclarationBody {
     required this.departureDate,
     required this.payout,
     required this.platform,
-    this.cancellationDate,
-    this.cancellationAmount,
+    required this.cancellationDate,
+    required this.cancellationAmount,
   });
 
   int get _translatedPlatform {
@@ -94,4 +94,5 @@ class DeclarationBody {
       return BookingPlatform.other;
     }
   }
+
 }

@@ -13,6 +13,8 @@ void main() async {
   group("Reservations Folder Manipulation", () {
     test("Adding to database and reading database entries", () async {
       final Reservation newReservation = Reservation(
+        cancellationDate: null, 
+        cancellationAmount: null, 
         arrivalDate: DateTime.now(),
         bookingPlatform: "Airbnb",
         departureDate: DateTime(2024),

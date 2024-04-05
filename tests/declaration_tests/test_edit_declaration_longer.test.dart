@@ -106,6 +106,8 @@ void main() async {
     //* STEP 4: Edit the selected declaration
 
     final DeclarationBody newDeclarationBody = DeclarationBody(
+      cancellationAmount: null,
+      cancellationDate: null,
       arrivalDate: DateTime.now(),
       departureDate: DateTime.now().add(const Duration(days: 2)),
       payout: 0.12,

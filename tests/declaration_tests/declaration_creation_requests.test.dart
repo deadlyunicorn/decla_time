@@ -17,6 +17,8 @@ void main() async {
     final String samplePropertyId = propertyId;
 
     final DeclarationBody testDeclarationBody = DeclarationBody(
+      cancellationAmount: null,
+      cancellationDate: null,
       arrivalDate: DateTime.now(),
       departureDate: DateTime.now().add(const Duration(days: 3)),
       payout: 0.01,

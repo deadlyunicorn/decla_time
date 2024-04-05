@@ -203,6 +203,8 @@ class _ReservationFormState extends State<ReservationForm> {
       final DateTime departureDate = this.departureDate!;
 
       final Reservation reservation = Reservation(
+        cancellationAmount: null, //TODO UNIMPLEMENTED
+        cancellationDate: null, //TODO UNIMPLEMENTED
         bookingPlatform: bookingPlatform,
         listingName: listingName,
         id: id,

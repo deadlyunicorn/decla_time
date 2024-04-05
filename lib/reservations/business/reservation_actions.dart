@@ -165,6 +165,8 @@ class ReservationActions {
       } else {
         airbnbTable.add(
           Reservation(
+            cancellationAmount: null, //TODO UNIMPLEMENTED
+            cancellationDate: null, //TODO UNIMPLEMENTED
             bookingPlatform: "Airbnb",
             listingName: csvFileRowEntries[i][kAirbnbListingNameColumn],
             id: csvFileRowEntries[i][kAirbnbIdColumn],
@@ -253,6 +255,8 @@ class ReservationActions {
 
         bookingDotComTable.add(
           Reservation(
+            cancellationDate: null, //TODO UNIMPLEMENTED
+            cancellationAmount: null, //TODO UNIMPLEMENTED
             bookingPlatform: "Booking.com",
             listingName: null,
             id: csvFileRowEntries[i][kBookingDotComIdColumn],

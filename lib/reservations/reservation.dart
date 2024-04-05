@@ -6,9 +6,7 @@ import "package:isar/isar.dart";
 part "reservation.g.dart";
 
 @collection
-class Reservation implements ItemWithDates{
-
-  //TODO Cancellation amounts/dates etc.
+class Reservation implements ItemWithDates {
 
   final String bookingPlatform;
   final String? listingName;
@@ -26,6 +24,9 @@ class Reservation implements ItemWithDates{
   final double payout;
   final String reservationStatus;
 
+  final DateTime? cancellationDate;
+  final double? cancellationAmount;
+
   Reservation({
     required this.bookingPlatform,
     required this.listingName,
@@ -35,6 +36,8 @@ class Reservation implements ItemWithDates{
     required this.departureDate,
     required this.payout,
     required this.reservationStatus,
+    required this.cancellationDate,
+    required this.cancellationAmount,
     this.isDeclared = false,
     this.lastEdit,
   });
@@ -53,6 +56,8 @@ class Reservation implements ItemWithDates{
         reservation.departureDate == departureDate &&
         reservation.payout == payout &&
         reservation.reservationStatus == reservationStatus &&
-        reservation.isDeclared == isDeclared;
+        reservation.isDeclared == isDeclared &&
+        reservation.cancellationAmount == cancellationAmount &&
+        reservation.cancellationDate == cancellationDate;
   }
 }
