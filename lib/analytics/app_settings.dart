@@ -30,20 +30,7 @@ class AppSettings extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Text("${localized.selectLanguage.capitalized}: "),
-            TextButton(
-              style: TextButton.styleFrom(
-                foregroundColor: Theme.of(context).colorScheme.surface,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(4),
-                ),
-              ),
-              onPressed: () {
-                context.read<SettingsController>().toggleLocale();
-              },
-              child: Text(
-                localized.localeFlag,
-              ),
-            ),
+            ToggleLocaleButton(localized: localized),
           ],
         ),
         TextButton(
@@ -74,6 +61,33 @@ class AppSettings extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class ToggleLocaleButton extends StatelessWidget {
+  const ToggleLocaleButton({
+    required this.localized,
+    super.key,
+  });
+
+  final AppLocalizations localized;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      style: TextButton.styleFrom(
+        foregroundColor: Theme.of(context).colorScheme.surface,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(4),
+        ),
+      ),
+      onPressed: () {
+        context.read<SettingsController>().toggleLocale();
+      },
+      child: Text(
+        localized.localeFlag,
+      ),
     );
   }
 }
