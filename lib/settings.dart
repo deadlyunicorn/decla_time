@@ -32,4 +32,15 @@ class SettingsController extends ChangeNotifier {
 
     notifyListeners();
   }
+
+  Future<bool> hasAcceptedDisclaimer() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getBool("accepted_disclaimer") ?? false;
+  }
+
+  Future<void> acceptDisclaimer() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool("accepted_disclaimer", true);
+    notifyListeners();
+  }
 }

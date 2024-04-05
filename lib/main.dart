@@ -73,7 +73,14 @@ class MyApp extends StatelessWidget {
           title: "DeclaTime",
           darkTheme: darkTheme(context),
           themeMode: ThemeMode.dark,
-          home: Skeleton(),
+          home: FutureBuilder<bool>(
+            future: settingsController.hasAcceptedDisclaimer(),
+            builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+              return MainApp(
+                hasAcceptedDisclaimer: snapshot.data ?? false,
+              );
+            },
+          ),
           locale: Locale(settingsController.locale),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
@@ -209,5 +216,27 @@ class MyApp extends StatelessWidget {
       ),
       useMaterial3: true,
     );
+  }
+}
+
+class MainApp extends StatelessWidget {
+  const MainApp({
+    required this.hasAcceptedDisclaimer,
+    super.key,
+  });
+
+  final bool hasAcceptedDisclaimer;
+
+  @override
+  Widget build(BuildContext context) {
+    final AppLocalizations localized = AppLocalizations.of(context)!;
+
+    return hasAcceptedDisclaimer
+        ? Skeleton(
+            localized: localized,
+          )
+        : AppDisclaimer(
+            localized: localized,
+          );
   }
 }
