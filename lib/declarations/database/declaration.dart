@@ -45,7 +45,7 @@ class Declaration implements ItemWithDates {
     this.cancellationAmount,
   });
 
-  int get nights => departureDate.difference(arrivalDate).inDays + 1;
+  int get nights => departureDate.difference(arrivalDate).inDays;
   String? get cancellationDateString => cancellationDate != null
       ? DateFormat("dd/MM/y").format(cancellationDate!)
       : null;
