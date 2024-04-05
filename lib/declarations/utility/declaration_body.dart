@@ -95,4 +95,23 @@ class DeclarationBody {
     }
   }
 
+  String bodyFINALIZEStringPOST(String viewStateParsed) {
+    double? payout = this.payout;
+
+    if (cancellationAmount != null) {
+      if (payout > 0) {
+        throw ("Cancellation Amount while Payout > 0");
+      }
+      if (cancellationDate == null) {
+        throw "Cancellation date missing";
+      }
+      payout = null;
+    } else if (cancellationDate != null) {
+      // && cancellation Amount == null
+      throw "Cancellation date missing";
+    }
+
+    // ignore: lines_longer_than_80_chars
+    return "appForm%3ArentalFrom_input=${translateDate(arrivalDate)}&appForm%3ArentalTo_input=${translateDate(departureDate)}&appForm%3AsumAmount_hinput=${payout ?? ""}&appForm%3Aplatform_input=$_translatedPlatform&appForm%3AcancelAmount_hinput=${cancellationAmount ?? ""}&appForm%3AcancelDate_input=${cancellationDate != null ? translateDate(cancellationDate!) : ""}&appForm%3ArenterAfm=000000000&appForm%3ApaymentType_focus=&appForm%3ApaymentType_input=4&appForm%3Aplatform_focus=&appForm%3Aj_idt92=&javax.faces.ViewState=$viewStateParsed&javax.faces.partial.ajax=true&javax.faces.source=appForm%3AfinalizeButton&javax.faces.partial.execute=%40all&javax.faces.partial.render=appForm&appForm%3AfinalizeButton=appForm%3AfinalizeButton&appForm=appForm";
+  }
 }
