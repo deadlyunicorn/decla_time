@@ -10,12 +10,14 @@ class ItemsOfYear<T> extends StatelessWidget {
     required this.itemsMapYear,
     required this.localized,
     required this.child,
+    required this.gridDelegate,
     super.key,
   });
 
   final Map<int, List<T>> itemsMapYear;
   final AppLocalizations localized;
   final Widget Function(T) child;
+  final SliverGridDelegate gridDelegate;
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +58,7 @@ class ItemsOfYear<T> extends StatelessWidget {
                     ),
                   ),
                   ItemsOfMonth<T>(
+                    gridDelegate: gridDelegate,
                     itemsOfMonth: itemsOfMonth,
                     localized: localized,
                     child: child,

@@ -21,12 +21,14 @@ class GenericCalendarGridView<T extends ItemWithDates> extends StatelessWidget {
     required this.items,
     required this.localized,
     required this.child,
+    required this.gridDelegate,
     super.key,
   });
 
   final List<T> items;
   final AppLocalizations localized;
   final Widget Function(T) child;
+  final SliverGridDelegate gridDelegate;
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +56,7 @@ class GenericCalendarGridView<T extends ItemWithDates> extends StatelessWidget {
               SizedBox(
                 width: min(MediaQuery.sizeOf(context).width, kMaxWidthLargest),
                 child: ItemsOfYear<T>(
+                  gridDelegate: gridDelegate,
                   child: child,
                   localized: localized,
                   itemsMapYear: yearMonthMap[year]!,

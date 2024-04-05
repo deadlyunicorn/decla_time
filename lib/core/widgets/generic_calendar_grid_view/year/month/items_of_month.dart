@@ -8,12 +8,14 @@ class ItemsOfMonth<T> extends StatelessWidget {
     required this.itemsOfMonth,
     required this.localized,
     required this.child,
-    super.key,
+    required this.gridDelegate,
+    super.key, 
   });
 
   final List<T> itemsOfMonth;
   final AppLocalizations localized;
   final Widget Function(T) child;
+  final SliverGridDelegate gridDelegate;
 
   @override
   Widget build(BuildContext context) {
@@ -24,11 +26,7 @@ class ItemsOfMonth<T> extends StatelessWidget {
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
-      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-        maxCrossAxisExtent: 160.0,
-        crossAxisSpacing: horizontalPadding,
-        mainAxisSpacing: 16,
-      ),
+      gridDelegate: gridDelegate,
       itemCount: itemsOfMonth.length,
       itemBuilder: (BuildContext context, int index) {
         return Padding(

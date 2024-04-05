@@ -98,7 +98,6 @@ class MyApp extends StatelessWidget {
 
   ThemeData darkTheme(BuildContext context) {
     return ThemeData(
-      fontFamily: "SourceSans",
       colorScheme: const ColorScheme(
         brightness: Brightness.dark,
         primary: _primary,
@@ -123,32 +122,32 @@ class MyApp extends StatelessWidget {
       textTheme: const TextTheme(
         headlineLarge: TextStyle(
           letterSpacing: 0.7,
-          fontSize: 56,
-          fontWeight: FontWeight.w900,
+          fontSize: 48,
+          fontWeight: FontWeight.w600,
         ),
         headlineMedium: TextStyle(
           letterSpacing: 0.7,
-          fontWeight: FontWeight.w800,
-          fontSize: 48,
+          fontWeight: FontWeight.w400,
+          fontSize: 36,
         ),
         headlineSmall: TextStyle(
           letterSpacing: 0.7,
-          fontWeight: FontWeight.w800,
-          fontSize: 36,
+          fontWeight: FontWeight.w400,
+          fontSize: 24,
         ),
         bodyLarge: TextStyle(
           fontSize: 24,
-          fontWeight: FontWeight.w600,
+          fontWeight: FontWeight.w300,
           letterSpacing: 0.2,
         ),
         bodyMedium: TextStyle(
           fontSize: 16,
-          fontWeight: FontWeight.w600,
+          fontWeight: FontWeight.w300,
           letterSpacing: 0.2,
         ),
         bodySmall: TextStyle(
           fontSize: 12,
-          fontWeight: FontWeight.w600,
+          fontWeight: FontWeight.w300,
           letterSpacing: 0.2,
         ),
       ),

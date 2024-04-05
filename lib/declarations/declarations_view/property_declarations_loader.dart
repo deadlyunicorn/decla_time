@@ -62,6 +62,9 @@ class PropertyDeclarationsLoader extends StatelessWidget {
                   localized: localized,
                 ),
               GenericCalendarGridView<Declaration>(
+                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                  maxCrossAxisExtent: 120,
+                ),
                 items: declarations,
                 localized: localized,
                 child: (Declaration declaration) => DeclarationContainer(

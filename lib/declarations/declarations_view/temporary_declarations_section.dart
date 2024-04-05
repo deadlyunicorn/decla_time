@@ -32,6 +32,7 @@ class TemporaryDeclarationsSection extends StatelessWidget {
             Text(
               localized.temporaryDeclarations.capitalized,
               style: Theme.of(context).textTheme.headlineMedium,
+              textAlign: TextAlign.center,
             ),
             GridView.builder(
               itemCount: temporaryDeclarations.length,
