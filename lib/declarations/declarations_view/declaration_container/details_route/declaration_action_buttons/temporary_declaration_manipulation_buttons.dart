@@ -14,6 +14,7 @@ import "package:decla_time/declarations/utility/network_requests/finalize_tempor
 import "package:decla_time/declarations/utility/network_requests/get_declaration_by_dbid.dart";
 import "package:decla_time/declarations/utility/network_requests/headers/declarations_page_headers.dart";
 import "package:decla_time/declarations/utility/network_requests/login/login_user.dart";
+import "package:decla_time/declarations/utility/user_credentials.dart";
 import "package:decla_time/users/users_controller.dart";
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
@@ -65,22 +66,26 @@ class TemporaryDeclarationManipulationButtons extends StatelessWidget {
                 }
               } on NotLoggedInException {
                 if (context.mounted) {
-                  await loginUser(
-                    credentials: context
-                        .read<UsersController>()
-                        .loggedUser
-                        .userCredentials!,
-                  ).then(
-                    (DeclarationsPageHeaders newHeaders) async {
-                      if (context.mounted) {
-                        await deleteTemporaryDeclaration(
-                          removeFromDatabase:
-                              isarHelper.declarationActions.removeFromDatabase,
-                          headers: newHeaders,
-                        );
-                      }
-                    },
-                  );
+                  final UserCredentials? userCredentials = context
+                      .read<UsersController>()
+                      .loggedUser
+                      .userCredentials;
+                  if (userCredentials != null) {
+                  //? If they are null we will be prompted to the login screen.
+                    await loginUser(
+                      credentials: userCredentials,
+                    ).then(
+                      (DeclarationsPageHeaders newHeaders) async {
+                        if (context.mounted) {
+                          await deleteTemporaryDeclaration(
+                            removeFromDatabase: isarHelper
+                                .declarationActions.removeFromDatabase,
+                            headers: newHeaders,
+                          );
+                        }
+                      },
+                    );
+                  }
                 }
               }
             },
