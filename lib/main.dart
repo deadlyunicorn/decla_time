@@ -1,5 +1,6 @@
 import "dart:math";
 
+import "package:decla_time/app_disclaimer.dart";
 import "package:decla_time/core/connection/isar_helper.dart";
 import "package:decla_time/core/constants/constants.dart";
 import "package:decla_time/declarations/status_indicator_declare/declaration_submit_controller.dart";
@@ -72,7 +73,7 @@ class MyApp extends StatelessWidget {
           title: "DeclaTime",
           darkTheme: darkTheme(context),
           themeMode: ThemeMode.dark,
-          home: const Skeleton(),
+          home: Skeleton(),
           locale: Locale(settingsController.locale),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
@@ -90,7 +91,7 @@ class MyApp extends StatelessWidget {
 
   ThemeData darkTheme(BuildContext context) {
     return ThemeData(
-      fontFamily: "NanumGothic",
+      fontFamily: "SourceSans",
       colorScheme: const ColorScheme(
         brightness: Brightness.dark,
         primary: _primary,
@@ -114,26 +115,40 @@ class MyApp extends StatelessWidget {
       ),
       textTheme: const TextTheme(
         headlineLarge: TextStyle(
-          fontFamily: "DelaGothicOne",
-          fontWeight: FontWeight.w700,
-          fontSize: 40,
+          letterSpacing: 0.7,
+          fontSize: 56,
+          fontWeight: FontWeight.w900,
         ),
         headlineMedium: TextStyle(
-          fontFamily: "DelaGothicOne",
-          fontWeight: FontWeight.w700,
-          fontSize: 32,
+          letterSpacing: 0.7,
+          fontWeight: FontWeight.w800,
+          fontSize: 48,
         ),
         headlineSmall: TextStyle(
-          fontFamily: "DelaGothicOne",
-          fontWeight: FontWeight.w700,
+          letterSpacing: 0.7,
+          fontWeight: FontWeight.w800,
+          fontSize: 36,
         ),
-        bodyLarge: TextStyle(fontSize: 24),
-        bodyMedium: TextStyle(fontSize: 16),
-        bodySmall: TextStyle(fontSize: 12),
+        bodyLarge: TextStyle(
+          fontSize: 24,
+          fontWeight: FontWeight.w600,
+          letterSpacing: 0.2,
+        ),
+        bodyMedium: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w600,
+          letterSpacing: 0.2,
+        ),
+        bodySmall: TextStyle(
+          fontSize: 12,
+          fontWeight: FontWeight.w600,
+          letterSpacing: 0.2,
+        ),
       ),
       appBarTheme: const AppBarTheme(backgroundColor: _primary),
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
+          textStyle: Theme.of(context).textTheme.bodySmall,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
           foregroundColor: _tetriary,
         ),

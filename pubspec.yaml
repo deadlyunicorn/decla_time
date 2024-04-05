@@ -50,9 +50,6 @@ flutter:
     - "assets/images/booking_com_instructions/"
 
   fonts:
-    - family: DelaGothicOne
+    - family: SourceSans
       fonts:
-        - asset: fonts/DelaGothicOne-Regular.ttf
-    - family: NanumGothic
-      fonts:
-        - asset: fonts/NanumGothic-Regular.ttf
+        - asset: fonts/SourceSans3-VariableFont_wght.ttf
