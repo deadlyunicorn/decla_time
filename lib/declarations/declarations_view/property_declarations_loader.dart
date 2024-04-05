@@ -56,10 +56,11 @@ class PropertyDeclarationsLoader extends StatelessWidget {
                 selectedProperty: selectedProperty,
                 totalDeclarations: declarations.length,
               ),
-              TemporaryDeclarationsSection(
-                temporaryDeclarations: temporaryDeclarations,
-                localized: localized,
-              ),
+              if (temporaryDeclarations.isNotEmpty)
+                TemporaryDeclarationsSection(
+                  temporaryDeclarations: temporaryDeclarations,
+                  localized: localized,
+                ),
               GenericCalendarGridView<Declaration>(
                 items: declarations,
                 localized: localized,
