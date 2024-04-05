@@ -90,7 +90,7 @@ class MyApp extends StatelessWidget {
 
   ThemeData darkTheme(BuildContext context) {
     return ThemeData(
-      fontFamily: "Ysabeau",
+      fontFamily: "NanumGothic",
       colorScheme: const ColorScheme(
         brightness: Brightness.dark,
         primary: _primary,
@@ -113,10 +113,19 @@ class MyApp extends StatelessWidget {
         selectedItemColor: _tetriary,
       ),
       textTheme: const TextTheme(
-        headlineLarge: TextStyle(fontFamily: "Do Hyeon", fontSize: 40),
-        headlineMedium: TextStyle(fontFamily: "Do Hyeon", fontSize: 32),
+        headlineLarge: TextStyle(
+          fontFamily: "DelaGothicOne",
+          fontWeight: FontWeight.w700,
+          fontSize: 40,
+        ),
+        headlineMedium: TextStyle(
+          fontFamily: "DelaGothicOne",
+          fontWeight: FontWeight.w700,
+          fontSize: 32,
+        ),
         headlineSmall: TextStyle(
-          fontFamily: "Do Hyeon",
+          fontFamily: "DelaGothicOne",
+          fontWeight: FontWeight.w700,
         ),
         bodyLarge: TextStyle(fontSize: 24),
         bodyMedium: TextStyle(fontSize: 16),
