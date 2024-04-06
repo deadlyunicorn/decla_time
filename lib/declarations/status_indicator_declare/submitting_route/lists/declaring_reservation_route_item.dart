@@ -31,7 +31,7 @@ class DeclaringReservationRouteItem extends StatelessWidget {
           children: <Widget>[
             Text(nightOrNights(localized, reservation.nights)),
             const Text("-"),
-            Text("${reservation.payout} EUR"),
+            Text("${reservation.payout.toStringAsFixed(2)} EUR"),
           ],
         ),
       ],
