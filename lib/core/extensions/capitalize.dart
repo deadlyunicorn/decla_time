@@ -2,7 +2,7 @@ extension CapitalizeString on String {
   String get capitalized => length > 1
       ? "${this[0].toUpperCase()}${substring(1).toLowerCase()}"
       : length == 1
-          ? this[0].capitalized
+          ? this[0].toUpperCase()
           : "";
 
   String get capitalizedAll => length > 1
@@ -19,6 +19,6 @@ extension CapitalizeString on String {
           return tempString.join("");
         })()
       : length == 1
-          ? this[0].capitalized
+          ? this[0].toUpperCase()
           : "";
 }
