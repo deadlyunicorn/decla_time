@@ -1,5 +1,6 @@
 import "dart:io";
 
+import "package:decla_time/core/extensions/capitalize.dart";
 import "package:decla_time/core/functions/is_landscape_mode.dart";
 import "package:decla_time/core/widgets/item_select/generic_item_select_grid.dart";
 import "package:decla_time/core/widgets/route_outline.dart";
@@ -33,7 +34,7 @@ class _ReservationAdditionRouteState extends State<ReservationAdditionRoute> {
   @override
   Widget build(BuildContext context) {
     return RouteOutline(
-      title: widget.localized.addEntries,
+      title: widget.localized.importReservations.capitalized,
       child: DropTarget(
         onDragDone: (DropDoneDetails details) async {
           final List<File> files =

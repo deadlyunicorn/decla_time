@@ -175,6 +175,7 @@
     "disclaimer": "disclaimer",
     "appDisclaimer":"This app has not gone through sufficient amount of testing, that means that you might come across unexpected behaviours.\nNevertheless under normal conditions, it will do what it is supposed to do successfully, but keep in mind that you use it at your own risk.\n\nThe software developer bears no responsibility for any errors or losses.",
     "userUnderstands": "i understand",
+    "importReservations": "import reservations",
     "unusedForNonTrailingComma________________________________":""
 
 
