@@ -49,7 +49,7 @@ class DeclarationStatusDot extends StatelessWidget {
         break;
     }
 
-    return Tooltip(
+    return Tooltip( //TODO: When clicking prompt to temporary declaration
       message:
           "${localized.declaration_status.capitalized}: ${message.capitalized}",
       child: icon,
