@@ -4,7 +4,7 @@ class TaxCalculation {
   final double _yearlyIncome;
 
   double untaxedAmount;
-  double get _taxRate {
+  double get taxRate {
     if (yearlyIncome <= 10000) {
       return 0.09;
     } else if (yearlyIncome <= 20000) {
@@ -19,11 +19,11 @@ class TaxCalculation {
   }
 
   double get fees {
-    return (untaxedAmount * _taxRate * 100).round() / 100;
+    return (untaxedAmount * taxRate * 100).round() / 100;
   }
 
   double get totalAfterFees {
-    return ((untaxedAmount * (1 - 1 * _taxRate)) * 100).round() / 100;
+    return ((untaxedAmount * (1 - 1 * taxRate)) * 100).round() / 100;
   }
 
   TaxCalculation({
