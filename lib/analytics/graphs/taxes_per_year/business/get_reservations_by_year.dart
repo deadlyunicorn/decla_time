@@ -10,8 +10,8 @@ Future<List<ReservationsOfYear>> getReservationsByYearFuture({
   final Isar isar = await context.read<IsarHelper>().isarFuture;
   final List<Reservation> reservations = await isar.reservations
       .where()
-      .findAll(); //TODO ?! doesn't work as intended unless we select desc. Debug it. !!!
-  //TODO!!!!!!!!!!!!!
+      .sortByDepartureDateDesc()
+      .findAll();
   int year = 0;
   final List<ReservationsOfYear> reservationsByYear = <ReservationsOfYear>[];
   for (int i = 0; i < reservations.length; i++) {
@@ -32,7 +32,6 @@ Future<List<ReservationsOfYear>> getReservationsByYearFuture({
           .add(currentReservation);
     }
   }
-
   return reservationsByYear;
 
   // { Year: [ reservations ],  }

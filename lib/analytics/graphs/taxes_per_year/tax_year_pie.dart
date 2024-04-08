@@ -1,5 +1,5 @@
 import "package:decla_time/analytics/business/tax_calculation.dart";
-import "package:decla_time/analytics/graphs/analytics_graphs.dart";
+import "package:decla_time/analytics/graphs/taxes_per_year/business/get_reservations_by_year.dart";
 import "package:decla_time/analytics/graphs/taxes_per_year/year_tax_details_button.dart";
 import "package:decla_time/core/extensions/capitalize.dart";
 import "package:decla_time/core/widgets/column_with_spacings.dart";
@@ -12,12 +12,13 @@ class TaxYearPie extends StatefulWidget {
   const TaxYearPie({
     required this.localized,
     required this.reservationsOfYear,
+    required this.size,
     super.key,
   });
 
   final AppLocalizations localized;
   final ReservationsOfYear reservationsOfYear;
-  final double size = 160;
+  final double size;
   final TextStyle badgeTextStyle = const TextStyle(
     shadows: <Shadow>[
       Shadow(
@@ -31,7 +32,7 @@ class TaxYearPie extends StatefulWidget {
   double get yearTotal => reservationsOfYear.reservations.fold(
         0,
         (double previousValue, Reservation element) =>
-            element.payout + (element.cancellationAmount ?? 0),
+            previousValue + element.payout + (element.cancellationAmount ?? 0),
       );
 
   TaxCalculation get taxCaclulation => TaxCalculation(
@@ -51,10 +52,10 @@ class _TaxYearPieState extends State<TaxYearPie> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 32),
       child: ColumnWithSpacings(
+        mainAxisSize: MainAxisSize.min,
         spacing: 16,
         children: <Widget>[
-          Container(
-            color: Colors.green,
+          SizedBox(
             width: widget.size * 3 + 16,
             height: widget.size + 16,
             child: Stack(
@@ -100,7 +101,7 @@ class _TaxYearPieState extends State<TaxYearPie> {
           ),
           Column(
             children: <Widget>[
-              Text("Unfeed Total: ${widget.yearTotal}"),
+              Text("Unfeed Total: ${widget.yearTotal.toStringAsFixed(2)}"),
               Text(
                 "Fee Factor: "
                 "${(widget.taxCaclulation.taxRate * 100).toStringAsFixed(2)}%",
