@@ -177,6 +177,8 @@
     "userUnderstands": "καταλαβαίνω",
     "importReservations": "εισαγωγή κρατήσεων",
     "declarationDetails":"στοιχεία δήλωσης",
+    "fees": "φόροι",
+    "netValue" : "καθαρό ποσό",
     "unusedForNonTrailingComma________________________________":""
 
 

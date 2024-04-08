@@ -177,6 +177,8 @@
     "userUnderstands": "i understand",
     "importReservations": "import reservations",
     "declarationDetails":"declaration details",
+    "fees": "fees",
+    "netValue" : "net value",
     "unusedForNonTrailingComma________________________________":""
 
 
