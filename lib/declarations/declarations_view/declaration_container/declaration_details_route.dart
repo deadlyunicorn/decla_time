@@ -21,7 +21,7 @@ class DeclarationDetailsRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RouteOutline(
-      title: localized.details.capitalized,
+      title: localized.declarationDetails.capitalized,
       child: FutureBuilder<FinalizedDeclarationDetails?>(
         future: context
             .watch<IsarHelper>()
