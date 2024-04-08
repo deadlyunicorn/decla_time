@@ -19,6 +19,8 @@ class TaxesPerYearPies extends StatelessWidget {
     return SizedBox(
       height: graphSize * 2,
       child: ListView.builder(
+        shrinkWrap: MediaQuery.sizeOf(context).width >
+            reservationsGroupedByYear.length * graphSize,
         scrollDirection: Axis.horizontal,
         itemCount: reservationsGroupedByYear.length,
         itemBuilder: (BuildContext context, int index) => Center(
