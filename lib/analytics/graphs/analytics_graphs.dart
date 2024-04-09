@@ -1,7 +1,8 @@
+import "package:decla_time/analytics/graphs/days_filled_per_month/days_filled_per_month_chart.dart";
+import "package:decla_time/analytics/graphs/revenue_per_month/yearly_monthly_revenue_breakdown_chart.dart";
 import "package:decla_time/analytics/graphs/taxes_per_year/business/get_reservations_by_year.dart";
 import "package:decla_time/analytics/graphs/taxes_per_year/taxes_per_year_pies.dart";
 import "package:decla_time/core/widgets/column_with_spacings.dart";
-import "package:decla_time/reservations/reservation.dart";
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 
@@ -30,8 +31,12 @@ class AnalyticsGraphs extends StatelessWidget {
               reservationsGroupedByYear:
                   snapshot.data ?? <ReservationsOfYear>[],
             ),
-            Text(localized.howToGetTheFiles),
-            Text(localized.howToGetTheFiles),
+            YearlyMonthlyRevenueBreakdownChart(
+              localized: localized,
+              reservationsGroupedByYear:
+                  snapshot.data ?? <ReservationsOfYear>[],
+            ), //TODO here we go
+            DaysFilledPerMonthChart(localized: localized),
           ],
         );
       },
