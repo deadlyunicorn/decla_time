@@ -179,6 +179,8 @@
     "declarationDetails":"στοιχεία δήλωσης",
     "fees": "φόροι",
     "netValue" : "καθαρό ποσό",
+    "grossValue": "μεικτό ποσό",
+    "feeFactor": "φορολογικός συντελεστής",
     "unusedForNonTrailingComma________________________________":""
 
 

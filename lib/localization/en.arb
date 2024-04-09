@@ -179,6 +179,8 @@
     "declarationDetails":"declaration details",
     "fees": "fees",
     "netValue" : "net value",
+    "grossValue": "gross value",
+    "feeFactor": "fee factor",
     "unusedForNonTrailingComma________________________________":""
 
 

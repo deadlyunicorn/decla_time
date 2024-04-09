@@ -101,9 +101,10 @@ class _TaxYearPieState extends State<TaxYearPie> {
           ),
           Column(
             children: <Widget>[
-              Text("Unfeed Total: ${widget.yearTotal.toStringAsFixed(2)}"),
+              Text("${widget.localized.grossValue.capitalized}: "
+                  "${widget.yearTotal.toStringAsFixed(2)} EUR"),
               Text(
-                "Fee Factor: "
+                "${widget.localized.feeFactor.capitalized}: "
                 "${(widget.taxCaclulation.taxRate * 100).toStringAsFixed(2)}%",
               ),
             ],
