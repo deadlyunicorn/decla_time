@@ -181,6 +181,8 @@
     "netValue" : "καθαρό ποσό",
     "grossValue": "μεικτό ποσό",
     "feeFactor": "φορολογικός συντελεστής",
+    "average": "μέσος όρος",
+    "area":"εμβαδόν",
     "unusedForNonTrailingComma________________________________":""
 
 

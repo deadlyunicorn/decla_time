@@ -181,6 +181,8 @@
     "netValue" : "net value",
     "grossValue": "gross value",
     "feeFactor": "fee factor",
+    "average": "average",
+    "area":"area",
     "unusedForNonTrailingComma________________________________":""
 
 
