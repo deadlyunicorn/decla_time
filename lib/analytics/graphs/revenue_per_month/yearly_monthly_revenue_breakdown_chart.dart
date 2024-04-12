@@ -1,9 +1,9 @@
 import "package:decla_time/analytics/graphs/revenue_per_month/business/get_reservations_by_month.dart";
+import "package:decla_time/analytics/graphs/revenue_per_month/monthly_revenue_line_chart.dart";
 import "package:decla_time/analytics/graphs/taxes_per_year/business/get_reservations_by_year.dart";
 import "package:decla_time/reservations/reservation.dart";
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
-import "package:intl/intl.dart";
 
 class YearlyMonthlyRevenueBreakdownChart extends StatelessWidget {
   const YearlyMonthlyRevenueBreakdownChart({
@@ -21,37 +21,30 @@ class YearlyMonthlyRevenueBreakdownChart extends StatelessWidget {
         .map((ReservationsOfYear reservationsOfYear) => reservationsOfYear.year)
         .toList();
 
-    return ListView.builder(
-      shrinkWrap: true,
-      itemBuilder: (BuildContext context, int index) {
-        final List<ReservationsOfMonthOfYear> reservationsByMonthOfYear =
-            getReservationsByMonth(reservationsGroupedByYear)
-                .where(
-                  (ReservationsOfMonthOfYear element) =>
-                      element.year == years[index],
-                )
-                .toList();
+    return SizedBox(
+      height: 560,
+      child: ListView.builder(
+        padding: const EdgeInsets.symmetric(horizontal: 32),
+        scrollDirection: Axis.horizontal,
+        itemCount: years.length,
+        itemBuilder: (BuildContext context, int index) {
+          final List<ReservationsOfMonthOfYear> reservationsByMonthOfYear =
+              getReservationsByMonth(reservationsGroupedByYear)
+                  .where(
+                    (ReservationsOfMonthOfYear element) =>
+                        element.year == years[index],
+                  )
+                  .toList();
 
-        return ListView.builder(
-          shrinkWrap: true,
-          itemBuilder: (BuildContext context, int index) {
-            final ReservationsOfMonthOfYear reservationsOfMonth =
-                reservationsByMonthOfYear[index];
-
-            return Text(
-              DateFormat("MMMM - y: ").format(
-                    DateTime(
-                      reservationsOfMonth.year,
-                      reservationsOfMonth.month,
-                    ),
-                  ) +
-                  reservationsOfMonth.monthTotal.toStringAsFixed(2),
-            );
-          },
-          itemCount: reservationsByMonthOfYear.length,
-        );
-      },
-      itemCount: years.length,
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 32.0),
+            child: MonthlyRevenueLineChart(
+              localized: localized,
+              reservationsByMonthOfYear: reservationsByMonthOfYear,
+            ),
+          );
+        },
+      ),
     );
   }
 }
