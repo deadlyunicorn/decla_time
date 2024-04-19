@@ -114,7 +114,7 @@ class _DaysFilledPerMonthBarChartState
                 BarChartRodData rod,
                 int rodIndex,
               ) {
-                return ( groupIndex == indexOfHoveringBar && rod.toY > 0 ) 
+                return (groupIndex == indexOfHoveringBar && rod.toY > 0)
                     ? BarTooltipItem(
                         "${rod.toY.round() - (widget._addOnHover).ceil()}",
                         const TextStyle(
@@ -130,13 +130,16 @@ class _DaysFilledPerMonthBarChartState
             bottomTitles: AxisTitles(
               sideTitles: SideTitles(
                 showTitles: true,
-                reservedSize: 30,
-                getTitlesWidget: (double value, TitleMeta meta) => Text(
-                  DateFormat.MMM(widget.localized.localeName).format(
-                    DateTime(
-                      0,
-                      value.toInt(),
+                reservedSize: 24,
+                getTitlesWidget: (double value, TitleMeta meta) => Center(
+                  child: Text(
+                    DateFormat.MMM(widget.localized.localeName).format(
+                      DateTime(
+                        0,
+                        value.toInt(),
+                      ),
                     ),
+                    style: Theme.of(context).textTheme.bodySmall,
                   ),
                 ),
               ),
@@ -162,35 +165,36 @@ class _DaysFilledPerMonthBarChartState
           borderData: FlBorderData(
             show: false,
           ),
-          barGroups: List<int>.generate(12, (int index) => 12 - index)
-              .map((int index) {
-            final ReservationsOfMonthOfYear? currentMonthDetails =
-                widget.reservationsByMonthOfYear
-                    .where(
-                      (ReservationsOfMonthOfYear element) =>
-                          element.month == index,
-                    )
-                    .firstOrNull;
-            return BarChartGroupData(
-              x: index,
-              barRods: <BarChartRodData>[
-                BarChartRodData(
-                  width: 16,
-                  toY: currentMonthDetails != null
-                      ? currentMonthDetails.reservations.fold<double>(
-                            0,
-                            (double previousValue, Reservation reservation) =>
-                                reservation.nights + previousValue,
-                          ) +
-                          (12 - (indexOfHoveringBar ?? -1) == index
-                              ? widget._addOnHover
-                              : 0)
-                      : 0,
-                  gradient: _barsGradient,
-                ),
-              ],
-            );
-          }).toList(),
+          barGroups: List<int>.generate(12, (int index) => index + 1).map(
+            (int index) {
+              final ReservationsOfMonthOfYear? currentMonthDetails =
+                  widget.reservationsByMonthOfYear
+                      .where(
+                        (ReservationsOfMonthOfYear element) =>
+                            element.month == index,
+                      )
+                      .firstOrNull;
+              return BarChartGroupData(
+                x: index,
+                barRods: <BarChartRodData>[
+                  BarChartRodData(
+                    width: 16,
+                    toY: currentMonthDetails != null
+                        ? currentMonthDetails.reservations.fold<double>(
+                              0,
+                              (double previousValue, Reservation reservation) =>
+                                  reservation.nights + previousValue,
+                            ) +
+                            ( ( indexOfHoveringBar ?? -1 ) + 1 == index
+                                ? widget._addOnHover
+                                : 0)
+                        : 0,
+                    gradient: _barsGradient,
+                  ),
+                ],
+              );
+            },
+          ).toList(),
         ),
       ),
     );
