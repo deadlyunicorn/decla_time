@@ -2,8 +2,10 @@ import "package:decla_time/analytics/graphs/days_filled_per_month/days_filled_pe
 import "package:decla_time/analytics/graphs/revenue_per_month/business/reservations_of_month_of_year.dart";
 import "package:decla_time/analytics/graphs/revenue_per_month/show_areas_button.dart";
 import "package:decla_time/analytics/graphs/revenue_per_month/show_average_button.dart";
+import "package:decla_time/analytics/graphs/revenue_per_month/show_average_night_rate_button.dart";
 import "package:decla_time/analytics/graphs/revenue_per_month/show_nights_per_month_button.dart";
 import "package:decla_time/core/extensions/capitalize.dart";
+import "package:decla_time/reservations/reservation.dart";
 import "package:fl_chart/fl_chart.dart";
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
@@ -59,95 +61,108 @@ class _MonthlyRevenueLineChartState extends State<MonthlyRevenueLineChart> {
   bool showAverage = false;
   bool showAreas = false;
   bool showNightsPerMonth = false;
+  bool showAverageNightRate = false;
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 560,
-      child: Stack(
-        clipBehavior: Clip.none,
-        children: <Widget>[
-          Positioned.fill(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Center(
-                  child: Text(
-                    "${widget.reservationsByMonthOfYear.first.year}",
-                    style: Theme.of(context).textTheme.headlineSmall,
+    return Padding(
+      padding: const EdgeInsets.only(top: 32.0), //? Prevent clipping overflow
+      child: SizedBox(
+        width: 560,
+        child: Stack(
+          clipBehavior: Clip.none,
+          children: <Widget>[
+            Positioned.fill(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Center(
+                    child: Text(
+                      "${widget.reservationsByMonthOfYear.first.year}",
+                      style: Theme.of(context).textTheme.headlineSmall,
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: 360,
-                  child: LineChart(
-                    LineChartData(
-                      lineTouchData: getLineTouchData(context),
-                      lineBarsData: <LineChartBarData>[
-                        generateLineBarsData(showAreas: showAreas),
-                      ],
-                      extraLinesData: ExtraLinesData(
-                        extraLinesOnTop: true,
-                        horizontalLines: <HorizontalLine>[
-                          if (showAverage) displayAverageLine(context),
+                  SizedBox(
+                    height: 360,
+                    child: LineChart(
+                      LineChartData(
+                        lineTouchData: getLineTouchData(context),
+                        lineBarsData: <LineChartBarData>[
+                          generateLineBarsData(showAreas: showAreas),
                         ],
-                      ),
+                        extraLinesData: ExtraLinesData(
+                          extraLinesOnTop: true,
+                          horizontalLines: <HorizontalLine>[
+                            if (showAverage) displayAverageLine(context),
+                          ],
+                        ),
 
-                      minX: 1,
-                      maxX: 12,
-                      minY: 0,
-                      maxY: widget.greatestMonthIncome
-                          .ceilToDouble(), // max / 10 -> round * 10
-                      borderData: FlBorderData(
-                        show: false,
-                      ),
-                      titlesData: getTitles(context),
-                      gridData: FlGridData(
-                        show: true,
-                        drawVerticalLine: false,
-                        horizontalInterval:
-                            (widget.greatestMonthIncome / 10).ceilToDouble(),
+                        minX: 1,
+                        maxX: 12,
+                        minY: 0,
+                        maxY: widget.greatestMonthIncome
+                            .ceilToDouble(), // max / 10 -> round * 10
+                        borderData: FlBorderData(
+                          show: false,
+                        ),
+                        titlesData: getTitles(context),
+                        gridData: FlGridData(
+                          show: true,
+                          drawVerticalLine: false,
+                          horizontalInterval:
+                              (widget.greatestMonthIncome / 10).ceilToDouble(),
+                        ),
                       ),
                     ),
                   ),
-                ),
-                ShowAreasButton(
-                  showAreas: showAreas,
-                  setShowAreas: setShowAreas,
-                  localized: widget.localized,
-                ),
-                ShowAverageButton(
-                  showAverage: showAverage,
-                  setShowAverage: setShowAverage,
-                  localized: widget.localized,
-                ),
-                ShowNightsPerMonthButton(
-                  showNights: showNightsPerMonth,
-                  setShowNights: setShowNights,
-                  localized: widget.localized,
-                ),
-                const SizedBox.square(
-                  dimension: 4,
-                ),
-              ],
-            ),
-          ),
-          if (showNightsPerMonth)
-            Positioned(
-              left: 36,
-              child: SizedBox(
-                // color: Colors.green,
-                height: 360,
-                width: 560,
-                child: DaysFilledPerMonthBarChart(
-                  showGrid: false,
-                  themeData: Theme.of(context),
-                  localized: widget.localized,
-                  reservationsByMonthOfYear: widget.reservationsByMonthOfYear,
-                ),
+                  ShowAreasButton(
+                    showAreas: showAreas,
+                    setShowAreas: setShowAreas,
+                    localized: widget.localized,
+                  ),
+                  ShowAverageButton(
+                    showAverage: showAverage,
+                    setShowAverage: setShowAverage,
+                    localized: widget.localized,
+                  ),
+                  ShowAverageNightRateButton(
+                    showAverageNightRate: showAverageNightRate,
+                    setShowAverageNightRate: (bool? newState) {
+                      setState(() {
+                        showAverageNightRate = newState ?? false;
+                      });
+                    },
+                    localized: widget.localized,
+                  ),
+                  ShowNightsPerMonthButton(
+                    showNights: showNightsPerMonth,
+                    setShowNights: setShowNights,
+                    localized: widget.localized,
+                  ),
+                  const SizedBox.square(
+                    dimension: 4,
+                  ),
+                ],
               ),
             ),
-        ],
+            if (showNightsPerMonth)
+              Positioned(
+                left: 36,
+                child: SizedBox(
+                  // color: Colors.green,
+                  height: 360,
+                  width: 560,
+                  child: DaysFilledPerMonthBarChart(
+                    showGrid: false,
+                    themeData: Theme.of(context),
+                    localized: widget.localized,
+                    reservationsByMonthOfYear: widget.reservationsByMonthOfYear,
+                  ),
+                ),
+              ),
+          ],
+        ),
       ),
     );
   }
@@ -159,17 +174,59 @@ class _MonthlyRevenueLineChartState extends State<MonthlyRevenueLineChart> {
           reservedSize: 48,
           showTitles: true,
           interval: 1,
-          getTitlesWidget: (double value, TitleMeta meta) => SideTitleWidget(
-            axisSide: meta.axisSide,
-            space: 4,
-            child: Center(
-              child: Text(
-                DateFormat.MMM(widget.localized.localeName)
-                    .format(DateTime(0, value.toInt())),
-                style: Theme.of(context).textTheme.bodySmall,
+          getTitlesWidget: (double value, TitleMeta meta) {
+            final List<Reservation>? reservationsOfMonth =
+                widget.reservationsByMonthOfYear
+                    .where(
+                      (ReservationsOfMonthOfYear element) =>
+                          element.month == value,
+                    )
+                    .firstOrNull
+                    ?.reservations;
+
+            final double averageRate = reservationsOfMonth != null
+                ? (reservationsOfMonth.fold<double>(
+                      0,
+                      (double previousValue, Reservation element) =>
+                          previousValue + element.dailyRate,
+                    ) /
+                    reservationsOfMonth.length)
+                : 0;
+
+            return SideTitleWidget(
+              axisSide: meta.axisSide,
+              space: 4,
+              child: Column(
+                children: <Widget>[
+                  Center(
+                    child: Text(
+                      DateFormat.MMM(widget.localized.localeName)
+                          .format(DateTime(0, value.toInt())),
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                  ),
+                  if (showAverageNightRate) 
+                    reservationsOfMonth != null
+                        ? Text(
+                            averageRate.toStringAsFixed(2),
+                            style:
+                                Theme.of(context).textTheme.bodySmall?.copyWith(
+                                      color: value == 1
+                                          ? Colors.amber
+                                          : Colors.greenAccent.shade700,
+                                    ),
+                          )
+                        : Tooltip(
+                            message: widget.localized.noData.capitalized,
+                            child: const Icon(
+                              Icons.error_outline_rounded,
+                              size: 16,
+                            ),
+                          ),
+                ],
               ),
-            ),
-          ),
+            );
+          },
         ),
       ),
       leftTitles: AxisTitles(
