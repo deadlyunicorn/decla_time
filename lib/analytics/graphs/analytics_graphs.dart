@@ -23,6 +23,7 @@ class AnalyticsGraphs extends StatelessWidget {
         BuildContext context,
         AsyncSnapshot<List<ReservationsOfYear>?> snapshot,
       ) {
+
         final List<ReservationsOfMonthOfYear> reservationsByMonthByYear =
             getReservationsByMonth(
           snapshot.data ?? <ReservationsOfYear>[],
@@ -41,11 +42,19 @@ class AnalyticsGraphs extends StatelessWidget {
             //   localized: localized,
             //   reservationsByMonthByYear: reservationsByMonthByYear,
             // ),
+
+            //TODO - Average Daily Rate (ADR) Chart
+            //
+            //TODO Distribution Channel Bar Chart ( 3 Subbars per bar group, AirBnb, Booking, Other )
+
+            
             TaxesPerYearPies(
               localized: localized,
               reservationsGroupedByYear:
                   snapshot.data ?? <ReservationsOfYear>[],
             ),
+
+            
           ],
         );
       },
