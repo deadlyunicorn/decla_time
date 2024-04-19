@@ -36,10 +36,12 @@ class AnalyticsGraphs extends StatelessWidget {
               localized: localized,
               reservationsByMonthByYear: reservationsByMonthByYear,
             ),
-            DaysFilledPerMonthChart(
-              localized: localized,
-              reservationsByMonthByYear: reservationsByMonthByYear,
-            ),
+            // * Moved inside the YearlyMonthlyRevenueBreadkownChart 
+            // * as an optional chart. 
+            // DaysFilledPerMonthChart(
+            //   localized: localized,
+            //   reservationsByMonthByYear: reservationsByMonthByYear,
+            // ),
             TaxesPerYearPies(
               localized: localized,
               reservationsGroupedByYear:

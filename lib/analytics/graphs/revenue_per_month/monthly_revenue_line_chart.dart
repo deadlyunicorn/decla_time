@@ -1,6 +1,8 @@
+import "package:decla_time/analytics/graphs/days_filled_per_month/days_filled_per_month_chart.dart";
 import "package:decla_time/analytics/graphs/revenue_per_month/business/reservations_of_month_of_year.dart";
 import "package:decla_time/analytics/graphs/revenue_per_month/show_areas_button.dart";
 import "package:decla_time/analytics/graphs/revenue_per_month/show_average_button.dart";
+import "package:decla_time/analytics/graphs/revenue_per_month/show_nights_per_month_button.dart";
 import "package:decla_time/core/extensions/capitalize.dart";
 import "package:fl_chart/fl_chart.dart";
 import "package:flutter/material.dart";
@@ -56,68 +58,96 @@ class MonthlyRevenueLineChart extends StatefulWidget {
 class _MonthlyRevenueLineChartState extends State<MonthlyRevenueLineChart> {
   bool showAverage = false;
   bool showAreas = false;
+  bool showNightsPerMonth = false;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: 560,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Stack(
+        clipBehavior: Clip.none,
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(bottom: 32.0),
-            child: Center(
-              child: Text(
-                "${widget.reservationsByMonthOfYear.first.year}",
-                style: Theme.of(context).textTheme.headlineSmall,
-              ),
-            ),
-          ),
-          Expanded(
-            child: LineChart(
-              LineChartData(
-                lineTouchData: getLineTouchData(context),
-                lineBarsData: <LineChartBarData>[
-                  generateLineBarsData(showAreas: showAreas),
-                ],
-                extraLinesData: ExtraLinesData(
-                  extraLinesOnTop: true,
-                  horizontalLines: <HorizontalLine>[
-                    if (showAverage) displayAverageLine(context),
-                  ],
+          Positioned.fill(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Center(
+                  child: Text(
+                    "${widget.reservationsByMonthOfYear.first.year}",
+                    style: Theme.of(context).textTheme.headlineSmall,
+                  ),
                 ),
+                SizedBox(
+                  height: 360,
+                  child: LineChart(
+                    LineChartData(
+                      lineTouchData: getLineTouchData(context),
+                      lineBarsData: <LineChartBarData>[
+                        generateLineBarsData(showAreas: showAreas),
+                      ],
+                      extraLinesData: ExtraLinesData(
+                        extraLinesOnTop: true,
+                        horizontalLines: <HorizontalLine>[
+                          if (showAverage) displayAverageLine(context),
+                        ],
+                      ),
 
-                minX: 1,
-                maxX: 12,
-                minY: 0,
-                maxY: widget.greatestMonthIncome
-                    .ceilToDouble(), // max / 10 -> round * 10
-                borderData: FlBorderData(
-                  show: false,
+                      minX: 1,
+                      maxX: 12,
+                      minY: 0,
+                      maxY: widget.greatestMonthIncome
+                          .ceilToDouble(), // max / 10 -> round * 10
+                      borderData: FlBorderData(
+                        show: false,
+                      ),
+                      titlesData: getTitles(context),
+                      gridData: FlGridData(
+                        show: true,
+                        drawVerticalLine: false,
+                        horizontalInterval:
+                            (widget.greatestMonthIncome / 10).ceilToDouble(),
+                      ),
+                    ),
+                  ),
                 ),
-                titlesData: getTitles(context),
-                gridData: FlGridData(
-                  show: true,
-                  drawVerticalLine: false,
-                  horizontalInterval:
-                      (widget.greatestMonthIncome / 10).ceilToDouble(),
+                ShowAreasButton(
+                  showAreas: showAreas,
+                  setShowAreas: setShowAreas,
+                  localized: widget.localized,
+                ),
+                ShowAverageButton(
+                  showAverage: showAverage,
+                  setShowAverage: setShowAverage,
+                  localized: widget.localized,
+                ),
+                ShowNightsPerMonthButton(
+                  showNights: showNightsPerMonth,
+                  setShowNights: setShowNights,
+                  localized: widget.localized,
+                ),
+                const SizedBox.square(
+                  dimension: 4,
+                ),
+              ],
+            ),
+          ),
+          if (showNightsPerMonth)
+            Positioned(
+              left: 36,
+              top: 16,
+              child: SizedBox(
+                // color: Colors.green,
+                height: 360,
+                width: 560,
+                child: DaysFilledPerMonthBarChart(
+                  showGrid: false,
+                  themeData: Theme.of(context),
+                  localized: widget.localized,
+                  reservationsByMonthOfYear: widget.reservationsByMonthOfYear,
                 ),
               ),
             ),
-          ),
-          ShowAverageButton(
-            showAverage: showAverage,
-            setShowAverage: setShowAverage,
-            localized: widget.localized,
-          ),
-          ShowAreasButton(
-            showAreas: showAreas,
-            setShowAreas: setShowAreas,
-            localized: widget.localized,
-          ),
-          const SizedBox.square(
-            dimension: 4,
-          ),
         ],
       ),
     );
@@ -259,6 +289,12 @@ class _MonthlyRevenueLineChartState extends State<MonthlyRevenueLineChart> {
   void setShowAreas(bool? newState) {
     setState(() {
       showAreas = newState ?? false;
+    });
+  }
+
+  void setShowNights(bool? newState) {
+    setState(() {
+      showNightsPerMonth = newState ?? false;
     });
   }
 }
