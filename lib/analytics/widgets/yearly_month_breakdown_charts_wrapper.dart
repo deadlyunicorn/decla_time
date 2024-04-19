@@ -13,7 +13,7 @@ class YearlyMonthBreakdownChartsWrapper extends StatelessWidget {
   final Widget Function(
     List<ReservationsOfMonthOfYear> reservationsByMonthOfYear,
   ) chart;
-  final int height ;
+  final int height;
 
   @override
   Widget build(BuildContext context) {

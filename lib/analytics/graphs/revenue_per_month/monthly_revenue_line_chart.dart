@@ -135,7 +135,6 @@ class _MonthlyRevenueLineChartState extends State<MonthlyRevenueLineChart> {
           if (showNightsPerMonth)
             Positioned(
               left: 36,
-              top: 16,
               child: SizedBox(
                 // color: Colors.green,
                 height: 360,
@@ -178,9 +177,12 @@ class _MonthlyRevenueLineChartState extends State<MonthlyRevenueLineChart> {
           showTitles: true,
           getTitlesWidget: (double value, TitleMeta meta) => SideTitleWidget(
             axisSide: meta.axisSide,
-            child: Text(
-              "${value.toStringAsFixed(2)} EUR",
-              style: Theme.of(context).textTheme.bodySmall,
+            child: Center(
+              child: Text(
+                "${value.toStringAsFixed(2)}€",
+                style: Theme.of(context).textTheme.bodySmall,
+                // textAlign: TextAlign.center,
+              ),
             ),
           ),
           interval: (widget.greatestMonthIncome / 10)

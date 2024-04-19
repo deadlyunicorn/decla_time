@@ -8,21 +8,19 @@ class ShowAreasButton extends StatelessWidget {
     required this.showAreas,
     required this.setShowAreas,
     required this.localized,
-
     super.key,
   });
 
   final bool showAreas;
   final Function(bool?) setShowAreas;
-    final AppLocalizations localized;
-
+  final AppLocalizations localized;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        Text( localized.area.capitalized),
+        Text(localized.area.capitalized),
         Checkbox(
           value: showAreas,
           onChanged: setShowAreas,

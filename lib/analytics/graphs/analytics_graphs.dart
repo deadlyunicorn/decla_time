@@ -1,4 +1,3 @@
-import "package:decla_time/analytics/graphs/days_filled_per_month/days_filled_per_month_chart.dart";
 import "package:decla_time/analytics/graphs/revenue_per_month/business/get_reservations_by_month.dart";
 import "package:decla_time/analytics/graphs/revenue_per_month/business/reservations_of_month_of_year.dart";
 import "package:decla_time/analytics/graphs/revenue_per_month/yearly_monthly_revenue_breakdown_chart.dart";
@@ -36,8 +35,8 @@ class AnalyticsGraphs extends StatelessWidget {
               localized: localized,
               reservationsByMonthByYear: reservationsByMonthByYear,
             ),
-            // * Moved inside the YearlyMonthlyRevenueBreadkownChart 
-            // * as an optional chart. 
+            // * Moved inside the YearlyMonthlyRevenueBreadkownChart
+            // * as an optional chart.
             // DaysFilledPerMonthChart(
             //   localized: localized,
             //   reservationsByMonthByYear: reservationsByMonthByYear,

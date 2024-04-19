@@ -27,7 +27,7 @@ class DaysFilledPerMonthChart extends StatelessWidget {
         spacing: 16,
         children: <Widget>[
           Text(
-            localized.daysPerMonth.capitalized,
+            localized.nightsPerMonth.capitalized,
             style: Theme.of(context).textTheme.headlineMedium,
           ),
           YearlyMonthBreakdownChartsWrapper(
