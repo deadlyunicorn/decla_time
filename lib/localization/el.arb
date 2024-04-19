@@ -187,6 +187,8 @@
     "incomePerMonth":  "έσοδα ανά μήνα",
     "nightsPerMonth" : "νύχτες ανά μήνα",
     "displayNightsPerMonth" : "εμφάνιση νυχτών ανά μήνα",
+    "noData": "δεν υπάρχουν δεδομένα",
+    "nightRateAverage" : "μέσος όρος νύχτας",
     "unusedForNonTrailingComma________________________________":""
 
 

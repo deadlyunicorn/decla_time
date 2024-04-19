@@ -187,6 +187,8 @@
     "incomePerMonth":  "income per month",
     "nightsPerMonth" : "nights per month",
     "displayNightsPerMonth" : "display nights per month",
+    "noData": "no data",
+    "nightRateAverage" : "night rate average",
     "unusedForNonTrailingComma________________________________":""
 
 
