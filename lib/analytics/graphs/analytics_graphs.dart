@@ -1,4 +1,4 @@
-import "package:decla_time/analytics/graphs/days_filled_per_month/days_filled_per_month_chart.dart";
+import "package:decla_time/analytics/graphs/revenue_per_month/business/get_reservations_by_month.dart";
 import "package:decla_time/analytics/graphs/revenue_per_month/yearly_monthly_revenue_breakdown_chart.dart";
 import "package:decla_time/analytics/graphs/taxes_per_year/business/get_reservations_by_year.dart";
 import "package:decla_time/analytics/graphs/taxes_per_year/taxes_per_year_pies.dart";
@@ -22,10 +22,15 @@ class AnalyticsGraphs extends StatelessWidget {
         BuildContext context,
         AsyncSnapshot<List<ReservationsOfYear>?> snapshot,
       ) {
+        final List<ReservationsOfMonthOfYear> reservationsByMonthByYear =
+            getReservationsByMonth(
+          snapshot.data ?? <ReservationsOfYear>[],
+        );
         return ColumnWithSpacings(
           //TODO Pass required data by props
           spacing: 16,
           children: <Widget>[
+            //TODO Click on a year that takes you to a new page with more expectations for the year
             TaxesPerYearPies(
               localized: localized,
               reservationsGroupedByYear:
@@ -33,10 +38,8 @@ class AnalyticsGraphs extends StatelessWidget {
             ),
             YearlyMonthlyRevenueBreakdownChart(
               localized: localized,
-              reservationsGroupedByYear:
-                  snapshot.data ?? <ReservationsOfYear>[],
-            ), //TODO here we go
-            DaysFilledPerMonthChart(localized: localized),
+              reservationsByMonthByYear: reservationsByMonthByYear,
+            ),
           ],
         );
       },

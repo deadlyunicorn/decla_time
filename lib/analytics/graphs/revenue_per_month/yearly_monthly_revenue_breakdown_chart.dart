@@ -1,6 +1,6 @@
-import "package:decla_time/analytics/graphs/revenue_per_month/business/get_reservations_by_month.dart";
+import "dart:math";
+
 import "package:decla_time/analytics/graphs/revenue_per_month/monthly_revenue_line_chart.dart";
-import "package:decla_time/analytics/graphs/taxes_per_year/business/get_reservations_by_year.dart";
 import "package:decla_time/reservations/reservation.dart";
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
@@ -8,18 +8,26 @@ import "package:flutter_gen/gen_l10n/app_localizations.dart";
 class YearlyMonthlyRevenueBreakdownChart extends StatelessWidget {
   const YearlyMonthlyRevenueBreakdownChart({
     required this.localized,
-    required this.reservationsGroupedByYear,
+    required this.reservationsByMonthByYear,
     super.key,
   });
 
   final AppLocalizations localized;
-  final List<ReservationsOfYear> reservationsGroupedByYear;
+  final List<ReservationsOfMonthOfYear> reservationsByMonthByYear;
 
   @override
   Widget build(BuildContext context) {
-    final List<int> years = reservationsGroupedByYear
-        .map((ReservationsOfYear reservationsOfYear) => reservationsOfYear.year)
+    final List<int> years = reservationsByMonthByYear
+        .map((ReservationsOfMonthOfYear reservationsOfMonthOfYear) =>
+            reservationsOfMonthOfYear.year)
+        .toSet()
         .toList();
+
+    final double greatestMonthIncome = reservationsByMonthByYear.fold(
+      0,
+      (double previousValue, ReservationsOfMonthOfYear element) =>
+          max(element.monthTotal, previousValue),
+    );
 
     return SizedBox(
       height: 560,
@@ -29,17 +37,17 @@ class YearlyMonthlyRevenueBreakdownChart extends StatelessWidget {
         itemCount: years.length,
         itemBuilder: (BuildContext context, int index) {
           final List<ReservationsOfMonthOfYear> reservationsByMonthOfYear =
-              getReservationsByMonth(reservationsGroupedByYear)
+              reservationsByMonthByYear
                   .where(
                     (ReservationsOfMonthOfYear element) =>
                         element.year == years[index],
                   )
                   .toList();
-
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 32.0),
             child: MonthlyRevenueLineChart(
               localized: localized,
+              greatestMonthIncome: greatestMonthIncome,
               reservationsByMonthOfYear: reservationsByMonthOfYear,
             ),
           );

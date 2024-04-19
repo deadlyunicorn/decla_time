@@ -14,12 +14,14 @@ class MonthlyRevenueLineChart extends StatefulWidget {
   const MonthlyRevenueLineChart({
     required this.reservationsByMonthOfYear,
     required this.localized,
+    required this.greatestMonthIncome,
     super.key,
   });
 
   final AppLocalizations localized;
 
   final List<ReservationsOfMonthOfYear> reservationsByMonthOfYear;
+  final double greatestMonthIncome;
 
   double get minMonthPayOfYear => reservationsByMonthOfYear.fold(
         double.infinity,
@@ -90,8 +92,8 @@ class _MonthlyRevenueLineChartState extends State<MonthlyRevenueLineChart> {
                 minX: 1,
                 maxX: 12,
                 minY: 0,
-                maxY: ((widget.maxMonthPayOfYear + 30) / 10).ceil() *
-                    10, // max / 10 -> round * 10
+                maxY: widget.greatestMonthIncome
+                    .ceilToDouble(), // max / 10 -> round * 10
                 borderData: FlBorderData(
                   show: false,
                 ),
@@ -100,10 +102,7 @@ class _MonthlyRevenueLineChartState extends State<MonthlyRevenueLineChart> {
                   show: true,
                   drawVerticalLine: false,
                   horizontalInterval:
-                      ((widget.maxMonthPayOfYear - widget.minMonthPayOfYear) /
-                                  100)
-                              .round() *
-                          10,
+                      (widget.greatestMonthIncome / 10).ceilToDouble(),
                 ),
               ),
             ),
@@ -156,10 +155,8 @@ class _MonthlyRevenueLineChartState extends State<MonthlyRevenueLineChart> {
               style: Theme.of(context).textTheme.bodySmall,
             ),
           ),
-          interval:
-              ((widget.maxMonthPayOfYear - widget.minMonthPayOfYear) / 100)
-                      .round() *
-                  10, // ( max - min ) - / 10
+          interval: (widget.greatestMonthIncome / 10)
+              .ceilToDouble(), // ( max - min ) - / 10
           reservedSize: 72,
         ),
       ),
