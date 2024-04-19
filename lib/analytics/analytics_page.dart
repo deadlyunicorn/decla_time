@@ -18,12 +18,12 @@ class AnalyticsPage extends StatelessWidget {
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 32),
-        child: ColumnWithSpacings(  
-          spacing: 16,
+        child: ColumnWithSpacings(
+          spacing: 64,
           children: <Widget>[
             Text(
               localized.analytics.capitalized,
-              style: Theme.of(context).textTheme.headlineMedium,
+              style: Theme.of(context).textTheme.headlineLarge,
             ),
             AnalyticsGraphs(localized: localized),
             AppSettings(localized: localized),

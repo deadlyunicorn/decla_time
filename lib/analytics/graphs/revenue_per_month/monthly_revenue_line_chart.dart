@@ -1,14 +1,12 @@
+import "package:decla_time/analytics/graphs/revenue_per_month/business/reservations_of_month_of_year.dart";
 import "package:decla_time/analytics/graphs/revenue_per_month/show_areas_button.dart";
 import "package:decla_time/analytics/graphs/revenue_per_month/show_average_button.dart";
-import "package:decla_time/analytics/graphs/revenue_per_month/yearly_monthly_revenue_breakdown_chart.dart";
 import "package:decla_time/core/extensions/capitalize.dart";
 import "package:fl_chart/fl_chart.dart";
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 
 import "package:intl/intl.dart";
-
-//TODO: Pass data, Use Data, Scroll horizontally
 
 class MonthlyRevenueLineChart extends StatefulWidget {
   const MonthlyRevenueLineChart({
@@ -62,16 +60,16 @@ class _MonthlyRevenueLineChartState extends State<MonthlyRevenueLineChart> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: MediaQuery.sizeOf(context).width * 0.75,
+      width: 560,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.only(bottom: 32.0),
             child: Center(
               child: Text(
                 "${widget.reservationsByMonthOfYear.first.year}",
-                style: Theme.of(context).textTheme.headlineMedium,
+                style: Theme.of(context).textTheme.headlineSmall,
               ),
             ),
           ),
