@@ -185,7 +185,8 @@
     "area":"area",
     "taxesPerYear": "taxes per year",
     "incomePerMonth":  "income per month",
-    "daysPerMonth" : "days per month",
+    "nightsPerMonth" : "nights per month",
+    "displayNightsPerMonth" : "display nights per month",
     "unusedForNonTrailingComma________________________________":""
 
 

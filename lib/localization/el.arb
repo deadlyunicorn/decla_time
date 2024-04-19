@@ -185,7 +185,8 @@
     "area":"εμβαδόν",
     "taxesPerYear": "φόροι ανά έτος",
     "incomePerMonth":  "έσοδα ανά μήνα",
-    "daysPerMonth" : "μέρες ανά μήνα",
+    "nightsPerMonth" : "νύχτες ανά μήνα",
+    "displayNightsPerMonth" : "εμφάνιση νυχτών ανά μήνα",
     "unusedForNonTrailingComma________________________________":""
 
 
