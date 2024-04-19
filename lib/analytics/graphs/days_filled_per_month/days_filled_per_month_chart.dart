@@ -1,6 +1,7 @@
 import "package:decla_time/analytics/graphs/revenue_per_month/business/reservations_of_month_of_year.dart";
 import "package:decla_time/analytics/widgets/yearly_month_breakdown_charts_wrapper.dart";
 import "package:decla_time/core/extensions/capitalize.dart";
+import "package:decla_time/core/functions/night_or_nights.dart";
 import "package:decla_time/core/widgets/column_with_spacings.dart";
 import "package:decla_time/reservations/reservation.dart";
 import "package:fl_chart/fl_chart.dart";
@@ -45,6 +46,7 @@ class DaysFilledPerMonthChart extends StatelessWidget {
                   ),
                   Expanded(
                     child: DaysFilledPerMonthBarChart(
+                      showGrid: true,
                       reservationsByMonthOfYear: reservationsByMonthOfYear,
                       themeData: Theme.of(context),
                       localized: localized,
@@ -65,6 +67,7 @@ class DaysFilledPerMonthBarChart extends StatefulWidget {
     required this.themeData,
     required this.localized,
     required this.reservationsByMonthOfYear,
+    required this.showGrid,
     super.key,
   });
 
@@ -72,6 +75,7 @@ class DaysFilledPerMonthBarChart extends StatefulWidget {
   final AppLocalizations localized;
   final double _addOnHover = 0.5;
   final List<ReservationsOfMonthOfYear> reservationsByMonthOfYear;
+  final bool showGrid;
 
   @override
   State<DaysFilledPerMonthBarChart> createState() =>
@@ -88,7 +92,8 @@ class _DaysFilledPerMonthBarChartState
       padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: BarChart(
         BarChartData(
-          gridData: const FlGridData(
+          gridData: FlGridData(
+            show: widget.showGrid,
             drawVerticalLine: false,
             horizontalInterval: 7,
           ),
@@ -106,8 +111,7 @@ class _DaysFilledPerMonthBarChartState
             },
             touchTooltipData: BarTouchTooltipData(
               getTooltipColor: (BarChartGroupData group) => Colors.transparent,
-              tooltipPadding: EdgeInsets.zero,
-              tooltipMargin: 8,
+              tooltipPadding: const EdgeInsets.all(16),
               getTooltipItem: (
                 BarChartGroupData group,
                 int groupIndex,
@@ -116,9 +120,14 @@ class _DaysFilledPerMonthBarChartState
               ) {
                 return (groupIndex == indexOfHoveringBar && rod.toY > 0)
                     ? BarTooltipItem(
-                        "${rod.toY.round() - (widget._addOnHover).ceil()}",
-                        const TextStyle(
+                        nightOrNights(
+                          widget.localized,
+                          rod.toY.round() - (widget._addOnHover).ceil(),
+                        ),
+                        TextStyle(
                           color: Colors.amber,
+                          backgroundColor:
+                              Theme.of(context).colorScheme.background,
                         ),
                       )
                     : null;
@@ -126,7 +135,7 @@ class _DaysFilledPerMonthBarChartState
             ),
           ),
           titlesData: FlTitlesData(
-            show: true,
+            show: widget.showGrid,
             bottomTitles: AxisTitles(
               sideTitles: SideTitles(
                 showTitles: true,
@@ -146,7 +155,7 @@ class _DaysFilledPerMonthBarChartState
             ),
             leftTitles: AxisTitles(
               sideTitles: SideTitles(
-                showTitles: true,
+                showTitles: widget.showGrid,
                 reservedSize: 36,
                 interval: 7,
                 getTitlesWidget: (double value, TitleMeta meta) => Text(
@@ -185,7 +194,7 @@ class _DaysFilledPerMonthBarChartState
                               (double previousValue, Reservation reservation) =>
                                   reservation.nights + previousValue,
                             ) +
-                            ( ( indexOfHoveringBar ?? -1 ) + 1 == index
+                            ((indexOfHoveringBar ?? -1) + 1 == index
                                 ? widget._addOnHover
                                 : 0)
                         : 0,
