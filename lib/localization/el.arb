@@ -183,6 +183,9 @@
     "feeFactor": "φορολογικός συντελεστής",
     "average": "μέσος όρος",
     "area":"εμβαδόν",
+    "taxesPerYear": "φόροι ανά έτος",
+    "incomePerMonth":  "έσοδα ανά μήνα",
+    "daysPerMonth" : "μέρες ανά μήνα",
     "unusedForNonTrailingComma________________________________":""
 
 

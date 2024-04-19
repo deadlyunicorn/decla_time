@@ -183,6 +183,9 @@
     "feeFactor": "fee factor",
     "average": "average",
     "area":"area",
+    "taxesPerYear": "taxes per year",
+    "incomePerMonth":  "income per month",
+    "daysPerMonth" : "days per month",
     "unusedForNonTrailingComma________________________________":""
 
 
