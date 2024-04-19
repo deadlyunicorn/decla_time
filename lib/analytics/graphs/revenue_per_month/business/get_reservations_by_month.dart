@@ -1,4 +1,4 @@
-import "package:decla_time/analytics/graphs/revenue_per_month/yearly_monthly_revenue_breakdown_chart.dart";
+import "package:decla_time/analytics/graphs/revenue_per_month/business/reservations_of_month_of_year.dart";
 import "package:decla_time/analytics/graphs/taxes_per_year/business/get_reservations_by_year.dart";
 import "package:decla_time/reservations/reservation.dart";
 
