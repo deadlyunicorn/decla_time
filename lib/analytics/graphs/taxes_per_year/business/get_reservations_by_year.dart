@@ -1,18 +1,10 @@
 import "dart:math";
 
-import "package:decla_time/core/connection/isar_helper.dart";
 import "package:decla_time/reservations/reservation.dart";
-import "package:flutter/material.dart";
-import "package:isar/isar.dart";
-import "package:provider/provider.dart";
 
-
-Future<List<ReservationsOfYear>> getReservationsByYearFuture({
-  required BuildContext context,
-}) async {
-  final Isar isar = await context.read<IsarHelper>().isarFuture;
-  final List<Reservation> reservations =
-      await isar.reservations.where().sortByDepartureDateDesc().findAll();
+List<ReservationsOfYear> getReservationsByYear({
+  required List<Reservation> reservations,
+}) {
   final List<ReservationsOfYear> reservationsByYear = <ReservationsOfYear>[];
 
   for (int i = 0; i < reservations.length; i++) {
@@ -84,8 +76,6 @@ class ReservationsOfYear {
   final List<Reservation> reservations;
 }
 
-
-//TODO - make something similar for months. 
 //? Why: Those are used for the analytics -
 //? If you leave it as is, and sb reserves for 3 months, you will get 90 days on departureDateMonth..
 
@@ -165,6 +155,10 @@ List<Reservation> reservationSplitOnYearChange({
             .inHours,
       );
 
+      final double correctedPayout =
+          Duration(hours: hoursToAdd).inDays.round() * averageDailyRate +
+              2 * averageDailyRate;
+
       currentReservation = Reservation(
         bookingPlatform: reservation.bookingPlatform,
         listingName: reservation.listingName,
@@ -176,16 +170,10 @@ List<Reservation> reservationSplitOnYearChange({
             hours: hoursToAdd,
           ),
         ),
-        payout: isCancelled
-            ? 0
-            : Duration(hours: hoursToAdd).inDays.round() * averageDailyRate +
-                2 * averageDailyRate,
+        payout: isCancelled ? 0 : correctedPayout,
         reservationStatus: reservation.reservationStatus,
         cancellationDate: reservation.cancellationDate,
-        cancellationAmount: isCancelled
-            ? Duration(hours: hoursToAdd).inDays.round() * averageDailyRate +
-                2 * averageDailyRate
-            : null,
+        cancellationAmount: isCancelled ? correctedPayout : null,
       );
 
       splitReservations.add(currentReservation);
