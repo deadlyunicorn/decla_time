@@ -2,10 +2,10 @@ import "dart:math";
 
 import "package:decla_time/analytics/graphs/days_filled_per_month/days_filled_per_month_chart.dart";
 import "package:decla_time/analytics/graphs/revenue_per_month/business/reservations_of_month_of_year.dart";
-import "package:decla_time/analytics/graphs/revenue_per_month/show_areas_button.dart";
-import "package:decla_time/analytics/graphs/revenue_per_month/show_average_button.dart";
-import "package:decla_time/analytics/graphs/revenue_per_month/show_average_night_rate_button.dart";
-import "package:decla_time/analytics/graphs/revenue_per_month/show_nights_per_month_button.dart";
+import "package:decla_time/analytics/graphs/revenue_per_month/buttons/show_areas_button.dart";
+import "package:decla_time/analytics/graphs/revenue_per_month/buttons/show_average_button.dart";
+import "package:decla_time/analytics/graphs/revenue_per_month/buttons/show_average_night_rate_button.dart";
+import "package:decla_time/analytics/graphs/revenue_per_month/buttons/show_nights_per_month_button.dart";
 import "package:decla_time/core/extensions/capitalize.dart";
 import "package:decla_time/reservations/reservation.dart";
 import "package:fl_chart/fl_chart.dart";
