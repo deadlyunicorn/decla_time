@@ -28,7 +28,7 @@ class AnalyticsGraphs extends StatelessWidget {
         AsyncSnapshot<List<ReservationsOfYear>?> snapshot,
       ) {
         final List<ReservationsOfMonthOfYear> reservationsByMonthByYear =
-            getReservationsByMonth(
+            getReservationsByMonthForAnalytics(
           snapshot.data ?? <ReservationsOfYear>[],
         );
         return ColumnWithSpacings(
