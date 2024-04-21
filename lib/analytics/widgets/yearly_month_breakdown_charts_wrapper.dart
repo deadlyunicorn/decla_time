@@ -1,4 +1,5 @@
 import "package:decla_time/analytics/graphs/revenue_per_month/business/reservations_of_month_of_year.dart";
+import "package:decla_time/analytics/graphs/revenue_per_month/monthly_revenue_line_chart.dart";
 import "package:flutter/material.dart";
 
 class YearlyMonthBreakdownChartsWrapper extends StatelessWidget {
@@ -28,6 +29,7 @@ class YearlyMonthBreakdownChartsWrapper extends StatelessWidget {
     return SizedBox(
       height: height.toDouble(),
       child: ListView.builder(
+        itemExtent: MonthlyRevenueLineChart.graphWidth.toDouble(),
         padding: const EdgeInsets.symmetric(horizontal: 32),
         scrollDirection: Axis.horizontal,
         itemCount: years.length,
@@ -40,7 +42,9 @@ class YearlyMonthBreakdownChartsWrapper extends StatelessWidget {
                   )
                   .toList();
           return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 32.0),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 32,
+            ),
             child: chart(reservationsByMonthOfYear),
           );
         },

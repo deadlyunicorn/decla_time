@@ -1,3 +1,5 @@
+import "dart:math";
+
 import "package:decla_time/analytics/graphs/days_filled_per_month/days_filled_per_month_chart.dart";
 import "package:decla_time/analytics/graphs/revenue_per_month/business/reservations_of_month_of_year.dart";
 import "package:decla_time/analytics/graphs/revenue_per_month/show_areas_button.dart";
@@ -52,6 +54,11 @@ class MonthlyRevenueLineChart extends StatefulWidget {
       ) /
       reservationsByMonthOfYear.length;
 
+  static const int graphHeight = 360;
+  static const int buttonReservedHeight = 196;
+  static const int reservedLeftSideSize = 72;
+  static const int graphWidth = 560;
+
   @override
   State<MonthlyRevenueLineChart> createState() =>
       _MonthlyRevenueLineChartState();
@@ -65,105 +72,110 @@ class _MonthlyRevenueLineChartState extends State<MonthlyRevenueLineChart> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 32.0), //? Prevent clipping overflow
-      child: SizedBox(
-        width: 560,
-        child: Stack(
-          clipBehavior: Clip.none,
-          children: <Widget>[
-            Positioned.fill(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Center(
-                    child: Text(
-                      "${widget.reservationsByMonthOfYear.first.year}",
-                      style: Theme.of(context).textTheme.headlineSmall,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Center(
+          child: Text(
+            "${widget.reservationsByMonthOfYear.first.year}",
+            style: Theme.of(context).textTheme.headlineSmall,
+          ),
+        ),
+        SizedBox(
+          height: MonthlyRevenueLineChart.graphHeight.toDouble(),
+          child: Stack(
+            clipBehavior: Clip.none,
+            children: <Widget>[
+              Positioned.fill(
+                child: LineChart(
+                  LineChartData(
+                    lineTouchData: getLineTouchData(context),
+                    lineBarsData: <LineChartBarData>[
+                      generateLineBarsData(showAreas: showAreas),
+                    ],
+                    extraLinesData: ExtraLinesData(
+                      extraLinesOnTop: true,
+                      horizontalLines: <HorizontalLine>[
+                        if (showAverage) displayAverageLine(context),
+                      ],
                     ),
-                  ),
-                  SizedBox(
-                    height: 360,
-                    child: LineChart(
-                      LineChartData(
-                        lineTouchData: getLineTouchData(context),
-                        lineBarsData: <LineChartBarData>[
-                          generateLineBarsData(showAreas: showAreas),
-                        ],
-                        extraLinesData: ExtraLinesData(
-                          extraLinesOnTop: true,
-                          horizontalLines: <HorizontalLine>[
-                            if (showAverage) displayAverageLine(context),
-                          ],
-                        ),
 
-                        minX: 1,
-                        maxX: 12,
-                        minY: 0,
-                        maxY: widget.greatestMonthIncome
-                            .ceilToDouble(), // max / 10 -> round * 10
-                        borderData: FlBorderData(
-                          show: false,
-                        ),
-                        titlesData: getTitles(context),
-                        gridData: FlGridData(
-                          show: true,
-                          drawVerticalLine: false,
-                          horizontalInterval:
-                              (widget.greatestMonthIncome / 10).ceilToDouble(),
-                        ),
-                      ),
+                    minX: 1,
+                    maxX: 12,
+                    minY: 0,
+                    maxY: widget.greatestMonthIncome
+                        .ceilToDouble(), // max / 10 -> round * 10
+                    borderData: FlBorderData(
+                      show: false,
                     ),
-                  ),
-                  ShowAreasButton(
-                    showAreas: showAreas,
-                    setShowAreas: setShowAreas,
-                    localized: widget.localized,
-                  ),
-                  ShowAverageButton(
-                    showAverage: showAverage,
-                    setShowAverage: setShowAverage,
-                    localized: widget.localized,
-                  ),
-                  ShowAverageNightRateButton(
-                    showAverageNightRate: showAverageNightRate,
-                    setShowAverageNightRate: (bool? newState) {
-                      setState(() {
-                        showAverageNightRate = newState ?? false;
-                      });
-                    },
-                    localized: widget.localized,
-                  ),
-                  ShowNightsPerMonthButton(
-                    showNights: showNightsPerMonth,
-                    setShowNights: setShowNights,
-                    localized: widget.localized,
-                  ),
-                  const SizedBox.square(
-                    dimension: 4,
-                  ),
-                ],
-              ),
-            ),
-            if (showNightsPerMonth)
-              Positioned(
-                left: 36,
-                child: SizedBox(
-                  // color: Colors.green,
-                  height: 360,
-                  width: 560,
-                  child: DaysFilledPerMonthBarChart(
-                    showGrid: false,
-                    themeData: Theme.of(context),
-                    localized: widget.localized,
-                    reservationsByMonthOfYear: widget.reservationsByMonthOfYear,
+                    titlesData: getTitles(context),
+                    gridData: FlGridData(
+                      show: true,
+                      drawVerticalLine: false,
+                      horizontalInterval:
+                          (widget.greatestMonthIncome / 10).ceilToDouble(),
+                    ),
                   ),
                 ),
               ),
-          ],
+              if (showNightsPerMonth)
+                Positioned.fill(
+                  bottom: 32,
+                  right: -32,
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: SizedBox(
+                      height: MonthlyRevenueLineChart.graphHeight.toDouble(),
+                      width: MonthlyRevenueLineChart.graphWidth -
+                          MonthlyRevenueLineChart.reservedLeftSideSize
+                              .toDouble(), //? Random number No.96.
+                      //? If you are interested check "reservedSize"
+                      child: DaysFilledPerMonthBarChart(
+                        showGrid: false,
+                        themeData: Theme.of(context),
+                        localized: widget.localized,
+                        reservationsByMonthOfYear:
+                            widget.reservationsByMonthOfYear,
+                      ),
+                    ),
+                  ),
+                ),
+            ],
+          ),
         ),
-      ),
+        SizedBox(
+          height: MonthlyRevenueLineChart.buttonReservedHeight.toDouble(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              ShowAreasButton(
+                showAreas: showAreas,
+                setShowAreas: setShowAreas,
+                localized: widget.localized,
+              ),
+              ShowAverageButton(
+                showAverage: showAverage,
+                setShowAverage: setShowAverage,
+                localized: widget.localized,
+              ),
+              ShowAverageNightRateButton(
+                showAverageNightRate: showAverageNightRate,
+                setShowAverageNightRate: (bool? newState) {
+                  setState(() {
+                    showAverageNightRate = newState ?? false;
+                  });
+                },
+                localized: widget.localized,
+              ),
+              ShowNightsPerMonthButton(
+                showNights: showNightsPerMonth,
+                setShowNights: setShowNights,
+                localized: widget.localized,
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 
@@ -205,7 +217,7 @@ class _MonthlyRevenueLineChartState extends State<MonthlyRevenueLineChart> {
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
                   ),
-                  if (showAverageNightRate) 
+                  if (showAverageNightRate)
                     reservationsOfMonth != null
                         ? Text(
                             averageRate.toStringAsFixed(2),
@@ -244,7 +256,7 @@ class _MonthlyRevenueLineChartState extends State<MonthlyRevenueLineChart> {
           ),
           interval: (widget.greatestMonthIncome / 10)
               .ceilToDouble(), // ( max - min ) - / 10
-          reservedSize: 72,
+          reservedSize: MonthlyRevenueLineChart.reservedLeftSideSize.toDouble(),
         ),
       ),
       topTitles: const AxisTitles(
@@ -315,14 +327,30 @@ class _MonthlyRevenueLineChartState extends State<MonthlyRevenueLineChart> {
           )
           .toList(),
       belowBarData: BarAreaData(
-        color: Colors.greenAccent.shade700,
+        gradient: LinearGradient(
+          colors: <Color>[
+            Colors.amber.withAlpha(96),
+            Colors.greenAccent.shade700,
+          ],
+          transform: const GradientRotation(
+            (270 * pi) / 180,
+          ),
+        ),
         //   //*OR in order to hide, use the same color as the bacgkround
         show: showAreas,
         applyCutOffY: true,
         cutOffY: widget.yearAverage, //Average
       ),
       aboveBarData: BarAreaData(
-        color: Colors.redAccent.shade700,
+        gradient: LinearGradient(
+          colors: <Color>[
+            Colors.amber.withAlpha(96),
+            Colors.redAccent.shade700,
+          ],
+          transform: const GradientRotation(
+            (90 * pi) / 180,
+          ),
+        ),
         cutOffY: widget.yearAverage,
         applyCutOffY: true,
         show: showAreas,

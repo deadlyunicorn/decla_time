@@ -187,7 +187,7 @@ class _DaysFilledPerMonthBarChartState
                 x: index,
                 barRods: <BarChartRodData>[
                   BarChartRodData(
-                    width: 16,
+                    width: 12,
                     toY: currentMonthDetails != null
                         ? currentMonthDetails.reservations.fold<double>(
                               0,
@@ -211,7 +211,7 @@ class _DaysFilledPerMonthBarChartState
 
   LinearGradient get _barsGradient => LinearGradient(
         colors: <Color>[
-          widget.themeData.colorScheme.primary,
+          widget.themeData.colorScheme.primary.withAlpha(64),
           widget.themeData.colorScheme.secondary,
         ],
         begin: Alignment.bottomCenter,

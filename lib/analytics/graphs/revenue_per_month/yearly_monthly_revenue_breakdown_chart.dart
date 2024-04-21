@@ -26,24 +26,31 @@ class YearlyMonthlyRevenueBreakdownChart extends StatelessWidget {
           max(element.monthTotal, previousValue),
     );
 
-    return ColumnWithSpacings(
-      spacing: 16,
-      children: <Widget>[
-        Text(
-          localized.incomePerMonth.capitalized,
-          style: Theme.of(context).textTheme.headlineMedium,
-        ),
-        YearlyMonthBreakdownChartsWrapper(
-          height: 560,
-          reservationsByMonthByYear: reservationsByMonthByYear,
-          chart: (List<ReservationsOfMonthOfYear> reservationsByMonthOfYear) =>
-              MonthlyRevenueLineChart(
-            localized: localized,
-            greatestMonthIncome: greatestMonthIncome,
-            reservationsByMonthOfYear: reservationsByMonthOfYear,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 32.0),
+      child: ColumnWithSpacings(
+        spacing: 64,
+        children: <Widget>[
+          Text(
+            localized.incomePerMonth.capitalized,
+            style: Theme.of(context).textTheme.headlineMedium,
           ),
-        ),
-      ],
+          YearlyMonthBreakdownChartsWrapper(
+            height: MonthlyRevenueLineChart.graphHeight +
+                MonthlyRevenueLineChart.buttonReservedHeight +
+                32,
+            //? GraphHeight + ButtonsHeight + idk what else + Year text.
+            reservationsByMonthByYear: reservationsByMonthByYear,
+            chart:
+                (List<ReservationsOfMonthOfYear> reservationsByMonthOfYear) =>
+                    MonthlyRevenueLineChart(
+              localized: localized,
+              greatestMonthIncome: greatestMonthIncome,
+              reservationsByMonthOfYear: reservationsByMonthOfYear,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
