@@ -1,5 +1,3 @@
-import "dart:math";
-
 import "package:decla_time/analytics/graphs/days_filled_per_month/days_filled_per_month_chart.dart";
 import "package:decla_time/analytics/graphs/revenue_per_month/business/reservations_of_month_of_year.dart";
 import "package:decla_time/analytics/graphs/revenue_per_month/buttons/show_areas_button.dart";
@@ -329,12 +327,11 @@ class _MonthlyRevenueLineChartState extends State<MonthlyRevenueLineChart> {
       belowBarData: BarAreaData(
         gradient: LinearGradient(
           colors: <Color>[
-            Colors.amber.withAlpha(96),
+            Colors.greenAccent.shade700.withAlpha(64),
             Colors.greenAccent.shade700,
           ],
-          transform: const GradientRotation(
-            (270 * pi) / 180,
-          ),
+          begin: const Alignment(0, 0),
+          end: const Alignment(0, -1),
         ),
         //   //*OR in order to hide, use the same color as the bacgkround
         show: showAreas,
@@ -344,12 +341,11 @@ class _MonthlyRevenueLineChartState extends State<MonthlyRevenueLineChart> {
       aboveBarData: BarAreaData(
         gradient: LinearGradient(
           colors: <Color>[
-            Colors.amber.withAlpha(96),
+            Colors.transparent,
             Colors.redAccent.shade700,
           ],
-          transform: const GradientRotation(
-            (90 * pi) / 180,
-          ),
+          begin: const Alignment(0, 0),
+          end: const Alignment(0, 1),
         ),
         cutOffY: widget.yearAverage,
         applyCutOffY: true,
