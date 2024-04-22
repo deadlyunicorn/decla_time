@@ -110,8 +110,9 @@ class _DaysFilledPerMonthBarChartState
               }
             },
             touchTooltipData: BarTouchTooltipData(
-              getTooltipColor: (BarChartGroupData group) => Colors.transparent,
-              tooltipPadding: const EdgeInsets.all(16),
+              getTooltipColor: (BarChartGroupData group) =>
+                  Theme.of(context).colorScheme.background.withAlpha(232),
+              tooltipPadding: const EdgeInsets.all(8),
               getTooltipItem: (
                 BarChartGroupData group,
                 int groupIndex,
@@ -124,10 +125,8 @@ class _DaysFilledPerMonthBarChartState
                           widget.localized,
                           rod.toY.round() - (widget._addOnHover).ceil(),
                         ),
-                        TextStyle(
+                        const TextStyle(
                           color: Colors.amber,
-                          backgroundColor:
-                              Theme.of(context).colorScheme.background,
                         ),
                       )
                     : null;
