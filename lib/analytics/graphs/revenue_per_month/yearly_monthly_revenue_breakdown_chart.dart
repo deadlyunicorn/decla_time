@@ -38,8 +38,9 @@ class YearlyMonthlyRevenueBreakdownChart extends StatelessWidget {
           YearlyMonthBreakdownChartsWrapper(
             height: MonthlyRevenueLineChart.graphHeight +
                 MonthlyRevenueLineChart.buttonReservedHeight +
+                32 +
                 32,
-            //? GraphHeight + ButtonsHeight + idk what else + Year text.
+            //? GraphHeight + ButtonsHeight + Year text + top padding.
             reservationsByMonthByYear: reservationsByMonthByYear,
             chart:
                 (List<ReservationsOfMonthOfYear> reservationsByMonthOfYear) =>

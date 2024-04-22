@@ -79,66 +79,70 @@ class _MonthlyRevenueLineChartState extends State<MonthlyRevenueLineChart> {
             style: Theme.of(context).textTheme.headlineSmall,
           ),
         ),
-        SizedBox(
-          height: MonthlyRevenueLineChart.graphHeight.toDouble(),
-          child: Stack(
-            clipBehavior: Clip.none,
-            children: <Widget>[
-              Positioned.fill(
-                child: LineChart(
-                  LineChartData(
-                    lineTouchData: getLineTouchData(context),
-                    lineBarsData: <LineChartBarData>[
-                      generateLineBarsData(showAreas: showAreas),
-                    ],
-                    extraLinesData: ExtraLinesData(
-                      extraLinesOnTop: true,
-                      horizontalLines: <HorizontalLine>[
-                        if (showAverage) displayAverageLine(context),
-                      ],
-                    ),
-
-                    minX: 1,
-                    maxX: 12,
-                    minY: 0,
-                    maxY: widget.greatestMonthIncome
-                        .ceilToDouble(), // max / 10 -> round * 10
-                    borderData: FlBorderData(
-                      show: false,
-                    ),
-                    titlesData: getTitles(context),
-                    gridData: FlGridData(
-                      show: true,
-                      drawVerticalLine: false,
-                      horizontalInterval:
-                          (widget.greatestMonthIncome / 10).ceilToDouble(),
-                    ),
-                  ),
-                ),
-              ),
-              if (showNightsPerMonth)
+        Padding(
+          padding: const EdgeInsets.only(top: 32.0),
+          child: SizedBox(
+            height: MonthlyRevenueLineChart.graphHeight.toDouble(),
+            child: Stack(
+              clipBehavior: Clip.none,
+              children: <Widget>[
                 Positioned.fill(
-                  bottom: 32,
-                  right: -32,
-                  child: Align(
-                    alignment: Alignment.centerRight,
-                    child: SizedBox(
-                      height: MonthlyRevenueLineChart.graphHeight.toDouble(),
-                      width: MonthlyRevenueLineChart.graphWidth -
-                          MonthlyRevenueLineChart.reservedLeftSideSize
-                              .toDouble(), //? Random number No.96.
-                      //? If you are interested check "reservedSize"
-                      child: DaysFilledPerMonthBarChart(
-                        showGrid: false,
-                        themeData: Theme.of(context),
-                        localized: widget.localized,
-                        reservationsByMonthOfYear:
-                            widget.reservationsByMonthOfYear,
+                  child: LineChart(
+                    LineChartData(
+                      lineTouchData: getLineTouchData(context),
+                      lineBarsData: <LineChartBarData>[
+                        generateLineBarsData(showAreas: showAreas),
+                      ],
+                      extraLinesData: ExtraLinesData(
+                        extraLinesOnTop: true,
+                        horizontalLines: <HorizontalLine>[
+                          if (showAverage) displayAverageLine(context),
+                        ],
+                      ),
+
+                      minX: 1,
+                      maxX: 12,
+                      minY: 0,
+                      maxY: widget.greatestMonthIncome
+                          .ceilToDouble(), // max / 10 -> round * 10
+                      borderData: FlBorderData(
+                        show: false,
+                      ),
+                      titlesData: getTitles(context),
+                      gridData: FlGridData(
+                        show: true,
+                        drawVerticalLine: false,
+                        horizontalInterval:
+                            (widget.greatestMonthIncome / 10).ceilToDouble(),
                       ),
                     ),
                   ),
                 ),
-            ],
+                if (showNightsPerMonth)
+                  Positioned.fill(
+                    bottom: -64,
+                    right: -32,
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: SizedBox(
+                        height: MonthlyRevenueLineChart.graphHeight.toDouble() -
+                            128,
+                        width: MonthlyRevenueLineChart.graphWidth -
+                            MonthlyRevenueLineChart.reservedLeftSideSize
+                                .toDouble(), //? Random number No.96.
+                        //? If you are interested check "reservedSize"
+                        child: DaysFilledPerMonthBarChart(
+                          showGrid: false,
+                          themeData: Theme.of(context),
+                          localized: widget.localized,
+                          reservationsByMonthOfYear:
+                              widget.reservationsByMonthOfYear,
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
           ),
         ),
         SizedBox(
@@ -341,7 +345,7 @@ class _MonthlyRevenueLineChartState extends State<MonthlyRevenueLineChart> {
       aboveBarData: BarAreaData(
         gradient: LinearGradient(
           colors: <Color>[
-            Colors.transparent,
+            Colors.redAccent.shade700.withAlpha(64),
             Colors.redAccent.shade700,
           ],
           begin: const Alignment(0, 0),
