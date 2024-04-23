@@ -7,3 +7,11 @@ String nightOrNights(AppLocalizations localized, int nights) {
     return "$nights ${localized.nights}";
   }
 }
+
+String reservationOrReservations(AppLocalizations localized, int reservations) {
+  if (reservations <= 1) {
+    return "$reservations ${localized.reservation}";
+  } else {
+    return "$reservations ${localized.reservations}";
+  }
+}
