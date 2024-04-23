@@ -2,6 +2,7 @@ import "package:decla_time/core/connection/isar_helper.dart";
 import "package:decla_time/core/constants/constants.dart";
 import "package:decla_time/core/extensions/capitalize.dart";
 import "package:decla_time/core/functions/translate_reservation_status.dart";
+import "package:decla_time/declarations/utility/declaration_body.dart";
 import "package:decla_time/reservations/presentation/widgets/reservation_form/form_fields/date_fields/date_pickers_field.dart";
 import "package:decla_time/reservations/presentation/widgets/reservation_form/form_fields/id_field.dart";
 import "package:decla_time/reservations/presentation/widgets/reservation_form/form_fields/listing_name_field.dart";
@@ -205,7 +206,8 @@ class _ReservationFormState extends State<ReservationForm> {
       final Reservation reservation = Reservation(
         cancellationAmount: null, //TODO UNIMPLEMENTED
         cancellationDate: null, //TODO UNIMPLEMENTED
-        bookingPlatform: bookingPlatform,
+        bookingPlatform:
+            DeclarationBody.extractBookingPlatform(bookingPlatform),
         listingName: listingName,
         id: id,
         guestName: guestName,

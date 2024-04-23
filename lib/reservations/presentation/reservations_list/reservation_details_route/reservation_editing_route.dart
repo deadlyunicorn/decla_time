@@ -28,7 +28,7 @@ class ReservationEditingRoute extends StatelessWidget {
         id: reservation.id,
         listingName: reservation.listingName,
         payout: reservation.payout.toStringAsFixed(2),
-        platformName: reservation.bookingPlatform,
+        platformName: reservation.bookingPlatform.name.capitalized,
         reservationStatus: reservation.reservationStatus,
         localized: localized,
         handleFormSubmit: (Reservation editedReservation) {

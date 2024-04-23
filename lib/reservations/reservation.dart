@@ -1,3 +1,4 @@
+import "package:decla_time/core/enums/booking_platform.dart";
 import "package:decla_time/core/functions/fasthash.dart";
 import "package:decla_time/core/widgets/generic_calendar_grid_view/generic_calendar_grid_view.dart";
 import "package:intl/intl.dart";
@@ -10,7 +11,9 @@ class Reservation implements ItemWithDates {
   //TODO !! Some reservations are "CANCELLED" and show some amount ( of what would be the income if it was not cancelled)
   //TODO !! However the income is 0 - find a way to exclude those.
 
-  final String bookingPlatform;
+  @Enumerated(EnumType.name)
+  final BookingPlatform bookingPlatform;
+
   final String? listingName;
 
   DateTime? lastEdit;
@@ -52,7 +55,7 @@ class Reservation implements ItemWithDates {
   double get dailyRate => ((cancellationAmount ?? 0) + payout) / nights;
 
   Reservation copyWith({
-    String? bookingPlatform,
+    BookingPlatform? bookingPlatform,
     String? listingName,
     String? id,
     String? guestName,

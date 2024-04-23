@@ -2,6 +2,7 @@ import "dart:io";
 
 import "package:decla_time/core/constants/constants.dart";
 import "package:decla_time/core/documents_io/documents_io.dart";
+import "package:decla_time/core/enums/booking_platform.dart";
 import "package:decla_time/core/errors/exceptions.dart";
 import "package:decla_time/reservations/reservation.dart";
 import "package:intl/intl.dart";
@@ -167,7 +168,7 @@ class ReservationActions {
           Reservation(
             cancellationAmount: null, //TODO UNIMPLEMENTED
             cancellationDate: null, //TODO UNIMPLEMENTED
-            bookingPlatform: "Airbnb",
+            bookingPlatform: BookingPlatform.airbnb,
             listingName: csvFileRowEntries[i][kAirbnbListingNameColumn],
             id: csvFileRowEntries[i][kAirbnbIdColumn],
             guestName: csvFileRowEntries[i][kAirbnbGuestNameColumn],
@@ -257,7 +258,7 @@ class ReservationActions {
           Reservation(
             cancellationDate: null, //TODO UNIMPLEMENTED
             cancellationAmount: null, //TODO UNIMPLEMENTED
-            bookingPlatform: "Booking.com",
+            bookingPlatform: BookingPlatform.booking,
             listingName: null,
             id: csvFileRowEntries[i][kBookingDotComIdColumn],
             guestName: csvFileRowEntries[i][kBookingDotComGuestNameColumn],

@@ -1,4 +1,5 @@
 import "package:decla_time/core/connection/isar_helper.dart";
+import "package:decla_time/core/enums/booking_platform.dart";
 import "package:decla_time/reservations/business/reservation_actions.dart";
 import "package:decla_time/reservations/reservation.dart";
 import "package:flutter_test/flutter_test.dart";
@@ -16,7 +17,7 @@ void main() async {
         cancellationDate: null, 
         cancellationAmount: null, 
         arrivalDate: DateTime.now(),
-        bookingPlatform: "Airbnb",
+        bookingPlatform: BookingPlatform.airbnb,
         departureDate: DateTime(2024),
         guestName: "John Doe",
         id: "AABBCC",

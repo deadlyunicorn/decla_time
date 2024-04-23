@@ -65,7 +65,7 @@ class DeclarationSubmitController extends ChangeNotifier {
           arrivalDate: currentReservation.arrivalDate,
           departureDate: currentReservation.departureDate,
           payout: currentReservation.payout,
-          platform: currentReservation.bookingPlatform,
+          platform: currentReservation.bookingPlatform.name,
         );
 
         final http.Response declarationResponse = await Future.any(

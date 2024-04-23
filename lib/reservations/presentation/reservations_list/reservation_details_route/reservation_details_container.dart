@@ -60,7 +60,8 @@ class ReservationDetailsContainer extends StatelessWidget {
                                 style: Theme.of(context).textTheme.bodyLarge,
                                 children: <InlineSpan>[
                                   TextSpan(
-                                    text: reservation.bookingPlatform,
+                                    text: reservation
+                                        .bookingPlatform.name.capitalized,
                                     style: Theme.of(context)
                                         .textTheme
                                         .headlineSmall,

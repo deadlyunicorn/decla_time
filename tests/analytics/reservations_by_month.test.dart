@@ -1,12 +1,13 @@
 import "package:decla_time/analytics/graphs/revenue_per_month/business/get_reservations_by_month.dart";
 import "package:decla_time/analytics/graphs/revenue_per_month/business/reservations_of_month_of_year.dart";
 import "package:decla_time/analytics/graphs/taxes_per_year/business/get_reservations_by_year.dart";
+import "package:decla_time/core/enums/booking_platform.dart";
 import "package:decla_time/reservations/reservation.dart";
 import "package:test/test.dart";
 
 void main() {
   final Reservation reservation1 = Reservation(
-    bookingPlatform: "Airbnb",
+    bookingPlatform: BookingPlatform.airbnb,
     listingName: null,
     id: "123123",
     guestName: "haha",

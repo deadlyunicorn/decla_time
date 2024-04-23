@@ -1,11 +1,12 @@
 import "package:decla_time/analytics/graphs/taxes_per_year/business/get_reservations_by_year.dart";
+import "package:decla_time/core/enums/booking_platform.dart";
 import "package:decla_time/reservations/reservation.dart";
 import "package:test/test.dart";
 
 void main() {
   test("Edge cases for grouping reservations by year", () {
     final Reservation reservation = Reservation(
-      bookingPlatform: "Airbnb",
+      bookingPlatform: BookingPlatform.airbnb,
       listingName: null,
       id: "123123",
       guestName: "haha",
@@ -64,7 +65,7 @@ void main() {
 
   test("Edge cases for grouping reservations by year, 2011", () {
     final Reservation reservation = Reservation(
-      bookingPlatform: "Airbnb",
+      bookingPlatform: BookingPlatform.airbnb,
       listingName: null,
       id: "123123",
       guestName: "haha",
