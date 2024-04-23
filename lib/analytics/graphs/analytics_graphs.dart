@@ -21,16 +21,20 @@ class AnalyticsGraphs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<ReservationsOfYear>>(
-      future: getAllReservationByYearFromDatabaseFuture(context: context),
+    return FutureBuilder<List<Reservation>>(
+      future: getAllReservationsFromDatabaseFuture(context: context),
       builder: (
         BuildContext context,
-        AsyncSnapshot<List<ReservationsOfYear>?> snapshot,
+        AsyncSnapshot<List<Reservation>?> snapshot,
       ) {
+        final List<ReservationsOfYear> reservationsByYear =
+            snapshot.data != null
+                ? getReservationsByYear(reservations: snapshot.data!)
+                : <ReservationsOfYear>[];
         final List<ReservationsOfMonthOfYear> reservationsByMonthByYear =
-            getReservationsByMonthForAnalytics(
-          snapshot.data ?? <ReservationsOfYear>[],
-        );
+            snapshot.data != null
+                ? getReservationsByMonthForAnalytics(reservationsByYear)
+                : <ReservationsOfMonthOfYear>[];
         return ColumnWithSpacings(
           spacing: 16,
           children: <Widget>[
@@ -48,26 +52,22 @@ class AnalyticsGraphs extends StatelessWidget {
 
             //TODO - Average Daily Rate (ADR) Chart
             //
-            //TODO Distribution Channel Bar Chart ( 3 Subbars per bar group, AirBnb, Booking, Other )
-
             TaxesPerYearPies(
               localized: localized,
-              reservationsGroupedByYear:
-                  snapshot.data ?? <ReservationsOfYear>[],
+              reservationsGroupedByYear: reservationsByYear,
             ),
+
+           
           ],
         );
       },
     );
   }
 
-  Future<List<ReservationsOfYear>> getAllReservationByYearFromDatabaseFuture({
+  Future<List<Reservation>> getAllReservationsFromDatabaseFuture({
     required BuildContext context,
   }) async {
     final Isar isar = await context.read<IsarHelper>().isarFuture;
-    final List<Reservation> reservations =
-        await isar.reservations.where().sortByDepartureDateDesc().findAll();
-
-    return getReservationsByYear(reservations: reservations);
+    return await isar.reservations.where().sortByDepartureDateDesc().findAll();
   }
 }
