@@ -34,6 +34,7 @@ class YearlyMonthlyRevenueBreakdownChart extends StatelessWidget {
           Text(
             localized.incomePerMonth.capitalized,
             style: Theme.of(context).textTheme.headlineMedium,
+            textAlign: TextAlign.center,
           ),
           YearlyMonthBreakdownChartsWrapper(
             height: MonthlyRevenueLineChart.graphHeight +

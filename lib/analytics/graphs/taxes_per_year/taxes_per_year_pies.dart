@@ -24,6 +24,7 @@ class TaxesPerYearPies extends StatelessWidget {
         Text(
           localized.taxesPerYear.capitalized,
           style: Theme.of(context).textTheme.headlineMedium,
+          textAlign: TextAlign.center,
         ),
         SizedBox(
           height: graphSize * 2,

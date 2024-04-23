@@ -24,6 +24,8 @@ class AnalyticsPage extends StatelessWidget {
             Text(
               localized.analytics.capitalized,
               style: Theme.of(context).textTheme.headlineLarge,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
             ),
             AnalyticsGraphs(localized: localized),
             AppSettings(localized: localized),
