@@ -1,4 +1,4 @@
-import "package:decla_time/core/functions/night_or_nights.dart";
+import "package:decla_time/core/functions/plurals.dart";
 import "package:decla_time/core/widgets/column_with_spacings.dart";
 import "package:decla_time/reservations/reservation.dart";
 import "package:flutter/material.dart";

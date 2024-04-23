@@ -1,13 +1,12 @@
 import "package:decla_time/core/constants/constants.dart";
 import "package:decla_time/core/extensions/capitalize.dart";
-import "package:decla_time/core/functions/night_or_nights.dart";
+import "package:decla_time/core/functions/plurals.dart";
 import "package:decla_time/core/widgets/generic_calendar_grid_view/generic_calendar_grid_view.dart";
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import "package:intl/intl.dart";
 
 class DateInformationWidget<T extends ItemWithDates> extends StatelessWidget {
-  
   const DateInformationWidget({
     required this.item,
     required this.nights,

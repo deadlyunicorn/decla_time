@@ -1,5 +1,5 @@
 import "package:decla_time/core/extensions/capitalize.dart";
-import "package:decla_time/core/functions/night_or_nights.dart";
+import "package:decla_time/core/functions/plurals.dart";
 import "package:decla_time/core/widgets/custom_date_picker.dart";
 import "package:decla_time/reservations/presentation/widgets/reservation_form/form_fields/date_fields/date_field_wrap.dart";
 import "package:flutter/material.dart";

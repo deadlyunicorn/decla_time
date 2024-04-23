@@ -1,4 +1,4 @@
-import "package:decla_time/core/functions/night_or_nights.dart";
+import "package:decla_time/core/functions/plurals.dart";
 import "package:decla_time/declarations/database/declaration.dart";
 import "package:decla_time/reservations/presentation/decleration_status_dot.dart";
 import "package:flutter/material.dart";
