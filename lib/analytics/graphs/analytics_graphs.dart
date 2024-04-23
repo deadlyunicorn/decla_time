@@ -1,3 +1,4 @@
+import "package:decla_time/analytics/graphs/platform_pie/platform_share_pie.dart";
 import "package:decla_time/analytics/graphs/revenue_per_month/business/get_reservations_by_month.dart";
 import "package:decla_time/analytics/graphs/revenue_per_month/business/reservations_of_month_of_year.dart";
 import "package:decla_time/analytics/graphs/revenue_per_month/yearly_monthly_revenue_breakdown_chart.dart";
@@ -57,7 +58,10 @@ class AnalyticsGraphs extends StatelessWidget {
               reservationsGroupedByYear: reservationsByYear,
             ),
 
-           
+            PlatformSharePie(
+              localized: localized,
+              reservations: snapshot.data ?? <Reservation>[],
+            ),
           ],
         );
       },
