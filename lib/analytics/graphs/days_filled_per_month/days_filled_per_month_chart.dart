@@ -1,7 +1,7 @@
 import "package:decla_time/analytics/graphs/revenue_per_month/business/reservations_of_month_of_year.dart";
 import "package:decla_time/analytics/widgets/yearly_month_breakdown_charts_wrapper.dart";
 import "package:decla_time/core/extensions/capitalize.dart";
-import "package:decla_time/core/functions/night_or_nights.dart";
+import "package:decla_time/core/functions/plurals.dart";
 import "package:decla_time/core/widgets/column_with_spacings.dart";
 import "package:decla_time/reservations/reservation.dart";
 import "package:fl_chart/fl_chart.dart";
