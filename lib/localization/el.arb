@@ -190,6 +190,8 @@
     "noData": "δεν υπάρχουν δεδομένα",
     "nightRateAverage" : "μέσος όρος νύχτας",
     "platforms" : "πλατφόρμες",
+    "total": "σύνολο",
+    "reservationsByPlatform" : "κρατήσεις ανά πλατφόρμα",
     "unusedForNonTrailingComma________________________________":""
 
 

@@ -190,6 +190,8 @@
     "noData": "no data",
     "nightRateAverage" : "night rate average",
     "platforms" : "platforms",
+    "total": "total",
+    "reservationsByPlatform" : "reservations by platform",
     "unusedForNonTrailingComma________________________________":""
 
 
