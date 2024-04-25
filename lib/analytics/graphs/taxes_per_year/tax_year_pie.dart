@@ -92,7 +92,10 @@ class _TaxYearPieState extends State<TaxYearPie> {
                 Positioned.fill(
                   child: Center(
                     child: YearTaxDetailsButton(
+                      localized: widget.localized,
+                      grossValue: widget.yearTotal,
                       yearString: widget.reservationsOfYear.year.toString(),
+                      year: widget.reservationsOfYear.year,
                     ),
                   ),
                 ),
@@ -103,9 +106,39 @@ class _TaxYearPieState extends State<TaxYearPie> {
             children: <Widget>[
               Text("${widget.localized.grossValue.capitalized}: "
                   "${widget.yearTotal.toStringAsFixed(2)} EUR"),
-              Text(
-                "${widget.localized.feeFactor.capitalized}: "
-                "${(widget.taxCaclulation.taxRate * 100).toStringAsFixed(2)}%",
+              RowWithSpacings(
+                spacing: 4,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    "${widget.localized.feeFactor.capitalized}: "
+                    // ignore: lines_longer_than_80_chars
+                    "${(widget.taxCaclulation.taxRate * 100).toStringAsFixed(2)}%",
+                  ),
+                  Tooltip(
+                    message:
+                        // ignore: lines_longer_than_80_chars
+                        "${widget.localized.yearlyIncome.capitalized} <10001 EUR: \n"
+                        "${widget.localized.feeFactor.capitalized} 9%\n\n"
+                        // ignore: lines_longer_than_80_chars
+                        "${widget.localized.yearlyIncome.capitalized} <20001 EUR: \n"
+                        "${widget.localized.feeFactor.capitalized} 22%\n\n"
+                        // ignore: lines_longer_than_80_chars
+                        "${widget.localized.yearlyIncome.capitalized} <30001 EUR: \n"
+                        "${widget.localized.feeFactor.capitalized} 28%\n\n"
+                        // ignore: lines_longer_than_80_chars
+                        "${widget.localized.yearlyIncome.capitalized} <40001 EUR: \n"
+                        "${widget.localized.feeFactor.capitalized} 36%\n\n"
+                        // ignore: lines_longer_than_80_chars
+                        "${widget.localized.yearlyIncome.capitalized} >40000 EUR: \n"
+                        "${widget.localized.feeFactor.capitalized} 44%",
+                    textAlign: TextAlign.center,
+                    child: const Icon(
+                      Icons.info,
+                      size: 16,
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
