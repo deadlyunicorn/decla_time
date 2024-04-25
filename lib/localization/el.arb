@@ -192,6 +192,13 @@
     "platforms" : "πλατφόρμες",
     "total": "σύνολο",
     "reservationsByPlatform" : "κρατήσεις ανά πλατφόρμα",
+    "performanceComparedToPastYear" : "επιδόσεις σε σύγκριση\nμε τον περασμένο χρόνο",
+    "noEnoughData": "δεν υπάρχουν αρκετά δεδομένα",
+    "perMonth" : "/μήνα",
+    "nightlyRate": "τιμή νύχτας",
+    "previous": "προηγούμενο",
+    "current": "τρέχων",
+    "filledPercentage": "ποσοστό πληρότητας",
     "unusedForNonTrailingComma________________________________":""
 
 

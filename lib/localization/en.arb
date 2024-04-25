@@ -192,6 +192,13 @@
     "platforms" : "platforms",
     "total": "total",
     "reservationsByPlatform" : "reservations by platform",
+    "performanceComparedToPastYear" : "performance\ncompared to past year",
+    "noEnoughData": "no enough data",
+    "perMonth" : "/month",
+    "nightlyRate": "nightly rate",
+    "previous": "previous",
+    "current": "current",
+    "filledPercentage": "filled percentage",
     "unusedForNonTrailingComma________________________________":""
 
 

@@ -1,3 +1,4 @@
+import "package:decla_time/analytics/graphs/performance_comparison/performance_compared_to_last_year.dart";
 import "package:decla_time/analytics/graphs/platform_pie/platform_share_pie.dart";
 import "package:decla_time/analytics/graphs/revenue_per_month/business/get_reservations_by_month.dart";
 import "package:decla_time/analytics/graphs/revenue_per_month/business/reservations_of_month_of_year.dart";
@@ -51,8 +52,6 @@ class AnalyticsGraphs extends StatelessWidget {
             //   reservationsByMonthByYear: reservationsByMonthByYear,
             // ),
 
-            //TODO - Average Daily Rate (ADR) Chart
-            //
             TaxesPerYearPies(
               localized: localized,
               reservationsGroupedByYear: reservationsByYear,
@@ -61,6 +60,10 @@ class AnalyticsGraphs extends StatelessWidget {
             PlatformSharePie(
               localized: localized,
               reservations: snapshot.data ?? <Reservation>[],
+            ),
+            PerformanceComparedToLastYear(
+              localized: localized,
+              reservationsByMonthByYear: reservationsByMonthByYear,
             ),
           ],
         );
