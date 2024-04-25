@@ -199,6 +199,17 @@
     "previous": "previous",
     "current": "current",
     "filledPercentage": "filled percentage",
+    "yearlyIncome" : "yearly income",
+    "taxCalculation" :"tax calculation",
+    "taxCalculationSummary" : "The calculations on the previous page takes into account only the data that you have imported into the app.\n\nIf you know however your actual yearly income, you can get an idea from this page, what your fees will be like.",
+    "net": "net",
+    "basedOnImports": "based on your imported records that means",
+    "feeExampleString01" : "you would be taxed",
+    "feeExampleString02" : "and you would have",
+    "importedData" : "imported data",
+    "atleast" : "atleast",
+    "forGross":"for",
+
     "unusedForNonTrailingComma________________________________":""
 
 
