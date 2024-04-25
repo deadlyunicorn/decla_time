@@ -1,45 +1,39 @@
+import "package:decla_time/analytics/graphs/taxes_per_year/tax_calculation_details_route/tax_calculation_details_route.dart";
 import "package:flutter/material.dart";
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
 
-class YearTaxDetailsButton extends StatefulWidget {
+class YearTaxDetailsButton extends StatelessWidget {
   const YearTaxDetailsButton({
     required this.yearString,
+    required this.grossValue,
+    required this.localized,
+    required this.year,
     super.key,
   });
 
   final String yearString;
+  final double grossValue;
+  final AppLocalizations localized;
+  final int year;
 
-  @override
-  State<YearTaxDetailsButton> createState() => _YearTaxDetailsButtonState();
-}
-
-class _YearTaxDetailsButtonState extends State<YearTaxDetailsButton> {
-  bool isHovered = false;
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onHover: (bool value) {
-        setState(() {
-          isHovered = value;
-        });
-      },
       onPressed: () {
-        print(
-            "Open a new page with the possible taxations based on total income");
+        Navigator.push(
+          context,
+          MaterialPageRoute<void>(
+            builder: (BuildContext context) => TaxCalculationDetailsRoute(
+              localized: localized,
+              year: year,
+              grossValue: grossValue,
+            ),
+          ),
+        );
       },
-      child: AnimatedDefaultTextStyle(
-        style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-              fontSize: isHovered ? 28 : 24,
-              shadows: const <Shadow>[
-                Shadow(blurRadius: 2, color: Colors.black),
-              ],
-            ) ??
-            const TextStyle(),
-        duration: const Duration(
-          milliseconds: 240,
-        ),
-        child: Text(
-          widget.yearString,
-        ),
+      child: Text(
+        yearString,
+        style: Theme.of(context).textTheme.headlineSmall,
       ),
     );
   }
