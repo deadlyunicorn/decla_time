@@ -1,4 +1,5 @@
 import "package:decla_time/core/constants/constants.dart";
+import "package:decla_time/core/enums/booking_platform.dart";
 import "package:decla_time/reservations/business/reservation_actions.dart";
 import "package:decla_time/reservations/reservation.dart";
 import "package:flutter_test/flutter_test.dart";
@@ -61,7 +62,10 @@ void main() {
     //All files should have booking platform of Airbnb.
     expect(
       reservationsTable
-          .where((Reservation element) => element.bookingPlatform != "Airbnb")
+          .where(
+            (Reservation element) =>
+                element.bookingPlatform != BookingPlatform.airbnb,
+          )
           .length,
       0,
     );
@@ -77,7 +81,8 @@ void main() {
     expect(
       reservationsTable
           .where(
-            (Reservation element) => element.bookingPlatform != "Booking.com",
+            (Reservation element) =>
+                element.bookingPlatform != BookingPlatform.booking,
           )
           .length,
       0,
