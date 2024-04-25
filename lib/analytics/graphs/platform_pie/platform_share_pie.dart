@@ -177,22 +177,31 @@ class _PlatformPieState extends State<PlatformPie> {
                 ),
                 Positioned.fill(
                   child: Center(
-                    child: Text(widget.localized.platforms.capitalized),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Text>[
+                        Text(widget.localized.platforms.capitalized),
+                        Text(
+                          // ignore: prefer_interpolation_to_compose_strings
+                          "${widget.localized.reservations.capitalized}: " +
+                              widget.platformDetailsList
+                                  .fold(
+                                    0,
+                                    (
+                                      int previousValue,
+                                      PlatformDetails platformDetails,
+                                    ) =>
+                                        previousValue +
+                                        platformDetails.reservationCount,
+                                  )
+                                  .toString(),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],
             ),
-          ),
-          Text(
-            // ignore: prefer_interpolation_to_compose_strings
-            "${widget.localized.reservations.capitalized}: " +
-                widget.platformDetailsList
-                    .fold(
-                      0,
-                      (int previousValue, PlatformDetails element) =>
-                          previousValue + element.reservationCount,
-                    )
-                    .toString(),
           ),
         ],
       ),
