@@ -1,20 +1,25 @@
 import "dart:io";
 
+import "package:decla_time/core/connection/isar_helper.dart";
 import "package:decla_time/core/extensions/capitalize.dart";
 import "package:decla_time/core/functions/is_landscape_mode.dart";
 import "package:decla_time/core/widgets/item_select/generic_item_select_grid.dart";
 import "package:decla_time/core/widgets/route_outline.dart";
 import "package:decla_time/reservations/business/extracting_from_file_actions.dart";
 import "package:decla_time/reservations/reservation.dart";
+import "package:decla_time/reservations/reservation_place.dart";
 import "package:decla_time/reservations_action_button_menu/add_from_files_button.dart";
 import "package:decla_time/reservations_action_button_menu/add_reservations_manually_button.dart";
 import "package:decla_time/reservations_action_button_menu/entries_found/reservation_details_tooltip.dart";
 import "package:decla_time/reservations_action_button_menu/entries_found/selectable_reservation_container.dart";
 import "package:decla_time/reservations_action_button_menu/entries_found/will_overwrite_tooltip.dart";
+import "package:decla_time/reservations_action_button_menu/place_selection/place_selection_widget.dart";
 import "package:decla_time/reservations_action_button_menu/selected_reservations_handler.dart";
 import "package:desktop_drop/desktop_drop.dart";
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
+import "package:isar/isar.dart";
+import "package:provider/provider.dart";
 
 class ReservationAdditionRoute extends StatefulWidget {
   const ReservationAdditionRoute({
@@ -30,6 +35,7 @@ class ReservationAdditionRoute extends StatefulWidget {
 
 class _ReservationAdditionRouteState extends State<ReservationAdditionRoute> {
   List<Reservation> reservations = <Reservation>[];
+  int? selectedPlaceId;
 
   @override
   Widget build(BuildContext context) {
@@ -87,6 +93,22 @@ class _ReservationAdditionRouteState extends State<ReservationAdditionRoute> {
                   ),
                 ),
               ),
+            ),
+            Text("Import to"),
+            FutureBuilder<List<ReservationPlace>>(
+              future: getReservationPlaces(),
+              builder: (
+                BuildContext context,
+                AsyncSnapshot<List<ReservationPlace>> snapshot,
+              ) {
+                return ReservationPlaceSelectionWidget(
+                  localized: widget.localized,
+                  selectedPlaceId: selectedPlaceId,
+                  setSelectedPlaceId: setSelectedPlaceId,
+                  availableReservationPlaces:
+                      snapshot.data ?? <ReservationPlace>[],
+                );
+              },
             ),
             Expanded(
               child: ItemsFoundList<Reservation>(
@@ -152,5 +174,18 @@ class _ReservationAdditionRouteState extends State<ReservationAdditionRoute> {
             .contains(reservation.id),
       );
     });
+  }
+
+  void setSelectedPlaceId(int newSelectionId) {
+    if (newSelectionId != selectedPlaceId) {
+      setState(() {
+        selectedPlaceId = newSelectionId;
+      });
+    }
+  }
+
+  Future<List<ReservationPlace>> getReservationPlaces() async {
+    final Isar isar = await context.watch<IsarHelper>().isarFuture;
+    return isar.reservationPlaces.where().findAll();
   }
 }
