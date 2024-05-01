@@ -166,6 +166,7 @@ class ReservationActions {
       } else {
         airbnbTable.add(
           Reservation(
+            reservationPlaceId: null,
             cancellationAmount: null, //TODO UNIMPLEMENTED
             cancellationDate: null, //TODO UNIMPLEMENTED
             bookingPlatform: BookingPlatform.airbnb,
@@ -256,6 +257,7 @@ class ReservationActions {
 
         bookingDotComTable.add(
           Reservation(
+            reservationPlaceId: null,
             cancellationDate: null, //TODO UNIMPLEMENTED
             cancellationAmount: null, //TODO UNIMPLEMENTED
             bookingPlatform: BookingPlatform.booking,

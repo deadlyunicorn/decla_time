@@ -16,6 +16,7 @@ void main() {
       reservationStatus: "completed",
       cancellationDate: null,
       cancellationAmount: null,
+      reservationPlaceId: 1,
     );
 
     final List<Reservation> splitReservations = reservationSplitOnYearChange(
@@ -75,6 +76,7 @@ void main() {
       reservationStatus: "completed",
       cancellationDate: null,
       cancellationAmount: null,
+      reservationPlaceId: 1,
     );
 
     final List<Reservation> splitReservations = reservationSplitOnYearChange(

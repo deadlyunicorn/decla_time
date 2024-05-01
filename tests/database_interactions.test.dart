@@ -14,8 +14,8 @@ void main() async {
   group("Reservations Folder Manipulation", () {
     test("Adding to database and reading database entries", () async {
       final Reservation newReservation = Reservation(
-        cancellationDate: null, 
-        cancellationAmount: null, 
+        cancellationDate: null,
+        cancellationAmount: null,
         arrivalDate: DateTime.now(),
         bookingPlatform: BookingPlatform.airbnb,
         departureDate: DateTime(2024),
@@ -24,6 +24,7 @@ void main() async {
         listingName: "Lovely",
         payout: 377.42,
         reservationStatus: "ok",
+        reservationPlaceId: 1,
       );
 
       await IsarHelper()

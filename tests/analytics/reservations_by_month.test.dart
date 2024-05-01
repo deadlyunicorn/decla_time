@@ -17,6 +17,7 @@ void main() {
     reservationStatus: "completed",
     cancellationDate: null,
     cancellationAmount: null,
+    reservationPlaceId: 1,
   );
 
   final List<ReservationsOfMonthOfYear> reservationsByMonth =

@@ -7,6 +7,7 @@ import "package:decla_time/declarations/database/finalized_declaration_details.d
 import "package:decla_time/declarations/database/user/user.dart";
 import "package:decla_time/declarations/database/user/user_property.dart";
 import "package:decla_time/reservations/reservation.dart";
+import "package:decla_time/reservations/reservation_place.dart";
 import "package:flutter/foundation.dart";
 import "package:isar/isar.dart";
 
@@ -15,6 +16,7 @@ class IsarHelper extends ChangeNotifier {
       ? await Isar.open(
           <CollectionSchema<Object>>[
             ReservationSchema,
+            ReservationPlaceSchema,
             DeclarationSchema,
             FinalizedDeclarationDetailsSchema,
             UserPropertySchema,
@@ -27,6 +29,7 @@ class IsarHelper extends ChangeNotifier {
   ReservationActions? _reservationActions;
   DeclarationActions? _declarationActions;
   UserActions? _userActions;
+  ReservationPlaceActions? _reservationPlaceActions;
 
   //? The only bad thing about this design is that in the future
   //? if we change it - it will notify listeners from all the pages.
@@ -65,5 +68,39 @@ class IsarHelper extends ChangeNotifier {
         );
     _userActions ??= initializedUserActions;
     return initializedUserActions;
+  }
+
+  ReservationPlaceActions get reservationPlaceActions {
+    final ReservationPlaceActions reservationPlaceActions =
+        _reservationPlaceActions ??
+            ReservationPlaceActions(
+              isarFuture: isarFuture,
+              notifyListeners: notifyListeners,
+            );
+    _reservationPlaceActions ??= reservationPlaceActions;
+    return reservationPlaceActions;
+  }
+}
+
+class ReservationPlaceActions {
+  ReservationPlaceActions({
+    required Future<Isar> isarFuture,
+    required void Function() notifyListeners,
+  })  : _isarFuture = isarFuture,
+        _notifyListeners = notifyListeners;
+
+  final Future<Isar> _isarFuture;
+  final void Function() _notifyListeners;
+
+  Future<void> putReservationPlace(String friendlyName) async {
+    final Isar isar = await _isarFuture;
+    await isar.writeTxn(() async {
+      await isar.reservationPlaces.put(
+        ReservationPlace(
+          friendlyName: friendlyName,
+        ),
+      );
+    });
+    _notifyListeners();
   }
 }

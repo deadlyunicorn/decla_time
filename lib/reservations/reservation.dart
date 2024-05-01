@@ -32,6 +32,8 @@ class Reservation implements ItemWithDates {
   final DateTime? cancellationDate;
   final double? cancellationAmount;
 
+  final int? reservationPlaceId;
+
   Reservation({
     required this.bookingPlatform,
     required this.listingName,
@@ -43,6 +45,7 @@ class Reservation implements ItemWithDates {
     required this.reservationStatus,
     required this.cancellationDate,
     required this.cancellationAmount,
+    required this.reservationPlaceId,
     this.isDeclared = false,
     this.lastEdit,
   });
@@ -67,6 +70,7 @@ class Reservation implements ItemWithDates {
     double? cancellationAmount,
     bool? isDeclared,
     DateTime? lastEdit,
+    int? reservationPlaceId,
   }) =>
       Reservation(
         bookingPlatform: bookingPlatform ?? this.bookingPlatform,
@@ -81,6 +85,7 @@ class Reservation implements ItemWithDates {
         cancellationAmount: cancellationAmount ?? this.cancellationAmount,
         lastEdit: lastEdit ?? this.lastEdit,
         isDeclared: isDeclared ?? this.isDeclared,
+        reservationPlaceId: reservationPlaceId ?? this.reservationPlaceId,
       );
 
   bool isEqualTo(Reservation reservation) {
@@ -93,6 +98,7 @@ class Reservation implements ItemWithDates {
         reservation.payout == payout &&
         reservation.reservationStatus == reservationStatus &&
         reservation.isDeclared == isDeclared &&
+        reservation.reservationPlaceId == reservationPlaceId &&
         reservation.cancellationAmount == cancellationAmount &&
         reservation.cancellationDate == cancellationDate;
   }
