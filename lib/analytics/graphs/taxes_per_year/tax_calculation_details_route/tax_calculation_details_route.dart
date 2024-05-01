@@ -69,25 +69,30 @@ class _TaxCalculationDetailsRouteState
                         style: Theme.of(context).textTheme.headlineMedium,
                         textAlign: TextAlign.center,
                       ),
-                      TextField(
-                        controller: textEditingController,
-                        onChanged: (String value) {
-                          if (value.isNotEmpty) {
-                            setState(() {
-                              grossValue = double.parse(value);
-                            });
-                          }
-                        },
-                        inputFormatters: <TextInputFormatter>[
-                          FilteringTextInputFormatter.digitsOnly,
-                        ],
-                        style: Theme.of(context)
-                            .textTheme
-                            .headlineMedium
-                            ?.copyWith(
-                              color: Colors.amberAccent.shade700,
-                            ),
-                        textAlign: TextAlign.center,
+                      Center(
+                        child: SizedBox(
+                          width: kFormFieldWidth,
+                          child: TextField(
+                            controller: textEditingController,
+                            onChanged: (String value) {
+                              if (value.isNotEmpty) {
+                                setState(() {
+                                  grossValue = double.parse(value);
+                                });
+                              }
+                            },
+                            inputFormatters: <TextInputFormatter>[
+                              FilteringTextInputFormatter.digitsOnly,
+                            ],
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineMedium
+                                ?.copyWith(
+                                  color: Colors.amberAccent.shade700,
+                                ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
                       ),
                     ],
                   ),

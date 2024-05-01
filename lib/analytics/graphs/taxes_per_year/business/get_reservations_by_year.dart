@@ -106,12 +106,7 @@ List<Reservation> reservationSplitOnYearChange({
         .inHours;
 
     //* keep the arrival date.
-    Reservation currentReservation = Reservation(
-      bookingPlatform: reservation.bookingPlatform,
-      listingName: reservation.listingName,
-      id: reservation.id,
-      guestName: reservation.guestName,
-      arrivalDate: reservation.arrivalDate,
+    Reservation currentReservation = reservation.copyWith(
       departureDate: reservation.arrivalDate.add(
         Duration(
           hours: hoursToAdd,
@@ -121,13 +116,12 @@ List<Reservation> reservationSplitOnYearChange({
           ? 0
           : Duration(hours: hoursToAdd).inDays * averageDailyRate +
               averageDailyRate,
-      reservationStatus: reservation.reservationStatus,
-      cancellationDate: reservation.cancellationDate,
       cancellationAmount: isCancelled
           ? Duration(hours: hoursToAdd).inDays * averageDailyRate +
               averageDailyRate
           : null,
     );
+
     splitReservations.add(currentReservation);
 
     for (int currentYear = arrivalYear + 1;
@@ -159,11 +153,7 @@ List<Reservation> reservationSplitOnYearChange({
           Duration(hours: hoursToAdd).inDays.round() * averageDailyRate +
               2 * averageDailyRate;
 
-      currentReservation = Reservation(
-        bookingPlatform: reservation.bookingPlatform,
-        listingName: reservation.listingName,
-        id: reservation.id,
-        guestName: reservation.guestName,
+      currentReservation = reservation.copyWith(
         arrivalDate: currentArrivalDate,
         departureDate: currentArrivalDate.add(
           Duration(
@@ -171,8 +161,6 @@ List<Reservation> reservationSplitOnYearChange({
           ),
         ),
         payout: isCancelled ? 0 : correctedPayout,
-        reservationStatus: reservation.reservationStatus,
-        cancellationDate: reservation.cancellationDate,
         cancellationAmount: isCancelled ? correctedPayout : null,
       );
 

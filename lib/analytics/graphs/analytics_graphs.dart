@@ -40,7 +40,6 @@ class AnalyticsGraphs extends StatelessWidget {
         return ColumnWithSpacings(
           spacing: 16,
           children: <Widget>[
-            //TODO Click on a year that takes you to a new page with more expectations for the year
             YearlyMonthlyRevenueBreakdownChart(
               localized: localized,
               reservationsByMonthByYear: reservationsByMonthByYear,
