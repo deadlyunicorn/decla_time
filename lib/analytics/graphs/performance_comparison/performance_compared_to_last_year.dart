@@ -34,9 +34,9 @@ class PerformanceComparedToLastYear extends StatelessWidget {
           if (DateTime.now().difference(reservation.arrivalDate).inDays <=
               30 * 3) {
             recentReservations.reservations.add(reservation);
-          } else if (DateTime.now()
-                  .difference(reservation.arrivalDate)
-                  .inDays <=
+          }
+          if (DateTime.now().difference(reservation.arrivalDate).inDays <=
+              //* else if would need adjustment when dividing below.
               365) {
             olderReservations.reservations.add(reservation);
           }

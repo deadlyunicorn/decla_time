@@ -1,4 +1,5 @@
 import "package:decla_time/core/extensions/capitalize.dart";
+import "package:decla_time/core/widgets/animated_drop_down_icon.dart";
 import "package:decla_time/core/widgets/column_with_spacings.dart";
 import "package:decla_time/declarations/properties/available_user_properties.dart";
 import "package:decla_time/reservations/reservation_place.dart";
@@ -46,9 +47,7 @@ class _ReservationPlaceSelectionWidgetState
             spacing: 8,
             children: <Widget>[
               AvailablePropertiesListTile(
-                icon: isOpen
-                    ? const Icon(Icons.arrow_drop_up_outlined)
-                    : const Icon(Icons.arrow_drop_down_circle_outlined),
+                icon: AnimatedDropDownIcon(isOpen: isOpen),
                 onTap: () {
                   setState(() {
                     isOpen = !isOpen;

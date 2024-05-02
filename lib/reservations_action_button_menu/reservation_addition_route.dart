@@ -198,6 +198,6 @@ class _ReservationAdditionRouteState extends State<ReservationAdditionRoute> {
 
   Future<List<ReservationPlace>> getReservationPlaces() async {
     final Isar isar = await context.watch<IsarHelper>().isarFuture;
-    return isar.reservationPlaces.where().findAll();
+    return isar.reservationPlaces.where().sortByFriendlyName().findAll();
   }
 }

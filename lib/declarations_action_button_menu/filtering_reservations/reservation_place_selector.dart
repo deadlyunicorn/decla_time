@@ -1,5 +1,6 @@
 import "package:decla_time/core/connection/isar_helper.dart";
 import "package:decla_time/core/extensions/capitalize.dart";
+import "package:decla_time/core/widgets/animated_drop_down_icon.dart";
 import "package:decla_time/core/widgets/column_with_spacings.dart";
 import "package:decla_time/declarations/properties/available_user_properties.dart";
 import "package:decla_time/reservations/reservation_place.dart";
@@ -47,6 +48,7 @@ class _ReservationPlaceSelectorState extends State<ReservationPlaceSelector> {
               spacing: 4,
               children: <Widget>[
                 AvailablePropertiesListTile(
+                  icon: AnimatedDropDownIcon(isOpen: isOpen),
                   onTap: () {
                     setState(() {
                       isOpen = !isOpen;
@@ -97,6 +99,6 @@ class _ReservationPlaceSelectorState extends State<ReservationPlaceSelector> {
   }) async {
     final Isar isar = await context.read<IsarHelper>().isarFuture;
 
-    return await isar.reservationPlaces.where().findAll();
+    return await isar.reservationPlaces.where().sortByFriendlyName().findAll();
   }
 }
