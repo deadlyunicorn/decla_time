@@ -1,3 +1,4 @@
+import "package:decla_time/analytics/graphs/taxes_per_year/business/get_reservations_by_year.dart";
 import "package:decla_time/core/connection/isar_helper.dart";
 import "package:decla_time/core/constants/constants.dart";
 import "package:decla_time/core/extensions/capitalize.dart";
@@ -75,13 +76,25 @@ class _DeclarationSubmitRouteState extends State<DeclarationSubmitRoute> {
                   BuildContext context,
                   AsyncSnapshot<List<Reservation>> snapshot,
                 ) {
-                  final List<Reservation> reservations =
-                      snapshot.data ?? <Reservation>[];
+                  final List<Reservation> reservationsFixed =
+                      getReservationsByYear(
+                    reservations: snapshot.data ?? <Reservation>[],
+                  ).fold<List<Reservation>>(
+                    <Reservation>[],
+                    (
+                      List<Reservation> previousValue,
+                      ReservationsOfYear element,
+                    ) =>
+                        previousValue
+                          ..addAll(
+                            element.reservations,
+                          ),
+                  );
 
                   return Expanded(
                     child: ItemsFoundList<Reservation>(
                       mainAxisSpacing: 36,
-                      items: reservations,
+                      items: reservationsFixed,
                       localized: widget.localized,
                       positionedChildren: ({
                         required Reservation item,
@@ -106,7 +119,10 @@ class _DeclarationSubmitRouteState extends State<DeclarationSubmitRoute> {
                                 localized: widget.localized,
                                 reservationToBeSubmitted:
                                     setOfIndicesOfSelectedItems
-                                        .map((int index) => reservations[index])
+                                        .map(
+                                          (int index) =>
+                                              reservationsFixed[index],
+                                        )
                                         .toList(),
                               ),
                             );
@@ -149,10 +165,11 @@ class _DeclarationSubmitRouteState extends State<DeclarationSubmitRoute> {
     final Isar isar = await context.read<IsarHelper>().isarFuture;
 
     return selectedReservationPlace == null
-        ? isar.reservations.where().findAll()
+        ? isar.reservations.where().sortByDepartureDateDesc().findAll()
         : isar.reservations
             .filter()
             .reservationPlaceIdEqualTo(selectedReservationPlaceId)
+            .sortByDepartureDateDesc()
             .findAll();
   }
 }
