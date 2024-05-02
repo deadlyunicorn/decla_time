@@ -215,6 +215,7 @@
     "addPlaceForReservations" :"προσθήκη νέου μέρους για αποθήκευση κρατήσεων",
     "placeName": "ονομασία μέρους",
     "displayReservationsOf": "εμφάνιση κρατήσεων από",
+    "displayAnalyticsFor": "εμφάνιση αναλυτικών για",
 
     "unusedForNonTrailingComma________________________________":""
 

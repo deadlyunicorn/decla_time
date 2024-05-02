@@ -215,6 +215,7 @@
     "addPlaceForReservations" :"add a new place to store reservations",
     "placeName": "place name",
     "displayReservationsOf": "display reservations of",
+    "displayAnalyticsFor": "display analytics for",
 
     "unusedForNonTrailingComma________________________________":""
 
