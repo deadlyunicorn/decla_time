@@ -1,5 +1,6 @@
 import "package:decla_time/core/connection/isar_helper.dart";
 import "package:decla_time/core/extensions/capitalize.dart";
+import "package:decla_time/core/functions/snackbars.dart";
 import "package:decla_time/reservations/reservation.dart";
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
@@ -11,6 +12,7 @@ class SelectedReservationsHandler extends StatelessWidget {
     required this.reservations,
     required this.removeFromReservationsFoundSoFar,
     required this.localized,
+    required this.selectedPlaceId,
     super.key,
   });
 
@@ -18,6 +20,7 @@ class SelectedReservationsHandler extends StatelessWidget {
   final List<Reservation> reservations;
   final void Function(Iterable<Reservation>) removeFromReservationsFoundSoFar;
   final AppLocalizations localized;
+  final int? selectedPlaceId;
 
   @override
   Widget build(BuildContext context) {
@@ -28,22 +31,31 @@ class SelectedReservationsHandler extends StatelessWidget {
               //Submit button
               //Submit Button
               onPressed: () async {
-                await context
-                    .read<IsarHelper>()
-                    .reservationActions
-                    .insertMultipleEntriesToDb(
-                      setOfIndicesOfSelectedItems
-                          .map(
-                            (int index) => reservations[index],
-                          )
-                          .toList(),
-                    );
-                removeFromReservationsFoundSoFar(
-                  setOfIndicesOfSelectedItems.map(
-                    (int index) => reservations[index],
-                  ),
-                );
-                setOfIndicesOfSelectedItems.clear();
+                if (selectedPlaceId != null) {
+                  await context
+                      .read<IsarHelper>()
+                      .reservationActions
+                      .insertMultipleEntriesToDb(
+                        setOfIndicesOfSelectedItems
+                            .map(
+                              (int index) => reservations[index].copyWith(
+                                reservationPlaceId: selectedPlaceId,
+                              ),
+                            )
+                            .toList(),
+                      );
+                  removeFromReservationsFoundSoFar(
+                    setOfIndicesOfSelectedItems.map(
+                      (int index) => reservations[index],
+                    ),
+                  );
+                  setOfIndicesOfSelectedItems.clear();
+                } else {
+                  showErrorSnackbar(
+                    context: context,
+                    message: localized.noPlaceSelected.capitalized,
+                  );
+                }
               },
               child: Text(
                 // ignore: lines_longer_than_80_chars
