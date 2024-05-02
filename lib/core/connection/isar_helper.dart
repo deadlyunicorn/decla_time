@@ -80,6 +80,10 @@ class IsarHelper extends ChangeNotifier {
     _reservationPlaceActions ??= reservationPlaceActions;
     return reservationPlaceActions;
   }
+
+  void update() {
+    notifyListeners();
+  }
 }
 
 class ReservationPlaceActions {

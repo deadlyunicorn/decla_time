@@ -51,7 +51,8 @@ class ReservationForm extends StatefulWidget {
 class _ReservationFormState extends State<ReservationForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController platformNameController = TextEditingController();
-  final TextEditingController listingNameController = TextEditingController();
+  final TextEditingController reservationPlaceController =
+      TextEditingController();
   final TextEditingController idController = TextEditingController();
   final TextEditingController guestNameController = TextEditingController();
   final TextEditingController payoutController = TextEditingController();
@@ -65,7 +66,7 @@ class _ReservationFormState extends State<ReservationForm> {
     super.initState();
 
     platformNameController.text = widget.platformName ?? "";
-    listingNameController.text = widget.listingName ?? "";
+    reservationPlaceController.text = widget.listingName ?? "";
     idController.text = widget.id ?? "";
     guestNameController.text = widget.guestName ?? "";
     payoutController.text = widget.payout ?? "";
@@ -99,9 +100,9 @@ class _ReservationFormState extends State<ReservationForm> {
                         localized: widget.localized,
                         platformNameController: platformNameController,
                       ),
-                      ListingNameField(
+                      ReservationPlaceField(
                         localized: widget.localized,
-                        listingNameController: listingNameController,
+                        listingNameController: reservationPlaceController,
                       ),
                       StatusField(
                         localized: widget.localized,
@@ -168,7 +169,7 @@ class _ReservationFormState extends State<ReservationForm> {
                     child: SubmitButton(
                       submitReservationForm: submitReservationForm,
                       platformNameController: platformNameController,
-                      listingNameController: listingNameController,
+                      listingNameController: reservationPlaceController,
                       idController: idController,
                       guestNameController: guestNameController,
                       payoutController: payoutController,
@@ -192,7 +193,7 @@ class _ReservationFormState extends State<ReservationForm> {
   void submitReservationForm() {
     if (_formKey.currentState!.validate()) {
       final String bookingPlatform = platformNameController.text;
-      final String listingName = listingNameController.text;
+      final String listingName = reservationPlaceController.text;
       final String id = idController.text;
       final String guestName = guestNameController.text;
       final double payout = double.tryParse(payoutController.text)!;
@@ -204,6 +205,7 @@ class _ReservationFormState extends State<ReservationForm> {
       final DateTime departureDate = this.departureDate!;
 
       final Reservation reservation = Reservation(
+        reservationPlaceId: -1, //TODO IMPLEMENT SOON.
         cancellationAmount: null, //TODO UNIMPLEMENTED
         cancellationDate: null, //TODO UNIMPLEMENTED
         bookingPlatform:

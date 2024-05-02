@@ -17,9 +17,11 @@ class ReservationManualEntryDropdownFieldOutline extends StatefulWidget {
     required this.sharedPrefsListKey,
     required this.label,
     required this.isRequired,
-    super.key,
+    this.addNewEntryFuture,
+    this.dropdownMenuEntriesFuture,
     this.helperText,
     this.defaultDropdownEntriesList,
+    super.key,
   });
 
   final AppLocalizations localized;
@@ -29,6 +31,14 @@ class ReservationManualEntryDropdownFieldOutline extends StatefulWidget {
   final String? helperText;
   final bool isRequired;
   final List<DropdownMenuEntry<String>>? defaultDropdownEntriesList;
+  final Future<List<DropdownMenuEntry<String>>> Function({
+    required BuildContext context,
+  })? dropdownMenuEntriesFuture;
+
+  final Future<void> Function({
+    required BuildContext context,
+    required String newEntry,
+  })? addNewEntryFuture;
 
   @override
   State<ReservationManualEntryDropdownFieldOutline> createState() =>
@@ -42,12 +52,14 @@ class _ReservationManualEntryDropdownFieldOutlineState
     return Padding(
       padding: const EdgeInsets.all(16),
       child: FutureBuilder<List<DropdownMenuEntry<String>>>(
-        future: dropDownMenuEntriesFuture(), //getBookingPlatforms(),
+        future: widget.dropdownMenuEntriesFuture != null
+            ? widget.dropdownMenuEntriesFuture!(context: context)
+            : defaultDropDownMenuEntriesFuture(), //getBookingPlatforms(),
         builder: (
           BuildContext context,
           AsyncSnapshot<List<DropdownMenuEntry<String>>> snapshot,
         ) {
-          final List<DropdownMenuEntry<String>> snapshotData =
+          final List<DropdownMenuEntry<String>> additionalDropdownMenuEntries =
               snapshot.data ?? <DropdownMenuEntry<String>>[];
 
           return FormField<String>(
@@ -72,7 +84,7 @@ class _ReservationManualEntryDropdownFieldOutlineState
                       value: "newEntry",
                       label: widget.localized.add.capitalized,
                     ),
-                    ...snapshotData,
+                    ...additionalDropdownMenuEntries,
                   ],
                   onSelected: (String? value) async {
                     if (value == "newEntry") {
@@ -98,21 +110,30 @@ class _ReservationManualEntryDropdownFieldOutlineState
                           );
                         },
                       ));
-
+                      if (widget.addNewEntryFuture != null &&
+                          newEntry != null &&
+                          newEntry.isNotEmpty &&
+                          context.mounted) {
+                        await widget.addNewEntryFuture!(
+                          context: context,
+                          newEntry: newEntry,
+                        );
+                      }
                       field.didChange(newEntry ?? "");
                       widget.textEditingController.text = newEntry ?? "";
                     } else {
-                      String finalValue = widget.defaultDropdownEntriesList
-                              ?.firstWhere(
+                      final DropdownMenuEntry<String> finalValue =
+                          widget.defaultDropdownEntriesList?.firstWhere(
                                 (DropdownMenuEntry<String> dropdownMenuEntry) =>
                                     dropdownMenuEntry.value == value,
-                              )
-                              .label ??
-                          value ??
-                          "";
+                              ) ??
+                              additionalDropdownMenuEntries.firstWhere(
+                                (DropdownMenuEntry<String> dropdownMenuEntry) =>
+                                    dropdownMenuEntry.value == value,
+                              );
 
-                      field.didChange(finalValue);
-                      widget.textEditingController.text = finalValue;
+                      field.didChange(finalValue.value);
+                      widget.textEditingController.text = finalValue.label;
                     }
                   },
                 ),
@@ -131,7 +152,18 @@ class _ReservationManualEntryDropdownFieldOutlineState
               } else if (stringValue.length < 4) {
                 return widget.localized.insertAtleastFour;
               } else {
-                if (stringValue != widget.textEditingController.text) {
+                final List<DropdownMenuEntry<String>> dropDownEntries =
+                    additionalDropdownMenuEntries
+                      ..addAll(
+                        widget.defaultDropdownEntriesList ??
+                            <DropdownMenuEntry<String>>[],
+                      );
+                if (dropDownEntries
+                    .where(
+                      (DropdownMenuEntry<String> element) =>
+                          element.label == widget.textEditingController.text,
+                    )
+                    .isEmpty) {
                   return widget.localized.selectSomeField;
                 }
                 return null;
@@ -143,7 +175,8 @@ class _ReservationManualEntryDropdownFieldOutlineState
     );
   }
 
-  Future<List<DropdownMenuEntry<String>>> dropDownMenuEntriesFuture() async {
+  Future<List<DropdownMenuEntry<String>>>
+      defaultDropDownMenuEntriesFuture() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final Map<String, String>? defaultValuesMap =
         widget.defaultDropdownEntriesList?.fold(
