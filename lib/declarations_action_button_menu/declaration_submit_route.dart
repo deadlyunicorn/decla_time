@@ -8,9 +8,11 @@ import "package:decla_time/declarations/database/user/user_property.dart";
 import "package:decla_time/declarations_action_button_menu/confirm_dialog/start_declaring_dialog.dart";
 import "package:decla_time/declarations_action_button_menu/filtering_reservations/reservation_place_selector.dart";
 import "package:decla_time/reservations/reservation.dart";
+import "package:decla_time/reservations/reservation_place.dart";
 import "package:decla_time/reservations_action_button_menu/entries_found/selectable_reservation_container.dart";
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
+import "package:isar/isar.dart";
 import "package:provider/provider.dart";
 
 class DeclarationSubmitRoute extends StatefulWidget {
@@ -28,7 +30,7 @@ class DeclarationSubmitRoute extends StatefulWidget {
 }
 
 class _DeclarationSubmitRouteState extends State<DeclarationSubmitRoute> {
-  String selectedReservationPlace = "";
+  ReservationPlace? selectedReservationPlace;
 
   @override
   Widget build(BuildContext context) {
@@ -65,17 +67,10 @@ class _DeclarationSubmitRouteState extends State<DeclarationSubmitRoute> {
                 localized: widget.localized,
               ),
               FutureBuilder<List<Reservation>>(
-                future: selectedReservationPlace.isEmpty
-                    ? context
-                        .watch<IsarHelper>()
-                        .reservationActions
-                        .getAllEntriesFromReservations()
-                    : context
-                        .watch<IsarHelper>()
-                        .reservationActions
-                        .getReservationsByPlace(
-                          selectedReservationPlace,
-                        ),
+                future: getReservationFromDatabaseWhere(
+                  selectedReservationPlaceId: selectedReservationPlace?.id,
+                  context: context,
+                ),
                 builder: (
                   BuildContext context,
                   AsyncSnapshot<List<Reservation>> snapshot,
@@ -141,9 +136,23 @@ class _DeclarationSubmitRouteState extends State<DeclarationSubmitRoute> {
     );
   }
 
-  void setSelectedReservationPlace(String newPlace) {
+  void setSelectedReservationPlace(ReservationPlace? newPlace) {
     setState(() {
       selectedReservationPlace = newPlace;
     });
+  }
+
+  Future<List<Reservation>> getReservationFromDatabaseWhere({
+    required int? selectedReservationPlaceId,
+    required BuildContext context,
+  }) async {
+    final Isar isar = await context.read<IsarHelper>().isarFuture;
+
+    return selectedReservationPlace == null
+        ? isar.reservations.where().findAll()
+        : isar.reservations
+            .filter()
+            .reservationPlaceIdEqualTo(selectedReservationPlaceId)
+            .findAll();
   }
 }
