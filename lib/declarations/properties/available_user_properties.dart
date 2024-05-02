@@ -107,13 +107,15 @@ class AvailablePropertiesListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.primary.withAlpha(128),
+        borderRadius: BorderRadius.circular(8),
+      ),
       width: kMaxContainerWidthSmall * 2,
       height: 48,
       child: ListTile(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         splashColor: Theme.of(context).colorScheme.secondary.withAlpha(128),
-        tileColor: Theme.of(context).colorScheme.primary.withAlpha(128),
         title: FittedBox(
           fit: BoxFit.scaleDown,
           child:
