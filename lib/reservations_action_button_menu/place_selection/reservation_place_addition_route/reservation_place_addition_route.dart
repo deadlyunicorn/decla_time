@@ -1,5 +1,6 @@
 import "package:decla_time/core/connection/isar_helper.dart";
 import "package:decla_time/core/constants/constants.dart";
+import "package:decla_time/core/extensions/capitalize.dart";
 import "package:decla_time/core/widgets/custom_alert_dialog.dart";
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
@@ -34,11 +35,10 @@ class _ReservationPlaceAdditionRouteState
           if (context.mounted) {
             Navigator.of(context).pop();
           }
-
-          ///TODO HERE
         }
       },
-      title: "Add new place to store reservations",
+      title: widget.localized.addPlaceForReservations.capitalized,
+      localized: widget.localized,
       child: Padding(
         padding: const EdgeInsets.only(top: 16.0),
         child: Row(
@@ -46,7 +46,7 @@ class _ReservationPlaceAdditionRouteState
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Text("Place name: "),
+            Text("${widget.localized.placeName.capitalized}: "),
             SizedBox(
               width: kFormFieldWidth,
               child: TextField(
@@ -56,7 +56,6 @@ class _ReservationPlaceAdditionRouteState
           ],
         ),
       ),
-      localized: widget.localized,
     );
   }
 }

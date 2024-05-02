@@ -1,3 +1,4 @@
+import "package:decla_time/core/extensions/capitalize.dart";
 import "package:decla_time/core/widgets/column_with_spacings.dart";
 import "package:decla_time/declarations/properties/available_user_properties.dart";
 import "package:decla_time/reservations/reservation_place.dart";
@@ -36,55 +37,64 @@ class _ReservationPlaceSelectionWidgetState
         )
         .firstOrNull;
 
-    return ColumnWithSpacings(
-      spacing: 8,
-      children: <Widget>[
-        AvailablePropertiesListTile(
-          onTap: () {
-            setState(() {
-              isOpen = !isOpen;
-            });
-            // widget.setSelectedPlaceId(123);
-          },
-          child: Text(
-            selectedPlace != null
-                ? selectedPlace.friendlyName
-                : "No place selected.",
-            overflow: TextOverflow.ellipsis,
-          ),
-        ),
-        if (isOpen)
-          ColumnWithSpacings(
+    return SizedBox(
+      height: 88,
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 16.0),
+          child: ColumnWithSpacings(
             spacing: 8,
             children: <Widget>[
-              ...widget.availableReservationPlaces.map(
-                (ReservationPlace place) => AvailablePropertiesListTile(
-                  onTap: () {
-                    widget.setSelectedPlaceId(place.id);
-                    setState(() {
-                      isOpen = false;
-                    });
-                  },
-                  child: Text(place.friendlyName),
+              AvailablePropertiesListTile(
+                icon: isOpen
+                    ? const Icon(Icons.arrow_drop_up_outlined)
+                    : const Icon(Icons.arrow_drop_down_circle_outlined),
+                onTap: () {
+                  setState(() {
+                    isOpen = !isOpen;
+                  });
+                  // widget.setSelectedPlaceId(123);
+                },
+                child: Text(
+                  selectedPlace != null
+                      ? selectedPlace.friendlyName
+                      : widget.localized.noPlaceSelected.capitalized,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
-              AvailablePropertiesListTile(
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) =>
-                        ReservationPlaceAdditionRoute(
-                      localized: widget.localized,
+              if (isOpen)
+                ColumnWithSpacings(
+                  spacing: 8,
+                  children: <Widget>[
+                    ...widget.availableReservationPlaces.map(
+                      (ReservationPlace place) => AvailablePropertiesListTile(
+                        onTap: () {
+                          widget.setSelectedPlaceId(place.id);
+                          setState(() {
+                            isOpen = false;
+                          });
+                        },
+                        child: Text(place.friendlyName),
+                      ),
                     ),
-                  );
-                },
-
-                ///TODO HERE
-                child: Text("add new Place"),
-              ),
+                    AvailablePropertiesListTile(
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) =>
+                              ReservationPlaceAdditionRoute(
+                            localized: widget.localized,
+                          ),
+                        );
+                      },
+                      child: Text(widget.localized.addPlace.capitalized),
+                    ),
+                  ],
+                ),
             ],
           ),
-      ],
+        ),
+      ),
     );
   }
 }

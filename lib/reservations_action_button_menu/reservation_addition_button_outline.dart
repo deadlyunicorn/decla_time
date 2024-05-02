@@ -20,8 +20,8 @@ class ReservationAdditionButtonOutline extends StatelessWidget {
     final double dimension = min(
       160,
       min(
-        MediaQuery.sizeOf(context).width / 3,
-        MediaQuery.sizeOf(context).height / 3,
+        MediaQuery.sizeOf(context).width / 4,
+        MediaQuery.sizeOf(context).height / 4,
       ),
     ).toDouble();
 

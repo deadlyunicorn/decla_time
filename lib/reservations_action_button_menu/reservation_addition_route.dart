@@ -3,6 +3,7 @@ import "dart:io";
 import "package:decla_time/core/connection/isar_helper.dart";
 import "package:decla_time/core/extensions/capitalize.dart";
 import "package:decla_time/core/functions/is_landscape_mode.dart";
+import "package:decla_time/core/widgets/column_with_spacings.dart";
 import "package:decla_time/core/widgets/item_select/generic_item_select_grid.dart";
 import "package:decla_time/core/widgets/route_outline.dart";
 import "package:decla_time/reservations/business/extracting_from_file_actions.dart";
@@ -89,26 +90,36 @@ class _ReservationAdditionRouteState extends State<ReservationAdditionRoute> {
                         addToReservationsFoundSoFar:
                             addToReservationsFoundSoFar,
                       ),
+                      Center(
+                        child: ColumnWithSpacings(
+                          spacing: 8,
+                          children: <Widget>[
+                            Text(
+                              widget.localized.importTo.capitalized,
+                              style: Theme.of(context).textTheme.headlineSmall,
+                            ),
+                            FutureBuilder<List<ReservationPlace>>(
+                              future: getReservationPlaces(),
+                              builder: (
+                                BuildContext context,
+                                AsyncSnapshot<List<ReservationPlace>> snapshot,
+                              ) {
+                                return ReservationPlaceSelectionWidget(
+                                  localized: widget.localized,
+                                  selectedPlaceId: selectedPlaceId,
+                                  setSelectedPlaceId: setSelectedPlaceId,
+                                  availableReservationPlaces:
+                                      snapshot.data ?? <ReservationPlace>[],
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 ),
               ),
-            ),
-            Text("Import to"),
-            FutureBuilder<List<ReservationPlace>>(
-              future: getReservationPlaces(),
-              builder: (
-                BuildContext context,
-                AsyncSnapshot<List<ReservationPlace>> snapshot,
-              ) {
-                return ReservationPlaceSelectionWidget(
-                  localized: widget.localized,
-                  selectedPlaceId: selectedPlaceId,
-                  setSelectedPlaceId: setSelectedPlaceId,
-                  availableReservationPlaces:
-                      snapshot.data ?? <ReservationPlace>[],
-                );
-              },
             ),
             Expanded(
               child: ItemsFoundList<Reservation>(
@@ -147,6 +158,7 @@ class _ReservationAdditionRouteState extends State<ReservationAdditionRoute> {
                       removeFromReservationsFoundSoFar,
                   reservations: reservations,
                   setOfIndicesOfSelectedItems: setOfIndicesOfSelectedItems,
+                  selectedPlaceId: selectedPlaceId,
                 ),
               ),
             ),
