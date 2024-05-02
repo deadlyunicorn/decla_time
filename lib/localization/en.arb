@@ -209,6 +209,11 @@
     "importedData" : "imported data",
     "atleast" : "atleast",
     "forGross":"for",
+    "noPlaceSelected": "no place selected",
+    "importTo" : "import to",
+    "addPlace" : "add place",
+    "addPlaceForReservations" :"add a new place to store reservations",
+    "placeName": "place name",
 
     "unusedForNonTrailingComma________________________________":""
 

@@ -209,6 +209,11 @@
     "importedData" : "εισαγμένα δεδομένα",
     "atleast" : "τουλάχιστον",
     "forGross":"για τα",
+    "noPlaceSelected": "δεν έχει επιλεχθεί μέρος",
+    "importTo" : "εισαγωγή στο",
+    "addPlace" : "προσθήκη μέρους",
+    "addPlaceForReservations" :"προσθήκη νέου μέρους για αποθήκευση κρατήσεων",
+    "placeName": "ονομασία μέρους",
 
     "unusedForNonTrailingComma________________________________":""
 
