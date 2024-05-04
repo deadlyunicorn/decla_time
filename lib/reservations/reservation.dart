@@ -14,8 +14,6 @@ class Reservation implements ItemWithDates {
   @Enumerated(EnumType.name)
   final BookingPlatform bookingPlatform;
 
-  final String? listingName;
-
   DateTime? lastEdit;
   bool isDeclared;
 
@@ -36,7 +34,6 @@ class Reservation implements ItemWithDates {
 
   Reservation({
     required this.bookingPlatform,
-    required this.listingName,
     required this.id,
     required this.guestName,
     required this.arrivalDate,
@@ -54,6 +51,14 @@ class Reservation implements ItemWithDates {
   String get arrivalDateString => DateFormat("dd/MM/y").format(arrivalDate);
   String get departureDateString => DateFormat("dd/MM/y").format(departureDate);
   Id get isarId => fastHash(id);
+  String get platformNameString {
+    switch (bookingPlatform.name) {
+      case "booking":
+        return "booking.com";
+      default:
+        return bookingPlatform.name;
+    }
+  }
 
   double get dailyRate => ((cancellationAmount ?? 0) + payout) / nights;
 
@@ -74,7 +79,6 @@ class Reservation implements ItemWithDates {
   }) =>
       Reservation(
         bookingPlatform: bookingPlatform ?? this.bookingPlatform,
-        listingName: listingName ?? this.listingName,
         id: id ?? this.id,
         guestName: guestName ?? this.guestName,
         arrivalDate: arrivalDate ?? this.arrivalDate,
@@ -90,7 +94,6 @@ class Reservation implements ItemWithDates {
 
   bool isEqualTo(Reservation reservation) {
     return reservation.bookingPlatform == bookingPlatform &&
-        reservation.listingName == listingName &&
         reservation.id == id &&
         reservation.guestName == guestName &&
         reservation.arrivalDate == arrivalDate &&

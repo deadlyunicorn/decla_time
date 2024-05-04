@@ -79,22 +79,4 @@ class ReservationActions {
     });
     _notifyListeners();
   }
-
-  Future<Set<String>> getReservationPlaces() async {
-    return (await _isarFuture).reservations.where().findAll().then(
-          (List<Reservation> reservations) => reservations
-              .map((Reservation reservation) => reservation.listingName)
-              .nonNulls
-              .toSet(),
-        );
-  }
-
-  Future<List<Reservation>> getReservationsByPlace(String listingName) async {
-    return (await _isarFuture)
-        .reservations
-        .filter()
-        .listingNameEqualTo(listingName)
-        .sortByDepartureDateDesc()
-        .findAll();
-  }
 }

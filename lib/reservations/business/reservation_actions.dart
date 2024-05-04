@@ -170,7 +170,6 @@ class ReservationActions {
             cancellationAmount: null, //TODO UNIMPLEMENTED
             cancellationDate: null, //TODO UNIMPLEMENTED
             bookingPlatform: BookingPlatform.airbnb,
-            listingName: csvFileRowEntries[i][kAirbnbListingNameColumn],
             id: csvFileRowEntries[i][kAirbnbIdColumn],
             guestName: csvFileRowEntries[i][kAirbnbGuestNameColumn],
             arrivalDate: DateFormat("M/d/y HH:mm").parse(
@@ -261,7 +260,6 @@ class ReservationActions {
             cancellationDate: null, //TODO UNIMPLEMENTED
             cancellationAmount: null, //TODO UNIMPLEMENTED
             bookingPlatform: BookingPlatform.booking,
-            listingName: null,
             id: csvFileRowEntries[i][kBookingDotComIdColumn],
             guestName: csvFileRowEntries[i][kBookingDotComGuestNameColumn],
             arrivalDate: DateFormat("y-MM-dd HH:mm").parse(
