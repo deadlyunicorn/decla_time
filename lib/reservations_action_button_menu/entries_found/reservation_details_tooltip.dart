@@ -29,13 +29,7 @@ class ReservationDetailsTooltip extends StatelessWidget {
             TextSpan(
               text:
                   // ignore: lines_longer_than_80_chars
-                  "${localized.listingPlace.capitalized}: ${reservation.listingName ?? localized.other.capitalized}",
-            ),
-            const TextSpan(text: "\n"),
-            TextSpan(
-              text:
-                  // ignore: lines_longer_than_80_chars
-                  "${localized.platform.capitalized}: ${reservation.bookingPlatform}",
+                  "${localized.platform.capitalized}: ${reservation.platformNameString}",
             ),
             const TextSpan(text: "\n"),
             TextSpan(

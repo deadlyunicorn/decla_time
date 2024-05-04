@@ -22,7 +22,7 @@ class ReservationForm extends StatefulWidget {
     required this.handleFormSubmit,
     super.key,
     this.platformName,
-    this.listingName,
+    this.reservationPlaceId,
     this.id,
     this.guestName,
     this.payout,
@@ -36,7 +36,7 @@ class ReservationForm extends StatefulWidget {
 
   //? Below are default values -
   final String? platformName;
-  final String? listingName;
+  final String? reservationPlaceId;
   final String? id;
   final String? guestName;
   final String? payout;
@@ -66,7 +66,7 @@ class _ReservationFormState extends State<ReservationForm> {
     super.initState();
 
     platformNameController.text = widget.platformName ?? "";
-    reservationPlaceController.text = widget.listingName ?? "";
+    reservationPlaceController.text = widget.reservationPlaceId ?? "";
     idController.text = widget.id ?? "";
     guestNameController.text = widget.guestName ?? "";
     payoutController.text = widget.payout ?? "";
@@ -192,8 +192,9 @@ class _ReservationFormState extends State<ReservationForm> {
 
   void submitReservationForm() {
     if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
       final String bookingPlatform = platformNameController.text;
-      final String listingName = reservationPlaceController.text;
+      final String reservationPlaceId = reservationPlaceController.text;
       final String id = idController.text;
       final String guestName = guestNameController.text;
       final double payout = double.tryParse(payoutController.text)!;
@@ -202,15 +203,15 @@ class _ReservationFormState extends State<ReservationForm> {
         widget.localized,
       ).name;
       final DateTime arrivalDate = this.arrivalDate!;
+
       final DateTime departureDate = this.departureDate!;
 
       final Reservation reservation = Reservation(
-        reservationPlaceId: -1, //TODO IMPLEMENT SOON.
+        reservationPlaceId: int.parse(reservationPlaceId),
         cancellationAmount: null, //TODO UNIMPLEMENTED
         cancellationDate: null, //TODO UNIMPLEMENTED
         bookingPlatform:
             DeclarationBody.extractBookingPlatform(bookingPlatform),
-        listingName: listingName,
         id: id,
         guestName: guestName,
         arrivalDate: arrivalDate,

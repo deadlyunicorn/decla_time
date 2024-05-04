@@ -26,6 +26,18 @@ class ReservationPlaceField extends StatelessWidget {
         BuildContext context,
         AsyncSnapshot<List<DropdownMenuEntry<String>>> snapshot,
       ) {
+        if (snapshot.data != null && listingNameController.text.isNotEmpty) {
+          final String? initialText = snapshot.data!
+              .where(
+                (DropdownMenuEntry<String> element) =>
+                    element.value == listingNameController.text,
+              )
+              .firstOrNull
+              ?.label;
+          if (initialText != null) {
+            listingNameController.text = initialText;
+          }
+        }
         return ReservationManualEntryDropdownFieldOutline(
           //Spaghetti code :)
           localized: localized,

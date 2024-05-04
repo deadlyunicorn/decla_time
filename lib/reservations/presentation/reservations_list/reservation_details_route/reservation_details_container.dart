@@ -1,3 +1,4 @@
+import "package:decla_time/core/connection/isar_helper.dart";
 import "package:decla_time/core/constants/constants.dart";
 import "package:decla_time/core/enums/declaration_status.dart";
 import "package:decla_time/core/extensions/capitalize.dart";
@@ -7,8 +8,11 @@ import "package:decla_time/reservations/presentation/reservations_list/reservati
 import "package:decla_time/reservations/presentation/reservations_list/reservation_details_route/reservation_delete_button.dart";
 import "package:decla_time/reservations/presentation/reservations_list/reservation_details_route/reservation_edit_button.dart";
 import "package:decla_time/reservations/reservation.dart";
+import "package:decla_time/reservations/reservation_place.dart";
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
+import "package:isar/isar.dart";
+import "package:provider/provider.dart";
 
 class ReservationDetailsContainer extends StatelessWidget {
   const ReservationDetailsContainer({
@@ -61,7 +65,7 @@ class ReservationDetailsContainer extends StatelessWidget {
                                 children: <InlineSpan>[
                                   TextSpan(
                                     text: reservation
-                                        .bookingPlatform.name.capitalized,
+                                        .platformNameString.capitalized,
                                     style: Theme.of(context)
                                         .textTheme
                                         .headlineSmall,
@@ -107,14 +111,25 @@ class ReservationDetailsContainer extends StatelessWidget {
                           ),
                         ),
                         const SizedBox.square(dimension: 8),
-                        (reservation.listingName != null &&
-                                reservation.listingName!.isNotEmpty)
-                            ? Text(
-                                // ignore: lines_longer_than_80_chars
-                                "${localized.at.capitalized} '${reservation.listingName}'",
-                                textAlign: TextAlign.center,
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
+                        (reservation.reservationPlaceId != null)
+                            ? FutureBuilder<String>(
+                                future: getReservationPlaceFriendlyNameWhere(
+                                  reservationPlaceId:
+                                      reservation.reservationPlaceId!,
+                                  context: context,
+                                ),
+                                builder: (
+                                  BuildContext context,
+                                  AsyncSnapshot<String> snapshot,
+                                ) {
+                                  return Text(
+                                    // ignore: lines_longer_than_80_chars
+                                    "${localized.at.capitalized} '${snapshot.data ?? "..."}'",
+                                    textAlign: TextAlign.center,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                  );
+                                },
                               )
                             : const SizedBox.shrink(),
                       ],
@@ -199,6 +214,19 @@ class ReservationDetailsContainer extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Future<String> getReservationPlaceFriendlyNameWhere({
+    required int reservationPlaceId,
+    required BuildContext context,
+  }) async {
+    final Isar isar = await context.read<IsarHelper>().isarFuture;
+    return (await isar.reservationPlaces
+                .filter()
+                .idEqualTo(reservationPlaceId)
+                .findFirst())
+            ?.friendlyName ??
+        "";
   }
 }
 

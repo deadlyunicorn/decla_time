@@ -54,7 +54,7 @@ class _ReservationManualEntryDropdownFieldOutlineState
       child: FutureBuilder<List<DropdownMenuEntry<String>>>(
         future: widget.dropdownMenuEntriesFuture != null
             ? widget.dropdownMenuEntriesFuture!(context: context)
-            : defaultDropDownMenuEntriesFuture(), //getBookingPlatforms(),
+            : defaultDropDownMenuEntriesFuture(),
         builder: (
           BuildContext context,
           AsyncSnapshot<List<DropdownMenuEntry<String>>> snapshot,
@@ -153,8 +153,9 @@ class _ReservationManualEntryDropdownFieldOutlineState
                 return widget.localized.insertAtleastFour;
               } else {
                 final List<DropdownMenuEntry<String>> dropDownEntries =
-                    additionalDropdownMenuEntries
-                      ..addAll(
+                    List<DropdownMenuEntry<String>>.from(
+                  additionalDropdownMenuEntries,
+                )..addAll(
                         widget.defaultDropdownEntriesList ??
                             <DropdownMenuEntry<String>>[],
                       );
@@ -168,6 +169,22 @@ class _ReservationManualEntryDropdownFieldOutlineState
                 }
                 return null;
               }
+            },
+            onSaved: (String? newValue) {
+              final List<DropdownMenuEntry<String>> dropDownEntries =
+                  List<DropdownMenuEntry<String>>.from(
+                additionalDropdownMenuEntries,
+              )..addAll(
+                      widget.defaultDropdownEntriesList ??
+                          <DropdownMenuEntry<String>>[],
+                    );
+              widget.textEditingController.text = dropDownEntries
+                  .where(
+                    (DropdownMenuEntry<String> element) =>
+                        element.label == widget.textEditingController.text,
+                  )
+                  .first
+                  .value;
             },
           );
         },
