@@ -32,6 +32,7 @@ class DeclarationsPage extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 32),
             child: (selectedUser.isNotEmpty && !requestLogin) || isLoggedIn
                 ? PropertySelector(
+                    //* In here declarations.
                     localized: localized,
                   )
                 : LoginForm(

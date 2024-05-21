@@ -23,7 +23,6 @@ class UsersController extends ChangeNotifier {
   String get selectedUser => _selectedUser;
   UserProperty? get selectedProperty => _selectedProperty;
 
-
   bool get requestLogin => _requestLogin;
   bool get isLoggedIn => (loggedUser.userCredentials != null &&
       loggedUser.userCredentials?.username == selectedUser);
@@ -66,12 +65,27 @@ class UsersController extends ChangeNotifier {
 
   Future<void> selectUser(String username) async {
     if (username == _selectedUser) return;
+
     _selectedUser = username;
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     unawaited(prefs.setString(kLastSelectedUser, username));
 
-    await selectProperty("");
+    //? this will get back to selectUser..
+    // //await selectProperty("");
+
+    final User? selectedUser = _availableUsers
+        .where(
+          (User user) => user.username == username,
+        )
+        .firstOrNull;
+
+    if (selectedUser?.propertyIds.firstOrNull != null) {
+      _selectedProperty = await _isarHelper.userActions
+          .getProperty(propertyId: selectedUser!.propertyIds.first);
+    } else {
+      _selectedProperty = null;
+    }
 
     notifyListeners();
   }
